@@ -58,12 +58,20 @@ namespace VMS.TPS
 
             AllocConsole();
 
+            Console.SetWindowSize(80, 20);
+            Console.SetBufferSize(80, 20);
+
+          //  if (course == null)
+          //  {
+          //      course = plan;
+          //  }
+
             Console.WriteLine(" Hi {0}, Welcome to the Lahey RadOnc Automatic Patient Plan Report Generator   V 1.0 \n \n", user);
 
             Thread.Sleep(3000);
 
-            Console.WriteLine("You have loaded {0}'s {1} plan. The course {2} is currently selected.  \n", patient, plan, course);
-            Console.WriteLine("This program will print all required images for the selected course. If you want to do this, press Y. \n");
+            Console.WriteLine("You have loaded {0}'s course {1}. The currently selected plan of course {1} is {2}.  \n", patient, course, plan);
+            Console.WriteLine("This program will print all required images for the current plan {0}. If you want to do this, press Y. \n", plan);
             Console.WriteLine("If you want to print the images for a different course, plan, or patient, or exit the program for any reason, press N. \n");
             Console.WriteLine("(Y/N)? ");
             input = Console.ReadLine();
@@ -79,7 +87,7 @@ namespace VMS.TPS
             else if (input == "y" | input == "Y")
             {
                 Console.WriteLine("\n \n");
-                Console.WriteLine("All images for course {0} will now print. \n \n", course);
+                Console.WriteLine("All images for plan {0} will now print. \n \n", plan);
                 Console.WriteLine("This Command Line Window will now close. \n");
                 Thread.Sleep(4000);
 
@@ -114,7 +122,8 @@ namespace VMS.TPS
           //  Thread.Sleep(4000);
           //  Console.WriteLine("This Command Line Window will now close. \n");
           //  Thread.Sleep(5000);
-
+           
+            
 
         }  // end of IOConsole
 
@@ -123,7 +132,7 @@ namespace VMS.TPS
 
 
 
-        public void Execute(ScriptContext context )     // PROGRAM START
+        public void Execute(ScriptContext context )     // PROGRAM START - sending a return to Execute will end the program
         {
             //regular variables
 
@@ -142,11 +151,11 @@ namespace VMS.TPS
 
             if (context.Patient == null)
             {
-                MessageBox.Show("{0}, please load a patient with a treatment plan before running this script!", user.Name);
+                MessageBox.Show("Please load a patient with a treatment plan before running this script!");
                 return;
             }
 
-            output = IOConsole(user.Name, patient.Name, plan.Name, course.Name);  // calls the I/O interface and assigns the int it returns
+            output = IOConsole(user.Name, patient.Name, plan.Id, course.Id);  // calls the I/O interface and assigns the int it returns
 
             if (output == 0 )  
             {
@@ -181,8 +190,9 @@ namespace VMS.TPS
 
             //script code here
 
+            return;
 
-        }  //ends Execute
+        }  //ends Execute  END OF PROGRAM
 
 
 
@@ -219,9 +229,8 @@ namespace VMS.TPS
 
 
 
-
-        
+                
 
  
     }   //ends Script class
-}
+}  //ends namespace
