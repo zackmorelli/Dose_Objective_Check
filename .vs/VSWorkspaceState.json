@@ -2,10 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\PDFLibraries",
-    "\\PDFLibraries\\src",
-    "\\PDFLibraries\\src\\SimplePdfReport.Reporting.MigraDoc",
-    "\\PDFLibraries\\src\\SimplePdfReport.Reporting\\Properties"
+    "\\PDFLibraries\\src"
   ],
-  "SelectedNode": "\\PDFLibraries\\src\\SimplePdfReport.Reporting.MigraDoc\\SimplePdfReport.Reporting.MigraDoc.csproj",
+  "SelectedNode": "\\PDFLibraries\\PDFGenerator.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -35,6 +35,9 @@
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PdfReport.PDFGenerator">
+      <HintPath>PDFLibraries\bin\Debug\PdfReport.PDFGenerator.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />

@@ -12,6 +12,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using VMS.TPS.Common.Model.API;
 using VMS.TPS.Common.Model.Types;
+using PdfReport.PDFGenerator;
 
 
 /*
@@ -163,6 +164,13 @@ namespace VMS.TPS
             }
             else if (output == 1)
             {
+
+
+                PdfReport.PDFGenerator.Program.Main();
+
+
+
+
 
             }
 
