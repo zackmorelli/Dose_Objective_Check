@@ -166,7 +166,7 @@ namespace VMS.TPS
             {
 
 
-                PdfReport.PDFGenerator.Program.Main();
+                PdfReport.PDFGenerator.Program.Main(patient, course, plan, image3D, structureSet, user);
 
 
 

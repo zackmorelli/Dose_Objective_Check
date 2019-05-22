@@ -3,15 +3,17 @@ using System.Diagnostics;
 using System.IO;
 using PdfReport.Reporting;
 using PdfReport.Reporting.MigraDoc;
+using VMS.TPS.Common.Model.API;
+using VMS.TPS.Common.Model.Types;
 
 namespace PdfReport.PDFGenerator
 {
      public class Program
     {
-        public static void Main()
+        public static void Main(VMS.TPS.Common.Model.API.Patient patient, VMS.TPS.Common.Model.API.Course course, VMS.TPS.Common.Model.API.PlanSetup plan, VMS.TPS.Common.Model.API.Image image3D, VMS.TPS.Common.Model.API.StructureSet structureSet, VMS.TPS.Common.Model.API.User user)
         {
             var reportService = new ReportPdf();
-            var reportData = CreateReportData();
+            var reportData = CreateReportData(patient, course, plan, image3D, structureSet, user);
 
             var path = GetTempPdfPath();
             reportService.Export(path, reportData);
@@ -19,23 +21,46 @@ namespace PdfReport.PDFGenerator
             Process.Start(path);
         }
 
-        private static ReportData CreateReportData()
+        private static ReportData CreateReportData(VMS.TPS.Common.Model.API.Patient patient, VMS.TPS.Common.Model.API.Course course, VMS.TPS.Common.Model.API.PlanSetup plan, VMS.TPS.Common.Model.API.Image image3D, VMS.TPS.Common.Model.API.StructureSet structureSet, VMS.TPS.Common.Model.API.User user)
         {
+            // some variables used to help convert between Varian stuff and the classes for the pdf
+
+            DateTime DOB = (DateTime)patient.DateOfBirth;  //casts nullable DateTime varriable from Varian's API to a normal one
+
+
             return new ReportData
             {
-                Patient = new Patient
+                Patient = new PdfReport.Reporting.Patient
                 {
-                    Id = "38561948",
-                    FirstName = "Daniel",
-                    LastName = "Price",
-                    Sex = Sex.Male,
-                    Birthdate = new DateTime(1950, 1, 1),
+                    Id = patient.Id,
+                    FirstName = patient.FirstName,
+                    LastName = patient.LastName,
+                    Sex = patient.Sex,
+                    Birthdate = DOB,
+
                     Doctor = new Doctor
                     {
-                        FirstName = "Heather",
-                        LastName = "Powell"
+                        Name = patient.PrimaryOncologistId
                     }
                 },
+
+                Plan = new PdfReport.Reporting.Plan
+                {
+
+                    Id = plan.Id,
+                    Course = course.Id,
+                    ApprovalStatus = plan.ApprovalStatus.ToString()
+
+                    //  Type = Enum.GetName(typeof(PlanType),
+
+                }
+
+
+
+
+
+
+               /* 
                 StructureSet = new StructureSet
                 {
                     Id = "CT",
@@ -89,7 +114,9 @@ namespace PdfReport.PDFGenerator
                             MeanDoseInGy = 26.39
                         },
                     }
-                }
+                }   //ends structure set
+                */
+
             };
         }
 

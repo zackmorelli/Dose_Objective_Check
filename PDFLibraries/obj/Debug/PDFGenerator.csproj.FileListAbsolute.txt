@@ -22,3 +22,9 @@ C:\prog\Auto-Report-Script\PDFLibraries\obj\Debug\PDFGenerator.csproj.CoreCompil
 C:\prog\Auto-Report-Script\PDFLibraries\obj\Debug\PDFGenerator.csproj.CopyComplete
 C:\prog\Auto-Report-Script\PDFLibraries\obj\Debug\PdfReport.PDFGenerator.dll
 C:\prog\Auto-Report-Script\PDFLibraries\obj\Debug\PdfReport.PDFGenerator.pdb
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\VMS.TPS.Common.Model.API.dll
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\VMS.TPS.Common.Model.Types.dll
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\VMS.TPS.Common.Calculation.Interface.dll
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\VMS.TPS.Common.Model.Interface.dll
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\VMS.TPS.Common.Model.API.xml
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\VMS.TPS.Common.Model.Types.xml

@@ -46,7 +46,7 @@ namespace PdfReport.Reporting.MigraDoc.Internal
             p1.Style = CustomStyles.PatientName;
             p1.AddText($"{patient.LastName}, {patient.FirstName}");
             p1.AddSpace(2);
-            AddSexSymbol(p1, patient.Sex);
+            // AddSexSymbol(p1, patient.Sex);
 
             // Add patient ID
             var p2 = cell.AddParagraph();
@@ -54,10 +54,11 @@ namespace PdfReport.Reporting.MigraDoc.Internal
             p2.AddFormattedText(patient.Id, TextFormat.Bold);
         }
 
-        private void AddSexSymbol(Paragraph p, Sex sex)
+      /*  private void AddSexSymbol(Paragraph p, Sex sex)
         {
             p.AddImage(new SexSymbol(sex).GetMigraDocFileName());
         }
+        */
 
         private void AddRightInfo(Cell cell, Patient patient)
         {
@@ -71,7 +72,7 @@ namespace PdfReport.Reporting.MigraDoc.Internal
 
             // Add doctor name
             p.AddText("Doctor: ");
-            p.AddFormattedText($"{patient.Doctor.FirstName} {patient.Doctor.LastName}", TextFormat.Bold);
+          //  p.AddFormattedText($"{patient.Doctor.FirstName} {patient.Doctor.LastName}", TextFormat.Bold);
         }
 
         private string Format(DateTime birthdate)
