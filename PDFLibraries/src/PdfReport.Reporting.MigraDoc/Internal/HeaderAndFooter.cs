@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using MigraDoc.DocumentObjectModel;
 
 namespace PdfReport.Reporting.MigraDoc.Internal
@@ -7,8 +8,10 @@ namespace PdfReport.Reporting.MigraDoc.Internal
     {
         public void Add(Section section, ReportData data)
         {
-            AddHeader(section, data.Patient, data.Hospital, data.Plan);
+           // MessageBox.Show("Trigger main Header ADD1");
+            AddHeader(section, data);    
             AddFooter(section);
+           // MessageBox.Show("Trigger main Header ADD2");
         }
 
         private string Format(DateTime birthdate)
@@ -24,23 +27,37 @@ namespace PdfReport.Reporting.MigraDoc.Internal
             return birthdate.AddYears(age) > today ? age - 1 : age;
         }
 
-        private void AddHeader(Section section, Patient patient, Hospital hospital, Plan plan)
+        private void AddHeader(Section section, ReportData data)
         {
             var header = section.Headers.Primary.AddParagraph();
             header.Format.AddTabStop(Size.GetWidth(section), TabAlignment.Right);
 
-            header.AddFormattedText($"{patient.LastName}, {patient.FirstName} (ID: {patient.Id}) - {patient.Sex} \n" , TextFormat.Bold);
+            /*
+            MessageBox.Show(data.Patient.LastName);
+            MessageBox.Show(data.Patient.FirstName);
+            MessageBox.Show(data.Plan.Id);
+            MessageBox.Show(data.Patient.Doctor.Name);
+            MessageBox.Show(data.Hospital.Address);
+            MessageBox.Show(data.Plan.ApprovalStatus);
+            */
+
+
+            header.AddFormattedText($"{data.Patient.LastName}, {data.Patient.FirstName} (ID: {data.Patient.Id}) - {data.Patient.Sex} " , TextFormat.Bold);
+            header.AddSpace(68);
+            header.AddText($"Generated {DateTime.Now:g}  By: {data.User}");           //first line  ( g is the General Date Short Time Format Specifier)
+            header.AddLineBreak();
+            
             header.AddText("Birthdate: ");
-            header.AddFormattedText(Format(patient.Birthdate), TextFormat.Bold );
-            header.AddText("\n");
-            header.AddText("Plan: ");
-            header.AddFormattedText($"{plan.Id} - {plan.ApprovalStatus}", TextFormat.Bold);
+            header.AddFormattedText(Format(data.Patient.Birthdate), TextFormat.Bold );    // second line
             header.AddTab();
-            header.AddText($"Generated {DateTime.Now:g}  By: \n");
             header.AddText("Primary Oncologist: ");
-            header.AddFormattedText($"{patient.Doctor.Name} ", TextFormat.Bold);
-            header.AddText("\n");
-            header.AddText($"{hospital.Name}, {hospital.Address} ");
+            header.AddFormattedText($"{data.Patient.Doctor.Name} ", TextFormat.Bold);
+            header.AddText("\n\r");
+
+            header.AddText("Plan: ");
+            header.AddFormattedText($"{data.Plan.Id} - {data.Plan.ApprovalStatus}", TextFormat.Bold);    // third line
+            header.AddTab();
+            header.AddText($"{data.Hospital.Name}, {data.Hospital.Address} ");
 
 
         }

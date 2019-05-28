@@ -1,4 +1,5 @@
-﻿using MigraDoc.DocumentObjectModel;
+﻿using System.Windows;
+using MigraDoc.DocumentObjectModel;
 using MigraDoc.Rendering;
 using PdfReport.Reporting.MigraDoc.Internal;
 
@@ -6,9 +7,10 @@ namespace PdfReport.Reporting.MigraDoc
 {
     public class ReportPdf : IReport
     {
-        public void Export(string path, ReportData data)
+        public void Export(string path, ReportData reportdata)
         {
-            ExportPdf(path, CreateReport(data));
+           // MessageBox.Show("Trigger export");
+            ExportPdf(path, CreateReport(reportdata));
         }
 
         private void ExportPdf(string path, Document report)
@@ -17,22 +19,26 @@ namespace PdfReport.Reporting.MigraDoc
             pdfRenderer.Document = report;
             pdfRenderer.RenderDocument();
             pdfRenderer.PdfDocument.Save(path);
+           // MessageBox.Show("Trigger exportpdf");
         }
 
-        private Document CreateReport(ReportData data)
+        private Document CreateReport(ReportData reportdata)
         {
             var doc = new Document();
             CustomStyles.Define(doc);
-            doc.Add(CreateMainSection(data));
+            doc.Add(CreateMainSection(reportdata));
+           // MessageBox.Show("Trigger create report");
             return doc;
+
         }
 
-        private Section CreateMainSection(ReportData data)
+        private Section CreateMainSection(ReportData reportdata)
         {
             var section = new Section();
             SetUpPage(section);
-            AddHeaderAndFooter(section, data);
-           // AddContents(section, data);
+            AddHeaderAndFooter(section, reportdata);
+            // AddContents(section, data);
+           // MessageBox.Show("Trigger main section");
             return section;
         }
 
@@ -49,9 +55,12 @@ namespace PdfReport.Reporting.MigraDoc
             section.PageSetup.FooterDistance = Size.HeaderFooterMargin;
         }
 
-        private void AddHeaderAndFooter(Section section, ReportData data)
+        private void AddHeaderAndFooter(Section section, ReportData reportdata)
         {
-            new HeaderAndFooter().Add(section, data);
+
+          //  MessageBox.Show("Trigger HF");
+            new HeaderAndFooter().Add(section, reportdata);      
+           // MessageBox.Show("Trigger HF2");
         }
 
         /*

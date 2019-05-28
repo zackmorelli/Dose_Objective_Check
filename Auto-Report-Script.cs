@@ -81,7 +81,7 @@ namespace VMS.TPS
             {
                 Console.WriteLine("\n \n");
                 Console.WriteLine("The program will now close.");
-                Thread.Sleep(4000);
+                Thread.Sleep(3000);
 
                 return k;
             }
@@ -90,7 +90,7 @@ namespace VMS.TPS
                 Console.WriteLine("\n \n");
                 Console.WriteLine("All images for plan {0} will now print. \n \n", plan);
                 Console.WriteLine("This Command Line Window will now close. \n");
-                Thread.Sleep(4000);
+                Thread.Sleep(3000);
 
                 k = 1;
                 return k;
@@ -165,7 +165,7 @@ namespace VMS.TPS
             else if (output == 1)
             {
 
-
+               // MessageBox.Show("Trigger Fire main from Auto");
                 PdfReport.PDFGenerator.Program.Main(patient, course, plan, image3D, structureSet, user);
 
 

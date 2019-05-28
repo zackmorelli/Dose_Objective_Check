@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Windows;
 using PdfReport.Reporting;
 using PdfReport.Reporting.MigraDoc;
 using VMS.TPS.Common.Model.API;
@@ -12,17 +13,26 @@ namespace PdfReport.PDFGenerator
     {
         public static void Main(VMS.TPS.Common.Model.API.Patient patient, VMS.TPS.Common.Model.API.Course course, VMS.TPS.Common.Model.API.PlanSetup plan, VMS.TPS.Common.Model.API.Image image3D, VMS.TPS.Common.Model.API.StructureSet structureSet, VMS.TPS.Common.Model.API.User user)
         {
+
+           // MessageBox.Show("Trigger main start");
+
             var reportService = new ReportPdf();
             var reportData = CreateReportData(patient, course, plan, image3D, structureSet, user);
-
+           // MessageBox.Show("Trigger main middle");
             var path = GetTempPdfPath();
+           // MessageBox.Show(path);
             reportService.Export(path, reportData);
+           // MessageBox.Show("Trigger after export");
 
             Process.Start(path);
+           // MessageBox.Show("Trigger main end");
         }
 
         private static ReportData CreateReportData(VMS.TPS.Common.Model.API.Patient patient, VMS.TPS.Common.Model.API.Course course, VMS.TPS.Common.Model.API.PlanSetup plan, VMS.TPS.Common.Model.API.Image image3D, VMS.TPS.Common.Model.API.StructureSet structureSet, VMS.TPS.Common.Model.API.User user)
         {
+
+           // MessageBox.Show("Trigger report data");
+
             // some variables used to help convert between Varian stuff and the classes for the pdf
 
             DateTime DOB = (DateTime)patient.DateOfBirth;  //casts nullable DateTime varriable from Varian's API to a normal one
@@ -30,18 +40,29 @@ namespace PdfReport.PDFGenerator
 
             return new ReportData
             {
+
+                User = user.Name,
+
                 Patient = new PdfReport.Reporting.Patient
                 {
                     Id = patient.Id,
                     FirstName = patient.FirstName,
+                    MiddleName = patient.MiddleName,
                     LastName = patient.LastName,
                     Sex = patient.Sex,
                     Birthdate = DOB,
 
-                    Doctor = new Doctor
+                    Doctor = new PdfReport.Reporting.Doctor
                     {
                         Name = patient.PrimaryOncologistId
                     }
+
+                },
+
+                Hospital = new PdfReport.Reporting.Hospital
+                {
+                    Name = patient.Hospital.Name,
+                    Address = patient.Hospital.Location
                 },
 
                 Plan = new PdfReport.Reporting.Plan
@@ -55,10 +76,7 @@ namespace PdfReport.PDFGenerator
 
                 }
 
-
-
-
-
+              
 
                /* 
                 StructureSet = new StructureSet

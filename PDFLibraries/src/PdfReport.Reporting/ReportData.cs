@@ -6,7 +6,7 @@
         public StructureSet StructureSet { get; set; }
         public Hospital Hospital { get; set; }
         public Plan Plan { get; set; }
-
+        public string User { get; set; }
 
 
 
