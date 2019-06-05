@@ -1,0 +1,464 @@
+"NORMAL TISSUE DOSIMETRIC GUIDELINES
+BASED ON TG-101 WITH BED-BASED SCALING EXCEPT WHERE OTHERWISE INDICATED
+Note:  All values in Gy unless otherwise noted, ROI's must have unique names
+8-29-18 P. Halvorsen"											ROI not assigned to any Treatment Site lists	ROI Unique Name is not unique (duplicated)																		"Excel sorting steps: Sort 1 a-z, ROI a-z, Sort 2 small-large, Limit z-a, Limit Value small-large"	"Sorting logic: 1=Vxx, 2=Dxx, 3=Max Pt Dose. Within each category it should be largest ""xx"" first to the lowest ""xx"" (i.e. V20 [Sort 2 = 1], then V5 [Sort 2 = 1.1])"
+ROI UNIQUE NAME	REGION OF INTEREST	LIMIT	LIMIT Eval	LIMIT VALUE	LIMIT UNITS	LIMIT GOAL	REQUIREMENT	REF / COMMENT	ROI COMMENT	"Tx Site groups 1 
+(Single fraction)"	"Tx Site groups 2 
+(3 fraction)"	"Tx Site groups 3 
+(4 fraction)"	"Tx Site groups 4 
+(5 fraction)"	"Tx Site groups 5 
+(6 fraction)"	"Tx Site groups 6 
+(8 fraction)"	"Tx Site groups 7
+(10 fraction)"	"Tx Site groups 8
+(Liver)"	"Tx Site groups 9 
+(Lung 4 fraction)"	"Tx Site groups 10 
+(Lung 5 fraction)"	"Tx Site groups 11 
+(Lung 8 fraction)"	"Tx Site groups 12 
+(Pancreas)"	"Tx Site groups 13 
+(SRS Cranial 1 Fx)"	"Tx Site groups 14 
+(SRS Cranial 3 Fx)"	"Tx Site groups 15 
+(SRS Cranial 5 Fx)"	"Tx Site groups 16 
+(SRS Cranial AVM)"	"Tx Site groups 17 
+(SRS CranialTrigem)"	Tx Site groups 18	Tx Site groups 19	Tx Site groups 20	"Sort
+1"	"Sort
+2"
+_CTV_V100%Rx ? 100% 	_CTV	V100%Rx	>=	100	%												Liver													_	
+_PTV_Isocenter dose ? 8500cGy 	_PTV	Isocenter dose	>=	8500	cGy																					SRS Cranial Trigeminal Neuralgia				_	
+BileDuct_Max Pt Dose ? 3000cGy 	BileDuct	Max Pt Dose	<=	3000	cGy			NRG BR-001																			Oligomets 1 fraction			n	3
+BileDuct_Max Pt Dose ? 3600cGy 	BileDuct	Max Pt Dose	<=	3600	cGy			NRG BR-001																				Oligomets 3 fractions		n	3
+BileDuct_Max Pt Dose ? 4100cGy 	BileDuct	Max Pt Dose	<=	4100	cGy			NRG BR-001																					Oligomets 5 fractions	n	3
+BladderWall_5mm_V23 ? 15cc 	BladderWall_5mm	V23	<=	15	cc											10 fraction														n	1
+BladderWall_5mm_V21.5 ? 15cc 	BladderWall_5mm	V21.5	<=	15	cc										8 fraction															n	1
+BladderWall_5mm_V20 ? 15cc 	BladderWall_5mm	V20	<=	15	cc			NRG BR-001																					Oligomets 5 fractions	n	1
+BladderWall_5mm_V19.5 ? 15cc 	BladderWall_5mm	V19.5	<=	15	cc									6 fraction																n	1
+BladderWall_5mm_V18.5 ? 15cc 	BladderWall_5mm	V18.5	<=	15	cc								5 fraction																	n	1
+BladderWall_5mm_V18 ? 15cc 	BladderWall_5mm	V18	<=	15	cc							4 fraction																		n	1
+BladderWall_5mm_V17 ? 15cc 	BladderWall_5mm	V17	<=	15	cc						3 fraction																	Oligomets 3 fractions		n	1
+BladderWall_5mm_V12 ? 15cc 	BladderWall_5mm	V12	<=	15	cc			NRG BR-001																			Oligomets 1 fraction			n	1
+BladderWall_5mm_V11 ? 15cc 	BladderWall_5mm	V11	<=	15	cc					Single fraction																				n	1
+BladderWall_5mm_Max Pt Dose ? 1850cGy 	BladderWall_5mm	Max Pt Dose	<=	1850	cGy					Single fraction																				n	3
+BladderWall_5mm_Max Pt Dose ? 2500cGy 	BladderWall_5mm	Max Pt Dose	<=	2500	cGy			NRG BR-001																			Oligomets 1 fraction			n	3
+BladderWall_5mm_Max Pt Dose ? 2800cGy 	BladderWall_5mm	Max Pt Dose	<=	2800	cGy						3 fraction																			n	3
+BladderWall_5mm_Max Pt Dose ? 3300cGy 	BladderWall_5mm	Max Pt Dose	<=	3300	cGy							4 fraction																Oligomets 3 fractions		n	3
+BladderWall_5mm_Max Pt Dose ? 3800cGy 	BladderWall_5mm	Max Pt Dose	<=	3800	cGy								5 fraction																Oligomets 5 fractions	n	3
+BladderWall_5mm_Max Pt Dose ? 4100cGy 	BladderWall_5mm	Max Pt Dose	<=	4100	cGy									6 fraction																n	3
+BladderWall_5mm_Max Pt Dose ? 4600cGy 	BladderWall_5mm	Max Pt Dose	<=	4600	cGy										8 fraction															n	3
+BladderWall_5mm_Max Pt Dose ? 5000cGy 	BladderWall_5mm	Max Pt Dose	<=	5000	cGy											10 fraction														n	3
+Body-PTV_D1cc ? 5750cGy 	Body-PTV	D1cc	<=	5750	cGy	5500			"<115% of Rx dose, <110% goal"								Liver													n	
+Bowel_Loops_V28.5 ? 20cc 	Bowel_Loops	V28.5	<=	20	cc			NRG BR-001																					Oligomets 5 fractions	n	1
+Bowel_Loops_V24 ? 20cc 	Bowel_Loops	V24	<=	20	cc			NRG BR-001																				Oligomets 3 fractions		n	1
+Bowel_Loops_V18 ? 20cc 	Bowel_Loops	V18	<=	20	cc			NRG BR-001																			Oligomets 1 fraction			n	1
+Bowel_Loops_Max Pt Dose ? 2900cGy 	Bowel_Loops	Max Pt Dose	<=	2900	cGy			NRG BR-001																			Oligomets 1 fraction			n	3
+Bowel_Loops_Max Pt Dose ? 3450cGy 	Bowel_Loops	Max Pt Dose	<=	3450	cGy			NRG BR-001																				Oligomets 3 fractions		n	3
+Bowel_Loops_Max Pt Dose ? 4000cGy 	Bowel_Loops	Max Pt Dose	<=	4000	cGy			NRG BR-001																					Oligomets 5 fractions	n	3
+BrachPlexus_L_V35 ? 3cc 	BrachPlexus_L	V35	<=	3	cc											10 fraction														n	1
+BrachPlexus_L_V32 ? 3cc 	BrachPlexus_L	V32	<=	3	cc										8 fraction															n	1
+BrachPlexus_L_V30 ? 3cc 	BrachPlexus_L	V30	<=	3	cc																								Oligomets 5 fractions	n	1
+BrachPlexus_L_V29 ? 3cc 	BrachPlexus_L	V29	<=	3	cc									6 fraction																n	1
+BrachPlexus_L_V27 ? 3cc 	BrachPlexus_L	V27	<=	3	cc								5 fraction						Lung 5 fraction											n	1
+BrachPlexus_L_V24 ? 3cc 	BrachPlexus_L	V24	<=	3	cc							4 fraction						Lung 4 fraction												n	1
+BrachPlexus_L_V22 ? 3cc 	BrachPlexus_L	V22	<=	3	cc																							Oligomets 3 fractions		n	1
+BrachPlexus_L_V20 ? 3cc 	BrachPlexus_L	V20	<=	3	cc						3 fraction																			n	1
+BrachPlexus_L_V14 ? 3cc 	BrachPlexus_L	V14	<=	3	cc					Single fraction																	Oligomets 1 fraction			n	1
+BrachPlexus_L_Max Pt Dose ? 1750cGy 	BrachPlexus_L	Max Pt Dose	<=	1750	cGy					Single fraction																	Oligomets 1 fraction			n	3
+BrachPlexus_L_Max Pt Dose ? 2400cGy 	BrachPlexus_L	Max Pt Dose	<=	2400	cGy						3 fraction																			n	3
+BrachPlexus_L_Max Pt Dose ? 2600cGy 	BrachPlexus_L	Max Pt Dose	<=	2600	cGy																							Oligomets 3 fractions		n	3
+BrachPlexus_L_Max Pt Dose ? 2750cGy 	BrachPlexus_L	Max Pt Dose	<=	2750	cGy							4 fraction						Lung 4 fraction												n	3
+BrachPlexus_L_Max Pt Dose ? 3050cGy 	BrachPlexus_L	Max Pt Dose	<=	3050	cGy								5 fraction						Lung 5 fraction											n	3
+BrachPlexus_L_Max Pt Dose ? 3200cGy 	BrachPlexus_L	Max Pt Dose	<=	3200	cGy																								Oligomets 5 fractions	n	3
+BrachPlexus_L_Max Pt Dose ? 3300cGy 	BrachPlexus_L	Max Pt Dose	<=	3300	cGy									6 fraction																n	3
+BrachPlexus_L_Max Pt Dose ? 3600cGy 	BrachPlexus_L	Max Pt Dose	<=	3600	cGy															Lung 8 fraction										n	3
+BrachPlexus_L_Max Pt Dose ? 3650cGy 	BrachPlexus_L	Max Pt Dose	<=	3650	cGy										8 fraction															n	3
+BrachPlexus_L_Max Pt Dose ? 4000cGy 	BrachPlexus_L	Max Pt Dose	<=	4000	cGy											10 fraction														n	3
+BrachPlexus_R_V35 ? 3cc 	BrachPlexus_R	V35	<=	3	cc											10 fraction														n	1
+BrachPlexus_R_V32 ? 3cc 	BrachPlexus_R	V32	<=	3	cc										8 fraction															n	1
+BrachPlexus_R_V30 ? 3cc 	BrachPlexus_R	V30	<=	3	cc																								Oligomets 5 fractions	n	1
+BrachPlexus_R_V29 ? 3cc 	BrachPlexus_R	V29	<=	3	cc									6 fraction																n	1
+BrachPlexus_R_V27 ? 3cc 	BrachPlexus_R	V27	<=	3	cc								5 fraction						Lung 5 fraction											n	1
+BrachPlexus_R_V24 ? 3cc 	BrachPlexus_R	V24	<=	3	cc							4 fraction						Lung 4 fraction												n	1
+BrachPlexus_R_V22 ? 3cc 	BrachPlexus_R	V22	<=	3	cc																							Oligomets 3 fractions		n	1
+BrachPlexus_R_V20 ? 3cc 	BrachPlexus_R	V20	<=	3	cc						3 fraction																			n	1
+BrachPlexus_R_V14 ? 3cc 	BrachPlexus_R	V14	<=	3	cc					Single fraction																	Oligomets 1 fraction			n	1
+BrachPlexus_R_Max Pt Dose ? 1750cGy 	BrachPlexus_R	Max Pt Dose	<=	1750	cGy					Single fraction																	Oligomets 1 fraction			n	3
+BrachPlexus_R_Max Pt Dose ? 2400cGy 	BrachPlexus_R	Max Pt Dose	<=	2400	cGy						3 fraction																			n	3
+BrachPlexus_R_Max Pt Dose ? 2600cGy 	BrachPlexus_R	Max Pt Dose	<=	2600	cGy																							Oligomets 3 fractions		n	3
+BrachPlexus_R_Max Pt Dose ? 2750cGy 	BrachPlexus_R	Max Pt Dose	<=	2750	cGy							4 fraction						Lung 4 fraction												n	3
+BrachPlexus_R_Max Pt Dose ? 3050cGy 	BrachPlexus_R	Max Pt Dose	<=	3050	cGy								5 fraction						Lung 5 fraction											n	3
+BrachPlexus_R_Max Pt Dose ? 3200cGy 	BrachPlexus_R	Max Pt Dose	<=	3200	cGy																								Oligomets 5 fractions	n	3
+BrachPlexus_R_Max Pt Dose ? 3300cGy 	BrachPlexus_R	Max Pt Dose	<=	3300	cGy									6 fraction																n	3
+BrachPlexus_R_Max Pt Dose ? 3600cGy 	BrachPlexus_R	Max Pt Dose	<=	3600	cGy															Lung 8 fraction										n	3
+BrachPlexus_R_Max Pt Dose ? 3650cGy 	BrachPlexus_R	Max Pt Dose	<=	3650	cGy										8 fraction															n	3
+BrachPlexus_R_Max Pt Dose ? 4000cGy 	BrachPlexus_R	Max Pt Dose	<=	4000	cGy											10 fraction														n	3
+Brain_V12  [record] 	Brain	V12 	[record]		cc																	SRS Cranial 1 fraction			SRS Cranial AVM	SRS Cranial Trigeminal Neuralgia				n	
+Brainstem_V23 ? 0.5cc 	Brainstem	V23	<=	0.5	cc																			SRS Cranial 5 fraction						n	1
+Brainstem_V18 ? 0.5cc 	Brainstem	V18	<=	0.5	cc																		SRS Cranial 3 fraction							n	1
+Brainstem_V10 ? 0.5cc 	Brainstem	V10	<=	0.5	cc					Single fraction												SRS Cranial 1 fraction			SRS Cranial AVM	SRS Cranial Trigeminal Neuralgia				n	1
+Brainstem_Max Pt Dose [voxel] ? 4250cGy 	Brainstem	Max Pt Dose [voxel]	<=	4250	cGy				"True point, single-voxel max"																	SRS Cranial Trigeminal Neuralgia				n	3
+Brainstem_Max Pt Dose ? 1500cGy 	Brainstem	Max Pt Dose	<=	1500	cGy					Single fraction												SRS Cranial 1 fraction			SRS Cranial AVM	SRS Cranial Trigeminal Neuralgia				n	3
+Brainstem_Max Pt Dose ? 2300cGy 	Brainstem	Max Pt Dose	<=	2300	cGy																		SRS Cranial 3 fraction							n	3
+Brainstem_Max Pt Dose ? 3100cGy 	Brainstem	Max Pt Dose	<=	3100	cGy																			SRS Cranial 5 fraction						n	3
+CaudaEquina_V39 ? 5cc 	CaudaEquina	V39	<=	5	cc											10 fraction														n	1
+CaudaEquina_V36 ? 5cc 	CaudaEquina	V36	<=	5	cc										8 fraction															n	1
+CaudaEquina_V32 ? 5cc 	CaudaEquina	V32	<=	5	cc									6 fraction																n	1
+CaudaEquina_V30 ? 5cc 	CaudaEquina	V30	<=	5	cc								5 fraction																Oligomets 5 fractions	n	1
+CaudaEquina_V26 ? 5cc 	CaudaEquina	V26	<=	5	cc							4 fraction																		n	1
+CaudaEquina_V22 ? 5cc 	CaudaEquina	V22	<=	5	cc						3 fraction																	Oligomets 3 fractions		n	1
+CaudaEquina_V14 ? 5cc 	CaudaEquina	V14	<=	5	cc					Single fraction																	Oligomets 1 fraction			n	1
+CaudaEquina_Max Pt Dose ? 1600cGy 	CaudaEquina	Max Pt Dose	<=	1600	cGy					Single fraction																	Oligomets 1 fraction			n	3
+CaudaEquina_Max Pt Dose ? 2400cGy 	CaudaEquina	Max Pt Dose	<=	2400	cGy						3 fraction																			n	3
+CaudaEquina_Max Pt Dose ? 2550cGy 	CaudaEquina	Max Pt Dose	<=	2550	cGy																							Oligomets 3 fractions		n	3
+CaudaEquina_Max Pt Dose ? 2800cGy 	CaudaEquina	Max Pt Dose	<=	2800	cGy							4 fraction																		n	3
+CaudaEquina_Max Pt Dose ? 3200cGy 	CaudaEquina	Max Pt Dose	<=	3200	cGy								5 fraction																Oligomets 5 fractions	n	3
+CaudaEquina_Max Pt Dose ? 3450cGy 	CaudaEquina	Max Pt Dose	<=	3450	cGy									6 fraction																n	3
+CaudaEquina_Max Pt Dose ? 3800cGy 	CaudaEquina	Max Pt Dose	<=	3800	cGy										8 fraction															n	3
+CaudaEquina_Max Pt Dose ? 4200cGy 	CaudaEquina	Max Pt Dose	<=	4200	cGy											10 fraction														n	3
+ChestWall_D0.5cc < 5000cGy [Goal]	ChestWall	D0.5cc	<	5000	cGy		[Goal]	LCID 2014-026 SBRT TACE	Goal [not constraint]								Liver													n	
+Chiasm_Nerve_V23 ? 0.2cc 	Chiasm_Nerve	V23	<=	0.2	cc																			SRS Cranial 5 fraction						n	1
+Chiasm_Nerve_V15 ? 0.2cc 	Chiasm_Nerve	V15	<=	0.2	cc																		SRS Cranial 3 fraction							n	1
+Chiasm_Nerve_V8 ? 0.2cc 	Chiasm_Nerve	V8	<=	0.2	cc					Single fraction												SRS Cranial 1 fraction			SRS Cranial AVM	SRS Cranial Trigeminal Neuralgia				n	1.1
+Chiasm_Nerve_Max Pt Dose ? 1000cGy 	Chiasm_Nerve	Max Pt Dose	<=	1000	cGy					Single fraction												SRS Cranial 1 fraction			SRS Cranial AVM	SRS Cranial Trigeminal Neuralgia				n	3
+Chiasm_Nerve_Max Pt Dose ? 1750cGy 	Chiasm_Nerve	Max Pt Dose	<=	1750	cGy																		SRS Cranial 3 fraction							n	3
+Chiasm_Nerve_Max Pt Dose ? 2500cGy 	Chiasm_Nerve	Max Pt Dose	<=	2500	cGy																			SRS Cranial 5 fraction						n	3
+Cochlea_L_Max Pt Dose ? 900cGy 	Cochlea_L	Max Pt Dose	<=	900	cGy																	SRS Cranial 1 fraction			SRS Cranial AVM	SRS Cranial Trigeminal Neuralgia				n	
+Cochlea_L_Max Pt Dose ? 1700cGy 	Cochlea_L	Max Pt Dose	<=	1700	cGy																		SRS Cranial 3 fraction							n	
+Cochlea_L_Max Pt Dose ? 2500cGy 	Cochlea_L	Max Pt Dose	<=	2500	cGy																			SRS Cranial 5 fraction						n	
+Cochlea_R_Max Pt Dose ? 900cGy 	Cochlea_R	Max Pt Dose	<=	900	cGy																	SRS Cranial 1 fraction			SRS Cranial AVM	SRS Cranial Trigeminal Neuralgia				n	
+Cochlea_R_Max Pt Dose ? 1700cGy 	Cochlea_R	Max Pt Dose	<=	1700	cGy																		SRS Cranial 3 fraction							n	
+Cochlea_R_Max Pt Dose ? 2500cGy 	Cochlea_R	Max Pt Dose	<=	2500	cGy																			SRS Cranial 5 fraction						n	
+CommonBileDuct_D0.5cc < 5000cGy [Goal]	CommonBileDuct	D0.5cc	<	5000	cGy		[Goal]	LCID 2014-026 SBRT TACE	Goal [not constraint]								Liver													n	
+Duodenum_V30 ? 0.5cc 	Duodenum	V30	<=	0.5	cc			NRG BR-001																					Oligomets 5 fractions	n	1
+Duodenum_V22.5 ? 5cc 	Duodenum	V22.5	<=	5	cc											10 fraction														n	1
+Duodenum_V21 ? 5cc 	Duodenum	V21	<=	5	cc										8 fraction															n	1
+Duodenum_V19 ? 5cc 	Duodenum	V19	<=	5	cc									6 fraction																n	1
+Duodenum_V18 ? 5cc 	Duodenum	V18	<=	5	cc								5 fraction																Oligomets 5 fractions	n	1
+Duodenum_V17.5 ? 5cc 	Duodenum	V17.5	<=	5	cc							4 fraction																		n	1
+Duodenum_V16.5 ? 5cc 	Duodenum	V16.5	<=	5	cc						3 fraction																			n	1
+Duodenum_V15 ? 10cc 	Duodenum	V15	<=	10	cc											10 fraction												Oligomets 3 fractions		n	1
+Duodenum_V14.5 ? 10cc 	Duodenum	V14.5	<=	10	cc										8 fraction															n	1
+Duodenum_V13 ? 10cc 	Duodenum	V13	<=	10	cc									6 fraction																n	1
+Duodenum_V12.5 ? 10cc 	Duodenum	V12.5	<=	10	cc								5 fraction																	n	1
+Duodenum_V12 ? 10cc 	Duodenum	V12	<=	10	cc			NRG BR-001				4 fraction																		n	1
+Duodenum_V11 ? 5cc 	Duodenum	V11	<=	5	cc					Single fraction																	Oligomets 1 fraction			n	1
+Duodenum_V11 ? 10cc 	Duodenum	V11	<=	10	cc						3 fraction																			n	1
+Duodenum_V9 ? 10cc 	Duodenum	V9	<=	10	cc					Single fraction																	Oligomets 1 fraction			n	1.1
+Duodenum_D9cc < 1500cGy 	Duodenum	D9cc	<	1500	cGy																Pancreas									n	2
+Duodenum_D5cc < 2500cGy [Goal]	Duodenum	D5cc	<	2500	cGy		[Goal]	LCID 2014-026 SBRT TACE	Goal [not constraint]								Liver													n	2
+Duodenum_D3cc < 2000cGy 	Duodenum	D3cc	<	2000	cGy																Pancreas									n	2
+Duodenum_D1cc < 3300cGy 	Duodenum	D1cc	<	3300	cGy																Pancreas									n	2
+Duodenum_D0.5cc ? 3000cGy 	Duodenum	D0.5cc	<=	3000	cGy			LCID 2014-026 SBRT TACE									Liver													n	2
+Duodenum_Max Pt Dose ? 1250cGy 	Duodenum	Max Pt Dose	<=	1250	cGy					Single fraction																				n	3
+Duodenum_Max Pt Dose ? 1700cGy 	Duodenum	Max Pt Dose	<=	1700	cGy																						Oligomets 1 fraction			n	3
+Duodenum_Max Pt Dose ? 2200cGy 	Duodenum	Max Pt Dose	<=	2200	cGy						3 fraction																			n	3
+Duodenum_Max Pt Dose ? 2400cGy 	Duodenum	Max Pt Dose	<=	2400	cGy			NRG BR-001																				Oligomets 3 fractions		n	3
+Duodenum_Max Pt Dose ? 2700cGy 	Duodenum	Max Pt Dose	<=	2700	cGy							4 fraction																		n	3
+Duodenum_Max Pt Dose ? 3200cGy 	Duodenum	Max Pt Dose	<=	3200	cGy								5 fraction																	n	3
+Duodenum_Max Pt Dose ? 3450cGy 	Duodenum	Max Pt Dose	<=	3450	cGy									6 fraction																n	3
+Duodenum_Max Pt Dose ? 3850cGy 	Duodenum	Max Pt Dose	<=	3850	cGy										8 fraction															n	3
+Duodenum_Max Pt Dose ? 4200cGy 	Duodenum	Max Pt Dose	<=	4200	cGy											10 fraction														n	3
+Esophagus_V27.5 ? 5cc 	Esophagus	V27.5	<=	5	cc			NRG BR-001																					Oligomets 5 fractions	n	1
+Esophagus_V24.5 ? 5cc 	Esophagus	V24.5	<=	5	cc											10 fraction														n	1
+Esophagus_V23 ? 5cc 	Esophagus	V23	<=	5	cc										8 fraction															n	1
+Esophagus_V21 ? 5cc 	Esophagus	V21	<=	5	cc									6 fraction																n	1
+Esophagus_V19.5 ? 5cc 	Esophagus	V19.5	<=	5	cc								5 fraction						Lung 5 fraction											n	1
+Esophagus_V19 ? 5cc 	Esophagus	V19	<=	5	cc							4 fraction						Lung 4 fraction												n	1
+Esophagus_V18 ? 5cc 	Esophagus	V18	<=	5	cc						3 fraction																	Oligomets 3 fractions		n	1
+Esophagus_V12 ? 5cc 	Esophagus	V12	<=	5	cc					Single fraction																	Oligomets 1 fraction			n	1
+Esophagus_D0.5cc ? 3200cGy 	Esophagus	D0.5cc	<=	3200	cGy			LCID 2014-026 SBRT TACE									Liver													n	2
+Esophagus_Max Pt Dose ? 1550cGy 	Esophagus	Max Pt Dose	<=	1550	cGy	1540				Single fraction																	Oligomets 1 fraction			n	3
+Esophagus_Max Pt Dose ? 2500cGy 	Esophagus	Max Pt Dose	<=	2500	cGy						3 fraction																			n	3
+Esophagus_Max Pt Dose ? 2700cGy 	Esophagus	Max Pt Dose	<=	2700	cGy			NRG BR-001																				Oligomets 3 fractions		n	3
+Esophagus_Max Pt Dose ? 3000cGy 	Esophagus	Max Pt Dose	<=	3000	cGy							4 fraction						Lung 4 fraction												n	3
+Esophagus_Max Pt Dose ? 3500cGy 	Esophagus	Max Pt Dose	<=	3500	cGy								5 fraction						Lung 5 fraction										Oligomets 5 fractions	n	3
+Esophagus_Max Pt Dose ? 3750cGy 	Esophagus	Max Pt Dose	<=	3750	cGy									6 fraction																n	3
+Esophagus_Max Pt Dose ? 4000cGy 	Esophagus	Max Pt Dose	<=	4000	cGy															Lung 8 fraction										n	3
+Esophagus_Max Pt Dose ? 4250cGy 	Esophagus	Max Pt Dose	<=	4250	cGy										8 fraction															n	3
+Esophagus_Max Pt Dose ? 4600cGy 	Esophagus	Max Pt Dose	<=	4600	cGy											10 fraction														n	3
+Eye_L_Max Pt Dose [record] 	Eye_L	Max Pt Dose	[record]		cGy				max dose to eye/retina													SRS Cranial 1 fraction	SRS Cranial 3 fraction	SRS Cranial 5 fraction	SRS Cranial AVM					n	
+Eye_R_Max Pt Dose [record] 	Eye_R	Max Pt Dose	[record]		cGy				max dose to eye/retina													SRS Cranial 1 fraction	SRS Cranial 3 fraction	SRS Cranial 5 fraction	SRS Cranial AVM					n	
+FemHeadNeck_L_V39 ? 10cc 	FemHeadNeck_L	V39	<=	10	cc											10 fraction														n	
+FemHeadNeck_L_V36 ? 10cc 	FemHeadNeck_L	V36	<=	10	cc										8 fraction															n	
+FemHeadNeck_L_V32 ? 10cc 	FemHeadNeck_L	V32	<=	10	cc									6 fraction																n	
+FemHeadNeck_L_V30 ? 10cc 	FemHeadNeck_L	V30	<=	10	cc								5 fraction																Oligomets 5 fractions	n	
+FemHeadNeck_L_V26 ? 10cc 	FemHeadNeck_L	V26	<=	10	cc							4 fraction																		n	
+FemHeadNeck_L_V24 ? 10cc 	FemHeadNeck_L	V24	<=	10	cc			NRG BR-001																				Oligomets 3 fractions		n	
+FemHeadNeck_L_V22 ? 10cc 	FemHeadNeck_L	V22	<=	10	cc						3 fraction																			n	
+FemHeadNeck_L_V15 ? 10cc 	FemHeadNeck_L	V15	<=	10	cc			NRG BR-001																			Oligomets 1 fraction			n	
+FemHeadNeck_L_V14 ? 10cc 	FemHeadNeck_L	V14	<=	10	cc					Single fraction																				n	
+FemHeadNeck_R_V39 ? 10cc 	FemHeadNeck_R	V39	<=	10	cc											10 fraction														n	
+FemHeadNeck_R_V36 ? 10cc 	FemHeadNeck_R	V36	<=	10	cc										8 fraction															n	
+FemHeadNeck_R_V32 ? 10cc 	FemHeadNeck_R	V32	<=	10	cc									6 fraction																n	
+FemHeadNeck_R_V30 ? 10cc 	FemHeadNeck_R	V30	<=	10	cc								5 fraction																Oligomets 5 fractions	n	
+FemHeadNeck_R_V26 ? 10cc 	FemHeadNeck_R	V26	<=	10	cc							4 fraction																		n	
+FemHeadNeck_R_V24 ? 10cc 	FemHeadNeck_R	V24	<=	10	cc			NRG BR-001																				Oligomets 3 fractions		n	
+FemHeadNeck_R_V22 ? 10cc 	FemHeadNeck_R	V22	<=	10	cc						3 fraction																			n	
+FemHeadNeck_R_V15 ? 10cc 	FemHeadNeck_R	V15	<=	10	cc			NRG BR-001																			Oligomets 1 fraction			n	
+FemHeadNeck_R_V14 ? 10cc 	FemHeadNeck_R	V14	<=	10	cc					Single fraction																				n	
+GallBladder_D0.5cc < 5500cGy [Goal]	GallBladder	D0.5cc	<	5500	cGy		[Goal]	LCID 2014-026 SBRT TACE	Goal [not constraint]								Liver													n	
+GreatVessels_V63 ? 10cc 	GreatVessels	V63	<=	10	cc											10 fraction														n	1
+GreatVessels_V57.5 ? 10cc 	GreatVessels	V57.5	<=	10	cc										8 fraction															n	1
+GreatVessels_V51 ? 10cc 	GreatVessels	V51	<=	10	cc									6 fraction																n	1
+GreatVessels_V47 ? 10cc 	GreatVessels	V47	<=	10	cc								5 fraction						Lung 5 fraction										Oligomets 5 fractions	n	1
+GreatVessels_V43.5 ? 10cc 	GreatVessels	V43.5	<=	10	cc							4 fraction						Lung 4 fraction												n	1
+GreatVessels_V39 ? 10cc 	GreatVessels	V39	<=	10	cc						3 fraction																	Oligomets 3 fractions		n	1
+GreatVessels_V31 ? 10cc 	GreatVessels	V31	<=	10	cc					Single fraction																	Oligomets 1 fraction			n	1
+GreatVessels_D0.5cc < 6000cGy [Goal]	GreatVessels	D0.5cc	<	6000	cGy		[Goal]	LCID 2014-026 SBRT TACE	Goal [not constraint]								Liver													n	2
+GreatVessels_Max Pt Dose ? 3700cGy 	GreatVessels	Max Pt Dose	<=	3700	cGy					Single fraction																	Oligomets 1 fraction			n	3
+GreatVessels_Max Pt Dose ? 4500cGy 	GreatVessels	Max Pt Dose	<=	4500	cGy						3 fraction																	Oligomets 3 fractions		n	3
+GreatVessels_Max Pt Dose ? 4950cGy 	GreatVessels	Max Pt Dose	<=	4950	cGy							4 fraction						Lung 4 fraction												n	3
+GreatVessels_Max Pt Dose ? 5300cGy 	GreatVessels	Max Pt Dose	<=	5300	cGy								5 fraction						Lung 5 fraction										Oligomets 5 fractions	n	3
+GreatVessels_Max Pt Dose ? 5750cGy 	GreatVessels	Max Pt Dose	<=	5750	cGy									6 fraction																n	3
+GreatVessels_Max Pt Dose ? 6500cGy 	GreatVessels	Max Pt Dose	<=	6500	cGy										8 fraction															n	3
+GreatVessels_Max Pt Dose ? 7100cGy 	GreatVessels	Max Pt Dose	<=	7100	cGy											10 fraction														n	3
+GreatVessels_Max Pt Dose [record] 	GreatVessels	Max Pt Dose	[record]		cGy															Lung 8 fraction										n	3
+Heart_Peric_V42 ? 15cc 	Heart_Peric	V42	<=	15	cc											10 fraction														n	1
+Heart_Peric_V38.5 ? 15cc 	Heart_Peric	V38.5	<=	15	cc										8 fraction															n	1
+Heart_Peric_V34.5 ? 15cc 	Heart_Peric	V34.5	<=	15	cc									6 fraction																n	1
+Heart_Peric_V32 ? 15cc 	Heart_Peric	V32	<=	15	cc			NRG BR-001					5 fraction						Lung 5 fraction										Oligomets 5 fractions	n	1
+Heart_Peric_V28 ? 15cc 	Heart_Peric	V28	<=	15	cc							4 fraction						Lung 4 fraction												n	1
+Heart_Peric_V24 ? 15cc 	Heart_Peric	V24	<=	15	cc			NRG BR-001			3 fraction																	Oligomets 3 fractions		n	1
+Heart_Peric_V16 ? 15cc 	Heart_Peric	V16	<=	15	cc			NRG BR-001		Single fraction																	Oligomets 1 fraction			n	1
+Heart_Peric_D30cc < 3000cGy [Goal]	Heart_Peric	D30cc	<	3000	cGy		[Goal]	LCID 2014-026 SBRT TACE	Goal [not constraint]								Liver													n	2
+Heart_Peric_Max Pt Dose ? 2200cGy 	Heart_Peric	Max Pt Dose	<=	2200	cGy					Single fraction																	Oligomets 1 fraction			n	3
+Heart_Peric_Max Pt Dose ? 3000cGy 	Heart_Peric	Max Pt Dose	<=	3000	cGy						3 fraction																	Oligomets 3 fractions		n	3
+Heart_Peric_Max Pt Dose ? 3400cGy 	Heart_Peric	Max Pt Dose	<=	3400	cGy							4 fraction						Lung 4 fraction												n	3
+Heart_Peric_Max Pt Dose ? 3800cGy 	Heart_Peric	Max Pt Dose	<=	3800	cGy								5 fraction						Lung 5 fraction										Oligomets 5 fractions	n	3
+Heart_Peric_Max Pt Dose ? 4100cGy 	Heart_Peric	Max Pt Dose	<=	4100	cGy									6 fraction																n	3
+Heart_Peric_Max Pt Dose ? 4400cGy 	Heart_Peric	Max Pt Dose	<=	4400	cGy															Lung 8 fraction										n	3
+Heart_Peric_Max Pt Dose ? 4600cGy 	Heart_Peric	Max Pt Dose	<=	4600	cGy										8 fraction															n	3
+Heart_Peric_Max Pt Dose ? 5000cGy 	Heart_Peric	Max Pt Dose	<=	5000	cGy											10 fraction														n	3
+Kidney_single_V10 < 10% 	Kidney_single	V10	<	10	%			LCID 2014-026 SBRT TACE	Only if one kidney								Liver													n	
+Kidneys_Bilat_Mean dose < 1000cGy 	Kidneys_Bilat	Mean dose	<	1000	cGy			LCID 2014-026 SBRT TACE									Liver													n	
+Kidneys_Bilat_D75% < 1200cGy 	Kidneys_Bilat	D75%	<	1200	cGy																Pancreas									n	
+Lens_L_Max Pt Dose [record] 	Lens_L	Max Pt Dose	[record]		cGy																	SRS Cranial 1 fraction	SRS Cranial 3 fraction	SRS Cranial 5 fraction	SRS Cranial AVM					n	
+Lens_R_Max Pt Dose [record] 	Lens_R	Max Pt Dose	[record]		cGy																	SRS Cranial 1 fraction	SRS Cranial 3 fraction	SRS Cranial 5 fraction	SRS Cranial AVM					n	
+LgBowel_Loops_V32 ? 20cc 	LgBowel_Loops	V32	<=	20	cc											10 fraction														n	1
+LgBowel_Loops_V30 ? 20cc 	LgBowel_Loops	V30	<=	20	cc										8 fraction															n	1
+LgBowel_Loops_V27 ? 20cc 	LgBowel_Loops	V27	<=	20	cc									6 fraction																n	1
+LgBowel_Loops_V25 ? 20cc 	LgBowel_Loops	V25	<=	20	cc							4 fraction	5 fraction																	n	1
+LgBowel_Loops_V24 ? 20cc 	LgBowel_Loops	V24	<=	20	cc						3 fraction																			n	1
+LgBowel_Loops_V14 ? 20cc 	LgBowel_Loops	V14	<=	20	cc					Single fraction																				n	1
+LgBowel_Loops_D0.5cc ? 3200cGy 	LgBowel_Loops	D0.5cc	<=	3200	cGy			LCID 2014-026 SBRT TACE									Liver													n	2
+LgBowel_Loops_Max Pt Dose ? 1850cGy 	LgBowel_Loops	Max Pt Dose	<=	1850	cGy					Single fraction																				n	3
+LgBowel_Loops_Max Pt Dose ? 2800cGy 	LgBowel_Loops	Max Pt Dose	<=	2800	cGy						3 fraction																			n	3
+LgBowel_Loops_Max Pt Dose ? 3300cGy 	LgBowel_Loops	Max Pt Dose	<=	3300	cGy							4 fraction																		n	3
+LgBowel_Loops_Max Pt Dose ? 3800cGy 	LgBowel_Loops	Max Pt Dose	<=	3800	cGy								5 fraction																	n	3
+LgBowel_Loops_Max Pt Dose ? 4100cGy 	LgBowel_Loops	Max Pt Dose	<=	4100	cGy									6 fraction																n	3
+LgBowel_Loops_Max Pt Dose ? 4600cGy 	LgBowel_Loops	Max Pt Dose	<=	4600	cGy										8 fraction															n	3
+LgBowel_Loops_Max Pt Dose ? 5000cGy 	LgBowel_Loops	Max Pt Dose	<=	5000	cGy											10 fraction														n	3
+Liver_D50% < 1200cGy 	Liver	D50%	<	1200	cGy																Pancreas									n	2
+Liver_Veff < 25% [Optional]	Liver	Veff	<	25	%		[Optional]	LCID 2014-026 SBRT TACE	Optional - see Liver protocol								Liver													n	4
+Liver_NTCP ? 15% [Optional]	Liver	NTCP	<=	15	%	10	[Optional]	LCID 2014-026 SBRT TACE	Optional								Liver													n	4
+Liver-GTV_V10 ? 70% [Goal]	Liver-GTV	V10	<=	70	%		[Goal]	LCID 2014-026 SBRT TACE	Goal [not constraint]								Liver													n	1
+Liver-GTV_Mean Dose ? 1300cGy 	Liver-GTV	Mean Dose	<=	1300	cGy			LCID 2014-026 SBRT TACE	Follow Liver protocol for higher mean dose								Liver													n	3
+LiverHilum_D0.5cc ? 5000cGy [Optional]	LiverHilum	D0.5cc	<=	5000	cGy		[Optional]	LCID 2014-026 SBRT TACE	Optional								Liver													n	
+Lungs-GTV_V20 ? 15% 	Lungs-GTV	V20	<=	15	%																							Oligomets 3 fractions		n	1
+Lungs-GTV_V13.5 ? 37% 	Lungs-GTV	V13.5	<=	37	%																								Oligomets 5 fractions	n	1
+Lungs-GTV_V11 ? 37% 	Lungs-GTV	V11	<=	37	%																							Oligomets 3 fractions		n	1
+Lungs-GTV_V8 ? 37% 	Lungs-GTV	V8	<=	37	%																						Oligomets 1 fraction			n	1.1
+PenileBulb_V30 ? 3cc 	PenileBulb	V30	<=	3	cc																								Oligomets 5 fractions	n	1
+PenileBulb_V25 ? 3cc 	PenileBulb	V25	<=	3	cc																							Oligomets 3 fractions		n	1
+PenileBulb_V16 ? 3cc 	PenileBulb	V16	<=	3	cc																						Oligomets 1 fraction			n	1
+Rectum_V50 ? 3.5cc 	Rectum	V50	<=	3.5	cc			NRG BR-001																					Oligomets 5 fractions	n	1
+Rectum_V45 ? 3.5cc 	Rectum	V45	<=	3.5	cc			NRG BR-001																				Oligomets 3 fractions		n	1
+Rectum_V39 ? 3.5cc 	Rectum	V39	<=	3.5	cc			NRG BR-001																			Oligomets 1 fraction			n	1
+Rectum_V32.5 ? 20cc 	Rectum	V32.5	<=	20	cc			NRG BR-001																					Oligomets 5 fractions	n	1
+Rectum_V32 ? 20cc 	Rectum	V32	<=	20	cc											10 fraction														n	1
+Rectum_V30 ? 20cc 	Rectum	V30	<=	20	cc										8 fraction															n	1
+Rectum_V27.5 ? 20cc 	Rectum	V27.5	<=	20	cc			NRG BR-001																				Oligomets 3 fractions		n	1
+Rectum_V27 ? 20cc 	Rectum	V27	<=	20	cc									6 fraction																n	1
+Rectum_V25 ? 20cc 	Rectum	V25	<=	20	cc							4 fraction	5 fraction																	n	1
+Rectum_V24 ? 20cc 	Rectum	V24	<=	20	cc						3 fraction																			n	1
+Rectum_V22 ? 20cc 	Rectum	V22	<=	20	cc			NRG BR-001																			Oligomets 1 fraction			n	1
+Rectum_V14 ? 20cc 	Rectum	V14	<=	20	cc					Single fraction																				n	1
+Rectum_Max Pt Dose ? 1850cGy 	Rectum	Max Pt Dose	<=	1850	cGy					Single fraction																				n	3
+Rectum_Max Pt Dose ? 2800cGy 	Rectum	Max Pt Dose	<=	2800	cGy						3 fraction																			n	3
+Rectum_Max Pt Dose ? 3300cGy 	Rectum	Max Pt Dose	<=	3300	cGy							4 fraction																		n	3
+Rectum_Max Pt Dose ? 3800cGy 	Rectum	Max Pt Dose	<=	3800	cGy								5 fraction																	n	3
+Rectum_Max Pt Dose ? 4100cGy 	Rectum	Max Pt Dose	<=	4100	cGy									6 fraction																n	3
+Rectum_Max Pt Dose ? 4400cGy 	Rectum	Max Pt Dose	<=	4400	cGy			NRG BR-001																			Oligomets 1 fraction			n	3
+Rectum_Max Pt Dose ? 4600cGy 	Rectum	Max Pt Dose	<=	4600	cGy										8 fraction															n	3
+Rectum_Max Pt Dose ? 4950cGy 	Rectum	Max Pt Dose	<=	4950	cGy			NRG BR-001																				Oligomets 3 fractions		n	3
+Rectum_Max Pt Dose ? 5000cGy 	Rectum	Max Pt Dose	<=	5000	cGy											10 fraction														n	3
+Rectum_Max Pt Dose ? 5500cGy 	Rectum	Max Pt Dose	<=	5500	cGy			NRG BR-001																					Oligomets 5 fractions	n	3
+RenalHilum_V23 ? 15cc 	RenalHilum	V23	<=	15	cc																								Oligomets 5 fractions	n	1
+RenalHilum_V19.5 ? 15cc 	RenalHilum	V19.5	<=	15	cc																							Oligomets 3 fractions		n	1
+RenalHilum_V14 ? 15cc 	RenalHilum	V14	<=	15	cc																						Oligomets 1 fraction			n	1
+Ribs_V45 ? 5cc 	Ribs	V45	<=	5	cc			NRG BR-001																					Oligomets 5 fractions	n	1
+Ribs_V40 ? 5cc 	Ribs	V40	<=	5	cc			NRG BR-001																				Oligomets 3 fractions		n	1
+Ribs_V28 ? 5cc 	Ribs	V28	<=	5	cc			NRG BR-001																			Oligomets 1 fraction			n	1
+Ribs_Max Pt Dose ? 3000cGy 	Ribs	Max Pt Dose	<=	3000	cGy					Single fraction																				n	3
+Ribs_Max Pt Dose ? 3300cGy 	Ribs	Max Pt Dose	<=	3300	cGy			NRG BR-001																			Oligomets 1 fraction			n	3
+Ribs_Max Pt Dose ? 3700cGy 	Ribs	Max Pt Dose	<=	3700	cGy						3 fraction																			n	3
+Ribs_Max Pt Dose ? 4050cGy 	Ribs	Max Pt Dose	<=	4050	cGy							4 fraction						Lung 4 fraction												n	3
+Ribs_Max Pt Dose ? 4300cGy 	Ribs	Max Pt Dose	<=	4300	cGy								5 fraction				Liver		Lung 5 fraction											n	3
+Ribs_Max Pt Dose ? 4650cGy 	Ribs	Max Pt Dose	<=	4650	cGy									6 fraction																n	3
+Ribs_Max Pt Dose ? 5000cGy 	Ribs	Max Pt Dose	<=	5000	cGy			NRG BR-001																				Oligomets 3 fractions		n	3
+Ribs_Max Pt Dose ? 5250cGy 	Ribs	Max Pt Dose	<=	5250	cGy										8 fraction															n	3
+Ribs_Max Pt Dose ? 5700cGy 	Ribs	Max Pt Dose	<=	5700	cGy											10 fraction													Oligomets 5 fractions	n	3
+Ribs_Max Pt Dose [record] 	Ribs	Max Pt Dose	[record]		cGy															Lung 8 fraction										n	3
+SacralPlexus_V30 ? 5cc 	SacralPlexus	V30	<=	5	cc			NRG BR-001																					Oligomets 5 fractions	n	1
+SacralPlexus_V22.5 ? 5cc 	SacralPlexus	V22.5	<=	5	cc			NRG BR-001																				Oligomets 3 fractions		n	1
+SacralPlexus_V14.5 ? 5cc 	SacralPlexus	V14.5	<=	5	cc			NRG BR-001																			Oligomets 1 fraction			n	1
+SacralPlexus_Max Pt Dose ? 1800cGy 	SacralPlexus	Max Pt Dose	<=	1800	cGy			NRG BR-001																			Oligomets 1 fraction			n	3
+SacralPlexus_Max Pt Dose ? 2400cGy 	SacralPlexus	Max Pt Dose	<=	2400	cGy			NRG BR-001																				Oligomets 3 fractions		n	3
+SacralPlexus_Max Pt Dose ? 3200cGy 	SacralPlexus	Max Pt Dose	<=	3200	cGy			NRG BR-001																					Oligomets 5 fractions	n	3
+Skin_3mm_V36 ? 10cc 	Skin_3mm	V36	<=	10	cc																			SRS Cranial 5 fraction						n	1
+Skin_3mm_V30 ? 10cc 	Skin_3mm	V30	<=	10	cc																		SRS Cranial 3 fraction							n	1
+Skin_3mm_V23 ? 10cc 	Skin_3mm	V23	<=	10	cc																	SRS Cranial 1 fraction			SRS Cranial AVM	SRS Cranial Trigeminal Neuralgia				n	1
+Skin_3mm_Max Pt Dose ? 2600cGy 	Skin_3mm	Max Pt Dose	<=	2600	cGy																	SRS Cranial 1 fraction			SRS Cranial AVM	SRS Cranial Trigeminal Neuralgia				n	3
+Skin_3mm_Max Pt Dose ? 3300cGy 	Skin_3mm	Max Pt Dose	<=	3300	cGy																		SRS Cranial 3 fraction							n	3
+Skin_3mm_Max Pt Dose ? 3950cGy 	Skin_3mm	Max Pt Dose	<=	3950	cGy																			SRS Cranial 5 fraction						n	3
+Skin_5mm_V48 ? 10cc 	Skin_5mm	V48	<=	10	cc											10 fraction														n	1
+Skin_5mm_V44 ? 10cc 	Skin_5mm	V44	<=	10	cc										8 fraction															n	1
+Skin_5mm_V40 ? 10cc 	Skin_5mm	V40	<=	10	cc									6 fraction																n	1
+Skin_5mm_V36.5 ? 10cc 	Skin_5mm	V36.5	<=	10	cc			NRG BR-001																					Oligomets 5 fractions	n	1
+Skin_5mm_V36 ? 10cc 	Skin_5mm	V36	<=	10	cc								5 fraction						Lung 5 fraction		Pancreas									n	1
+Skin_5mm_V34 ? 10cc 	Skin_5mm	V34	<=	10	cc							4 fraction						Lung 4 fraction												n	1
+Skin_5mm_V31 ? 10cc 	Skin_5mm	V31	<=	10	cc			NRG BR-001																				Oligomets 3 fractions		n	1
+Skin_5mm_V30 ? 10cc 	Skin_5mm	V30	<=	10	cc						3 fraction																			n	1
+Skin_5mm_V25.5 ? 10cc 	Skin_5mm	V25.5	<=	10	cc			NRG BR-001																			Oligomets 1 fraction			n	1
+Skin_5mm_V23 ? 10cc 	Skin_5mm	V23	<=	10	cc					Single fraction																				n	1
+Skin_5mm_D0.5cc < 3200cGy [Goal]	Skin_5mm	D0.5cc	<	3200	cGy		[Goal]	LCID 2014-026 SBRT TACE	Goal [not constraint]								Liver													n	2
+Skin_5mm_Max Pt Dose ? 2600cGy 	Skin_5mm	Max Pt Dose	<=	2600	cGy					Single fraction																				n	3
+Skin_5mm_Max Pt Dose ? 2750cGy 	Skin_5mm	Max Pt Dose	<=	2750	cGy			NRG BR-001																			Oligomets 1 fraction			n	3
+Skin_5mm_Max Pt Dose ? 3300cGy 	Skin_5mm	Max Pt Dose	<=	3300	cGy						3 fraction																	Oligomets 3 fractions		n	3
+Skin_5mm_Max Pt Dose ? 3650cGy 	Skin_5mm	Max Pt Dose	<=	3650	cGy							4 fraction						Lung 4 fraction												n	3
+Skin_5mm_Max Pt Dose ? 3850cGy 	Skin_5mm	Max Pt Dose	<=	3850	cGy																								Oligomets 5 fractions	n	3
+Skin_5mm_Max Pt Dose ? 3950cGy 	Skin_5mm	Max Pt Dose	<=	3950	cGy								5 fraction						Lung 5 fraction		Pancreas									n	3
+Skin_5mm_Max Pt Dose ? 4250cGy 	Skin_5mm	Max Pt Dose	<=	4250	cGy									6 fraction																n	3
+Skin_5mm_Max Pt Dose ? 4800cGy 	Skin_5mm	Max Pt Dose	<=	4800	cGy										8 fraction															n	3
+Skin_5mm_Max Pt Dose ? 5250cGy 	Skin_5mm	Max Pt Dose	<=	5250	cGy											10 fraction														n	3
+Skin_5mm_Max Pt Dose [record] 	Skin_5mm	Max Pt Dose	[record]		cGy															Lung 8 fraction										n	3
+SmBowel_Loops_V24.5 ? 5cc 	SmBowel_Loops	V24.5	<=	5	cc											10 fraction														n	1
+SmBowel_Loops_V23 ? 5cc 	SmBowel_Loops	V23	<=	5	cc										8 fraction															n	1
+SmBowel_Loops_V21 ? 5cc 	SmBowel_Loops	V21	<=	5	cc									6 fraction																n	1
+SmBowel_Loops_V19.5 ? 5cc 	SmBowel_Loops	V19.5	<=	5	cc								5 fraction																	n	1
+SmBowel_Loops_V19 ? 5cc 	SmBowel_Loops	V19	<=	5	cc							4 fraction																		n	1
+SmBowel_Loops_V18 ? 5cc 	SmBowel_Loops	V18	<=	5	cc						3 fraction																			n	1
+SmBowel_Loops_V12 ? 5cc 	SmBowel_Loops	V12	<=	5	cc					Single fraction																				n	1
+SmBowel_Loops_D9cc < 1500cGy 	SmBowel_Loops	D9cc	<	1500	cGy																Pancreas									n	2
+SmBowel_Loops_D5cc < 2500cGy 	SmBowel_Loops	D5cc	<	2500	cGy												Liver													n	2
+SmBowel_Loops_D3cc < 2000cGy 	SmBowel_Loops	D3cc	<	2000	cGy																Pancreas									n	2
+SmBowel_Loops_D1cc < 3300cGy 	SmBowel_Loops	D1cc	<	3300	cGy																Pancreas									n	2
+SmBowel_Loops_D0.5cc ? 3000cGy 	SmBowel_Loops	D0.5cc	<=	3000	cGy												Liver													n	2
+SmBowel_Loops_Max Pt Dose ? 1550cGy 	SmBowel_Loops	Max Pt Dose	<=	1550	cGy					Single fraction																				n	3
+SmBowel_Loops_Max Pt Dose ? 2500cGy 	SmBowel_Loops	Max Pt Dose	<=	2500	cGy						3 fraction																			n	3
+SmBowel_Loops_Max Pt Dose ? 3000cGy 	SmBowel_Loops	Max Pt Dose	<=	3000	cGy							4 fraction																		n	3
+SmBowel_Loops_Max Pt Dose ? 3500cGy 	SmBowel_Loops	Max Pt Dose	<=	3500	cGy								5 fraction																	n	3
+SmBowel_Loops_Max Pt Dose ? 3750cGy 	SmBowel_Loops	Max Pt Dose	<=	3750	cGy									6 fraction																n	3
+SmBowel_Loops_Max Pt Dose ? 4250cGy 	SmBowel_Loops	Max Pt Dose	<=	4250	cGy										8 fraction															n	3
+SmBowel_Loops_Max Pt Dose ? 4600cGy 	SmBowel_Loops	Max Pt Dose	<=	4600	cGy											10 fraction														n	3
+SpinalCord_V30 ? 0.35cc 	SpinalCord	V30	<=	0.35	cc											10 fraction														n	1
+SpinalCord_V28 ? 0.35cc 	SpinalCord	V28	<=	0.35	cc										8 fraction															n	1
+SpinalCord_V25 ? 0.35cc 	SpinalCord	V25	<=	0.35	cc									6 fraction																n	1
+SpinalCord_V23 ? 0.35cc 	SpinalCord	V23	<=	0.35	cc								5 fraction						Lung 5 fraction					SRS Cranial 5 fraction						n	1
+SpinalCord_V22 ? 0.35cc 	SpinalCord	V22	<=	0.35	cc			NRG BR-001																					Oligomets 5 fractions	n	1
+SpinalCord_V20 ? 0.35cc 	SpinalCord	V20	<=	0.35	cc							4 fraction						Lung 4 fraction												n	1
+SpinalCord_V18.5 ? 1.2cc 	SpinalCord	V18.5	<=	1.2	cc											10 fraction														n	1
+SpinalCord_V18 ? 0.35cc 	SpinalCord	V18	<=	0.35	cc						3 fraction												SRS Cranial 3 fraction							n	1
+SpinalCord_V17 ? 1.2cc 	SpinalCord	V17	<=	1.2	cc										8 fraction															n	1
+SpinalCord_V15.5 ? 1.2cc 	SpinalCord	V15.5	<=	1.2	cc									6 fraction															Oligomets 5 fractions	n	1
+SpinalCord_V14.5 ? 1.2cc 	SpinalCord	V14.5	<=	1.2	cc								5 fraction						Lung 5 fraction					SRS Cranial 5 fraction						n	1
+SpinalCord_V13.5 ? 1.2cc 	SpinalCord	V13.5	<=	1.2	cc							4 fraction						Lung 4 fraction												n	1
+SpinalCord_V13 ? 1.2cc 	SpinalCord	V13	<=	1.2	cc			NRG BR-001																				Oligomets 3 fractions		n	1
+SpinalCord_V12 ? 1.2cc 	SpinalCord	V12	<=	1.2	cc						3 fraction												SRS Cranial 3 fraction							n	1
+SpinalCord_V10 ? 0.35cc 	SpinalCord	V10	<=	0.35	cc					Single fraction												SRS Cranial 1 fraction			SRS Cranial AVM	SRS Cranial Trigeminal Neuralgia	Oligomets 1 fraction			n	1
+SpinalCord_V8 ? 1cc 	SpinalCord	V8	<=	1	cc																Pancreas									n	1.1
+SpinalCord_V8 ? 1.2cc 	SpinalCord	V8	<=	1.2	cc			NRG BR-001																			Oligomets 1 fraction			n	1.1
+SpinalCord_V7 ? 1.2cc 	SpinalCord	V7	<=	1.2	cc					Single fraction												SRS Cranial 1 fraction			SRS Cranial AVM	SRS Cranial Trigeminal Neuralgia				n	1.2
+SpinalCord_Max Pt Dose ? 1400cGy 	SpinalCord	Max Pt Dose	<=	1400	cGy					Single fraction												SRS Cranial 1 fraction			SRS Cranial AVM	SRS Cranial Trigeminal Neuralgia	Oligomets 1 fraction			n	3
+SpinalCord_Max Pt Dose ? 2200cGy 	SpinalCord	Max Pt Dose	<=	2200	cGy						3 fraction												SRS Cranial 3 fraction							n	3
+SpinalCord_Max Pt Dose ? 2250cGy 	SpinalCord	Max Pt Dose	<=	2250	cGy			NRG BR-001																				Oligomets 3 fractions		n	3
+SpinalCord_Max Pt Dose ? 2600cGy 	SpinalCord	Max Pt Dose	<=	2600	cGy							4 fraction						Lung 4 fraction												n	3
+SpinalCord_Max Pt Dose ? 2800cGy 	SpinalCord	Max Pt Dose	<=	2800	cGy															Lung 8 fraction									Oligomets 5 fractions	n	3
+SpinalCord_Max Pt Dose ? 3000cGy 	SpinalCord	Max Pt Dose	<=	3000	cGy								5 fraction						Lung 5 fraction		Pancreas			SRS Cranial 5 fraction						n	3
+SpinalCord_Max Pt Dose ? 3250cGy 	SpinalCord	Max Pt Dose	<=	3250	cGy									6 fraction																n	3
+SpinalCord_Max Pt Dose ? 3650cGy 	SpinalCord	Max Pt Dose	<=	3650	cGy										8 fraction															n	3
+SpinalCord_Max Pt Dose ? 4000cGy 	SpinalCord	Max Pt Dose	<=	4000	cGy											10 fraction														n	3
+SpinalCord_05_D0.5cc ? 2500cGy 	SpinalCord_05	D0.5cc	<=	2500	cGy			LCID 2014-026 SBRT TACE									Liver													n	
+Stomach_V35 ? 0.5cc 	Stomach	V35	<=	0.5	cc			NRG BR-001																					Oligomets 5 fractions	n	1
+Stomach_V26.5 ? 5cc 	Stomach	V26.5	<=	5	cc			NRG BR-001																					Oligomets 5 fractions	n	1
+Stomach_V22.5 ? 10cc 	Stomach	V22.5	<=	10	cc											10 fraction												Oligomets 3 fractions		n	1
+Stomach_V21 ? 10cc 	Stomach	V21	<=	10	cc										8 fraction															n	1
+Stomach_V19 ? 10cc 	Stomach	V19	<=	10	cc									6 fraction																n	1
+Stomach_V18 ? 10cc 	Stomach	V18	<=	10	cc								5 fraction						Lung 5 fraction											n	1
+Stomach_V17.5 ? 5cc 	Stomach	V17.5	<=	5	cc			NRG BR-001																			Oligomets 1 fraction			n	1
+Stomach_V17.5 ? 10cc 	Stomach	V17.5	<=	10	cc							4 fraction						Lung 4 fraction												n	1
+Stomach_V16.5 ? 10cc 	Stomach	V16.5	<=	10	cc						3 fraction																			n	1
+Stomach_V11 ? 10cc 	Stomach	V11	<=	10	cc					Single fraction																				n	1
+Stomach_D9cc < 1500cGy 	Stomach	D9cc	<	1500	cGy																Pancreas									n	2
+Stomach_D5cc < 2500cGy [Goal]	Stomach	D5cc	<	2500	cGy		[Goal]	LCID 2014-026 SBRT TACE	Goal [not constraint]								Liver													n	2
+Stomach_D3cc < 2000cGy 	Stomach	D3cc	<	2000	cGy																Pancreas									n	2
+Stomach_D1cc < 3300cGy 	Stomach	D1cc	<	3300	cGy																Pancreas									n	2
+Stomach_D0.5cc ? 3000cGy 	Stomach	D0.5cc	<=	3000	cGy			LCID 2014-026 SBRT TACE									Liver													n	2
+Stomach_Max Pt Dose ? 1250cGy 	Stomach	Max Pt Dose	<=	1250	cGy					Single fraction																				n	3
+Stomach_Max Pt Dose ? 2200cGy 	Stomach	Max Pt Dose	<=	2200	cGy						3 fraction																Oligomets 1 fraction			n	3
+Stomach_Max Pt Dose ? 2700cGy 	Stomach	Max Pt Dose	<=	2700	cGy							4 fraction						Lung 4 fraction												n	3
+Stomach_Max Pt Dose ? 3000cGy 	Stomach	Max Pt Dose	<=	3000	cGy			NRG BR-001																				Oligomets 3 fractions		n	3
+Stomach_Max Pt Dose ? 3200cGy 	Stomach	Max Pt Dose	<=	3200	cGy								5 fraction						Lung 5 fraction											n	3
+Stomach_Max Pt Dose ? 3450cGy 	Stomach	Max Pt Dose	<=	3450	cGy									6 fraction																n	3
+Stomach_Max Pt Dose ? 3850cGy 	Stomach	Max Pt Dose	<=	3850	cGy										8 fraction															n	3
+Stomach_Max Pt Dose ? 4200cGy 	Stomach	Max Pt Dose	<=	4200	cGy											10 fraction														n	3
+Trachea_Bronc_V32 ? 5cc 	Trachea_Bronc	V32	<=	5	cc			NRG BR-001																					Oligomets 5 fractions	n	1
+Trachea_Bronc_V26 ? 5cc 	Trachea_Bronc	V26	<=	5	cc			NRG BR-001																				Oligomets 3 fractions		n	1
+Trachea_Bronc_V20.5 ? 4cc 	Trachea_Bronc	V20.5	<=	4	cc											10 fraction														n	1
+Trachea_Bronc_V19 ? 4cc 	Trachea_Bronc	V19	<=	4	cc										8 fraction															n	1
+Trachea_Bronc_V17.5 ? 4cc 	Trachea_Bronc	V17.5	<=	4	cc									6 fraction													Oligomets 1 fraction			n	1
+Trachea_Bronc_V16.5 ? 4cc 	Trachea_Bronc	V16.5	<=	4	cc								5 fraction						Lung 5 fraction											n	1
+Trachea_Bronc_V16 ? 4cc 	Trachea_Bronc	V16	<=	4	cc							4 fraction						Lung 4 fraction												n	1
+Trachea_Bronc_V15 ? 4cc 	Trachea_Bronc	V15	<=	4	cc						3 fraction																			n	1
+Trachea_Bronc_V10 ? 4cc 	Trachea_Bronc	V10	<=	4	cc					Single fraction																				n	1
+Trachea_Bronc_Max Pt Dose ? 2000cGy 	Trachea_Bronc	Max Pt Dose	<=	2000	cGy					Single fraction																	Oligomets 1 fraction			n	3
+Trachea_Bronc_Max Pt Dose ? 3000cGy 	Trachea_Bronc	Max Pt Dose	<=	3000	cGy						3 fraction																	Oligomets 3 fractions		n	3
+Trachea_Bronc_Max Pt Dose ? 3500cGy 	Trachea_Bronc	Max Pt Dose	<=	3500	cGy							4 fraction						Lung 4 fraction												n	3
+Trachea_Bronc_Max Pt Dose ? 4000cGy 	Trachea_Bronc	Max Pt Dose	<=	4000	cGy								5 fraction						Lung 5 fraction										Oligomets 5 fractions	n	3
+Trachea_Bronc_Max Pt Dose ? 4300cGy 	Trachea_Bronc	Max Pt Dose	<=	4300	cGy									6 fraction																n	3
+Trachea_Bronc_Max Pt Dose ? 4400cGy 	Trachea_Bronc	Max Pt Dose	<=	4400	cGy															Lung 8 fraction										n	3
+Trachea_Bronc_Max Pt Dose ? 4850cGy 	Trachea_Bronc	Max Pt Dose	<=	4850	cGy										8 fraction															n	3
+Trachea_Bronc_Max Pt Dose ? 5300cGy 	Trachea_Bronc	Max Pt Dose	<=	5300	cGy											10 fraction														n	3
+Ureter_Max Pt Dose ? 3500cGy 	Ureter	Max Pt Dose	<=	3500	cGy			NRG BR-001																			Oligomets 1 fraction			n	3
+Ureter_Max Pt Dose ? 4000cGy 	Ureter	Max Pt Dose	<=	4000	cGy			NRG BR-001																				Oligomets 3 fractions		n	3
+Ureter_Max Pt Dose ? 4500cGy 	Ureter	Max Pt Dose	<=	4500	cGy			NRG BR-001																					Oligomets 5 fractions	n	3
+		"Complementary volume criteria divider (leave ""B"" column blank)"								Single fraction	3 fraction	4 fraction	5 fraction	6 fraction	8 fraction	10 fraction	Liver	Lung 4 fraction	Lung 5 fraction	Lung 8 fraction	Pancreas						Oligomets 1 fraction	Oligomets 3 fractions	Oligomets 5 fractions	u	
+Kidney_single_CV12.5 > 130cc 	Kidney_single	CV12.5	>	130	cc			NRG BR-001																				Oligomets 3 fractions		v	1
+Kidneys_Bilat_CV22 > 200cc 	Kidneys_Bilat	CV22	>	200	cc											10 fraction														v	1
+Kidneys_Bilat_CV20.5 > 200cc 	Kidneys_Bilat	CV20.5	>	200	cc										8 fraction															v	1
+Kidneys_Bilat_CV18.5 > 200cc 	Kidneys_Bilat	CV18.5	>	200	cc									6 fraction																v	1
+Kidneys_Bilat_CV18 > 200cc 	Kidneys_Bilat	CV18	>	200	cc			NRG BR-001																					Oligomets 5 fractions	v	1
+Kidneys_Bilat_CV17.5 > 200cc 	Kidneys_Bilat	CV17.5	>	200	cc								5 fraction								Pancreas									v	1
+Kidneys_Bilat_CV17 > 200cc 	Kidneys_Bilat	CV17	>	200	cc							4 fraction																		v	1
+Kidneys_Bilat_CV16 > 200cc 	Kidneys_Bilat	CV16	>	200	cc						3 fraction																			v	1
+Kidneys_Bilat_CV15 > 200cc 	Kidneys_Bilat	CV15	>	200	cc			NRG BR-001																				Oligomets 3 fractions		v	1
+Kidneys_Bilat_CV9.5 > 200cc 	Kidneys_Bilat	CV9.5	>	200	cc			NRG BR-001																			Oligomets 1 fraction			v	1.1
+Kidneys_Bilat_CV8 > 200cc 	Kidneys_Bilat	CV8	>	200	cc					Single fraction																				v	1.2
+Liver_CV26.5 > 700cc 	Liver	CV26.5	>	700	cc											10 fraction														v	1
+Liver_CV25 > 700cc 	Liver	CV25	>	700	cc										8 fraction															v	1
+Liver_CV22.5 > 700cc 	Liver	CV22.5	>	700	cc									6 fraction																v	1
+Liver_CV21 > 700cc 	Liver	CV21	>	700	cc								5 fraction						Lung 5 fraction		Pancreas								Oligomets 5 fractions	v	1
+Liver_CV20 > 700cc 	Liver	CV20	>	700	cc							4 fraction						Lung 4 fraction												v	1
+Liver_CV19 > 700cc 	Liver	CV19	>	700	cc						3 fraction																			v	1
+Liver_CV17 > 700cc 	Liver	CV17	>	700	cc			NRG BR-001																				Oligomets 3 fractions		v	1
+Liver_CV15 > 700cc [Optional]	Liver	CV15	>	700	cc		[Optional]	LCID 2014-026 SBRT TACE	Optional								Liver													v	1
+Liver_CV11 > 700cc 	Liver	CV11	>	700	cc			NRG BR-001																			Oligomets 1 fraction			v	1
+Liver_CV9 > 700cc 	Liver	CV9	>	700	cc					Single fraction																				v	1.1
+Liver-GTV_Volume > 700cc [Goal]	Liver-GTV	Volume	>	700	cc		[Goal]	LCID 2014-026 SBRT TACE	Goal [not constraint]								Liver													v	
+Lungs-GTV_CV16.5 > 1000cc 	Lungs-GTV	CV16.5	>	1000	cc											10 fraction														v	1
+Lungs-GTV_CV15.5 > 1000cc 	Lungs-GTV	CV15.5	>	1000	cc										8 fraction					Lung 8 fraction										v	1
+Lungs-GTV_CV15 > 1500cc 	Lungs-GTV	CV15	>	1500	cc											10 fraction														v	1
+Lungs-GTV_CV14.5 > 1000cc 	Lungs-GTV	CV14.5	>	1000	cc									6 fraction																v	1
+Lungs-GTV_CV14.5 > 1500cc 	Lungs-GTV	CV14.5	>	1500	cc										8 fraction					Lung 8 fraction										v	1
+Lungs-GTV_CV13.5  > 1000cc [Optional]	Lungs-GTV	CV13.5 	>	1000	cc		[Optional]		Optional								Liver													v	1
+Lungs-GTV_CV13.5 > 1000cc 	Lungs-GTV	CV13.5	>	1000	cc								5 fraction						Lung 5 fraction										Oligomets 5 fractions	v	1
+Lungs-GTV_CV13 > 1000cc 	Lungs-GTV	CV13	>	1000	cc							4 fraction						Lung 4 fraction												v	1
+Lungs-GTV_CV13 > 1500cc 	Lungs-GTV	CV13	>	1500	cc									6 fraction																v	1
+Lungs-GTV_CV12.5  > 1500cc [Optional]	Lungs-GTV	CV12.5 	>	1500	cc		[Optional]		Optional								Liver													v	1
+Lungs-GTV_CV12.5 > 1000cc 	Lungs-GTV	CV12.5	>	1000	cc						3 fraction																			v	1
+Lungs-GTV_CV12.5 > 1500cc 	Lungs-GTV	CV12.5	>	1500	cc								5 fraction						Lung 5 fraction										Oligomets 5 fractions	v	1
+Lungs-GTV_CV12 > 1500cc 	Lungs-GTV	CV12	>	1500	cc							4 fraction						Lung 4 fraction												v	1
+Lungs-GTV_CV11.5 > 1000cc 	Lungs-GTV	CV11.5	>	1000	cc			NRG BR-001																				Oligomets 3 fractions		v	1
+Lungs-GTV_CV11.5 > 1500cc 	Lungs-GTV	CV11.5	>	1500	cc						3 fraction																			v	1
+Lungs-GTV_CV10.5 > 1500cc 	Lungs-GTV	CV10.5	>	1500	cc			NRG BR-001																				Oligomets 3 fractions		v	1
+Lungs-GTV_CV7.5 > 1000cc 	Lungs-GTV	CV7.5	>	1000	cc					Single fraction																	Oligomets 1 fraction			v	1.1
+Lungs-GTV_CV7 > 1500cc 	Lungs-GTV	CV7	>	1500	cc					Single fraction																	Oligomets 1 fraction			v	1.1
+ 																															
+Revised 1/7/2019 PHH																															

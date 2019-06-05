@@ -12,11 +12,11 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using VMS.TPS.Common.Model.API;
 using VMS.TPS.Common.Model.Types;
-using PdfReport.PDFGenerator;
+using PdfReport.PDFGenerator; 
 
 
 /*
-    Lahey RadOnc Automatic Patient Plan Report Generator 
+    Lahey RadOnc Automatic Patient Plan Report Generator and ROI criteria checker
     Copyright (c) 2019 Beth Isreal Lahey Health
 
     This program is expressely written as a plug-in script for use with Varian's Eclipse Treatment Planning System, and requires Varian's APIs to run properly.
@@ -51,45 +51,196 @@ namespace VMS.TPS
 
         // Declaration Space for Functions and Variables
 
-        static int IOConsole(String user, String patient, String plan, String course)   // This "IOConsole" function is the entire I/O interface for the program, and as such it is very long. It runs once and collects the requisite info from the user. 
+       public string Ttype = null;
+       public string Tsite = null;
+
+        public class TreatSite : IEquatable<TreatSite>        //makes a treatment site class used to make a list of treatment sites 
+        {                                                     //the treatment site list is used when the user is prompted to choose the treatment site of the selected plan
+            public string TreatSiteName { get; set; }
+
+            public int TreatSiteId { get; set; }
+
+            public override string ToString()
+            {
+                return "ID: " + TreatSiteId + "   Name: " + TreatSiteName;
+            }
+            public override bool Equals(object obj)
+            {
+                if (obj == null) return false;
+                TreatSite objAsTreatSite = obj as TreatSite;
+                if (objAsTreatSite == null) return false;
+                else return Equals(objAsTreatSite);
+            }
+            public override int GetHashCode()
+            {
+                return TreatSiteId;
+            }
+            public bool Equals(TreatSite other)
+            {
+                if (other == null) return false;
+                return (this.TreatSiteId.Equals(other.TreatSiteId));
+            }
+            // Should also override == and != operators.
+
+        }
+
+        static List<TreatSite> MakelistConv()           //treatment site list for Conventional plans
+        {
+            List<TreatSite> treatsite = new List<TreatSite>();
+
+            treatsite.Add(new TreatSite() { TreatSiteName = "Abdomen", TreatSiteId = 1 });
+            treatsite.Add(new TreatSite() { TreatSiteName = "Brain ", TreatSiteId = 2 });
+            treatsite.Add(new TreatSite() { TreatSiteName = "Brain Hypofx", TreatSiteId = 3 });
+            treatsite.Add(new TreatSite() { TreatSiteName = "Breast", TreatSiteId = 4 });
+            treatsite.Add(new TreatSite() { TreatSiteName = "Esophagus", TreatSiteId = 5 });
+            treatsite.Add(new TreatSite() { TreatSiteName = "Gynecological", TreatSiteId = 6 });
+            treatsite.Add(new TreatSite() { TreatSiteName = "Head & Neck", TreatSiteId = 7 });
+            treatsite.Add(new TreatSite() { TreatSiteName = "Lung", TreatSiteId = 8 });
+            treatsite.Add(new TreatSite() { TreatSiteName = "Pelvis (Other)", TreatSiteId = 9 });
+            treatsite.Add(new TreatSite() { TreatSiteName = "Pelvis EBRT + HDR", TreatSiteId = 10 });
+            treatsite.Add(new TreatSite() { TreatSiteName = "Prostate", TreatSiteId = 11 });
+            treatsite.Add(new TreatSite() { TreatSiteName = "Prostate Bed", TreatSiteId = 12 });
+            treatsite.Add(new TreatSite() { TreatSiteName = "Prostate Hypofx 60 Gy", TreatSiteId = 13 });
+            treatsite.Add(new TreatSite() { TreatSiteName = "Prostate Hypofx 70 Gy", TreatSiteId = 14 });
+            treatsite.Add(new TreatSite() { TreatSiteName = "Thorax", TreatSiteId = 15 });
+
+            return treatsite;
+        }
+
+        static List<TreatSite> MakelistSRS()           //treatment site list for SRS plans
+        {
+            List<TreatSite> treatsite = new List<TreatSite>();
+
+                treatsite.Add(new TreatSite() { TreatSiteName = " Single fraction", TreatSiteId = 1 });
+                treatsite.Add(new TreatSite() { TreatSiteName = "3 fraction", TreatSiteId = 2 });
+                treatsite.Add(new TreatSite() { TreatSiteName = "4 fraction", TreatSiteId = 3 });
+                treatsite.Add(new TreatSite() { TreatSiteName = "5 fraction", TreatSiteId = 4 });
+                treatsite.Add(new TreatSite() { TreatSiteName = "6 fraction", TreatSiteId = 5 });
+                treatsite.Add(new TreatSite() { TreatSiteName = "8 fraction", TreatSiteId = 6 });
+                treatsite.Add(new TreatSite() { TreatSiteName = "10 fraction", TreatSiteId = 7 });
+                treatsite.Add(new TreatSite() { TreatSiteName = "Liver", TreatSiteId = 8 });
+                treatsite.Add(new TreatSite() { TreatSiteName = "Lung 4 fraction", TreatSiteId = 9 });
+                treatsite.Add(new TreatSite() { TreatSiteName = "Lung 5 fraction", TreatSiteId = 10 });
+                treatsite.Add(new TreatSite() { TreatSiteName = "Lung 8 fraction", TreatSiteId = 11 });
+                treatsite.Add(new TreatSite() { TreatSiteName = "Oligomets 1 fraction", TreatSiteId = 12 });
+                treatsite.Add(new TreatSite() { TreatSiteName = "Oligomets 3 fractions", TreatSiteId = 13 });
+                treatsite.Add(new TreatSite() { TreatSiteName = "Oligomets 5 fractions", TreatSiteId = 14 });
+                treatsite.Add(new TreatSite() { TreatSiteName = "Pancreas", TreatSiteId = 15 });
+                treatsite.Add(new TreatSite() { TreatSiteName = "SRS Cranial 1 fraction", TreatSiteId = 16 });
+                treatsite.Add(new TreatSite() { TreatSiteName = "SRS Cranial 3 fraction", TreatSiteId = 17 });
+                treatsite.Add(new TreatSite() { TreatSiteName = "SRS Cranial 5 fraction", TreatSiteId = 18 });
+                treatsite.Add(new TreatSite() { TreatSiteName = "SRS Cranial AVM", TreatSiteId = 19 });
+                treatsite.Add(new TreatSite() { TreatSiteName = "SRS Cranial Trigeminal Neuralgia", TreatSiteId = 20 });
+
+            return treatsite;
+        }
+
+
+        static int IOConsole(string Ttype, string Tsite, String user, String patient, String plan, String course)   // This "IOConsole" function is the entire I/O interface for the program, and as such it is very long. It runs once and collects the requisite info from the user. 
                                   // This is neccessary so we can use the Command Line in what is technically a .DLL assembly file.                        
         {
             int k = 0;
-            String input = null;
+            string i = null;
+            int t = 0;
+            List<TreatSite> sitelist = null;
 
             AllocConsole();
+            Console.Title = "Lahey RadOnc Automatic Patient Plan Report Generator and ROI Criteria Checker  V 1.0";
 
-            Console.SetWindowSize(80, 20);
-            Console.SetBufferSize(80, 20);
+            Console.SetWindowSize(200, 70);                                 //these specific values are here for a reason, don't change them
+            Console.SetBufferSize(200, 70);
 
           //  if (course == null)
           //  {
           //      course = plan;
           //  }
 
-            Console.WriteLine(" Hi {0}, Welcome to the Lahey RadOnc Automatic Patient Plan Report Generator   V 1.0 \n \n", user);
-
-            Thread.Sleep(3000);
+            Console.WriteLine(" Hi {0}, Welcome to the Lahey RadOnc Automatic Patient Plan Report Generator and ROI Criteria Checker  V 1.0 \n \n", user);
+                                                                                                                                                                                                    //this is the size limit for characters on one line of cmd prompt
+            Thread.Sleep(2000);
 
             Console.WriteLine("You have loaded {0}'s course {1}. The currently selected plan of course {1} is {2}.  \n", patient, course, plan);
-            Console.WriteLine("This program will print all required images for the current plan {0}. If you want to do this, press Y. \n", plan);
-            Console.WriteLine("If you want to print the images for a different course, plan, or patient, or exit the program for any reason, press N. \n");
-            Console.WriteLine("(Y/N)? ");
-            input = Console.ReadLine();
+            Console.WriteLine("This program will now check the selected plan {0} to see if the DVH values estimated by the Eclipse DVH Estimation Algorithim are within the ROI criteria established \n by the Lahey Radiation Oncology Department for the specific anatomic treatment site that it is designed for. \n", plan);
+            Console.WriteLine("In order to do this, you must specify the treatment type and treatment site. Is this a conventionally fractionated plan or an SRS/SBRT plan? \n");
+            Console.WriteLine("(Enter C for conventional or S for SRS/SBRT): ");
+            i = Console.ReadLine();
+            Console.WriteLine("\n\n ");
+          
+            while (i != "c" & i != "C" & i != "S" & i != "s")
+            {
+                Console.WriteLine("Let's try that again. You must enter either C for Conventional or S for SRS/SBRT.");
+                i = Console.ReadLine();
+            }
 
-            if (input == "n" | input == "N")
+            if (i == "c" | i =="C")
+            {
+                Console.WriteLine("You have chosen a Conventional plan.");
+                Ttype = "Conventional";
+                sitelist = MakelistConv();
+            }
+
+            else if (i == "s" | i == "S")
+            {
+                Console.WriteLine("You have chosen an SRS/SBRT plan.");
+                Ttype = "SRS/SBRT";
+                sitelist = MakelistSRS();
+            }
+
+            Console.WriteLine("\n\n These are the following treatment sites associated with {0} plans.", Ttype);
+            Console.WriteLine("\n");
+
+            foreach (TreatSite aTreatSite in sitelist)
+            {
+                Console.WriteLine(aTreatSite);
+            }
+
+            Console.WriteLine("\nPlease enter the Id number associated with the treatment site of the selected plan: ");
+            t = System.Convert.ToInt32(Console.ReadLine());
+
+            foreach (TreatSite aTreatSite in sitelist)
+            {
+                
+                if (aTreatSite.TreatSiteId == t)
+                {
+                    Console.WriteLine("\nYou have chosen the {0} treatment site.", aTreatSite.TreatSiteName);
+                    Tsite = aTreatSite.TreatSiteName;
+                    break;
+                }
+                break;
+
+            }
+
+            Console.WriteLine("\n\nEXECUTING ROI CRITERIA CHECK.... ");
+
+            List<Auto_Report_Script.ROI> roi =  Auto_Report_Script.ROIcriteriacheck.Main(Ttype, Tsite);  //backend ROI check
+
+
+            /* the ROIcriteriacheck function will return a custom made list class of the ROI criteria for the given treatment site. This list class will contain a pass/fail parameter that will be assigned
+             * a value when the function checks it. This list will then be passed to Auto-Report-Script, which will loop through the list to display the ouput, including pass/fail parameter.
+             * this output function will do something special when it comes across a "fail"
+             */
+
+            //code for ROI ouput here
+
+            
+
+ 
+
+            Console.WriteLine("Would you like to generate a report of this ROI comparison (Y/N)?  ");
+            i = Console.ReadLine();
+            if (i == "n" | i == "N")
             {
                 Console.WriteLine("\n \n");
-                Console.WriteLine("The program will now close.");
+                Console.WriteLine("This program will now close.");
                 Thread.Sleep(3000);
 
                 return k;
             }
-            else if (input == "y" | input == "Y")
+            else if (i == "y" | i == "Y")
             {
                 Console.WriteLine("\n \n");
-                Console.WriteLine("All images for plan {0} will now print. \n \n", plan);
-                Console.WriteLine("This Command Line Window will now close. \n");
+                Console.WriteLine("Your report will now open in your default PDF viewer. \n \n", plan);
+                Console.WriteLine("This Program will now close. \n");
                 Thread.Sleep(3000);
 
                 k = 1;
@@ -156,7 +307,7 @@ namespace VMS.TPS
                 return;
             }
 
-            output = IOConsole(user.Name, patient.Name, plan.Id, course.Id);  // calls the I/O interface and assigns the int it returns
+            output = IOConsole(Ttype, Tsite, user.Name, patient.Name, plan.Id, course.Id);  // calls the I/O interface and assigns the int it returns
 
             if (output == 0 )  
             {
