@@ -75,7 +75,7 @@
   <ItemGroup>
     <Compile Include="Auto-Report-Script.cs" />
     <Compile Include="ROI.cs" />
-    <Compile Include="ROIcriteriacheck.cs" />
+    <Compile Include="LISTMAKER.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

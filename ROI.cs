@@ -12,17 +12,25 @@ namespace Auto_Report_Script
 
         public int ROIId { get; set; }
 
-        public string limit { get; set; }
+        public string Rstruct { get; set; }    // structure id in eclipse
 
-        public int limval { get; set; }
+        public double structvol { get; set; }
+
+        public string limit { get; set; }       // like "V80 or max point dose"
+
+        public int limval { get; set; }        // like "25 cGy"
 
         public string strict { get; set; }
 
-        public string limunit { get; set; }
+        public string limunit { get; set; }     // cGy, %
 
         public string status { get; set; }
 
         public string goal { get; set; }
+
+        public double limdose { get; set; }    // the upper limit of the dose in cGy for this specific ROI, calculated from predcribed dose of plan
+
+        public double actdose { get; set; }    // actual dose from eclipse
 
         public string[] treatsite { get; set; }
 
