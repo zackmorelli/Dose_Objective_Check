@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Lahey RadOnc Automatic Patient Plan Report Generator V 0.1")]
-[assembly: AssemblyDescription("Automatically prints out text plan report utilizing existing report templates, then prints out DRRs, 3 view +3d plan images, DVH curves.   Written by Zack Morelli")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Beth Isreal Lahey Health")]
+[assembly: AssemblyTitle("Lahey RadOnc Dose Objective Checker V 0.1")]
+[assembly: AssemblyDescription("Written by Zackary Morelli")]
+[assembly: AssemblyConfiguration("RELEASE 1.0")]
+[assembly: AssemblyCompany("Radiation Oncology Department, Lahey Health")]
 [assembly: AssemblyProduct("Auto-Report-Script")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyCopyright("Copyright ©  2019 Radiation Oncology Department, Lahey Health ")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.1")]
-[assembly: AssemblyFileVersion("0.1")]
+[assembly: AssemblyVersion("1.0")]
+[assembly: AssemblyFileVersion("1.0")]

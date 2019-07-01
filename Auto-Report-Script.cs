@@ -16,21 +16,21 @@ using PdfReport.PDFGenerator;
 
 
 /*
-    Lahey RadOnc Automatic Patient Plan Report Generator and ROI criteria checker
-    Copyright (c) 2019 Beth Isreal Lahey Health
+    Lahey RadOnc Dose Objective Checker
+    Copyright (c) 2019 Radiation Oncology Department, Lahey Health
 
-    This program is expressely written as a plug-in script for use with Varian's Eclipse Treatment Planning System, and requires Varian's APIs to run properly.
+    This program is expressely written as a plug-in script for use with Varian's Eclipse Treatment Planning System, and requires Varian's API files to run properly.
     This program also requires .NET Framework 4.5.0 to run properly.
 
     This is the source code for a .NET Framework assembly file, however this functions as an executable file in Eclipse.
-    In addition to Varian's APIs and .NET Framework, this program uses the following dependent libraries:
+    In addition to Varian's APIs and .NET Framework, this program uses the following commonly available libraries:
     MigraDoc
     PdfSharp
-    Custom Pdf export libraries using MigraDoc and PdfSharp
-    OXY Plot
 
     Release 1.0
-    Automatically prints preformatted pictures from the patient's plan as a PDF document, including DRRs, 3 view +3d plan images, DVH curves
+    Description:
+    Uses space-delimited text files to run an ROI check (using the department's unique criteria) on an external beam plan in Eclipse using some user-provided input. 
+    This program also generates a report of the ROI check as a PDF, which includes a standard header used to identify the patient/plan that the report was made for
 
 */
 
@@ -43,18 +43,15 @@ namespace VMS.TPS
 
         // Assembly Commands
 
-        [MethodImpl(MethodImplOptions.NoInlining)]   // prevents compiler optimization from messing with the program's methods. Protection for eventual Eclipse 15.5 upgrade
-
+        [MethodImpl(MethodImplOptions.NoInlining)]       // prevents compiler optimization from messing with the program's methods. Protection for eventual Eclipse 15.5 upgrade
+            
         [DllImport("kernel32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]    // This stuff manually imports the Windows Kernel and then sets up a function that instantiates a cmd line
+        [return: MarshalAs(UnmanagedType.Bool)]          // This stuff manually imports the Windows Kernel and then sets up a function that instantiates a cmd line
         static extern bool AllocConsole();
 
         // Declaration Space for Functions and Variables
+        
 
-        public string Ttype = null;
-        public string Tsite = null;
-        public static List<Auto_Report_Script.ROI> ROIE = new List<Auto_Report_Script.ROI>();     // Expected ROI list
-        public static List<Auto_Report_Script.ROI> ROIA = new List<Auto_Report_Script.ROI>();     // Actual ROI list from Eclipse 
 
 
         public class TreatSite : IEquatable<TreatSite>        //makes a treatment site class used to make a list of treatment sites 
@@ -105,9 +102,9 @@ namespace VMS.TPS
             treatsite.Add(new TreatSite() { DisplayName = "Pelvis EBRT + HDR", Name = "PelivsEBRT+HDR", Id = 10 });
             treatsite.Add(new TreatSite() { DisplayName = "Prostate", Name = "Prostate", Id = 11 });
             treatsite.Add(new TreatSite() { DisplayName = "Prostate Bed", Name = "ProstateBed", Id = 12 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypofx 60 Gy", Name = "ProstateHypofx60Gy", Id = 13 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypofx 70 Gy", Name = "ProstateHypofx70Gy", Id = 14 });
-            treatsite.Add(new TreatSite() { DisplayName = "Thorax", Name = "Thorax", Id = 15 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 20 fx", Name = "ProstateHypo20fx", Id = 13 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 28 fx", Name = "ProstateHypo28fx", Id = 14 });
+            treatsite.Add(new TreatSite() { DisplayName = "Thorax (Other)", Name = "Thorax(Other)", Id = 15 });
 
             return treatsite;
         }
@@ -141,21 +138,27 @@ namespace VMS.TPS
         }
 
 
-        static int IOConsole(string Ttype, string Tsite, User user, Patient patient, PlanSetup plan, Course course, StructureSet structureSet)   // This "IOConsole" function is the entire I/O interface for the program, and as such it is very long. It runs once and collects the requisite info from the user. 
-                                                                                                                    // This is neccessary so we can use the Command Line in what is technically a .DLL assembly file.                        
+        static int IOConsole(User user, Patient patient, PlanSetup plan, Course course, StructureSet structureSet)   // This "IOConsole" function is the entire I/O interface for the program, and as such it is very long. It runs once and collects the requisite info from the user. 
+                                                                                                                        // This is neccessary so we can use the Command Line in what is technically a .DLL assembly file.                        
         {
+
+            List<Auto_Report_Script.ROI> ROIE = new List<Auto_Report_Script.ROI>();     // Expected ROI made from text file list
+            List<Auto_Report_Script.ROI> ROIA = new List<Auto_Report_Script.ROI>();     // Actual ROI list from Eclipse 
+
+            string Ttype = null;
+            string Tsite = null;
+            
             int k = 0;
             string input = null;
             int t = 0;
             List<TreatSite> sitelist = null;
 
-
-
+            
             AllocConsole();
-            Console.Title = "Lahey RadOnc Automatic Patient Plan Report Generator and ROI Criteria Checker  V 1.0";
+            Console.Title = "Lahey RadOnc Dose Objective Checker  V 1.0";
 
-            Console.SetWindowSize(200, 70);                                 //these specific values are here for a reason, don't change them
-            Console.SetBufferSize(200, 70);
+            Console.SetWindowSize(230, 83);                                 //these specific values are here for a reason, don't change them
+            Console.SetBufferSize(230, 83);
 
             Console.WriteLine(" Hi {0}, Welcome to the Lahey RadOnc Automatic Patient Plan Report Generator and ROI Criteria Checker  V 1.0 \n \n", user.Name);
                                                                                                                                                                                                     //this is the size limit for characters on one line of cmd prompt
@@ -197,7 +200,7 @@ namespace VMS.TPS
             }
 
             Console.WriteLine("\nPlease enter the Id number associated with the treatment site of the selected plan: ");
-            t = System.Convert.ToInt32(Console.ReadLine());
+            t = Convert.ToInt32(Console.ReadLine());
 
             foreach (TreatSite aTreatSite in sitelist)
             {
@@ -205,50 +208,45 @@ namespace VMS.TPS
                 if (aTreatSite.Id == t)
                 {
                     Console.WriteLine("\nYou have chosen the {0} treatment site.", aTreatSite.DisplayName);
-                    Tsite = aTreatSite.Name;
-                     Thread.Sleep(2000);
+                    Tsite = aTreatSite.DisplayName;
+                   // Console.WriteLine("\n\nTsite is: {0} \n", Tsite);
+                    Thread.Sleep(2000);
                     break;
                 }
                 
             }
 
-            Console.WriteLine("\n\nStarting ROI criteria check ... \n");
+
+
+
+            Console.WriteLine("\n\nStarting dose objectives check ... \n\n");
                                                                                    // ROI is its own custom class
             ROIE = Auto_Report_Script.LISTMAKER.Listmaker(Ttype, Tsite);          // separate class with LISTMAKER function which generates a list of ROIs for the given treeatment type and site
 
-         //   if(ROIE.Count > 10)
-          //  {
-                Console.WriteLine("\n{0} ROI list created successfully.", Tsite);
-                Console.WriteLine("\nThe {0} ROI list contains {1} ROIs.", Tsite, ROIE.Count);
-                Thread.Sleep(2000);
-            //  }
-
-
-
+         
+            Console.WriteLine("\n{0} dose objective list created successfully.", Tsite);
+            Console.WriteLine("\nThe {0} dose objective list contains {1} unique dose objectives.", Tsite, ROIE.Count);
+            Thread.Sleep(2000);
+            
 
             // This part of code below gets DVH data from Eclipse. The way it works is different for different limit types, like MaxPtDose, V80, D1cc. etc.
 
-            double[] dose = new double[4000000000];              // variables used with obtaining MaxPtDose form DVH curve
-            uint dptcount = 0;
-            double maxptdose = 0;
-
+ 
             double pdose = plan.TotalPrescribedDose.Dose;       // prescribed dose of the plan
 
+            Console.WriteLine("\nPRESCRIBED DOSE: {0} {1}", pdose, plan.TotalPrescribedDose.Unit.ToString());
 
-            Console.WriteLine("\nPRESCRIBED DOSE UNIT: {0}", plan.TotalPrescribedDose.Unit.ToString());
-            Console.WriteLine("\nPRESCRIBED DOSE VALUE: {0}", pdose);
+            Thread.Sleep(4000);
 
-            Thread.Sleep(5000);
+            Console.WriteLine("\nCorrelating dose objectives with structures in current plan ... ");
 
-            Console.WriteLine("\nObtaining DVH data of these ROIs from Eclipse ... ");
-
-            for (int i = 0; i <= ROIE.Count; i++)
+            foreach (Auto_Report_Script.ROI morty in ROIE)
             {
 
                 foreach (Structure S in structureSet.Structures)        // iterates thriugh all the structures in the structureset of the current plan
                 {
 
-                    if (S.Id == ROIE[i].Rstruct)
+                    if (S.Id == morty.Rstruct)
                     {
 
                         double structvol = S.Volume;
@@ -256,12 +254,13 @@ namespace VMS.TPS
                         Thread.Sleep(5000);
 
 
-                        if (ROIE[i].limit == "MaxPtDose")        // MaxPtDose
+
+                        if (morty.limit == "MaxPtDose")        // MaxPtDose
                         {
                             string kstatus = null;
  
                             Console.WriteLine("\nTRIGGER MAX PT Dose");
-                            Console.WriteLine("\nMAX PT Dose Limit: {0}  {1}", ROIE[i].limval, ROIE[i].limunit);
+                            Console.WriteLine("\nMAX PT Dose Limit: {0}  {1}", morty.limval, morty.limunit);
                             Thread.Sleep(4000);
 
                             DVHData kDVH = plan.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.AbsoluteCm3, 0.1);
@@ -273,51 +272,106 @@ namespace VMS.TPS
                             Thread.Sleep(5000);
 
 
-                            if(ROIE[i].strict == "[record]")
+                            if(morty.strict == "[record]")
                             {
 
                                 kstatus = "PASS";
 
                             }
-                            else if(ROIE[i].strict == "<")
+                            else if(morty.strict == "<")
                             {
 
-                               if(maxdose.Dose < ROIE[i].limval)
-                               {
-                                    kstatus = "PASS";
-                               }
-                               else
-                               {
-                                    kstatus = "FAIL";
-
-                               }
-
-                            }
-                            else if(ROIE[i].strict == "<=")
-                            {
-
-                                if (maxdose.Dose <= ROIE[i].limval)
+                                if(morty.goal != "NA")            // meaning there is a goal set
                                 {
-                                    kstatus = "PASS";
+
+                                    if ((maxdose.Dose < Convert.ToDouble(morty.limval)) && (maxdose.Dose < Convert.ToDouble(morty.goal)))
+                                    {
+                                        kstatus = "PASS";
+                                    }
+                                    else if (maxdose.Dose < Convert.ToDouble(morty.goal))
+                                    {
+
+                                        kstatus = "WARNING";
+
+                                    }
+                                    else
+                                    {
+                                        kstatus = "FAIL";
+
+                                    }
+
+
                                 }
                                 else
                                 {
-                                    kstatus = "FAIL";
- 
+
+                                    if (maxdose.Dose < Convert.ToDouble(morty.limval))
+                                    {
+                                        kstatus = "PASS";
+                                    }
+                                    else
+                                    {
+                                        kstatus = "FAIL";
+
+                                    }
+
                                 }
+
+
+                            }
+                            else if(morty.strict == "<=")
+                            {
+
+
+                                if (morty.goal != "NA")            // meaning there is a goal set
+                                {
+
+                                    if ((maxdose.Dose <= Convert.ToDouble(morty.limval)) && (maxdose.Dose <= Convert.ToDouble(morty.goal)))
+                                    {
+                                        kstatus = "PASS";
+                                    }
+                                    else if (maxdose.Dose <= Convert.ToDouble(morty.goal))
+                                    {
+
+                                        kstatus = "WARNING";
+
+                                    }
+                                    else
+                                    {
+                                        kstatus = "FAIL";
+
+                                    }
+
+
+                                }
+                                else
+                                {
+
+                                    if (maxdose.Dose < Convert.ToDouble(morty.limval))
+                                    {
+                                        kstatus = "PASS";
+                                    }
+                                    else
+                                    {
+                                        kstatus = "FAIL";
+
+                                    }
+
+                                }
+
 
                             }
 
-                            ROIA.Add(new Auto_Report_Script.ROI { ROIName = ROIE[i].ROIName, limdose = ROIE[i].limval , actdose = maxdose.Dose, status = kstatus, structvol = structvol });
+                            ROIA.Add(new Auto_Report_Script.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval) , actdose = maxdose.Dose, status = kstatus, structvol = structvol });
 
 
                         }
-                        else if (ROIE[i].limit == "MeanDose")        // Mean dose
+                        else if (morty.limit == "MeanDose")        // Mean dose
                         {
                             string jstatus = null;
 
                             Console.WriteLine("\nTRIGGER Mean");
-                            Console.WriteLine("\nMean Dose Limit: {0}  {1}", ROIE[i].limval, ROIE[i].limunit);
+                            Console.WriteLine("\nMean Dose Limit: {0}  {1}", morty.limval, morty.limunit);
                             Thread.Sleep(4000);
 
                             DVHData jDVH = plan.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.AbsoluteCm3, 0.1);
@@ -329,308 +383,389 @@ namespace VMS.TPS
                             Thread.Sleep(5000);
 
 
-                            if (ROIE[i].strict == "[record]")
+                            if (morty.strict == "[record]")
                             {
 
                                 jstatus = "PASS";
 
                             }
-                            else if (ROIE[i].strict == "<")
+                            else if (morty.strict == "<")
                             {
 
-                                if (meandose.Dose < ROIE[i].limval)
+                                if (morty.goal != "NA")            // meaning there is a goal set
                                 {
-                                    jstatus = "PASS";
+
+                                    if ((meandose.Dose < Convert.ToDouble(morty.limval)) && (meandose.Dose < Convert.ToDouble(morty.goal)))
+                                    {
+                                        jstatus = "PASS";
+                                    }
+                                    else if (meandose.Dose < Convert.ToDouble(morty.goal))
+                                    {
+
+                                        jstatus = "WARNING";
+
+                                    }
+                                    else
+                                    {
+                                        jstatus = "FAIL";
+
+                                    }
+
+
                                 }
                                 else
                                 {
-                                    jstatus = "FAIL";
- 
+
+                                    if (meandose.Dose < Convert.ToDouble(morty.limval))
+                                    {
+                                        jstatus = "PASS";
+                                    }
+                                    else
+                                    {
+                                        jstatus = "FAIL";
+
+                                    }
+
                                 }
 
+
                             }
-                            else if (ROIE[i].strict == "<=")
+                            else if (morty.strict == "<=")
                             {
 
-                                if (meandose.Dose <= ROIE[i].limval)
+
+                                if (morty.goal != "NA")            // meaning there is a goal set
                                 {
-                                    jstatus = "PASS";
+
+                                    if ((meandose.Dose <= Convert.ToDouble(morty.limval)) && (meandose.Dose <= Convert.ToDouble(morty.goal)))
+                                    {
+                                        jstatus = "PASS";
+                                    }
+                                    else if (meandose.Dose <= Convert.ToDouble(morty.goal))
+                                    {
+
+                                        jstatus = "WARNING";
+
+                                    }
+                                    else
+                                    {
+                                        jstatus = "FAIL";
+
+                                    }
+
+
                                 }
                                 else
                                 {
-                                    jstatus = "FAIL";
 
+                                    if (meandose.Dose < Convert.ToDouble(morty.limval))
+                                    {
+                                        jstatus = "PASS";
+                                    }
+                                    else
+                                    {
+                                        jstatus = "FAIL";
+
+                                    }
 
                                 }
+
 
                             }
 
 
-                            ROIA.Add(new Auto_Report_Script.ROI { ROIName = ROIE[i].ROIName, limdose = ROIE[i].limval, actdose = meandose.Dose, status = jstatus, structvol = structvol});
+
+                            ROIA.Add(new Auto_Report_Script.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), actdose = meandose.Dose, status = jstatus, structvol = structvol});
 
 
                         }
-                        else if (ROIE[i].limit.StartsWith("V"))         // specifies a dose that a specific percentage of the volume of the structure must be less than
+                        else if (morty.limit.StartsWith("V"))         // V45   45 is the dose in cGy which specifies a maximum dose that a specific amount (percentage or absolute amount) of the volume of a structure can recieve
                         {
                             string fstatus = null;
                             DoseValue fdose = new DoseValue();
 
                             Console.WriteLine("\nTRIGGER V ");
-                            Console.WriteLine("\nV Dose Limit: {0}  {1}", ROIE[i].limval, ROIE[i].limunit);
+                            Console.WriteLine("\nV Dose Limit: {0}  {1}", morty.limval, morty.limunit);
                             Thread.Sleep(4000);
 
                                                                                             // "Substring" is an extremely useful string method that creates a new string starting at a specific character position.
                                                                                             // This allows the "V" in the limit string to be omitted so we just get the number    
-                            double Vgy = Convert.ToDouble(ROIE[i].limit.Substring(1));      // "V gray" 
+                            double Vgy = Convert.ToDouble(morty.limit.Substring(1));      // "V gray" 
 
 
-                            if(ROIE[i].limunit == "%")
+                            if(morty.limunit == "%")
                             {
 
-                                double fvol = (structvol * ((Convert.ToDouble(ROIE[i].limval)) / 100.0));         // specific volume that the ROI is concerned with. Here, limval is the percent of the volume of the structure
+                                double fvol = (structvol * ((Convert.ToDouble(morty.limval)) / 100.0));           // specific volume that the ROI is concerned with. Here, limval is the percent of the volume of the structure
 
                                 fdose = plan.GetDoseAtVolume(S, fvol, VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
 
-                                DoseValue tfdose = plan.GetDoseAtVolume(S, (Convert.ToDouble(ROIE[i].limval) / 100.0), VolumePresentation.Relative, DoseValuePresentation.Absolute);
+                                DoseValue tfdose = plan.GetDoseAtVolume(S, (Convert.ToDouble(morty.limval) / 100.0), VolumePresentation.Relative, DoseValuePresentation.Absolute);
 
                                 Console.WriteLine("\n\n PERCENT DOSE TEST: {0}  {1}", fdose.Dose, tfdose.Dose);
                                 Thread.Sleep(4000);
 
                             }
-                            else if(ROIE[i].limunit == "cc")
+                            else if(morty.limunit == "cc")
                             {
 
-                                fdose = plan.GetDoseAtVolume(S, Convert.ToDouble(ROIE[i].limval), VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
+                                fdose = plan.GetDoseAtVolume(S, Convert.ToDouble(morty.limval), VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
 
                             }
 
 
-                            if(ROIE[i].strict == "<=")
+                            if (morty.strict == "[record]")
                             {
 
-                                if(fdose.Dose <= Vgy)
+                                fstatus = "PASS";
+
+                            }
+                            else if (morty.strict == "<")
+                            {
+
+                                if (morty.goal != "NA")            // meaning there is a goal set
                                 {
-                                    fstatus = "PASS";
+
+                                    if ((fdose.Dose < Convert.ToDouble(morty.limval)) && (fdose.Dose < Convert.ToDouble(morty.goal)))
+                                    {
+                                        fstatus = "PASS";
+                                    }
+                                    else if (fdose.Dose < Convert.ToDouble(morty.goal))
+                                    {
+
+                                        fstatus = "WARNING";
+
+                                    }
+                                    else
+                                    {
+                                        fstatus = "FAIL";
+
+                                    }
+
+
                                 }
                                 else
                                 {
-                                    fstatus = "FAIL";
+
+                                    if (fdose.Dose < Convert.ToDouble(morty.limval))
+                                    {
+                                        fstatus = "PASS";
+                                    }
+                                    else
+                                    {
+                                        fstatus = "FAIL";
+
+                                    }
+
                                 }
 
+
                             }
-                            else if(ROIE[i].strict == "<")
+                            else if (morty.strict == "<=")
                             {
 
-                                if (fdose.Dose < Vgy)
+
+                                if (morty.goal != "NA")            // meaning there is a goal set
                                 {
-                                    fstatus = "PASS";
+
+                                    if ((fdose.Dose <= Convert.ToDouble(morty.limval)) && (fdose.Dose <= Convert.ToDouble(morty.goal)))
+                                    {
+                                        fstatus = "PASS";
+                                    }
+                                    else if (fdose.Dose <= Convert.ToDouble(morty.goal))
+                                    {
+
+                                        fstatus = "WARNING";
+
+                                    }
+                                    else
+                                    {
+                                        fstatus = "FAIL";
+
+                                    }
+
+
                                 }
                                 else
                                 {
-                                    fstatus = "FAIL";
+
+                                    if (fdose.Dose < Convert.ToDouble(morty.limval))
+                                    {
+                                        fstatus = "PASS";
+                                    }
+                                    else
+                                    {
+                                        fstatus = "FAIL";
+
+                                    }
+
                                 }
 
+
                             }
-                            else // thing to deal with Esophagus circumferential
+
+                             // add thing to deal with Esophagus circumferential
 
                             Console.WriteLine("\nDOSE UNIT: {0}", fdose.Unit.ToString());
                             Console.WriteLine("\nDOSE Vale: {0}", fdose.Dose);
                             Thread.Sleep(5000);
 
-                            ROIA.Add(new Auto_Report_Script.ROI { ROIName = ROIE[i].ROIName, limdose = Vgy  , actdose = fdose.Dose, status = fstatus, structvol = structvol});
-
+                            ROIA.Add(new Auto_Report_Script.ROI { ROIName = morty.ROIName, limdose = Vgy  , actdose = fdose.Dose, status = fstatus, structvol = structvol});
 
                         }
-                        else if (ROIE[i].limit.StartsWith("D"))
+                        else if (morty.limit.StartsWith("D"))            // D5%  - 5% is 5% of the volume of the structure that must be under a specific dose limit
                         {
 
                             string qstatus = null;
                             DoseValue qdose = new DoseValue();
 
                             Console.WriteLine("\nTRIGGER D ");
-                            Console.WriteLine("\nD Dose Limit: {0}  {1}", ROIE[i].limval, ROIE[i].limunit);
+                            Console.WriteLine("\nD Dose Limit: {0}  {1}", morty.limval, morty.limunit);
                             Thread.Sleep(4000);
 
-                                                                                            // "Substring" is an extremely useful string method that creates a new string starting at a specific character position.
+                                                                                             // "Substring" is an extremely useful string method that creates a new string starting at a specific character position.
                                                                                              // This allows the "V" in the limit string to be omitted so we just get the number    
-                            string qstring = ROIE[i].limit.Substring(1);      // "V gray" 
+                            string qstring = morty.limit.Substring(1);                     // "V gray" 
 
-                            if(ROIE[i].limit.EndsWith("cc"))
+                            if(morty.limit.EndsWith("cc"))
                             {
-                               
-                              //  ROIE[i].limit.Remove()
+                                char[] endl = new char[2] { 'c', 'c' };
 
-                                    // STOPPED HERE
+                                morty.limit.TrimEnd(endl);
 
+                                qdose = plan.GetDoseAtVolume(S, Convert.ToDouble(morty.limit), VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
 
-
-                            }
-                            else if(ROIE[i].limit.EndsWith("%"))
-                            {
-
-
-                                ROIE[i].limit.TrimStart()
-
-
-
-
-
-
-
-
-                            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            if (ROIE[i].limunit == "%")
-                            {
-
-                                double fvol = (structvol * ((Convert.ToDouble(ROIE[i].limval)) / 100.0));         // specific volume that the ROI is concerned with. Here, limval is the percent of the volume of the structure
-
-                                fdose = plan.GetDoseAtVolume(S, fvol, VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
-
-                                DoseValue tfdose = plan.GetDoseAtVolume(S, (Convert.ToDouble(ROIE[i].limval) / 100.0), VolumePresentation.Relative, DoseValuePresentation.Absolute);
-
-                                Console.WriteLine("\n\n PERCENT DOSE TEST: {0}  {1}", fdose.Dose, tfdose.Dose);
+                                Console.WriteLine("\n ABS DOSE: {0}", qdose.Dose);
                                 Thread.Sleep(4000);
 
                             }
-                            else if (ROIE[i].limunit == "cc")
+                            else if (morty.limit.EndsWith("%"))
                             {
+                                char[] endv = new char[1] { '%' };
 
-                                fdose = plan.GetDoseAtVolume(S, Convert.ToDouble(ROIE[i].limval), VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
+                                morty.limit.TrimEnd(endv);
 
+                                double qvol = (structvol * ((Convert.ToDouble(morty.limit)) / 100.0));           // specific volume that the ROI is concerned with. Here, limval is the percent of the volume of the structure
+
+                                qdose = plan.GetDoseAtVolume(S, qvol, VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
+
+                                DoseValue tqdose = plan.GetDoseAtVolume(S, (Convert.ToDouble(morty.limit) / 100.0), VolumePresentation.Relative, DoseValuePresentation.Absolute);
+
+                                Console.WriteLine("\n\n PERCENT DOSE TEST: {0}  {1}", qdose.Dose, tqdose.Dose);
+                                Thread.Sleep(5000);
+                             
                             }
 
 
-                            if (ROIE[i].strict == "<=")
+                            if (morty.strict == "[record]")
                             {
 
-                                if (fdose.Dose <= Vgy)
+                                qstatus = "PASS";
+
+                            }
+                            else if (morty.strict == "<")
+                            {
+
+                                if (morty.goal != "NA")            // meaning there is a goal set
                                 {
-                                    fstatus = "PASS";
+
+                                    if ((qdose.Dose < Convert.ToDouble(morty.limval)) && (qdose.Dose < Convert.ToDouble(morty.goal)))
+                                    {
+                                        qstatus = "PASS";
+                                    }
+                                    else if (qdose.Dose < Convert.ToDouble(morty.goal))
+                                    {
+
+                                        qstatus = "WARNING";
+
+                                    }
+                                    else
+                                    {
+                                        qstatus = "FAIL";
+
+                                    }
+
+
                                 }
                                 else
                                 {
-                                    fstatus = "FAIL";
+
+                                    if (qdose.Dose < Convert.ToDouble(morty.limval))
+                                    {
+                                        qstatus = "PASS";
+                                    }
+                                    else
+                                    {
+                                        qstatus = "FAIL";
+
+                                    }
+
                                 }
 
+
                             }
-                            else if (ROIE[i].strict == "<")
+                            else if (morty.strict == "<=")
                             {
 
-                                if (fdose.Dose < Vgy)
+
+                                if (morty.goal != "NA")            // meaning there is a goal set
                                 {
-                                    fstatus = "PASS";
+
+                                    if ((qdose.Dose <= Convert.ToDouble(morty.limval)) && (qdose.Dose <= Convert.ToDouble(morty.goal)))
+                                    {
+                                        qstatus = "PASS";
+                                    }
+                                    else if (qdose.Dose <= Convert.ToDouble(morty.goal))
+                                    {
+
+                                        qstatus = "WARNING";
+
+                                    }
+                                    else
+                                    {
+                                        qstatus = "FAIL";
+
+                                    }
+
+
                                 }
                                 else
                                 {
-                                    fstatus = "FAIL";
+
+                                    if (qdose.Dose < Convert.ToDouble(morty.limval))
+                                    {
+                                        qstatus = "PASS";
+                                    }
+                                    else
+                                    {
+                                        qstatus = "FAIL";
+
+                                    }
+
                                 }
 
-                            }
-                            else // thing to deal with Esophagus circumferential
 
-                                Console.WriteLine("\nDOSE UNIT: {0}", fdose.Unit.ToString());
-                            Console.WriteLine("\nDOSE Vale: {0}", fdose.Dose);
+                            }
+
+
+                            Console.WriteLine("\nDOSE UNIT: {0}", qdose.Unit.ToString());
+                            Console.WriteLine("\nDOSE Vale: {0}", qdose.Dose);
                             Thread.Sleep(5000);
 
-                            ROIA.Add(new Auto_Report_Script.ROI { ROIName = ROIE[i].ROIName, limdose = Vgy, actdose = fdose.Dose, status = fstatus, structvol = structvol });
+                            ROIA.Add(new Auto_Report_Script.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), actdose = qdose.Dose, status = qstatus, structvol = structvol });
 
 
+                        }  // ends the D loop
 
 
+                    }   // ends the if structure match loop
 
 
 
+                }   // ends structure iterating through current ROIE loop
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    }
-
-
-
-                }
-
-
-
-
-
-
-
-
-
-                foreach (Structure S in structureSet.Structures)
-                {
-
-                    if (S.Id == ROIE[i].Rstruct)
-                    {
-
-
-
-                        plan.GetDoseAtVolume(S,)
-
-
-                        ROIA.Add(new Auto_Report_Script.ROI { ROIName = ROIE[i].ROIName, limdose = , actdose =  , status = });
-
-
-
-
-                    }
-
-
-
-                }
 
                 /*
 
@@ -639,7 +774,7 @@ namespace VMS.TPS
                     foreach (EstimatedDVH dvh in DVH)
                     {
 
-                        if (dvh.StructureId == ROIE[i].Rstruct)
+                        if (dvh.StructureId == morty.Rstruct)
                         {
 
                             foreach (DVHPoint dpoint in dvh.CurveData)            // "CurveData" returns an array of "DVHPoints", another custom class
@@ -655,13 +790,13 @@ namespace VMS.TPS
 
                     }
 
-                    if (maxptdose <= ROIE[i].limval)
+                    if (maxptdose <= morty.limval)
                     {
-                        ROIE[i].status = "PASS";
+                        morty.status = "PASS";
                     }
                     else
                     {
-                        ROIE[i].status = "FAIL";
+                        morty.status = "FAIL";
 
                     }
 
@@ -672,29 +807,46 @@ namespace VMS.TPS
 
 
 
-            }
+            }    // Ends ROIE iterator loop
 
 
 
             // Code which gets data from Eclipse ends here. Below this is the ouput for the ROI comparison.
 
-            Console.WriteLine("\nROI Check complete.");
+            Console.WriteLine("\n{0} unique dose objectives matched with structures in the current plan.", ROIA.Count);
 
-            Thread.Sleep(1000);
 
-            Console.WriteLine("\n\n\t\tROI COMPARISON REPORT FOR {0}'S PLAN {1}", patient.Name, plan.Name);
+            Console.WriteLine("\nDose objective check complete.");
+
+            Thread.Sleep(2000);
+
+            Console.WriteLine("\n\n\t\tDOSE OBJECTIVE REPORT FOR {0}'S PLAN {1}", patient.Name, plan.Name);
             Console.WriteLine("--------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-            Console.WriteLine("Name                                                   |  Calculated Dose Limit (cGy)  |  Eclipse Estimated Dose (cGy)  |  Status    |  Structure Volume  ");
+            Console.WriteLine("Name                                                   |  Hard Dose Limit (cGy) | Goal Dose Limit (cGy) | Eclipse Estimated Dose (cGy) |  Status  | Structure Volume  ");
                          
             foreach(Auto_Report_Script.ROI aroi in ROIA)
             {
-                Console.WriteLine("\n\n"); 
-                Console.WriteLine("{0}   {1}      {2}      {3}   {4} ", aroi.ROIName, aroi.limdose, aroi.actdose, aroi.status, aroi.structvol);
+
+                if(aroi.strict == "[record]")
+                {
+
+                    Console.WriteLine("\n\n");
+                    Console.WriteLine("{0}      NA           {1}         {3}         {2}    {3} ", aroi.ROIName, aroi.goal, aroi.actdose, aroi.status, aroi.structvol);
+
+                }
+                else
+                {
+
+                    Console.WriteLine("\n\n");
+                    Console.WriteLine("{0}      {1}         {2}          {3}        {4}   {5} ", aroi.ROIName, aroi.limdose, aroi.goal, aroi.actdose, aroi.status, aroi.structvol);
+
+                }
+
             }
 
             Console.WriteLine("\n\n");
 
-            Console.WriteLine("Would you like to generate a PDF of this ROI comparison report (Y/N)?  ");
+            Console.WriteLine("Would you like to generate a PDF of this dose objective report (Y/N)?  ");
             input = Console.ReadLine();
             if (input == "n" | input == "N")
             {
@@ -718,40 +870,14 @@ namespace VMS.TPS
             return k;
 
 
-            /*
-            int template = 0;
 
-            Console.WriteLine("This is the current list of report templates... \n \n");
-
-            //list  
-            //figure out how to make indexed arrays in C#, make one here
-
-            Console.WriteLine(" \n \n");
-            Console.WriteLine("Please enter the number next to the report template that matches this plan: ");
-            template = System.Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine(" \n");
-
-            Console.WriteLine("You chose {0} \n", template);
-
-
-            // System.Diagnostics.Process.Start("templateprint.vbs")   // calls a yet to be created .vbs file that literally inputs the keystrokes to print a report from Eclipse
-
-            */
-
-                //  Console.WriteLine("Your report will now print! \n");
-                //  Thread.Sleep(4000);
-                //  Console.WriteLine("This Command Line Window will now close. \n");
-                //  Thread.Sleep(5000);
-
-
-
-            }  // end of IOConsole
+        }  // end of IOConsole
 
 
 
 
 
-            public void Execute(ScriptContext context )     // PROGRAM START - sending a return to Execute will end the program
+        public void Execute(ScriptContext context )     // PROGRAM START - sending a return to Execute will end the program
         {
             //regular variables
 
@@ -774,10 +900,7 @@ namespace VMS.TPS
                 return;
             }
 
-            output = IOConsole(Ttype, Tsite, user, patient, plan, course, structureSet);  // calls the I/O interface and assigns the int it returns
-
-
-
+            output = IOConsole(user, patient, plan, course, structureSet);  // calls the I/O interface and assigns the int it returns
 
 
             if (output == 0 )  

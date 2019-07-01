@@ -18,7 +18,7 @@ namespace Auto_Report_Script
 
         public string limit { get; set; }       // like "V80 or max point dose"
 
-        public int limval { get; set; }        // like "25 cGy"
+        public string limval { get; set; }        // like "25 cGy"
 
         public string strict { get; set; }
 
@@ -59,7 +59,7 @@ namespace Auto_Report_Script
             ROIName = null;
             ROIId = 0;
             limit = null;
-            limval = 0;
+            limval = null;
             strict = null;
             limunit = null;
             status = null;

@@ -28,7 +28,7 @@ namespace Auto_Report_Script
             string tname = null;                    // temporary variables used to build each ROI
             int tid = 0;
             string tlimit = null;
-            int tlimval = 0;
+            string tlimval = null;                    // needs to be a string because of a few weird cases
             string tstrict = null;
             string tlimunit = null;
             string tstatus = null;
@@ -43,15 +43,15 @@ namespace Auto_Report_Script
 
             if (Ttype == "Conventional")
             {
-                string path = @"\\Wvvrntboxt01g1\va_data$\filedata\ProgramData\Vision\PublishedScripts\testf.txt";
-              //  Console.WriteLine("TriggerConv1");
+                string path = @"\\Wvvrntboxt01g1\va_data$\filedata\ProgramData\Vision\PublishedScripts\ConventionalROIList.txt";
+                Console.WriteLine("TriggerConv1");
 
                 if(File.Exists(path))
                 {
-                  //  Console.WriteLine("TriggerConv2");
+                    Console.WriteLine("TriggerConv2");
                     using (StreamReader Lread = File.OpenText(path))   //opens file and puts it into a stream
                     {
-                      //  Console.WriteLine("TriggerConv3");
+                        Console.WriteLine("TriggerConv3");
 
                         while((line = Lread.ReadLine()) != "END")    //each loop pulls a line from the file until no lines left
                         {
@@ -61,7 +61,7 @@ namespace Auto_Report_Script
                             tname = null;
                             tid = 0;
                             tlimit = null;
-                            tlimval = 0;
+                            tlimval = null;
                             tstrict = null;
                             tlimunit = null;
                             tstatus = null;
@@ -71,7 +71,7 @@ namespace Auto_Report_Script
                             words = null;
 
 
-                            words = line.Split(' ');   // convenientley splits the line into multiple strings, stored in a string array, using space as a delimiter
+                            words = line.Split(',');   // convenientley splits the line into multiple strings, stored in a string array, using space as a delimiter
                            // Console.WriteLine("words size: {0}", words.Length);
                             tid = linecount;
                             tname = words[0];
@@ -81,11 +81,11 @@ namespace Auto_Report_Script
 
                             if(tstrict == "[record]")
                             {
-                                tlimval = 100000;  // set "record" limits which don't have a value to a high number so they always pass/don't cause issues
+                                tlimval = "record";  // set "record" limits which don't have a value to a high number so they always pass/don't cause issues
                             }
                             else
                             {
-                                tlimval = Convert.ToInt32(words[4]);
+                                tlimval = (words[4]);
                             }
                             tlimunit = words[5];
                             tgoal = words[6];
@@ -156,7 +156,7 @@ namespace Auto_Report_Script
                             tname = null;
                             tid = 0;
                             tlimit = null;
-                            tlimval = 0;
+                            tlimval = null;
                             tstrict = null;
                             tlimunit = null;
                             tstatus = null;
@@ -165,7 +165,7 @@ namespace Auto_Report_Script
                             words = null;
                             tstruct = null;
 
-                            words = line.Split(' ');   // convenientley splits the line into multiple strings, stored in a string array, using space as a delimiter
+                            words = line.Split(',');   // convenientley splits the line into multiple strings, stored in a string array, using comma as a delimiter
                                                        // Console.WriteLine("words size: {0}", words.Length);
                             tid = linecount;
                             tname = words[0];
@@ -175,11 +175,11 @@ namespace Auto_Report_Script
 
                             if (tstrict == "[record]")
                             {
-                                tlimval = 100000;  // set "record" limits which don't have a value to a high number so they always pass/don't cause issues
+                                tlimval = "record";  // set "record" limits which don't have a value to a high number so they always pass/don't cause issues
                             }
                             else
                             {
-                                tlimval = Convert.ToInt32(words[4]);
+                                tlimval = (words[4]);
                             }
                             tlimunit = words[5];
                             tgoal = words[6];
@@ -263,7 +263,7 @@ namespace Auto_Report_Script
                         
                         ROIE.Add(new ROI { ROIName = roi.ROIName, Rstruct = roi.Rstruct, ROIId = roi.ROIId, limit = roi.limit, limval = roi.limval, strict = roi.strict, limunit = roi.limunit, status = roi.status, goal = roi.goal });
 
-                      //  Console.WriteLine("TrigAft____ROIEadd");
+                        Console.WriteLine("TrigAft____ROIEadd");
                       //  Thread.Sleep(4000);
                     }
 
