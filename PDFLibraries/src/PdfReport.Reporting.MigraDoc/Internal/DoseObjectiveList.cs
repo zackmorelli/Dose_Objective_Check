@@ -27,13 +27,13 @@ namespace PdfReport.Reporting.MigraDoc.Internal
 
         private void AddDoseObjectiveList(Section section, List<ROI.ROI> PROI, Plan plan, Patient patient)
         {
-            string str = "DOSE OBJECTIVE REPORT FOR ,'S PLAN";
+           // string str = "DOSE OBJECTIVE REPORT FOR ,'S PLAN";
 
-            str.Insert(26, patient.LastName);
-            str.Insert(28, patient.FirstName);
-            str.Insert(36, plan.Id);
+          //  str.Insert(26, patient.LastName);
+          //  str.Insert(28, patient.FirstName);
+          //  str.Insert(36, plan.Id);
 
-            AddTableTitle(section, str);
+            AddTableTitle(section, "DOSE OBJECTIVE REPORT");
             AddDoseListTable(section, PROI);
         }
 

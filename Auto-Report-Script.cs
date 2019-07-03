@@ -245,37 +245,37 @@ namespace VMS.TPS
             foreach (ROI.ROI morty in ROIE)
             {
 
-                Console.WriteLine("\nThe current dose of objective is: {0}", morty.ROIName);
-                Thread.Sleep(2000);
+              //  Console.WriteLine("\nThe current dose of objective is: {0}", morty.ROIName);
+              // Thread.Sleep(2000);
 
                 foreach (Structure S in structureSet.Structures)        // iterates thriugh all the structures in the structureset of the current plan
                 {
 
                     if (S.Id == morty.Rstruct)
                     {
-                        Console.WriteLine("\nThe current structure from the plan is: {0}", S.Id);
-                        Console.WriteLine("\nThe current dose of objective has the structure tag: {0}", morty.Rstruct);
+                     //   Console.WriteLine("\nThe current structure from the plan is: {0}", S.Id);
+                      //  Console.WriteLine("\nThe current dose of objective has the structure tag: {0}", morty.Rstruct);
                         
                         double structvol = S.Volume;
-                        Console.WriteLine("\n\n{0} - STRUCTURE VOLUME: {1}", S.Id, S.Volume);
-                        Thread.Sleep(3000);
+                      //  Console.WriteLine("\n\n{0} - STRUCTURE VOLUME: {1}", S.Id, S.Volume);
+                      //  Thread.Sleep(3000);
 
 
                         if (morty.limit == "Max Pt Dose")        // MaxPtDose
                         {
                             string kstatus = null;
  
-                            Console.WriteLine("\nTRIGGER MAX PT Dose");
-                            Console.WriteLine("\nMAX PT Dose Limit: {0}  {1}", morty.limval, morty.limunit);
+                         //   Console.WriteLine("\nTRIGGER MAX PT Dose");
+                         //   Console.WriteLine("\nMAX PT Dose Limit: {0}  {1}", morty.limval, morty.limunit);
                             //Thread.Sleep(1000);
 
                             DVHData kDVH = plan.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.AbsoluteCm3, 0.1);
 
                             DoseValue maxdose = kDVH.MaxDose;
                             
-                            Console.WriteLine("\nDOSE UNIT: {0}", maxdose.Unit.ToString());
-                            Console.WriteLine("\nDOSE Vale: {0}", maxdose.Dose);
-                            Thread.Sleep(4000);
+                         //   Console.WriteLine("\nDOSE UNIT: {0}", maxdose.Unit.ToString());
+                         //   Console.WriteLine("\nDOSE Vale: {0}", maxdose.Dose);
+                          //  Thread.Sleep(4000);
 
 
                             if(morty.strict == "[record]")
@@ -376,17 +376,17 @@ namespace VMS.TPS
                         {
                             string jstatus = null;
 
-                            Console.WriteLine("\nTRIGGER Mean");
-                            Console.WriteLine("\nMean Dose Limit: {0}  {1}", morty.limval, morty.limunit);
+                          //  Console.WriteLine("\nTRIGGER Mean");
+                          //  Console.WriteLine("\nMean Dose Limit: {0}  {1}", morty.limval, morty.limunit);
                            // Thread.Sleep(1000);
 
                             DVHData jDVH = plan.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.AbsoluteCm3, 0.1);
 
                             DoseValue meandose = jDVH.MeanDose;
 
-                            Console.WriteLine("\nDOSE UNIT: {0}", meandose.Unit.ToString());
-                            Console.WriteLine("\nDOSE Vale: {0}", meandose.Dose);
-                            Thread.Sleep(4000);
+                          //  Console.WriteLine("\nDOSE UNIT: {0}", meandose.Unit.ToString());
+                          //  Console.WriteLine("\nDOSE Vale: {0}", meandose.Dose);
+                          //  Thread.Sleep(4000);
 
 
                             if (morty.strict == "[record]")
@@ -491,19 +491,20 @@ namespace VMS.TPS
                             DoseValue fdose = new DoseValue();
                             DoseValue gfdose = new DoseValue();
                             double Vgy = 0.0;
+                            double gfvol = 0.0;
 
-                            Console.WriteLine("\nTRIGGER V ");
-                            Console.WriteLine("\nV Dose Limit: {0}  {1}", morty.limval, morty.limunit);
-                            Thread.Sleep(2000);
+                           // Console.WriteLine("\nTRIGGER V ");
+                           // Console.WriteLine("\nV Dose Limit: {0}  {1}", morty.limval, morty.limunit);
+                           // Thread.Sleep(2000);
 
                                                                                               // "Substring" is an extremely useful string method that creates a new string starting at a specific character position.
                             if(morty.limit != "V60 is NOT Circumferential")                   // This allows the "V" in the limit string to be omitted so we just get the number    
                             {
                                 string jerry = morty.limit.Substring(1);
-                                Console.WriteLine("\n After V chop, we have (jerry): {0}", jerry);
+                              //  Console.WriteLine("\n After V chop, we have (jerry): {0}", jerry);
                                 Thread.Sleep(2000);
                                 Vgy = Convert.ToDouble(jerry);                                 // "V gray" 
-
+                               
                             }
                             else
                             {
@@ -514,23 +515,42 @@ namespace VMS.TPS
 
                             if(morty.limunit == "%")
                             {
-
+                               
                                 double fvol = (structvol * ((Convert.ToDouble(morty.limval)) / 100.0));           // specific volume that the ROI.ROI is concerned with. Here, limval is the percent of the volume of the structure
-
+                               
                                 fdose = plan.GetDoseAtVolume(S, fvol, VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
-
+                                
                                 DoseValue tfdose = plan.GetDoseAtVolume(S, (Convert.ToDouble(morty.limval) / 100.0), VolumePresentation.Relative, DoseValuePresentation.Absolute);
-                                 gfdose = plan.GetDoseAtVolume(S, (Convert.ToDouble(morty.goal) / 100.0), VolumePresentation.Relative, DoseValuePresentation.Absolute);
+                                
 
-                                Console.WriteLine("\n\n PERCENT DOSE TEST: {0}  {1}", fdose.Dose, tfdose.Dose);
-                                Thread.Sleep(5000);
+                                if(morty.goal != "NA")
+                                {
+
+                                    gfvol = (structvol * ((Convert.ToDouble(morty.goal)) / 100.0));
+
+                                  
+
+                                    gfdose = plan.GetDoseAtVolume(S, gfvol, VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
+
+                                }
+
+                              
+                              //  Console.WriteLine("\n\n PERCENT DOSE TEST: {0}  {1}", fdose.Dose, tfdose.Dose);
+                              //  Thread.Sleep(5000);
 
                             }
                             else if(morty.limunit == "cc")
                             {
 
                                 fdose = plan.GetDoseAtVolume(S, Convert.ToDouble(morty.limval), VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
-                                gfdose = plan.GetDoseAtVolume(S, Convert.ToDouble(morty.goal), VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
+
+                                if(morty.goal != "NA")
+                                {
+
+                                    gfdose = plan.GetDoseAtVolume(S, Convert.ToDouble(morty.goal), VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
+
+                                }
+
                             }
 
 
@@ -626,9 +646,9 @@ namespace VMS.TPS
 
                              // add thing to deal with Esophagus circumferential
 
-                            Console.WriteLine("\nDOSE UNIT: {0}", fdose.Unit.ToString());
-                            Console.WriteLine("\nDOSE Value: {0}", fdose.Dose);
-                            Thread.Sleep(5000);
+                           // Console.WriteLine("\nDOSE UNIT: {0}", fdose.Unit.ToString());
+                           // Console.WriteLine("\nDOSE Value: {0}", fdose.Dose);
+                          //  Thread.Sleep(5000);
 
                             ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Vgy, goal = morty.goal, actdose = fdose.Dose, status = fstatus, structvol = structvol});
 
@@ -639,27 +659,27 @@ namespace VMS.TPS
                             string qstatus = null;
                             DoseValue qdose = new DoseValue();
 
-                            Console.WriteLine("\nTRIGGER D ");
-                            Console.WriteLine("\nD Dose Limit: {0}  {1}", morty.limval, morty.limunit);
+                           // Console.WriteLine("\nTRIGGER D ");
+                          //  Console.WriteLine("\nD Dose Limit: {0}  {1}", morty.limval, morty.limunit);
                            // Thread.Sleep(1000);
 
                                                                                              // "Substring" is an extremely useful string method that creates a new string starting at a specific character position.
                                                                                              // This allows the "V" in the limit string to be omitted so we just get the number    
                             string qstring = morty.limit.Substring(1);                     // "V gray" 
 
-                            Console.WriteLine("\nqstring after D remove: {0}", qstring);
+                          //  Console.WriteLine("\nqstring after D remove: {0}", qstring);
 
                             if (morty.limit.EndsWith("cc"))
                             {
 
                                 string q2str = qstring.Remove(qstring.IndexOf('c'), 2);
 
-                                Console.WriteLine("\n q2str is: {0}", q2str);
+                               // Console.WriteLine("\n q2str is: {0}", q2str);
 
                                 qdose = plan.GetDoseAtVolume(S, Convert.ToDouble(q2str), VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
 
-                                Console.WriteLine("\n ABS DOSE: {0}", qdose.Dose);
-                                Thread.Sleep(4000);
+                              //  Console.WriteLine("\n ABS DOSE: {0}", qdose.Dose);
+                              //  Thread.Sleep(4000);
 
                             }
                             else if (morty.limit.EndsWith("%"))
@@ -667,7 +687,7 @@ namespace VMS.TPS
 
                                 string q2str = qstring.Remove(qstring.IndexOf('%'), 1);
 
-                                Console.WriteLine("\n q2str is: {0}", q2str);
+                              //  Console.WriteLine("\n q2str is: {0}", q2str);
 
                                 double qvol = (structvol * ((Convert.ToDouble(q2str)) / 100.0));           // specific volume that the ROI.ROI is concerned with. Here, limval is the percent of the volume of the structure
 
@@ -675,8 +695,8 @@ namespace VMS.TPS
 
                                 DoseValue tqdose = plan.GetDoseAtVolume(S, (Convert.ToDouble(q2str) / 100.0), VolumePresentation.Relative, DoseValuePresentation.Absolute);
 
-                                Console.WriteLine("\n\n PERCENT DOSE TEST: {0}  {1}", qdose.Dose, tqdose.Dose);
-                                Thread.Sleep(5000);
+                              //  Console.WriteLine("\n\n PERCENT DOSE TEST: {0}  {1}", qdose.Dose, tqdose.Dose);
+                              //  Thread.Sleep(5000);
                              
                             }
 
@@ -771,9 +791,9 @@ namespace VMS.TPS
 
                             }
 
-                            Console.WriteLine("\nDOSE UNIT: {0}", qdose.Unit.ToString());
-                            Console.WriteLine("\nDOSE Value: {0}", qdose.Dose);
-                            Thread.Sleep(5000);
+                          //  Console.WriteLine("\nDOSE UNIT: {0}", qdose.Unit.ToString());
+                          //  Console.WriteLine("\nDOSE Value: {0}", qdose.Dose);
+                          //  Thread.Sleep(5000);
 
                             ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = qdose.Dose, status = qstatus, structvol = structvol });
 
