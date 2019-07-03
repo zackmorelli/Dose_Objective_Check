@@ -1,4 +1,14 @@
-﻿namespace PdfReport.Reporting
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Windows;
+using System.IO;
+
+
+
+namespace PdfReport.Reporting
 {
     public class ReportData
     {
@@ -8,7 +18,7 @@
         public Plan Plan { get; set; }
         public string User { get; set; }
 
-
+        public List<ROI.ROI> PROI { get; set; }
 
 
 

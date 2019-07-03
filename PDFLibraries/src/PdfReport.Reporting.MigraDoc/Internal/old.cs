@@ -2,9 +2,10 @@
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Tables;
 
+
 namespace PdfReport.Reporting.MigraDoc.Internal
 {
-    internal class PatientInfo
+    internal class old
     {
         public static readonly Color Shading = new Color(243, 243, 243);
 

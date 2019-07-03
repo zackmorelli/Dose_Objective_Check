@@ -2,6 +2,9 @@
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.Rendering;
 using PdfReport.Reporting.MigraDoc.Internal;
+using System;
+using System.Collections.Generic;
+
 
 namespace PdfReport.Reporting.MigraDoc
 {
@@ -37,7 +40,7 @@ namespace PdfReport.Reporting.MigraDoc
             var section = new Section();
             SetUpPage(section);
             AddHeaderAndFooter(section, reportdata);
-            // AddContents(section, data);
+            AddContents(section, reportdata);
            // MessageBox.Show("Trigger main section");
             return section;
         }
@@ -63,24 +66,24 @@ namespace PdfReport.Reporting.MigraDoc
            // MessageBox.Show("Trigger HF2");
         }
 
-        /*
+        
         private void AddContents(Section section, ReportData data)
         {
-            AddPatientInfo(section, data.Patient);
-            AddStructureSet(section, data.StructureSet);
+           // Addold(section, data.Patient);
+            AddDoseObjectiveList(section, data.PROI, data.Plan, data.Patient);
         }
 
-        private void AddPatientInfo(Section section, Patient patient)
+        private void Addold(Section section, Patient patient)
         {
-            new PatientInfo().Add(section, patient);
+            new old().Add(section, patient);
         }
 
-        private void AddStructureSet(Section section, StructureSet structureSet)
+        private void AddDoseObjectiveList(Section section, List<ROI.ROI> PROI, Plan plan, Patient patient)
         {
-            new StructureSetContent().Add(section, structureSet);
+            new DoseObjectiveList().Add(section, PROI, plan, patient);
         }
 
-        */
+        
 
     }
 }

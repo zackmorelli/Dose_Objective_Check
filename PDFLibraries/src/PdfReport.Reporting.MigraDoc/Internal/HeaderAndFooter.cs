@@ -2,6 +2,7 @@
 using System.Windows;
 using MigraDoc.DocumentObjectModel;
 
+
 namespace PdfReport.Reporting.MigraDoc.Internal
 {
     internal class HeaderAndFooter

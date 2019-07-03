@@ -43,7 +43,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PdfReport.Reporting">
-      <HintPath>src\PdfReport.Reporting\bin\Debug\PdfReport.Reporting.dll</HintPath>
+      <HintPath>src\PdfReport.Reporting.MigraDoc\bin\Debug\PdfReport.Reporting.dll</HintPath>
     </Reference>
     <Reference Include="PdfReport.Reporting.MigraDoc">
       <HintPath>src\PdfReport.Reporting.MigraDoc\bin\Debug\PdfReport.Reporting.MigraDoc.dll</HintPath>
@@ -58,6 +58,12 @@
     <Reference Include="VMS.TPS.Common.Model.Types">
       <HintPath>..\..\ESAPI\VMS.TPS.Common.Model.Types.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ROI\ROI.csproj">
+      <Project>{7E8C97E1-151C-4B23-8396-D7340B81A325}</Project>
+      <Name>ROI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

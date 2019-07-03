@@ -12,7 +12,10 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using VMS.TPS.Common.Model.API;
 using VMS.TPS.Common.Model.Types;
-using PdfReport.PDFGenerator; 
+using PdfReport.PDFGenerator;
+using ROI;
+
+
 
 
 /*
@@ -138,17 +141,16 @@ namespace VMS.TPS
         }
 
 
-        static int IOConsole(User user, Patient patient, PlanSetup plan, Course course, StructureSet structureSet)   // This "IOConsole" function is the entire I/O interface for the program, and as such it is very long. It runs once and collects the requisite info from the user. 
+        static List<ROI.ROI> IOConsole(User user, Patient patient, PlanSetup plan, Course course, StructureSet structureSet)   // This "IOConsole" function is the entire I/O interface for the program, and as such it is very long. It runs once and collects the requisite info from the user. 
                                                                                                                         // This is neccessary so we can use the Command Line in what is technically a .DLL assembly file.                        
         {
 
-            List<Auto_Report_Script.ROI> ROIE = new List<Auto_Report_Script.ROI>();     // Expected ROI made from text file list
-            List<Auto_Report_Script.ROI> ROIA = new List<Auto_Report_Script.ROI>();     // Actual ROI list from Eclipse 
+            List<ROI.ROI> ROIE = new List<ROI.ROI>();     // Expected ROI.ROI made from text file list
+            List<ROI.ROI> ROIA = new List<ROI.ROI>();     // Actual ROI.ROI list from Eclipse 
 
             string Ttype = null;
             string Tsite = null;
             
-            int k = 0;
             string input = null;
             int t = 0;
             List<TreatSite> sitelist = null;
@@ -160,12 +162,12 @@ namespace VMS.TPS
             Console.SetWindowSize(230, 83);                                 //these specific values are here for a reason, don't change them
             Console.SetBufferSize(230, 83);
 
-            Console.WriteLine(" Hi {0}, Welcome to the Lahey RadOnc Automatic Patient Plan Report Generator and ROI Criteria Checker  V 1.0 \n \n", user.Name);
+            Console.WriteLine(" Hi {0}, Welcome to the Lahey RadOnc Automatic Patient Plan Report Generator and ROI.ROI Criteria Checker  V 1.0 \n \n", user.Name);
                                                                                                                                                                                                     //this is the size limit for characters on one line of cmd prompt
             Thread.Sleep(2000);
 
             Console.WriteLine("You have loaded {0}'s course {1}. The currently selected plan of course {1} is {2}.  \n", patient.Name, course.Name, plan.Name);
-            Console.WriteLine("This program will now check the selected plan {0} to determine if the Eclipse-calculated DVH values meet the dose objectives established by the Radiation Oncology\nteam for the relevant treatment site. \n", plan.Name);
+            Console.WriteLine("This program will now check the selected plan {0} to determine if the Eclipse-calculated Dose values meet the dose objectives established by the Radiation Oncology\nteam for the relevant treatment site. \n", plan.Name);
             Console.WriteLine("In order to do this, you must specify the treatment type and treatment site. Is this a conventionally fractionated plan or an SRS/SBRT plan? \n");
             Console.WriteLine("(Enter C for conventional or S for SRS/SBRT): ");
             input = Console.ReadLine();
@@ -220,7 +222,7 @@ namespace VMS.TPS
 
 
             Console.WriteLine("\n\nStarting dose objectives check ... \n\n");
-                                                                                   // ROI is its own custom class
+                                                                                   // ROI.ROI is its own custom class
             ROIE = Auto_Report_Script.LISTMAKER.Listmaker(Ttype, Tsite);          // separate class with LISTMAKER function which generates a list of ROIs for the given treeatment type and site
 
          
@@ -236,23 +238,27 @@ namespace VMS.TPS
 
             Console.WriteLine("\nPRESCRIBED DOSE: {0} {1}", pdose, plan.TotalPrescribedDose.Unit.ToString());
 
-            Thread.Sleep(4000);
+            Thread.Sleep(2500);
 
             Console.WriteLine("\nCorrelating dose objectives with structures in current plan ... ");
 
-            foreach (Auto_Report_Script.ROI morty in ROIE)
+            foreach (ROI.ROI morty in ROIE)
             {
+
+                Console.WriteLine("\nThe current dose of objective is: {0}", morty.ROIName);
+                Thread.Sleep(2000);
 
                 foreach (Structure S in structureSet.Structures)        // iterates thriugh all the structures in the structureset of the current plan
                 {
 
                     if (S.Id == morty.Rstruct)
                     {
-
+                        Console.WriteLine("\nThe current structure from the plan is: {0}", S.Id);
+                        Console.WriteLine("\nThe current dose of objective has the structure tag: {0}", morty.Rstruct);
+                        
                         double structvol = S.Volume;
                         Console.WriteLine("\n\n{0} - STRUCTURE VOLUME: {1}", S.Id, S.Volume);
-                        Thread.Sleep(1000);
-
+                        Thread.Sleep(3000);
 
 
                         if (morty.limit == "Max Pt Dose")        // MaxPtDose
@@ -261,7 +267,7 @@ namespace VMS.TPS
  
                             Console.WriteLine("\nTRIGGER MAX PT Dose");
                             Console.WriteLine("\nMAX PT Dose Limit: {0}  {1}", morty.limval, morty.limunit);
-                            Thread.Sleep(1000);
+                            //Thread.Sleep(1000);
 
                             DVHData kDVH = plan.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.AbsoluteCm3, 0.1);
 
@@ -269,7 +275,7 @@ namespace VMS.TPS
                             
                             Console.WriteLine("\nDOSE UNIT: {0}", maxdose.Unit.ToString());
                             Console.WriteLine("\nDOSE Vale: {0}", maxdose.Dose);
-                            Thread.Sleep(5000);
+                            Thread.Sleep(4000);
 
 
                             if(morty.strict == "[record]")
@@ -284,7 +290,7 @@ namespace VMS.TPS
                                 if(morty.goal != "NA")            // meaning there is a goal set
                                 {
 
-                                    if ((maxdose.Dose < Convert.ToDouble(morty.limval)) && (maxdose.Dose < Convert.ToDouble(morty.goal)))
+                                    if (maxdose.Dose < Convert.ToDouble(morty.limval) && maxdose.Dose < Convert.ToDouble(morty.goal))
                                     {
                                         kstatus = "PASS";
                                     }
@@ -362,7 +368,7 @@ namespace VMS.TPS
 
                             }
 
-                            ROIA.Add(new Auto_Report_Script.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval) , actdose = maxdose.Dose, status = kstatus, structvol = structvol });
+                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval) , goal = morty.goal, actdose = maxdose.Dose, status = kstatus, structvol = structvol });
 
 
                         }
@@ -372,7 +378,7 @@ namespace VMS.TPS
 
                             Console.WriteLine("\nTRIGGER Mean");
                             Console.WriteLine("\nMean Dose Limit: {0}  {1}", morty.limval, morty.limunit);
-                            Thread.Sleep(1000);
+                           // Thread.Sleep(1000);
 
                             DVHData jDVH = plan.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.AbsoluteCm3, 0.1);
 
@@ -380,7 +386,7 @@ namespace VMS.TPS
 
                             Console.WriteLine("\nDOSE UNIT: {0}", meandose.Unit.ToString());
                             Console.WriteLine("\nDOSE Vale: {0}", meandose.Dose);
-                            Thread.Sleep(5000);
+                            Thread.Sleep(4000);
 
 
                             if (morty.strict == "[record]")
@@ -475,7 +481,7 @@ namespace VMS.TPS
 
 
 
-                            ROIA.Add(new Auto_Report_Script.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), actdose = meandose.Dose, status = jstatus, structvol = structvol});
+                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = meandose.Dose, status = jstatus, structvol = structvol});
 
 
                         }
@@ -488,13 +494,15 @@ namespace VMS.TPS
 
                             Console.WriteLine("\nTRIGGER V ");
                             Console.WriteLine("\nV Dose Limit: {0}  {1}", morty.limval, morty.limunit);
-                            Thread.Sleep(1000);
+                            Thread.Sleep(2000);
 
                                                                                               // "Substring" is an extremely useful string method that creates a new string starting at a specific character position.
                             if(morty.limit != "V60 is NOT Circumferential")                   // This allows the "V" in the limit string to be omitted so we just get the number    
                             {
-
-                                 Vgy = Convert.ToDouble(morty.limit.Substring(1));       // "V gray" 
+                                string jerry = morty.limit.Substring(1);
+                                Console.WriteLine("\n After V chop, we have (jerry): {0}", jerry);
+                                Thread.Sleep(2000);
+                                Vgy = Convert.ToDouble(jerry);                                 // "V gray" 
 
                             }
                             else
@@ -507,7 +515,7 @@ namespace VMS.TPS
                             if(morty.limunit == "%")
                             {
 
-                                double fvol = (structvol * ((Convert.ToDouble(morty.limval)) / 100.0));           // specific volume that the ROI is concerned with. Here, limval is the percent of the volume of the structure
+                                double fvol = (structvol * ((Convert.ToDouble(morty.limval)) / 100.0));           // specific volume that the ROI.ROI is concerned with. Here, limval is the percent of the volume of the structure
 
                                 fdose = plan.GetDoseAtVolume(S, fvol, VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
 
@@ -619,10 +627,10 @@ namespace VMS.TPS
                              // add thing to deal with Esophagus circumferential
 
                             Console.WriteLine("\nDOSE UNIT: {0}", fdose.Unit.ToString());
-                            Console.WriteLine("\nDOSE Vale: {0}", fdose.Dose);
+                            Console.WriteLine("\nDOSE Value: {0}", fdose.Dose);
                             Thread.Sleep(5000);
 
-                            ROIA.Add(new Auto_Report_Script.ROI { ROIName = morty.ROIName, limdose = Vgy  , actdose = fdose.Dose, status = fstatus, structvol = structvol});
+                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Vgy, goal = morty.goal, actdose = fdose.Dose, status = fstatus, structvol = structvol});
 
                         }
                         else if (morty.limit.StartsWith("D"))            // D5%  - 5% is 5% of the volume of the structure that must be under a specific dose limit
@@ -633,23 +641,22 @@ namespace VMS.TPS
 
                             Console.WriteLine("\nTRIGGER D ");
                             Console.WriteLine("\nD Dose Limit: {0}  {1}", morty.limval, morty.limunit);
-                            Thread.Sleep(1000);
+                           // Thread.Sleep(1000);
 
                                                                                              // "Substring" is an extremely useful string method that creates a new string starting at a specific character position.
                                                                                              // This allows the "V" in the limit string to be omitted so we just get the number    
                             string qstring = morty.limit.Substring(1);                     // "V gray" 
 
-                            Console.WriteLine("\nqstring after start cut: {0}", qstring);
+                            Console.WriteLine("\nqstring after D remove: {0}", qstring);
 
                             if (morty.limit.EndsWith("cc"))
                             {
-                                char[] endl = new char[2] { 'c', 'c' };
 
-                                qstring.TrimEnd(endl);
+                                string q2str = qstring.Remove(qstring.IndexOf('c'), 2);
 
-                                Console.WriteLine("\n qstring is: {0}", qstring);
+                                Console.WriteLine("\n q2str is: {0}", q2str);
 
-                                qdose = plan.GetDoseAtVolume(S, Convert.ToDouble(qstring), VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
+                                qdose = plan.GetDoseAtVolume(S, Convert.ToDouble(q2str), VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
 
                                 Console.WriteLine("\n ABS DOSE: {0}", qdose.Dose);
                                 Thread.Sleep(4000);
@@ -657,17 +664,16 @@ namespace VMS.TPS
                             }
                             else if (morty.limit.EndsWith("%"))
                             {
-                                char[] endv = new char[1] { '%' };
 
-                                qstring.TrimEnd(endv);
+                                string q2str = qstring.Remove(qstring.IndexOf('%'), 1);
 
-                                Console.WriteLine("\n qstring is: {0}", qstring);
+                                Console.WriteLine("\n q2str is: {0}", q2str);
 
-                                double qvol = (structvol * ((Convert.ToDouble(qstring)) / 100.0));           // specific volume that the ROI is concerned with. Here, limval is the percent of the volume of the structure
+                                double qvol = (structvol * ((Convert.ToDouble(q2str)) / 100.0));           // specific volume that the ROI.ROI is concerned with. Here, limval is the percent of the volume of the structure
 
                                 qdose = plan.GetDoseAtVolume(S, qvol, VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
 
-                                DoseValue tqdose = plan.GetDoseAtVolume(S, (Convert.ToDouble(qstring) / 100.0), VolumePresentation.Relative, DoseValuePresentation.Absolute);
+                                DoseValue tqdose = plan.GetDoseAtVolume(S, (Convert.ToDouble(q2str) / 100.0), VolumePresentation.Relative, DoseValuePresentation.Absolute);
 
                                 Console.WriteLine("\n\n PERCENT DOSE TEST: {0}  {1}", qdose.Dose, tqdose.Dose);
                                 Thread.Sleep(5000);
@@ -765,12 +771,11 @@ namespace VMS.TPS
 
                             }
 
-
                             Console.WriteLine("\nDOSE UNIT: {0}", qdose.Unit.ToString());
-                            Console.WriteLine("\nDOSE Vale: {0}", qdose.Dose);
+                            Console.WriteLine("\nDOSE Value: {0}", qdose.Dose);
                             Thread.Sleep(5000);
 
-                            ROIA.Add(new Auto_Report_Script.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), actdose = qdose.Dose, status = qstatus, structvol = structvol });
+                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = qdose.Dose, status = qstatus, structvol = structvol });
 
 
                         }  // ends the D loop
@@ -829,20 +834,20 @@ namespace VMS.TPS
 
 
 
-            // Code which gets data from Eclipse ends here. Below this is the ouput for the ROI comparison.
+            // Code which gets data from Eclipse ends here. Below this is the ouput for the ROI.ROI comparison.
 
             Console.WriteLine("\n{0} unique dose objectives matched with structures in the current plan.", ROIA.Count);
 
 
             Console.WriteLine("\nDose objective check complete.");
 
-            Thread.Sleep(2000);
+            Thread.Sleep(6000);
 
             Console.WriteLine("\n\n\t\tDOSE OBJECTIVE REPORT FOR {0}'S PLAN {1}", patient.Name, plan.Name);
             Console.WriteLine("--------------------------------------------------------------------------------------------------------------------------------------------------------------------");
             Console.WriteLine("Name                                                   |  Hard Dose Limit (cGy) | Goal Dose Limit (cGy) | Eclipse Estimated Dose (cGy) |  Status  | Structure Volume  ");
                          
-            foreach(Auto_Report_Script.ROI aroi in ROIA)
+            foreach(ROI.ROI aroi in ROIA)
             {
 
                 if(aroi.strict == "[record]")
@@ -850,42 +855,23 @@ namespace VMS.TPS
 
                     Console.WriteLine("\n\n");
                     Console.WriteLine("{0}      NA           {1}         {3}         {2}    {3} ", aroi.ROIName, aroi.goal, aroi.actdose, aroi.status, aroi.structvol);
-
+                    Thread.Sleep(3000);
                 }
                 else
                 {
 
                     Console.WriteLine("\n\n");
                     Console.WriteLine("{0}      {1}         {2}          {3}        {4}   {5} ", aroi.ROIName, aroi.limdose, aroi.goal, aroi.actdose, aroi.status, aroi.structvol);
-
+                    Thread.Sleep(3000);
                 }
 
             }
 
-            Console.WriteLine("\n\n");
+            Console.WriteLine("\n\n\n");
 
-            Console.WriteLine("Would you like to generate a PDF of this dose objective report (Y/N)?  ");
-            input = Console.ReadLine();
-            if (input == "n" | input == "N")
-            {
-                Console.WriteLine("\n \n");
-                Console.WriteLine("This program will now close.");
-                Thread.Sleep(3000);
 
-                return k;
-            }
-            else if (input == "y" | input == "Y")
-            {
-                Console.WriteLine("\n \n");
-                Console.WriteLine("Your report will now open in your default PDF viewer. \n \n");
-                Console.WriteLine("This Program will now close. \n");
-                Thread.Sleep(3000);
 
-                k = 1;
-                return k;
-            }
-
-            return k;
+            return ROIA;
 
 
 
@@ -899,7 +885,8 @@ namespace VMS.TPS
         {
             //regular variables
 
-            int output = 0;
+            List<ROI.ROI> output = new List<ROI.ROI>();
+            string input = null;
 
             //ESAPI variables 
 
@@ -921,21 +908,28 @@ namespace VMS.TPS
             output = IOConsole(user, patient, plan, course, structureSet);  // calls the I/O interface and assigns the int it returns
 
 
-            if (output == 0 )  
+
+            Console.WriteLine("Would you like to generate a PDF of this dose objective report (Y/N)?  ");
+            input = Console.ReadLine();
+            if (input == "n" | input == "N")
             {
-                return;
+                Console.WriteLine("\n \n");
+                Console.WriteLine("This program will now close.");
+                Thread.Sleep(3000);
+
+       
             }
-            else if (output == 1)
+            else if (input == "y" | input == "Y")
             {
-
-               // MessageBox.Show("Trigger Fire main from Auto");
-                PdfReport.PDFGenerator.Program.Main(patient, course, plan, image3D, structureSet, user);
-
-
-
-
+                Console.WriteLine("\n \n");
+                Console.WriteLine("Your report will now open in your default PDF viewer. \n \n");
+                Console.WriteLine("This Program will now close. \n");
+                Thread.Sleep(2000);
+                PdfReport.PDFGenerator.Program.Main(patient, course, plan, image3D, structureSet, user, output);
 
             }
+
+
 
             // code to put images in pdf goes here
 

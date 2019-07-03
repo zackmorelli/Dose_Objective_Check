@@ -30,10 +30,10 @@ C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting.MigraDoc\bin\Deb
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting.MigraDoc\bin\Debug\PdfReport.Reporting.dll
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting.MigraDoc\bin\Debug\PdfSharp.Charting.dll
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting.MigraDoc\bin\Debug\PdfSharp.dll
-C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting.MigraDoc\bin\Debug\PdfReport.Reporting.pdb
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting.MigraDoc\bin\Debug\MigraDoc.DocumentObjectModel.xml
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting.MigraDoc\bin\Debug\MigraDoc.Rendering.xml
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting.MigraDoc\bin\Debug\MigraDoc.RtfRendering.xml
+C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting.MigraDoc\bin\Debug\PdfReport.Reporting.pdb
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting.MigraDoc\bin\Debug\PdfSharp.xml
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting.MigraDoc\bin\Debug\PdfSharp.Charting.xml
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting.MigraDoc\bin\Debug\de\MigraDoc.DocumentObjectModel.resources.dll
@@ -46,3 +46,5 @@ C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting.MigraDoc\obj\Deb
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting.MigraDoc\obj\Debug\PdfReport.Reporting.MigraDoc.csproj.CopyComplete
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting.MigraDoc\obj\Debug\PdfReport.Reporting.MigraDoc.dll
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting.MigraDoc\obj\Debug\PdfReport.Reporting.MigraDoc.pdb
+C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting.MigraDoc\bin\Debug\ROI.dll
+C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting.MigraDoc\bin\Debug\ROI.pdb

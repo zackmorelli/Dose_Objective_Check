@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Auto_Report_Script
-{
+
     public class ROI : IEquatable<ROI>
     {
         public string ROIName { get; set; }
@@ -70,7 +69,7 @@ namespace Auto_Report_Script
 
 
     }
-}          
+         
             // Should also override == and != operators.
 
      
