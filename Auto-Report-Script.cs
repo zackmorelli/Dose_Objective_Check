@@ -382,7 +382,7 @@ namespace VMS.TPS
 
                             DVHData jDVH = plan.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.AbsoluteCm3, 0.1);
 
-                            DoseValue meandose = jDVH.MaxDose;
+                            DoseValue meandose = jDVH.MeanDose;
 
                             Console.WriteLine("\nDOSE UNIT: {0}", meandose.Unit.ToString());
                             Console.WriteLine("\nDOSE Vale: {0}", meandose.Dose);
@@ -841,14 +841,23 @@ namespace VMS.TPS
 
             Console.WriteLine("\nDose objective check complete.");
 
-            Thread.Sleep(6000);
+            Thread.Sleep(5000);
 
             Console.WriteLine("\n\n\t\tDOSE OBJECTIVE REPORT FOR {0}'S PLAN {1}", patient.Name, plan.Name);
             Console.WriteLine("--------------------------------------------------------------------------------------------------------------------------------------------------------------------");
             Console.WriteLine("Name                                                   |  Hard Dose Limit (cGy) | Goal Dose Limit (cGy) | Eclipse Estimated Dose (cGy) |  Status  | Structure Volume  ");
-                         
+
+            int ct = 0;
+
             foreach(ROI.ROI aroi in ROIA)
             {
+
+                if((ct % 6) == 0)
+                {
+
+                    Console.WriteLine("\n\nName                                                   |  Hard Dose Limit (cGy) | Goal Dose Limit (cGy) | Eclipse Estimated Dose (cGy) |  Status  | Structure Volume  ");
+
+                }
 
                 if(aroi.strict == "[record]")
                 {
@@ -864,7 +873,7 @@ namespace VMS.TPS
                     Console.WriteLine("{0}      {1}         {2}          {3}        {4}   {5} ", aroi.ROIName, aroi.limdose, aroi.goal, aroi.actdose, aroi.status, aroi.structvol);
                     Thread.Sleep(3000);
                 }
-
+                ct++;
             }
 
             Console.WriteLine("\n\n\n");
