@@ -69,12 +69,12 @@ namespace PdfReport.Reporting.MigraDoc.Internal
         private void AddColumnsAndHeaders(Table table)
         {
             var width = Size.GetWidth(table.Section);
-            table.AddColumn(width * 0.4);
-            table.AddColumn(width * 0.3);
-            table.AddColumn(width * 0.3);
-            table.AddColumn(width * 0.4);
-            table.AddColumn(width * 0.3);
-            table.AddColumn(width * 0.3);
+            table.AddColumn(width * 0.34);
+            table.AddColumn(width * 0.11);
+            table.AddColumn(width * 0.11);
+            table.AddColumn(width * 0.11);
+            table.AddColumn(width * 0.11);
+            table.AddColumn(width * 0.11);
 
             var headerRow = table.AddRow();
             headerRow.Borders.Bottom.Width = 1;
