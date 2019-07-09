@@ -34,6 +34,10 @@ namespace ROI
 
         public string[] treatsite { get; set; }
 
+        // these last 3 variables are specifically used with the "V" type dose objectives, which compare the volumes enclosed by specific Isodose lines
+        public double limvol { get; set; }
+        public double goalvol { get; set; }
+        public double actvol { get; set; }
         public override string ToString()
         {
             return "ID: " + ROIId + "   Name: " + ROIName + "   Limit:" + limit + "   Strictness: " + strict + "   Limit Value: " + limval + "   Limit Unit: " + limunit;

@@ -9,5 +9,7 @@
         public string[] Energies { get; set; }
         public Beam[] Beams { get; set; }
         public string ApprovalStatus { get; set; }
+        
+        public double TotalPrescribedDose { get; set; }
     }
 }

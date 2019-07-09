@@ -44,7 +44,7 @@ namespace PdfReport.Reporting.MigraDoc.Internal
 
 
             header.AddFormattedText($"{data.Patient.LastName}, {data.Patient.FirstName} (ID: {data.Patient.Id}) - {data.Patient.Sex} " , TextFormat.Bold);
-            header.AddSpace(68);
+            header.AddSpace(60);
             header.AddText($"Generated {DateTime.Now:g}  By: {data.User}");           //first line  ( g is the General Date Short Time Format Specifier)
             header.AddLineBreak();
             
@@ -53,14 +53,14 @@ namespace PdfReport.Reporting.MigraDoc.Internal
             header.AddTab();
             header.AddText("Primary Oncologist: ");
             header.AddFormattedText($"{data.Patient.Doctor.Name} ", TextFormat.Bold);
-            header.AddText("\n\r");
+            header.AddLineBreak();
 
             header.AddText("Plan: ");
             header.AddFormattedText($"{data.Plan.Id} - {data.Plan.ApprovalStatus}", TextFormat.Bold);    // third line
             header.AddTab();
             header.AddText($"{data.Hospital.Name}, {data.Hospital.Address} ");
-
-
+            header.AddLineBreak();
+            header.AddSpace(60);
         }
 
        

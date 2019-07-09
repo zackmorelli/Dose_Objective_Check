@@ -11,6 +11,7 @@ namespace PdfReport.Reporting.MigraDoc.Internal
         public void Add(Section section, List<ROI.ROI> PROI, Plan plan, Patient patient)
         {
            // AddHeading(section, PROI);
+            
             AddDoseObjectiveList(section, PROI, plan, patient);
         }
 
@@ -33,7 +34,7 @@ namespace PdfReport.Reporting.MigraDoc.Internal
           //  str.Insert(28, patient.FirstName);
           //  str.Insert(36, plan.Id);
 
-            AddTableTitle(section, "DOSE OBJECTIVE REPORT");
+            AddTableTitle(section, "DOSE OBJECTIVE REPORT - (Total Prescribed Dose: " + plan.TotalPrescribedDose.ToString() + " cGy )");
             AddDoseListTable(section, PROI);
         }
 
@@ -70,11 +71,11 @@ namespace PdfReport.Reporting.MigraDoc.Internal
         {
             var width = Size.GetWidth(table.Section);
             table.AddColumn(width * 0.34);
-            table.AddColumn(width * 0.11);
-            table.AddColumn(width * 0.11);
-            table.AddColumn(width * 0.11);
-            table.AddColumn(width * 0.11);
-            table.AddColumn(width * 0.11);
+            table.AddColumn(width * 0.13);
+            table.AddColumn(width * 0.13);
+            table.AddColumn(width * 0.13);
+            table.AddColumn(width * 0.13);
+            table.AddColumn(width * 0.13);
 
             var headerRow = table.AddRow();
             headerRow.Borders.Bottom.Width = 1;
@@ -101,15 +102,41 @@ namespace PdfReport.Reporting.MigraDoc.Internal
                 var row = table.AddRow();
                 row.VerticalAlignment = VerticalAlignment.Center;
 
-                if (aroi.strict == "[record]")
+                if (aroi.actvol > 0.5)
+                {
+
+                    if (aroi.strict == "[record]")
+                    {
+
+                        row.Cells[0].AddParagraph(aroi.ROIName);
+                        row.Cells[1].AddParagraph("NA");
+                        row.Cells[2].AddParagraph("NA");
+                        row.Cells[3].AddParagraph(Math.Round(aroi.actvol, 2, MidpointRounding.AwayFromZero).ToString() + " cc");
+                        row.Cells[4].AddParagraph(aroi.status);
+                        row.Cells[5].AddParagraph(Math.Round(aroi.structvol, 2, MidpointRounding.AwayFromZero).ToString());
+
+                    }
+                    else
+                    {
+
+                        row.Cells[0].AddParagraph(aroi.ROIName);
+                        row.Cells[1].AddParagraph(Math.Round(aroi.limvol, 2, MidpointRounding.AwayFromZero).ToString() + " cc");
+                        row.Cells[2].AddParagraph(Math.Round(aroi.goalvol, 2, MidpointRounding.AwayFromZero).ToString() + " cc");
+                        row.Cells[3].AddParagraph(Math.Round(aroi.actvol, 2, MidpointRounding.AwayFromZero).ToString() + " cc");                  
+                        row.Cells[4].AddParagraph(aroi.status);
+                        row.Cells[5].AddParagraph(Math.Round(aroi.structvol, 2, MidpointRounding.AwayFromZero).ToString());
+
+                    }
+                }
+                else if (aroi.strict == "[record]")
                 {
 
                     row.Cells[0].AddParagraph(aroi.ROIName);
                     row.Cells[1].AddParagraph("NA");
                     row.Cells[2].AddParagraph(aroi.goal);
-                    row.Cells[3].AddParagraph(aroi.actdose.ToString());
+                    row.Cells[3].AddParagraph(Math.Round(aroi.actdose, 0, MidpointRounding.AwayFromZero).ToString());
                     row.Cells[4].AddParagraph(aroi.status);
-                    row.Cells[5].AddParagraph(aroi.structvol.ToString());
+                    row.Cells[5].AddParagraph(Math.Round(aroi.structvol, 2, MidpointRounding.AwayFromZero).ToString());
 
                 }
                 else
@@ -118,9 +145,9 @@ namespace PdfReport.Reporting.MigraDoc.Internal
                     row.Cells[0].AddParagraph(aroi.ROIName);
                     row.Cells[1].AddParagraph(aroi.limdose.ToString());
                     row.Cells[2].AddParagraph(aroi.goal);
-                    row.Cells[3].AddParagraph(aroi.actdose.ToString());
+                    row.Cells[3].AddParagraph(Math.Round(aroi.actdose, 0, MidpointRounding.AwayFromZero).ToString());
                     row.Cells[4].AddParagraph(aroi.status);
-                    row.Cells[5].AddParagraph(aroi.structvol.ToString());
+                    row.Cells[5].AddParagraph(Math.Round(aroi.structvol, 2, MidpointRounding.AwayFromZero).ToString());
 
                 }
 

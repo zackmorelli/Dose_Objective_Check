@@ -105,8 +105,8 @@ namespace VMS.TPS
             treatsite.Add(new TreatSite() { DisplayName = "Pelvis EBRT + HDR", Name = "PelivsEBRT+HDR", Id = 10 });
             treatsite.Add(new TreatSite() { DisplayName = "Prostate", Name = "Prostate", Id = 11 });
             treatsite.Add(new TreatSite() { DisplayName = "Prostate Bed", Name = "ProstateBed", Id = 12 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 20 fx", Name = "ProstateHypo20fx", Id = 13 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 28 fx", Name = "ProstateHypo28fx", Id = 14 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 20fx", Name = "ProstateHypo20fx", Id = 13 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 28fx", Name = "ProstateHypo28fx", Id = 14 });
             treatsite.Add(new TreatSite() { DisplayName = "Thorax (Other)", Name = "Thorax(Other)", Id = 15 });
 
             return treatsite;
@@ -145,8 +145,8 @@ namespace VMS.TPS
                                                                                                                         // This is neccessary so we can use the Command Line in what is technically a .DLL assembly file.                        
         {
 
-            List<ROI.ROI> ROIE = new List<ROI.ROI>();     // Expected ROI.ROI made from text file list
-            List<ROI.ROI> ROIA = new List<ROI.ROI>();     // Actual ROI.ROI list from Eclipse 
+            List<ROI.ROI> ROIE = new List<ROI.ROI>();     // Expected ROI made from text file list
+            List<ROI.ROI> ROIA = new List<ROI.ROI>();     // Actual ROI list from Eclipse 
 
             string Ttype = null;
             string Tsite = null;
@@ -162,7 +162,7 @@ namespace VMS.TPS
             Console.SetWindowSize(230, 83);                                 //these specific values are here for a reason, don't change them
             Console.SetBufferSize(230, 83);
 
-            Console.WriteLine(" Hi {0}, Welcome to the Lahey RadOnc Automatic Patient Plan Report Generator and ROI.ROI Criteria Checker  V 1.0 \n \n", user.Name);
+            Console.WriteLine(" Hi {0}, Welcome to the Lahey RadOnc Dose Objective Checker  V 1.0 \n \n", user.Name);
                                                                                                                                                                                                     //this is the size limit for characters on one line of cmd prompt
             Thread.Sleep(2000);
 
@@ -219,8 +219,6 @@ namespace VMS.TPS
             }
 
 
-
-
             Console.WriteLine("\n\nStarting dose objectives check ... \n\n");
                                                                                    // ROI.ROI is its own custom class
             ROIE = Auto_Report_Script.LISTMAKER.Listmaker(Ttype, Tsite);          // separate class with LISTMAKER function which generates a list of ROIs for the given treeatment type and site
@@ -238,7 +236,7 @@ namespace VMS.TPS
 
             Console.WriteLine("\nPRESCRIBED DOSE: {0} {1}", pdose, plan.TotalPrescribedDose.Unit.ToString());
 
-            Thread.Sleep(2500);
+            Thread.Sleep(2000);
 
             Console.WriteLine("\nCorrelating dose objectives with structures in current plan ... ");
 
@@ -253,11 +251,11 @@ namespace VMS.TPS
 
                     if (S.Id == morty.Rstruct)
                     {
-                     //   Console.WriteLine("\nThe current structure from the plan is: {0}", S.Id);
+                       // Console.WriteLine("\nThe current structure from the plan is: {0}", S.Id);
                       //  Console.WriteLine("\nThe current dose of objective has the structure tag: {0}", morty.Rstruct);
                         
                         double structvol = S.Volume;
-                      //  Console.WriteLine("\n\n{0} - STRUCTURE VOLUME: {1}", S.Id, S.Volume);
+                     //  Console.WriteLine("\n\n{0} - STRUCTURE VOLUME: {1}", S.Id, S.Volume);
                       //  Thread.Sleep(3000);
 
 
@@ -265,7 +263,7 @@ namespace VMS.TPS
                         {
                             string kstatus = null;
  
-                         //   Console.WriteLine("\nTRIGGER MAX PT Dose");
+                          //  Console.WriteLine("\nTRIGGER MAX PT Dose");
                          //   Console.WriteLine("\nMAX PT Dose Limit: {0}  {1}", morty.limval, morty.limunit);
                             //Thread.Sleep(1000);
 
@@ -273,8 +271,8 @@ namespace VMS.TPS
 
                             DoseValue maxdose = kDVH.MaxDose;
                             
-                         //   Console.WriteLine("\nDOSE UNIT: {0}", maxdose.Unit.ToString());
-                         //   Console.WriteLine("\nDOSE Vale: {0}", maxdose.Dose);
+                          //  Console.WriteLine("\nDOSE UNIT: {0}", maxdose.Unit.ToString());
+                         //   Console.WriteLine("\nDOSE Value: {0}", maxdose.Dose);
                           //  Thread.Sleep(4000);
 
 
@@ -290,11 +288,11 @@ namespace VMS.TPS
                                 if(morty.goal != "NA")            // meaning there is a goal set
                                 {
 
-                                    if (maxdose.Dose < Convert.ToDouble(morty.limval) && maxdose.Dose < Convert.ToDouble(morty.goal))
+                                    if (maxdose.Dose < Convert.ToDouble(morty.goal))
                                     {
                                         kstatus = "PASS";
                                     }
-                                    else if (maxdose.Dose < Convert.ToDouble(morty.goal))
+                                    else if (maxdose.Dose < Convert.ToDouble(morty.limval))
                                     {
 
                                         kstatus = "WARNING";
@@ -332,11 +330,11 @@ namespace VMS.TPS
                                 if (morty.goal != "NA")            // meaning there is a goal set
                                 {
 
-                                    if ((maxdose.Dose <= Convert.ToDouble(morty.limval)) && (maxdose.Dose <= Convert.ToDouble(morty.goal)))
+                                    if (maxdose.Dose <= Convert.ToDouble(morty.goal))
                                     {
                                         kstatus = "PASS";
                                     }
-                                    else if (maxdose.Dose <= Convert.ToDouble(morty.goal))
+                                    else if (maxdose.Dose <= Convert.ToDouble(morty.limval))
                                     {
 
                                         kstatus = "WARNING";
@@ -376,7 +374,7 @@ namespace VMS.TPS
                         {
                             string jstatus = null;
 
-                          //  Console.WriteLine("\nTRIGGER Mean");
+                           //  Console.WriteLine("\nTRIGGER Mean");
                           //  Console.WriteLine("\nMean Dose Limit: {0}  {1}", morty.limval, morty.limunit);
                            // Thread.Sleep(1000);
 
@@ -384,7 +382,7 @@ namespace VMS.TPS
 
                             DoseValue meandose = jDVH.MeanDose;
 
-                          //  Console.WriteLine("\nDOSE UNIT: {0}", meandose.Unit.ToString());
+                         //   Console.WriteLine("\nDOSE UNIT: {0}", meandose.Unit.ToString());
                           //  Console.WriteLine("\nDOSE Vale: {0}", meandose.Dose);
                           //  Thread.Sleep(4000);
 
@@ -401,11 +399,11 @@ namespace VMS.TPS
                                 if (morty.goal != "NA")            // meaning there is a goal set
                                 {
 
-                                    if ((meandose.Dose < Convert.ToDouble(morty.limval)) && (meandose.Dose < Convert.ToDouble(morty.goal)))
+                                    if (meandose.Dose < Convert.ToDouble(morty.goal))
                                     {
                                         jstatus = "PASS";
                                     }
-                                    else if (meandose.Dose < Convert.ToDouble(morty.goal))
+                                    else if (meandose.Dose < Convert.ToDouble(morty.limval))
                                     {
 
                                         jstatus = "WARNING";
@@ -443,11 +441,11 @@ namespace VMS.TPS
                                 if (morty.goal != "NA")            // meaning there is a goal set
                                 {
 
-                                    if ((meandose.Dose <= Convert.ToDouble(morty.limval)) && (meandose.Dose <= Convert.ToDouble(morty.goal)))
+                                    if (meandose.Dose <= Convert.ToDouble(morty.goal))
                                     {
                                         jstatus = "PASS";
                                     }
-                                    else if (meandose.Dose <= Convert.ToDouble(morty.goal))
+                                    else if (meandose.Dose <= Convert.ToDouble(morty.limval))
                                     {
 
                                         jstatus = "WARNING";
@@ -488,21 +486,22 @@ namespace VMS.TPS
                         else if (morty.limit.StartsWith("V"))         // V45   45 is the dose in cGy which specifies a maximum dose that a specific amount (percentage or absolute amount) of the volume of a structure can recieve
                         {
                             string fstatus = null;
-                            DoseValue fdose = new DoseValue();
-                            DoseValue gfdose = new DoseValue();
+                          //  DoseValue fdose = new DoseValue();
+                          //  DoseValue gfdose = new DoseValue();
                             double Vgy = 0.0;
                             double gfvol = 0.0;
+                            double fvol = 0.0;
 
-                           // Console.WriteLine("\nTRIGGER V ");
-                           // Console.WriteLine("\nV Dose Limit: {0}  {1}", morty.limval, morty.limunit);
-                           // Thread.Sleep(2000);
+                         //   Console.WriteLine("\nTRIGGER V ");
+                          //  Console.WriteLine("\nV Dose Limit: {0}  {1}", morty.limval, morty.limunit);
+                          //  Thread.Sleep(2000);
 
                                                                                               // "Substring" is an extremely useful string method that creates a new string starting at a specific character position.
                             if(morty.limit != "V60 is NOT Circumferential")                   // This allows the "V" in the limit string to be omitted so we just get the number    
                             {
                                 string jerry = morty.limit.Substring(1);
                               //  Console.WriteLine("\n After V chop, we have (jerry): {0}", jerry);
-                                Thread.Sleep(2000);
+                               // Thread.Sleep(2000);
                                 Vgy = Convert.ToDouble(jerry);                                 // "V gray" 
                                
                             }
@@ -516,11 +515,11 @@ namespace VMS.TPS
                             if(morty.limunit == "%")
                             {
                                
-                                double fvol = (structvol * ((Convert.ToDouble(morty.limval)) / 100.0));           // specific volume that the ROI.ROI is concerned with. Here, limval is the percent of the volume of the structure
+                                fvol = (structvol * ((Convert.ToDouble(morty.limval)) / 100.0));           // specific volume that the ROI.ROI is concerned with. Here, limval is the percent of the volume of the structure
                                
-                                fdose = plan.GetDoseAtVolume(S, fvol, VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
+                               // fdose = plan.GetDoseAtVolume(S, fvol, VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
                                 
-                                DoseValue tfdose = plan.GetDoseAtVolume(S, (Convert.ToDouble(morty.limval) / 100.0), VolumePresentation.Relative, DoseValuePresentation.Absolute);
+                              //  DoseValue tfdose = plan.GetDoseAtVolume(S, (Convert.ToDouble(morty.limval) / 100.0), VolumePresentation.Relative, DoseValuePresentation.Absolute);
                                 
 
                                 if(morty.goal != "NA")
@@ -528,9 +527,7 @@ namespace VMS.TPS
 
                                     gfvol = (structvol * ((Convert.ToDouble(morty.goal)) / 100.0));
 
-                                  
-
-                                    gfdose = plan.GetDoseAtVolume(S, gfvol, VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
+                                   // gfdose = plan.GetDoseAtVolume(S, gfvol, VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
 
                                 }
 
@@ -542,16 +539,24 @@ namespace VMS.TPS
                             else if(morty.limunit == "cc")
                             {
 
-                                fdose = plan.GetDoseAtVolume(S, Convert.ToDouble(morty.limval), VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
+                                fvol = Convert.ToDouble(morty.limval);
+
+                               // fdose = plan.GetDoseAtVolume(S, Convert.ToDouble(morty.limval), VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
 
                                 if(morty.goal != "NA")
                                 {
 
-                                    gfdose = plan.GetDoseAtVolume(S, Convert.ToDouble(morty.goal), VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
+                                    gfvol = Convert.ToDouble(morty.goal);
+
+                                   // gfdose = plan.GetDoseAtVolume(S, Convert.ToDouble(morty.goal), VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
 
                                 }
 
                             }
+
+                            DoseValue Vdose = new DoseValue((Vgy / 100.0) * plan.TotalPrescribedDose.Dose, DoseValue.DoseUnit.cGy);
+
+                            double Vvol = plan.GetVolumeAtDose(S, Vdose, VolumePresentation.AbsoluteCm3);
 
 
                             if (morty.strict == "[record]")
@@ -566,11 +571,11 @@ namespace VMS.TPS
                                 if (morty.goal != "NA")            // meaning there is a goal set
                                 {
 
-                                    if ((fdose.Dose < Vgy) && (gfdose.Dose < Vgy))
+                                    if (Vvol < gfvol)
                                     {
                                         fstatus = "PASS";
                                     }
-                                    else if (fdose.Dose < Vgy)
+                                    else if (Vvol < fvol)
                                     {
 
                                         fstatus = "WARNING";
@@ -587,7 +592,7 @@ namespace VMS.TPS
                                 else
                                 {
 
-                                    if (fdose.Dose < Vgy)
+                                    if (Vvol < fvol)
                                     {
                                         fstatus = "PASS";
                                     }
@@ -608,11 +613,11 @@ namespace VMS.TPS
                                 if (morty.goal != "NA")            // meaning there is a goal set
                                 {
 
-                                    if ((fdose.Dose <= Vgy) && (gfdose.Dose <= Vgy))
+                                    if (Vvol <= gfvol)
                                     {
                                         fstatus = "PASS";
                                     }
-                                    else if (fdose.Dose <= Vgy)
+                                    else if (Vvol <= fvol)
                                     {
 
                                         fstatus = "WARNING";
@@ -629,7 +634,7 @@ namespace VMS.TPS
                                 else
                                 {
 
-                                    if (fdose.Dose < Vgy)
+                                    if (Vvol <= fvol)
                                     {
                                         fstatus = "PASS";
                                     }
@@ -650,7 +655,7 @@ namespace VMS.TPS
                            // Console.WriteLine("\nDOSE Value: {0}", fdose.Dose);
                           //  Thread.Sleep(5000);
 
-                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Vgy, goal = morty.goal, actdose = fdose.Dose, status = fstatus, structvol = structvol});
+                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limvol = fvol, goalvol = gfvol, actvol = Vvol, status = fstatus, structvol = structvol});
 
                         }
                         else if (morty.limit.StartsWith("D"))            // D5%  - 5% is 5% of the volume of the structure that must be under a specific dose limit
@@ -659,7 +664,7 @@ namespace VMS.TPS
                             string qstatus = null;
                             DoseValue qdose = new DoseValue();
 
-                           // Console.WriteLine("\nTRIGGER D ");
+                           //  Console.WriteLine("\nTRIGGER D ");
                           //  Console.WriteLine("\nD Dose Limit: {0}  {1}", morty.limval, morty.limunit);
                            // Thread.Sleep(1000);
 
@@ -693,7 +698,7 @@ namespace VMS.TPS
 
                                 qdose = plan.GetDoseAtVolume(S, qvol, VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
 
-                                DoseValue tqdose = plan.GetDoseAtVolume(S, (Convert.ToDouble(q2str) / 100.0), VolumePresentation.Relative, DoseValuePresentation.Absolute);
+                              //  DoseValue tqdose = plan.GetDoseAtVolume(S, (Convert.ToDouble(q2str) / 100.0), VolumePresentation.Relative, DoseValuePresentation.Absolute);
 
                               //  Console.WriteLine("\n\n PERCENT DOSE TEST: {0}  {1}", qdose.Dose, tqdose.Dose);
                               //  Thread.Sleep(5000);
@@ -861,8 +866,9 @@ namespace VMS.TPS
 
             Console.WriteLine("\nDose objective check complete.");
 
-            Thread.Sleep(5000);
+            Thread.Sleep(3000);
 
+            /*
             Console.WriteLine("\n\n\t\tDOSE OBJECTIVE REPORT FOR {0}'S PLAN {1}", patient.Name, plan.Name);
             Console.WriteLine("--------------------------------------------------------------------------------------------------------------------------------------------------------------------");
             Console.WriteLine("Name                                                   |  Hard Dose Limit (cGy) | Goal Dose Limit (cGy) | Eclipse Estimated Dose (cGy) |  Status  | Structure Volume  ");
@@ -896,6 +902,7 @@ namespace VMS.TPS
                 ct++;
             }
 
+         */
             Console.WriteLine("\n\n\n");
 
 
@@ -915,7 +922,7 @@ namespace VMS.TPS
             //regular variables
 
             List<ROI.ROI> output = new List<ROI.ROI>();
-            string input = null;
+            bool T = false;
 
             //ESAPI variables 
 
@@ -936,28 +943,51 @@ namespace VMS.TPS
 
             output = IOConsole(user, patient, plan, course, structureSet);  // calls the I/O interface and assigns the int it returns
 
-
-
-            Console.WriteLine("Would you like to generate a PDF of this dose objective report (Y/N)?  ");
-            input = Console.ReadLine();
-            if (input == "n" | input == "N")
+            foreach (ROI.ROI aroi in output)
             {
-                Console.WriteLine("\n \n");
-                Console.WriteLine("This program will now close.");
-                Thread.Sleep(3000);
 
-       
-            }
-            else if (input == "y" | input == "Y")
-            {
-                Console.WriteLine("\n \n");
-                Console.WriteLine("Your report will now open in your default PDF viewer. \n \n");
-                Console.WriteLine("This Program will now close. \n");
-                Thread.Sleep(2000);
-                PdfReport.PDFGenerator.Program.Main(patient, course, plan, image3D, structureSet, user, output);
+                if(aroi.status == "FAIL")
+                {
+                    T = true;
+                }
 
             }
 
+            if (T == true)
+            {
+
+                MessageBox.Show("THIS PLAN HAS FAILED TO MEET ONE OR MORE DOSE OBJECTIVES.");
+
+
+            }
+
+            Console.WriteLine("A report of the Dose Objective Check will now open in your default PDF viewer. Please rename it and save it in the 'Dose Objective Checker Reports' folder");
+
+            Thread.Sleep(3500);
+
+            PdfReport.PDFGenerator.Program.Main(patient, course, plan, image3D, structureSet, user, output);
+
+            /*
+                Console.WriteLine("Would you like to generate a PDF of this dose objective report (Y/N)?  ");
+                input = Console.ReadLine();
+                if (input == "n" | input == "N")
+                {
+                    Console.WriteLine("\n \n");
+                    Console.WriteLine("This program will now close.");
+                    Thread.Sleep(3000);
+
+
+                }
+                else if (input == "y" | input == "Y")
+                {
+                    Console.WriteLine("\n \n");
+                    Console.WriteLine("Your report will now open in your default PDF viewer. \n \n");
+                    Console.WriteLine("This Program will now close. \n");
+                    Thread.Sleep(2000);
+                    PdfReport.PDFGenerator.Program.Main(patient, course, plan, image3D, structureSet, user, output);
+
+                }
+             */
 
 
             // code to put images in pdf goes here

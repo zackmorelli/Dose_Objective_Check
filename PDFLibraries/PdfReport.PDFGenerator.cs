@@ -72,7 +72,8 @@ namespace PdfReport.PDFGenerator
 
                     Id = plan.Id,
                     Course = course.Id,
-                    ApprovalStatus = plan.ApprovalStatus.ToString()
+                    ApprovalStatus = plan.ApprovalStatus.ToString(),
+                    TotalPrescribedDose = plan.TotalPrescribedDose.Dose
 
                     //  Type = Enum.GetName(typeof(PlanType),
 

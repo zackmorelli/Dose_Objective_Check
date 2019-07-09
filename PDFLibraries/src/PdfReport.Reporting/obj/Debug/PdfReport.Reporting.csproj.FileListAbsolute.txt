@@ -6,10 +6,10 @@ C:\prog\Auto-Report-Script\PDFLibraries\src\SimplePdfReport.Reporting\obj\Debug\
 C:\prog\Auto-Report-Script\PDFLibraries\src\SimplePdfReport.Reporting\obj\Debug\SimplePdfReport.Reporting.pdb
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\bin\Debug\PdfReport.Reporting.dll
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\bin\Debug\PdfReport.Reporting.pdb
-C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\obj\Debug\PdfReport.Reporting.csprojAssemblyReference.cache
-C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\obj\Debug\PdfReport.Reporting.csproj.CoreCompileInputs.cache
-C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\obj\Debug\PdfReport.Reporting.dll
-C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\obj\Debug\PdfReport.Reporting.pdb
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\bin\Debug\ROI.dll
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\bin\Debug\ROI.pdb
+C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\obj\Debug\PdfReport.Reporting.csprojAssemblyReference.cache
+C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\obj\Debug\PdfReport.Reporting.csproj.CoreCompileInputs.cache
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\obj\Debug\PdfReport.Reporting.csproj.CopyComplete
+C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\obj\Debug\PdfReport.Reporting.dll
+C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\obj\Debug\PdfReport.Reporting.pdb

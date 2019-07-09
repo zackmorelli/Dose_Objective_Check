@@ -1,6 +1,5 @@
 C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\PdfReport.PDFGenerator.dll.config
 C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\PdfReport.PDFGenerator.dll
-C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\PdfReport.PDFGenerator.pdb
 C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\PdfReport.Reporting.dll
 C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\PdfReport.Reporting.MigraDoc.dll
 C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\ROI.dll
@@ -28,5 +27,6 @@ C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\de\PdfSharp.Charting.resources
 C:\prog\Auto-Report-Script\PDFLibraries\obj\Debug\PDFGenerator.csprojAssemblyReference.cache
 C:\prog\Auto-Report-Script\PDFLibraries\obj\Debug\PDFGenerator.csproj.CoreCompileInputs.cache
 C:\prog\Auto-Report-Script\PDFLibraries\obj\Debug\PDFGenerator.csproj.CopyComplete
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\PdfReport.PDFGenerator.pdb
 C:\prog\Auto-Report-Script\PDFLibraries\obj\Debug\PdfReport.PDFGenerator.dll
 C:\prog\Auto-Report-Script\PDFLibraries\obj\Debug\PdfReport.PDFGenerator.pdb

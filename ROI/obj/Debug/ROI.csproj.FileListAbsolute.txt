@@ -1,6 +1,6 @@
 C:\prog\Auto-Report-Script\ROI\bin\Debug\ROI.dll
 C:\prog\Auto-Report-Script\ROI\bin\Debug\ROI.pdb
-C:\prog\Auto-Report-Script\ROI\obj\Debug\ROI.csprojAssemblyReference.cache
 C:\prog\Auto-Report-Script\ROI\obj\Debug\ROI.csproj.CoreCompileInputs.cache
 C:\prog\Auto-Report-Script\ROI\obj\Debug\ROI.dll
 C:\prog\Auto-Report-Script\ROI\obj\Debug\ROI.pdb
+C:\prog\Auto-Report-Script\ROI\obj\Debug\ROI.csprojAssemblyReference.cache
