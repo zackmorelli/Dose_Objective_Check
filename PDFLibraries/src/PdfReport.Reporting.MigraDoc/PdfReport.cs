@@ -12,7 +12,7 @@ namespace PdfReport.Reporting.MigraDoc
     {
         public void Export(string path, ReportData reportdata)
         {
-           // MessageBox.Show("Trigger export");
+            MessageBox.Show("Trigger export");
             ExportPdf(path, CreateReport(reportdata));
         }
 
@@ -22,7 +22,7 @@ namespace PdfReport.Reporting.MigraDoc
             pdfRenderer.Document = report;
             pdfRenderer.RenderDocument();
             pdfRenderer.PdfDocument.Save(path);
-           // MessageBox.Show("Trigger exportpdf");
+            MessageBox.Show("Trigger exportpdf");
         }
 
         private Document CreateReport(ReportData reportdata)
@@ -30,7 +30,7 @@ namespace PdfReport.Reporting.MigraDoc
             var doc = new Document();
             CustomStyles.Define(doc);
             doc.Add(CreateMainSection(reportdata));
-           // MessageBox.Show("Trigger create report");
+            MessageBox.Show("Trigger create report");
             return doc;
 
         }
@@ -41,7 +41,7 @@ namespace PdfReport.Reporting.MigraDoc
             SetUpPage(section);
             AddHeaderAndFooter(section, reportdata);
             AddContents(section, reportdata);
-           // MessageBox.Show("Trigger main section");
+            MessageBox.Show("Trigger main section");
             return section;
         }
 
@@ -60,17 +60,17 @@ namespace PdfReport.Reporting.MigraDoc
 
         private void AddHeaderAndFooter(Section section, ReportData reportdata)
         {
-
-          //  MessageBox.Show("Trigger HF");
+            MessageBox.Show("Trigger HF");
             new HeaderAndFooter().Add(section, reportdata);      
-           // MessageBox.Show("Trigger HF2");
+            MessageBox.Show("Trigger HF2");
         }
 
         
         private void AddContents(Section section, ReportData data)
         {
            // Addold(section, data.Patient);
-            AddDoseObjectiveList(section, data.PROI, data.Plan, data.Patient);
+            AddDoseObjectiveList(section, data);
+            MessageBox.Show("Trigger Dose objective Add1");
         }
 
         private void Addold(Section section, Patient patient)
@@ -78,9 +78,10 @@ namespace PdfReport.Reporting.MigraDoc
             new old().Add(section, patient);
         }
 
-        private void AddDoseObjectiveList(Section section, List<ROI.ROI> PROI, Plan plan, Patient patient)
+        private void AddDoseObjectiveList(Section section, ReportData data)
         {
-            new DoseObjectiveList().Add(section, PROI, plan, patient);
+            new DoseObjectiveList().Add(section, data);
+            MessageBox.Show("Trigger Dose Objective ADD");
         }
 
         

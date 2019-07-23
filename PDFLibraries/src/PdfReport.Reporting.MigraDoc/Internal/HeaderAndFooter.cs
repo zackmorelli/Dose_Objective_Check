@@ -56,7 +56,15 @@ namespace PdfReport.Reporting.MigraDoc.Internal
             header.AddLineBreak();
 
             header.AddText("Plan: ");
-            header.AddFormattedText($"{data.Plan.Id} - {data.Plan.ApprovalStatus}", TextFormat.Bold);    // third line
+
+            if (data.Plansum == null)
+            {
+                header.AddFormattedText($"{data.Plan.Id} - {data.Plan.ApprovalStatus}", TextFormat.Bold);    // third line
+            }
+            else
+            {
+                header.AddFormattedText($"{data.Plansum.Id} - {data.Plansum.ApprovalStatus}", TextFormat.Bold);    // third line
+            }
             header.AddTab();
             header.AddText($"{data.Hospital.Name}, {data.Hospital.Address} ");
             header.AddLineBreak();

@@ -16,6 +16,7 @@ namespace PdfReport.Reporting
         public StructureSet StructureSet { get; set; }
         public Hospital Hospital { get; set; }
         public Plan Plan { get; set; }
+        public Plansum Plansum { get; set; }
         public string User { get; set; }
 
         public List<ROI.ROI> PROI { get; set; }
