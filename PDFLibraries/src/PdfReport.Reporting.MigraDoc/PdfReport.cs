@@ -30,6 +30,7 @@ namespace PdfReport.Reporting.MigraDoc
             var doc = new Document();
             CustomStyles.Define(doc);
             doc.Add(CreateMainSection(reportdata));
+            doc.Add(CreateMainSection2(reportdata));
             MessageBox.Show("Trigger create report");
             return doc;
 
@@ -40,8 +41,18 @@ namespace PdfReport.Reporting.MigraDoc
             var section = new Section();
             SetUpPage(section);
             AddHeaderAndFooter(section, reportdata);
-            AddContents(section, reportdata);
+            AddDoseObjectiveList(section, reportdata);
             MessageBox.Show("Trigger main section");
+            return section;
+        }
+
+        private Section CreateMainSection2(ReportData reportdata)
+        {
+            var section = new Section();
+            SetUpPage(section);
+            AddHeaderAndFooter(section, reportdata);
+            AddVolDoseObjectiveList(section, reportdata);
+            MessageBox.Show("Trigger main section2");
             return section;
         }
 
@@ -68,8 +79,11 @@ namespace PdfReport.Reporting.MigraDoc
         
         private void AddContents(Section section, ReportData data)
         {
-           // Addold(section, data.Patient);
+
+            MessageBox.Show("Trigger ADDCONTENTS");
+            // Addold(section, data.Patient);
             AddDoseObjectiveList(section, data);
+            AddVolDoseObjectiveList(section, data);
             MessageBox.Show("Trigger Dose objective Add1");
         }
 
@@ -80,11 +94,22 @@ namespace PdfReport.Reporting.MigraDoc
 
         private void AddDoseObjectiveList(Section section, ReportData data)
         {
+
+            MessageBox.Show("Trigger Dose objective start");
             new DoseObjectiveList().Add(section, data);
-            MessageBox.Show("Trigger Dose Objective ADD");
+            MessageBox.Show("Trigger Dose Objective end");
         }
 
-        
+        private void AddVolDoseObjectiveList(Section section, ReportData data)
+        {
+
+            MessageBox.Show("Trigger Vol Dose objective start");
+            new VolDoseObjectiveList().Add(section, data);
+            MessageBox.Show("Trigger Vol Dose Objective end");
+        }
+
+
+
 
     }
 }

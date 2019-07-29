@@ -485,7 +485,7 @@ namespace VMS.TPS
                                 }
                             }
 
-                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = maxdose.Dose, status = kstatus, structvol = structvol });
+                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = maxdose.Dose, status = kstatus, structvol = structvol, type = "NV"});
 
                         }
                         else if (morty.limit == "Mean Dose")        // Mean dose
@@ -573,7 +573,7 @@ namespace VMS.TPS
                                 }
                             }
 
-                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = meandose.Dose, status = jstatus, structvol = structvol });
+                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = meandose.Dose, status = jstatus, structvol = structvol, type = "NV" });
 
                         }
                         else if (morty.limit.StartsWith("V"))         // V45   45 is the dose in cGy which specifies a maximum dose that a specific amount (percentage or absolute amount) of the volume of a structure can recieve
@@ -955,7 +955,7 @@ namespace VMS.TPS
                             //  Console.WriteLine("\nDOSE Value: {0}", qdose.Dose);
                             //  Thread.Sleep(5000);
 
-                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = qdose, status = qstatus, structvol = structvol });
+                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = qdose, status = qstatus, structvol = structvol, type = "NV"});
 
 
                         }  // ends the D loop
@@ -1195,7 +1195,7 @@ namespace VMS.TPS
 
                             }
 
-                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = maxdose.Dose, status = kstatus, structvol = structvol });
+                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = maxdose.Dose, status = kstatus, structvol = structvol, type = "NV" });
 
 
                         }
@@ -1308,7 +1308,7 @@ namespace VMS.TPS
 
 
 
-                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = meandose.Dose, status = jstatus, structvol = structvol });
+                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = meandose.Dose, status = jstatus, structvol = structvol, type = "NV" });
 
 
                         }
@@ -1649,7 +1649,7 @@ namespace VMS.TPS
                             //  Console.WriteLine("\nDOSE Value: {0}", qdose.Dose);
                             //  Thread.Sleep(5000);
 
-                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = qdose.Dose, status = qstatus, structvol = structvol });
+                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = qdose.Dose, status = qstatus, structvol = structvol, type = "NV" });
 
 
                         }  // ends the D loop
