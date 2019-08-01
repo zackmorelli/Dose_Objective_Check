@@ -12,7 +12,7 @@ namespace PdfReport.Reporting.MigraDoc
     {
         public void Export(string path, ReportData reportdata)
         {
-            MessageBox.Show("Trigger export");
+          //  MessageBox.Show("Trigger export");
             ExportPdf(path, CreateReport(reportdata));
         }
 
@@ -22,7 +22,7 @@ namespace PdfReport.Reporting.MigraDoc
             pdfRenderer.Document = report;
             pdfRenderer.RenderDocument();
             pdfRenderer.PdfDocument.Save(path);
-            MessageBox.Show("Trigger exportpdf");
+          //  MessageBox.Show("Trigger exportpdf");
         }
 
         private Document CreateReport(ReportData reportdata)
@@ -31,7 +31,7 @@ namespace PdfReport.Reporting.MigraDoc
             CustomStyles.Define(doc);
             doc.Add(CreateMainSection(reportdata));
             doc.Add(CreateMainSection2(reportdata));
-            MessageBox.Show("Trigger create report");
+          //  MessageBox.Show("Trigger create report");
             return doc;
 
         }
@@ -42,7 +42,7 @@ namespace PdfReport.Reporting.MigraDoc
             SetUpPage(section);
             AddHeaderAndFooter(section, reportdata);
             AddDoseObjectiveList(section, reportdata);
-            MessageBox.Show("Trigger main section");
+          //  MessageBox.Show("Trigger main section");
             return section;
         }
 
@@ -52,7 +52,7 @@ namespace PdfReport.Reporting.MigraDoc
             SetUpPage(section);
             AddHeaderAndFooter(section, reportdata);
             AddVolDoseObjectiveList(section, reportdata);
-            MessageBox.Show("Trigger main section2");
+          //  MessageBox.Show("Trigger main section2");
             return section;
         }
 
@@ -71,20 +71,20 @@ namespace PdfReport.Reporting.MigraDoc
 
         private void AddHeaderAndFooter(Section section, ReportData reportdata)
         {
-            MessageBox.Show("Trigger HF");
+           // MessageBox.Show("Trigger HF");
             new HeaderAndFooter().Add(section, reportdata);      
-            MessageBox.Show("Trigger HF2");
+          //  MessageBox.Show("Trigger HF2");
         }
 
         
         private void AddContents(Section section, ReportData data)
         {
 
-            MessageBox.Show("Trigger ADDCONTENTS");
+          //  MessageBox.Show("Trigger ADDCONTENTS");
             // Addold(section, data.Patient);
             AddDoseObjectiveList(section, data);
             AddVolDoseObjectiveList(section, data);
-            MessageBox.Show("Trigger Dose objective Add1");
+           // MessageBox.Show("Trigger Dose objective Add1");
         }
 
         private void Addold(Section section, Patient patient)
@@ -95,17 +95,17 @@ namespace PdfReport.Reporting.MigraDoc
         private void AddDoseObjectiveList(Section section, ReportData data)
         {
 
-            MessageBox.Show("Trigger Dose objective start");
+           // MessageBox.Show("Trigger Dose objective start");
             new DoseObjectiveList().Add(section, data);
-            MessageBox.Show("Trigger Dose Objective end");
+         //   MessageBox.Show("Trigger Dose Objective end");
         }
 
         private void AddVolDoseObjectiveList(Section section, ReportData data)
         {
 
-            MessageBox.Show("Trigger Vol Dose objective start");
+          //  MessageBox.Show("Trigger Vol Dose objective start");
             new VolDoseObjectiveList().Add(section, data);
-            MessageBox.Show("Trigger Vol Dose Objective end");
+          //  MessageBox.Show("Trigger Vol Dose Objective end");
         }
 
 

@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auto-Report-Script", "Auto-Report-Script.csproj", "{3E2ABC71-EAF2-4291-A57D-A99515AD5632}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FFF6FBB2-0BE5-41F9-B656-E0B9D9D17B6A} = {FFF6FBB2-0BE5-41F9-B656-E0B9D9D17B6A}
+		{E57ECCD3-5AAE-4248-B992-4B12654DDECA} = {E57ECCD3-5AAE-4248-B992-4B12654DDECA}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PDFGenerator", "PDFLibraries\PDFGenerator.csproj", "{FFF6FBB2-0BE5-41F9-B656-E0B9D9D17B6A}"
@@ -25,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfReport.Reporting.MigraDo
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ROI", "ROI\ROI.csproj", "{7E8C97E1-151C-4B23-8396-D7340B81A325}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContourChecks", "ContourChecks\ContourChecks.csproj", "{E57ECCD3-5AAE-4248-B992-4B12654DDECA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -96,6 +99,18 @@ Global
 		{7E8C97E1-151C-4B23-8396-D7340B81A325}.Release|x64.Build.0 = Release|Any CPU
 		{7E8C97E1-151C-4B23-8396-D7340B81A325}.Release|x86.ActiveCfg = Release|Any CPU
 		{7E8C97E1-151C-4B23-8396-D7340B81A325}.Release|x86.Build.0 = Release|Any CPU
+		{E57ECCD3-5AAE-4248-B992-4B12654DDECA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E57ECCD3-5AAE-4248-B992-4B12654DDECA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E57ECCD3-5AAE-4248-B992-4B12654DDECA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E57ECCD3-5AAE-4248-B992-4B12654DDECA}.Debug|x64.Build.0 = Debug|Any CPU
+		{E57ECCD3-5AAE-4248-B992-4B12654DDECA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E57ECCD3-5AAE-4248-B992-4B12654DDECA}.Debug|x86.Build.0 = Debug|Any CPU
+		{E57ECCD3-5AAE-4248-B992-4B12654DDECA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E57ECCD3-5AAE-4248-B992-4B12654DDECA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E57ECCD3-5AAE-4248-B992-4B12654DDECA}.Release|x64.ActiveCfg = Release|Any CPU
+		{E57ECCD3-5AAE-4248-B992-4B12654DDECA}.Release|x64.Build.0 = Release|Any CPU
+		{E57ECCD3-5AAE-4248-B992-4B12654DDECA}.Release|x86.ActiveCfg = Release|Any CPU
+		{E57ECCD3-5AAE-4248-B992-4B12654DDECA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

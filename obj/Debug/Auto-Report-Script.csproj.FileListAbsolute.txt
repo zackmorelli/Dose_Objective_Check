@@ -39,3 +39,5 @@ C:\prog\Auto-Report-Script\obj\Debug\Auto-Report-Script.csproj.CoreCompileInputs
 C:\prog\Auto-Report-Script\obj\Debug\Auto-Report-Script.csproj.CopyComplete
 C:\prog\Auto-Report-Script\obj\Debug\Auto-Report-Script.esapi.dll
 C:\prog\Auto-Report-Script\obj\Debug\Auto-Report-Script.esapi.pdb
+C:\prog\Auto-Report-Script\bin\Debug\ContourChecks.dll
+C:\prog\Auto-Report-Script\bin\Debug\ContourChecks.pdb

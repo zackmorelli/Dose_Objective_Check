@@ -35,6 +35,9 @@
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ContourChecks">
+      <HintPath>ContourChecks\bin\Debug\ContourChecks.dll</HintPath>
+    </Reference>
     <Reference Include="PdfReport.PDFGenerator">
       <HintPath>PDFLibraries\bin\Debug\PdfReport.PDFGenerator.dll</HintPath>
     </Reference>

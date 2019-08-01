@@ -16,15 +16,15 @@ namespace PdfReport.PDFGenerator
         public static void PlanMain(VMS.TPS.Common.Model.API.Patient patient, VMS.TPS.Common.Model.API.Course course, VMS.TPS.Common.Model.API.PlanSetup plan, VMS.TPS.Common.Model.API.Image image3D, VMS.TPS.Common.Model.API.StructureSet structureSet, VMS.TPS.Common.Model.API.User user, List<ROI.ROI> output)
         {
 
-            MessageBox.Show("Trigger plan main start");
+           // MessageBox.Show("Trigger plan main start");
 
             var reportService = new PdfReport.Reporting.MigraDoc.ReportPdf();
             var reportData = CreateReportDataPlan(patient, course, plan, image3D, structureSet, user, output);
-            MessageBox.Show("Trigger main middle plan");
+          //  MessageBox.Show("Trigger main middle plan");
             var path = GetTempPdfPath();
-            MessageBox.Show(path);
+           // MessageBox.Show(path);
             reportService.Export(path, reportData);
-            MessageBox.Show("Trigger after export plan");
+          //  MessageBox.Show("Trigger after export plan");
 
             Process.Start(path);
            // MessageBox.Show("Trigger main end");
@@ -34,7 +34,7 @@ namespace PdfReport.PDFGenerator
         public static void PlansumMain(VMS.TPS.Common.Model.API.Patient patient, VMS.TPS.Common.Model.API.Course course, VMS.TPS.Common.Model.API.PlanSum plansum, VMS.TPS.Common.Model.API.Image image3D, VMS.TPS.Common.Model.API.StructureSet structureSet, VMS.TPS.Common.Model.API.User user, List<ROI.ROI> output)
         {
 
-             MessageBox.Show("Trigger plansum main start");
+            // MessageBox.Show("Trigger plansum main start");
 
             var reportService = new PdfReport.Reporting.MigraDoc.ReportPdf();
             var reportData = CreateReportDataPlansum(patient, course, plansum, image3D, structureSet, user, output);
@@ -42,7 +42,7 @@ namespace PdfReport.PDFGenerator
             var path = GetTempPdfPath();
             // MessageBox.Show(path);
             reportService.Export(path, reportData);
-             MessageBox.Show("Trigger after export plansum");
+           //  MessageBox.Show("Trigger after export plansum");
 
             Process.Start(path);
             // MessageBox.Show("Trigger main end");
@@ -52,7 +52,7 @@ namespace PdfReport.PDFGenerator
         private static ReportData CreateReportDataPlan(VMS.TPS.Common.Model.API.Patient patient, VMS.TPS.Common.Model.API.Course course, VMS.TPS.Common.Model.API.PlanSetup plan, VMS.TPS.Common.Model.API.Image image3D, VMS.TPS.Common.Model.API.StructureSet structureSet, VMS.TPS.Common.Model.API.User user, List<ROI.ROI> output)
         {
 
-            MessageBox.Show("Trigger report data plan");
+          //  MessageBox.Show("Trigger report data plan");
 
             // some variables used to help convert between Varian stuff and the classes for the pdf
 
@@ -107,7 +107,7 @@ namespace PdfReport.PDFGenerator
         private static ReportData CreateReportDataPlansum(VMS.TPS.Common.Model.API.Patient patient, VMS.TPS.Common.Model.API.Course course, VMS.TPS.Common.Model.API.PlanSum plansum, VMS.TPS.Common.Model.API.Image image3D, VMS.TPS.Common.Model.API.StructureSet structureSet, VMS.TPS.Common.Model.API.User user, List<ROI.ROI> output)
         {
 
-             MessageBox.Show("Trigger report data sum");
+           //  MessageBox.Show("Trigger report data sum");
 
             // some variables used to help convert between Varian stuff and the classes for the pdf
 

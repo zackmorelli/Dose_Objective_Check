@@ -147,7 +147,7 @@ namespace Auto_Report_Script
                         while ((line = Lread.ReadLine()) != "END")    //each loop pulls a line from the file until no lines left
                         {
 
-                            //  Console.WriteLine("TriggerConv4");
+                             // Console.WriteLine("TriggerConv4");
                             // tempoarary variables cleared at beggining of each new line loop
                             tname = null;
                             tid = 0;
@@ -181,10 +181,7 @@ namespace Auto_Report_Script
                                     temp = words[6 + i];
 
                                     ttreatsite[i] = temp;
-
                                 }
-
-
                             }
                             else
                             {
@@ -197,9 +194,7 @@ namespace Auto_Report_Script
                                     temp = words[7 + i];
 
                                     ttreatsite[i] = temp;
-
                                 }
-
                             }
 
                             ROIL.Add(new ROI.ROI { ROIName = tname, Rstruct = tstruct, ROIId = tid, limit = tlimit, limval = tlimval, strict = tstrict, limunit = tlimunit, status = tstatus, goal = tgoal, treatsite = ttreatsite });
@@ -218,7 +213,7 @@ namespace Auto_Report_Script
 
 
 
-                      //  Console.WriteLine("TriggerSRS");
+                       // Console.WriteLine("TriggerSRS");
 
 
                     }   // ends open file
@@ -235,10 +230,9 @@ namespace Auto_Report_Script
             
  
  
-
             foreach (ROI.ROI roi in ROIL )       // iterate through all the ROI.ROI elements in the ROIL list
             {
-              //  Console.WriteLine("ROIL size is: {0}", ROIL.Count);
+              // Console.WriteLine("ROIL size is: {0}", ROIL.Count);
               //  Console.WriteLine("ROIL index: {0}", j);
               //  Console.WriteLine("roi name is: {0}", roi.ROIName);
                 j++;

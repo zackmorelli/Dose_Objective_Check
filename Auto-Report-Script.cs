@@ -12,6 +12,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using VMS.TPS.Common.Model.API;
 using VMS.TPS.Common.Model.Types;
+using ContourChecks;
 using PdfReport.PDFGenerator;
 using ROI;
 
@@ -576,6 +577,88 @@ namespace VMS.TPS
                             ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = meandose.Dose, status = jstatus, structvol = structvol, type = "NV" });
 
                         }
+                        else if (morty.limit.StartsWith("CV"))
+                        {
+
+                            string Lstatus = null;
+                            double Lcomp = 0.0;    //compare
+                            double Lcomp2 = 0.0;
+                            double Lvol = 0.0;
+                            double Ldose = 0.0;    //functional dose
+                            string type = "cm3";
+                            double Llimit = 0.0;
+
+
+                            string jerry = morty.limit.Substring(2);
+                            Llimit = Convert.ToDouble(jerry);
+
+                            Lcomp = Convert.ToDouble(morty.limval);  // VOLUME IN CM3
+
+                            if (morty.goal != "NA")
+                            {
+                                Lcomp2 = Convert.ToDouble(morty.goal);   // VOLUME IN CM3
+                            }
+
+                            Ldose = (Llimit / 100.0) * dosesum;    // this calculates an absolute dose from the fractional value of Vgy
+
+                            DVHData Ldvh = Plansum.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.AbsoluteCm3, 0.1);
+
+                            Console.WriteLine("\nDVH Point Curves Volume Unit CM3: {0}", Ldvh.CurveData[1].VolumeUnit);
+                            Console.WriteLine("\nDVH Point Curves Dose Unit cGy: {0}", Ldvh.CurveData[1].DoseValue.UnitAsString);
+
+                            Thread.Sleep(2000);
+
+                            foreach (DVHPoint point in Ldvh.CurveData)
+                            {
+
+                                if ((point.DoseValue.Dose >= (Ldose - 0.5)) && (point.DoseValue.Dose <= (Ldose + 0.5)))
+                                {
+                                    Console.WriteLine("\nTrigger DVH Point match!!");
+                                    Lvol = point.Volume;
+
+                                }
+                            }
+
+                            if (morty.strict == "[record]")
+                            {
+                                Lstatus = "PASS";
+                            }
+                            else if (morty.strict == ">")
+                            {
+
+                                if (morty.goal != "NA")            // meaning there is a goal set
+                                {
+
+                                    if (Lvol > Lcomp2)
+                                    {
+                                        Lstatus = "PASS";
+                                    }
+                                    else if (Lvol < Lcomp)
+                                    {
+                                        Lstatus = "REVIEW";
+                                    }
+                                    else
+                                    {
+                                        Lstatus = "REVIEW";
+                                    }
+                                }
+                                else
+                                {
+
+                                    if (Lvol > Lcomp)
+                                    {
+                                        Lstatus = "PASS";
+                                    }
+                                    else
+                                    {
+                                        Lstatus = "REVIEW";
+                                    }
+                                }
+                            }
+
+                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limvol = Lcomp, goalvol = Lcomp2, actvol = Lvol, status = Lstatus, structvol = structvol, type = type });
+
+                        }
                         else if (morty.limit.StartsWith("V"))         // V45   45 is the dose in cGy which specifies a maximum dose that a specific amount (percentage or absolute amount) of the volume of a structure can recieve
                         {
                             string fstatus = null;
@@ -602,6 +685,11 @@ namespace VMS.TPS
                                 // Thread.Sleep(2000);
                                 Vgy = Convert.ToDouble(jerry);                                 // "V gray" 
 
+                            }
+                            else if (morty.limit == "V100%Rx")
+                            {
+
+                                Vgy = 100.0;
                             }
                             else
                             {
@@ -698,37 +786,27 @@ namespace VMS.TPS
 
                             if (morty.strict == "[record]")
                             {
-
                                 fstatus = "PASS";
-
                             }
                             else if (morty.strict == "<")
                             {
-
                                 if (morty.goal != "NA")            // meaning there is a goal set
                                 {
-
                                     if (Vvol < comp2)
                                     {
                                         fstatus = "PASS";
                                     }
                                     else if (Vvol < comp)
-                                    {
-
+                                    { 
                                         fstatus = "REVIEW";
-
                                     }
                                     else
                                     {
                                         fstatus = "REVIEW";
-
                                     }
-
-
                                 }
                                 else
                                 {
-
                                     if (Vvol < comp)
                                     {
                                         fstatus = "PASS";
@@ -736,41 +814,28 @@ namespace VMS.TPS
                                     else
                                     {
                                         fstatus = "REVIEW";
-
                                     }
-
                                 }
-
-
                             }
                             else if (morty.strict == "<=")
                             {
-
-
                                 if (morty.goal != "NA")            // meaning there is a goal set
                                 {
-
                                     if (Vvol <= comp2)
                                     {
                                         fstatus = "PASS";
                                     }
                                     else if (Vvol <= comp)
                                     {
-
                                         fstatus = "REVIEW";
-
                                     }
                                     else
                                     {
                                         fstatus = "REVIEW";
-
                                     }
-
-
                                 }
                                 else
                                 {
-
                                     if (Vvol <= comp)
                                     {
                                         fstatus = "PASS";
@@ -778,7 +843,35 @@ namespace VMS.TPS
                                     else
                                     {
                                         fstatus = "REVIEW";
-
+                                    }
+                                }
+                            }
+                            else if (morty.strict == ">=")
+                            {
+                                if (morty.goal != "NA")            // meaning there is a goal set
+                                {
+                                    if (Vvol >= comp2)
+                                    {
+                                        fstatus = "PASS";
+                                    }
+                                    else if (Vvol >= comp)
+                                    {
+                                        fstatus = "REVIEW";
+                                    }
+                                    else
+                                    {
+                                        fstatus = "REVIEW";
+                                    }
+                                }
+                                else
+                                {
+                                    if (Vvol >= comp)
+                                    {
+                                        fstatus = "PASS";
+                                    }
+                                    else
+                                    {
+                                        fstatus = "REVIEW";
                                     }
                                 }
                             }
@@ -1310,6 +1403,70 @@ namespace VMS.TPS
 
                             ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = meandose.Dose, status = jstatus, structvol = structvol, type = "NV" });
 
+                        }
+                        else if (morty.limit.StartsWith("CV"))
+                        {
+
+                            string Lstatus = null;
+                            double Lcomp = 0.0;    //compare
+                            double Lcomp2 = 0.0;
+                            double Lvol = 0.0;
+                            string type = "cm3";
+                            double Llimit = 0.0;
+
+
+                            string jerry = morty.limit.Substring(2);
+                            Llimit = Convert.ToDouble(jerry);
+
+                            Lcomp = Convert.ToDouble(morty.limval);  // VOLUME IN CM3
+
+                            if (morty.goal != "NA")
+                            {
+                                Lcomp2 = Convert.ToDouble(morty.goal);   // VOLUME IN CM3
+                            }
+
+                            DoseValue Ldose = new DoseValue(Llimit, DoseValue.DoseUnit.Percent);
+
+                            Lvol = Plan.GetVolumeAtDose(S, Ldose, VolumePresentation.AbsoluteCm3);
+
+                            if (morty.strict == "[record]")
+                            {
+                                Lstatus = "PASS";
+                            }
+                            else if (morty.strict == ">")
+                            {
+
+                                if (morty.goal != "NA")            // meaning there is a goal set
+                                {
+
+                                    if (Lvol > Lcomp2)
+                                    {
+                                        Lstatus = "PASS";
+                                    }
+                                    else if (Lvol < Lcomp)
+                                    {
+                                        Lstatus = "REVIEW";
+                                    }
+                                    else
+                                    {
+                                        Lstatus = "REVIEW";
+                                    }
+                                }
+                                else
+                                {
+
+                                    if (Lvol > Lcomp)
+                                    {
+                                        Lstatus = "PASS";
+                                    }
+                                    else
+                                    {
+                                        Lstatus = "REVIEW";
+                                    }
+                                }
+                            }
+
+                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limvol = Lcomp, goalvol = Lcomp2, actvol = Lvol, status = Lstatus, structvol = structvol, type = type });
 
                         }
                         else if (morty.limit.StartsWith("V"))         // V45   45 is the dose in cGy which specifies a maximum dose that a specific amount (percentage or absolute amount) of the volume of a structure can recieve
@@ -1335,8 +1492,13 @@ namespace VMS.TPS
                                 string jerry = morty.limit.Substring(1);
                                 //  Console.WriteLine("\n After V chop, we have (jerry): {0}", jerry);
                                 // Thread.Sleep(2000);
-                                Vgy = Convert.ToDouble(jerry);                                 // "V gray" 
+                                Vgy = Convert.ToDouble(jerry);                                  
 
+                            }
+                            else if (morty.limit == "V100%Rx")
+                            {
+
+                                Vgy = 100.0;
                             }
                             else
                             {
@@ -1349,7 +1511,7 @@ namespace VMS.TPS
                             {
                                 type = "percent";
 
-                                comp = Convert.ToDouble(morty.limval);      
+                                comp = Convert.ToDouble(morty.limval);
 
                                 // fvol = (structvol * ((Convert.ToDouble(morty.limval)) / 100.0));           // specific volume that the ROI.ROI is concerned with. Here, limval is the percent of the volume of the structure
 
@@ -1370,15 +1532,15 @@ namespace VMS.TPS
 
                                 DoseValue Vdose = new DoseValue(Vgy, DoseValue.DoseUnit.Percent);
 
-                               // Console.WriteLine("\nVDOSE: {0} {1}", Vdose.Dose, Vdose.UnitAsString);
+                                // Console.WriteLine("\nVDOSE: {0} {1}", Vdose.Dose, Vdose.UnitAsString);
 
-                               // Thread.Sleep(2000);
+                                // Thread.Sleep(2000);
 
                                 Vvol = Plan.GetVolumeAtDose(S, Vdose, VolumePresentation.Relative);        //dvolper - dose volume percent
 
-                              //  Console.WriteLine("\nVVOL: {0}", Vvol);
-                              
-                               // Thread.Sleep(2000);
+                                //  Console.WriteLine("\nVVOL: {0}", Vvol);
+
+                                // Thread.Sleep(2000);
 
                                 //  Console.WriteLine("\n\n PERCENT DOSE TEST: {0}  {1}", fdose.Dose, tfdose.Dose);
                                 //  Thread.Sleep(5000);
@@ -1403,15 +1565,15 @@ namespace VMS.TPS
 
                                 DoseValue Vdose = new DoseValue(Vgy, DoseValue.DoseUnit.Percent);
 
-                              //  Console.WriteLine("\nVDOSE: {0} {1}", Vdose.Dose, Vdose.UnitAsString);
+                                //  Console.WriteLine("\nVDOSE: {0} {1}", Vdose.Dose, Vdose.UnitAsString);
 
-                              //  Thread.Sleep(2000);
+                                //  Thread.Sleep(2000);
 
                                 Vvol = Plan.GetVolumeAtDose(S, Vdose, VolumePresentation.AbsoluteCm3);
 
-                              //  Console.WriteLine("\nVVOL: {0}", Vvol);
+                                //  Console.WriteLine("\nVVOL: {0}", Vvol);
 
-                              //  Thread.Sleep(2000);
+                                //  Thread.Sleep(2000);
 
                             }
 
@@ -1442,8 +1604,6 @@ namespace VMS.TPS
                                         fstatus = "REVIEW";
 
                                     }
-
-
                                 }
                                 else
                                 {
@@ -1457,10 +1617,7 @@ namespace VMS.TPS
                                         fstatus = "REVIEW";
 
                                     }
-
                                 }
-
-
                             }
                             else if (morty.strict == "<=")
                             {
@@ -1493,7 +1650,36 @@ namespace VMS.TPS
                                     else
                                     {
                                         fstatus = "REVIEW";
+                                    }
+                                }
+                            }
+                            else if (morty.strict == ">=")
+                            {
+                                if (morty.goal != "NA")            // meaning there is a goal set
+                                {
 
+                                    if (Vvol >= comp2)
+                                    {
+                                        fstatus = "PASS";
+                                    }
+                                    else if (Vvol >= comp)
+                                    {
+                                        fstatus = "REVIEW";
+                                    }
+                                    else
+                                    {
+                                        fstatus = "REVIEW";
+                                    }
+                                }
+                                else
+                                {
+                                    if (Vvol >= comp)
+                                    {
+                                        fstatus = "PASS";
+                                    }
+                                    else
+                                    {
+                                        fstatus = "REVIEW";
                                     }
                                 }
                             }
@@ -1732,6 +1918,15 @@ foreach(ROI.ROI aroi in ROIA)
                 MessageBox.Show("Please load a patient with a treatment Plan before running this script!");
                 return;
             }
+
+            // this area calls outside functions that perform automatic checks on system
+
+
+           // ContourChecks.CountourChecks.ContoursInBody(structureSet);      
+                
+
+
+            // Functions below here are for the dose objective check program
 
             Discrim = Discriminator(Plansums, Plans, user);
             
