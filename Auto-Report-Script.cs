@@ -603,8 +603,8 @@ namespace VMS.TPS
 
                             DVHData Ldvh = Plansum.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.AbsoluteCm3, 0.1);
 
-                            Console.WriteLine("\nDVH Point Curves Volume Unit CM3: {0}", Ldvh.CurveData[1].VolumeUnit);
-                            Console.WriteLine("\nDVH Point Curves Dose Unit cGy: {0}", Ldvh.CurveData[1].DoseValue.UnitAsString);
+                          //  Console.WriteLine("\nDVH Point Curves Volume Unit CM3: {0}", Ldvh.CurveData[1].VolumeUnit);
+                          //  Console.WriteLine("\nDVH Point Curves Dose Unit cGy: {0}", Ldvh.CurveData[1].DoseValue.UnitAsString);
 
                             Thread.Sleep(2000);
 
@@ -613,7 +613,7 @@ namespace VMS.TPS
 
                                 if ((point.DoseValue.Dose >= (Ldose - 0.5)) && (point.DoseValue.Dose <= (Ldose + 0.5)))
                                 {
-                                    Console.WriteLine("\nTrigger DVH Point match!!");
+                                   // Console.WriteLine("\nTrigger DVH Point match!!");
                                     Lvol = point.Volume;
 
                                 }
@@ -725,8 +725,8 @@ namespace VMS.TPS
 
                                 DVHData Vdvh = Plansum.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.Relative, 0.1);
 
-                                Console.WriteLine("\nDVH Point Curves Volume Unit PERCENT: {0}", Vdvh.CurveData[1].VolumeUnit);
-                                Console.WriteLine("\nDVH Point Curves Dose Unit cGy: {0}", Vdvh.CurveData[1].DoseValue.UnitAsString);
+                              //  Console.WriteLine("\nDVH Point Curves Volume Unit PERCENT: {0}", Vdvh.CurveData[1].VolumeUnit);
+                              //  Console.WriteLine("\nDVH Point Curves Dose Unit cGy: {0}", Vdvh.CurveData[1].DoseValue.UnitAsString);
 
                                 Thread.Sleep(2000);
 
@@ -735,7 +735,7 @@ namespace VMS.TPS
 
                                     if ((point.DoseValue.Dose >= (fdose - 0.5)) && (point.DoseValue.Dose <= (fdose + 0.5)))
                                     {
-                                        Console.WriteLine("\nTrigger DVH Point match!!");
+                                       // Console.WriteLine("\nTrigger DVH Point match!!");
                                         Vvol = point.Volume;
                                     }
                                 }
@@ -767,8 +767,8 @@ namespace VMS.TPS
 
                                 DVHData Vdvh = Plansum.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.AbsoluteCm3, 0.1);
 
-                                Console.WriteLine("\nDVH Point Curves Volume Unit CM3: {0}", Vdvh.CurveData[1].VolumeUnit);
-                                Console.WriteLine("\nDVH Point Curves Dose Unit cGy: {0}", Vdvh.CurveData[1].DoseValue.UnitAsString);
+                               // Console.WriteLine("\nDVH Point Curves Volume Unit CM3: {0}", Vdvh.CurveData[1].VolumeUnit);
+                               // Console.WriteLine("\nDVH Point Curves Dose Unit cGy: {0}", Vdvh.CurveData[1].DoseValue.UnitAsString);
 
                                 Thread.Sleep(2000);
 
@@ -777,7 +777,7 @@ namespace VMS.TPS
 
                                     if ((point.DoseValue.Dose >= (fdose - 0.5)) && (point.DoseValue.Dose <= (fdose + 0.5)))
                                     {
-                                        Console.WriteLine("\nTrigger DVH Point match!!");
+                                       // Console.WriteLine("\nTrigger DVH Point match!!");
                                         Vvol = point.Volume;
 
                                     }
@@ -914,7 +914,7 @@ namespace VMS.TPS
 
                                 DVHData Qdvh = Plansum.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.AbsoluteCm3, 0.1);
 
-                                Console.WriteLine("\nDVH Point Curves volume unit CM3: {0}", Qdvh.CurveData[1].VolumeUnit);
+                               // Console.WriteLine("\nDVH Point Curves volume unit CM3: {0}", Qdvh.CurveData[1].VolumeUnit);
 
                                 foreach (DVHPoint point in Qdvh.CurveData)
                                 {
@@ -942,7 +942,7 @@ namespace VMS.TPS
 
                                 DVHData Qdvh = Plansum.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.Relative, 0.1);
 
-                                Console.WriteLine("\nDVH Point Curves volume unit PERCENT: {0}", Qdvh.CurveData[1].VolumeUnit);
+                               // Console.WriteLine("\nDVH Point Curves volume unit PERCENT: {0}", Qdvh.CurveData[1].VolumeUnit);
 
                                 foreach (DVHPoint point in Qdvh.CurveData)
                                 {
