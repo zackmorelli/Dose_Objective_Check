@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Windows;
+using System.ComponentModel;
+using System.Windows.Threading;
 using System.IO;
 using System.Reflection;
 using System.Diagnostics;
@@ -55,6 +57,8 @@ namespace VMS.TPS
         static extern bool AllocConsole();
 
         // Declaration Space for things outside of "Execute" class
+
+     
 
 
         public class TreatSite : IEquatable<TreatSite>        //makes a treatment site class used to make a list of treatment sites 
@@ -142,6 +146,7 @@ namespace VMS.TPS
 
         static bool Discriminator(IEnumerable<PlanSum> Plansums, IEnumerable<PlanSetup> Plans, User user)
         {
+
             bool D = false;
             int cnt = 0;
             string input = null;
@@ -354,10 +359,12 @@ namespace VMS.TPS
             Thread.Sleep(2000);
 
             Console.WriteLine("\nCorrelating dose objectives with structures in current Plansum ... ");
-
+            int county = 0;
 
             foreach (ROI.ROI morty in ROIE)
             {
+                Console.WriteLine("\n {0} Dose objectives calculated... ", county);
+                county++;
 
                 //  Console.WriteLine("\nThe current dose of objective is: {0}", morty.ROIName);
                 // Thread.Sleep(2000);
@@ -389,10 +396,26 @@ namespace VMS.TPS
                             //  Console.WriteLine("\nTRIGGER MAX PT Dose");
                             //   Console.WriteLine("\nMAX PT Dose Limit: {0}  {1}", morty.limval, morty.limunit);
                             //Thread.Sleep(1000);
+                            double maxdose = 0.0;
 
                             DVHData kDVH = Plansum.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.AbsoluteCm3, 0.1);
 
-                            DoseValue maxdose = kDVH.MaxDose;
+                            foreach (DVHPoint point in kDVH.CurveData)
+                            {
+
+                                if (point.Volume == 0.03)
+                                {
+                                    if (maxdose == 0.0)
+                                    {
+                                        maxdose = point.DoseValue.Dose;
+                                    }
+                                    
+                                    if (point.DoseValue.Dose > maxdose)
+                                    {
+                                        maxdose = point.DoseValue.Dose;
+                                    }
+                                }
+                            }
 
                             //  Console.WriteLine("\nDOSE UNIT: {0}", maxdose.Unit.ToString());
                             //   Console.WriteLine("\nDOSE Value: {0}", maxdose.Dose);
@@ -411,14 +434,14 @@ namespace VMS.TPS
                                 if (morty.goal != "NA")            // meaning there is a goal set
                                 {
 
-                                    if (maxdose.Dose < Convert.ToDouble(morty.goal))
+                                    if (maxdose < Convert.ToDouble(morty.goal))
                                     {
                                         kstatus = "PASS";
                                     }
-                                    else if (maxdose.Dose < Convert.ToDouble(morty.limval))
+                                    else if (maxdose < Convert.ToDouble(morty.limval))
                                     {
 
-                                        kstatus = "REVIEW";
+                                        kstatus = "REVIEW - GOAL";
 
                                     }
                                     else
@@ -432,7 +455,7 @@ namespace VMS.TPS
                                 else
                                 {
 
-                                    if (maxdose.Dose < Convert.ToDouble(morty.limval))
+                                    if (maxdose < Convert.ToDouble(morty.limval))
                                     {
                                         kstatus = "PASS";
                                     }
@@ -453,14 +476,14 @@ namespace VMS.TPS
                                 if (morty.goal != "NA")            // meaning there is a goal set
                                 {
 
-                                    if (maxdose.Dose <= Convert.ToDouble(morty.goal))
+                                    if (maxdose <= Convert.ToDouble(morty.goal))
                                     {
                                         kstatus = "PASS";
                                     }
-                                    else if (maxdose.Dose <= Convert.ToDouble(morty.limval))
+                                    else if (maxdose <= Convert.ToDouble(morty.limval))
                                     {
 
-                                        kstatus = "REVIEW";
+                                        kstatus = "REVIEW - GOAL";
 
                                     }
                                     else
@@ -474,7 +497,7 @@ namespace VMS.TPS
                                 else
                                 {
 
-                                    if (maxdose.Dose < Convert.ToDouble(morty.limval))
+                                    if (maxdose < Convert.ToDouble(morty.limval))
                                     {
                                         kstatus = "PASS";
                                     }
@@ -486,7 +509,7 @@ namespace VMS.TPS
                                 }
                             }
 
-                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = maxdose.Dose, status = kstatus, structvol = structvol, type = "NV"});
+                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = maxdose, status = kstatus, structvol = structvol, type = "NV"});
 
                         }
                         else if (morty.limit == "Mean Dose")        // Mean dose
@@ -521,7 +544,7 @@ namespace VMS.TPS
                                     }
                                     else if (meandose.Dose < Convert.ToDouble(morty.limval))
                                     {
-                                        jstatus = "REVIEW";
+                                        jstatus = "REVIEW - GOAL";
                                     }
                                     else
                                     {
@@ -553,7 +576,7 @@ namespace VMS.TPS
                                     }
                                     else if (meandose.Dose <= Convert.ToDouble(morty.limval))
                                     {
-                                        jstatus = "REVIEW";
+                                        jstatus = "REVIEW - GOAL";
                                     }
                                     else
                                     {
@@ -635,7 +658,7 @@ namespace VMS.TPS
                                     }
                                     else if (Lvol < Lcomp)
                                     {
-                                        Lstatus = "REVIEW";
+                                        Lstatus = "REVIEW - GOAL";
                                     }
                                     else
                                     {
@@ -719,8 +742,6 @@ namespace VMS.TPS
 
                                 }
 
-                                fdose = (Vgy / 100.0) * dosesum;    // this calculates an absolute dose from the fractional value of Vgy
-
                                 //  Vvol = Plan.GetVolumeAtDose(S, Vdose, VolumePresentation.Relative);        //dvolper - dose volume percent
 
                                 DVHData Vdvh = Plansum.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.Relative, 0.1);
@@ -733,7 +754,7 @@ namespace VMS.TPS
                                 foreach (DVHPoint point in Vdvh.CurveData)
                                 {
 
-                                    if ((point.DoseValue.Dose >= (fdose - 0.5)) && (point.DoseValue.Dose <= (fdose + 0.5)))
+                                    if ((point.DoseValue.Dose >= (Vgy - 0.3)) && (point.DoseValue.Dose <= (Vgy + 0.3)))
                                     {
                                        // Console.WriteLine("\nTrigger DVH Point match!!");
                                         Vvol = point.Volume;
@@ -761,9 +782,7 @@ namespace VMS.TPS
 
                                 }
 
-                                fdose = (Vgy / 100.0) * dosesum;    // this calculates an absolute dose from the fractional value of Vgy
-
-                                // Vvol = Plan.GetVolumeAtDose(S, Vdose, VolumePresentation.AbsoluteCm3);
+                              // Vvol = Plan.GetVolumeAtDose(S, Vdose, VolumePresentation.AbsoluteCm3);
 
                                 DVHData Vdvh = Plansum.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.AbsoluteCm3, 0.1);
 
@@ -775,7 +794,7 @@ namespace VMS.TPS
                                 foreach (DVHPoint point in Vdvh.CurveData)
                                 {
 
-                                    if ((point.DoseValue.Dose >= (fdose - 0.5)) && (point.DoseValue.Dose <= (fdose + 0.5)))
+                                    if ((point.DoseValue.Dose >= (Vgy - 0.3)) && (point.DoseValue.Dose <= (Vgy + 0.3)))
                                     {
                                        // Console.WriteLine("\nTrigger DVH Point match!!");
                                         Vvol = point.Volume;
@@ -798,7 +817,7 @@ namespace VMS.TPS
                                     }
                                     else if (Vvol < comp)
                                     { 
-                                        fstatus = "REVIEW";
+                                        fstatus = "REVIEW - GOAL";
                                     }
                                     else
                                     {
@@ -827,7 +846,7 @@ namespace VMS.TPS
                                     }
                                     else if (Vvol <= comp)
                                     {
-                                        fstatus = "REVIEW";
+                                        fstatus = "REVIEW - GOAL";
                                     }
                                     else
                                     {
@@ -856,7 +875,7 @@ namespace VMS.TPS
                                     }
                                     else if (Vvol >= comp)
                                     {
-                                        fstatus = "REVIEW";
+                                        fstatus = "REVIEW - GOAL";
                                     }
                                     else
                                     {
@@ -982,7 +1001,7 @@ namespace VMS.TPS
                                     else if (qdose < Convert.ToDouble(morty.goal))
                                     {
 
-                                        qstatus = "REVIEW";
+                                        qstatus = "REVIEW - GOAL";
 
                                     }
                                     else
@@ -1019,7 +1038,7 @@ namespace VMS.TPS
                                     else if (qdose <= Convert.ToDouble(morty.goal))
                                     {
 
-                                        qstatus = "REVIEW";
+                                        qstatus = "REVIEW - GOAL";
 
                                     }
                                     else
@@ -1152,9 +1171,12 @@ namespace VMS.TPS
             Thread.Sleep(2000);
 
             Console.WriteLine("\nCorrelating dose objectives with structures in current Plan ... ");
+            int county = 0;
 
             foreach (ROI.ROI morty in ROIE)
             {
+                Console.WriteLine("\n {0} Dose objectives calculated... ", county);
+                county++;
 
                 //  Console.WriteLine("\nThe current dose of objective is: {0}", morty.ROIName);
                 // Thread.Sleep(2000);
@@ -1191,7 +1213,24 @@ namespace VMS.TPS
 
                             DVHData kDVH = Plan.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.AbsoluteCm3, 0.1);
 
-                            DoseValue maxdose = kDVH.MaxDose;
+                            double maxdose = 0.0;
+
+                            foreach (DVHPoint point in kDVH.CurveData)
+                            {
+
+                                if (point.Volume == 0.03)
+                                {
+                                    if (maxdose == 0.0)
+                                    {
+                                        maxdose = point.DoseValue.Dose;
+                                    }
+
+                                    if (point.DoseValue.Dose > maxdose)
+                                    {
+                                        maxdose = point.DoseValue.Dose;
+                                    }
+                                }
+                            }
 
                             //  Console.WriteLine("\nDOSE UNIT: {0}", maxdose.Unit.ToString());
                             //   Console.WriteLine("\nDOSE Value: {0}", maxdose.Dose);
@@ -1210,14 +1249,14 @@ namespace VMS.TPS
                                 if (morty.goal != "NA")            // meaning there is a goal set
                                 {
 
-                                    if (maxdose.Dose < Convert.ToDouble(morty.goal))
+                                    if (maxdose < Convert.ToDouble(morty.goal))
                                     {
                                         kstatus = "PASS";
                                     }
-                                    else if (maxdose.Dose < Convert.ToDouble(morty.limval))
+                                    else if (maxdose < Convert.ToDouble(morty.limval))
                                     {
 
-                                        kstatus = "REVIEW";
+                                        kstatus = "REVIEW - GOAL";
 
                                     }
                                     else
@@ -1231,7 +1270,7 @@ namespace VMS.TPS
                                 else
                                 {
 
-                                    if (maxdose.Dose < Convert.ToDouble(morty.limval))
+                                    if (maxdose < Convert.ToDouble(morty.limval))
                                     {
                                         kstatus = "PASS";
                                     }
@@ -1252,14 +1291,14 @@ namespace VMS.TPS
                                 if (morty.goal != "NA")            // meaning there is a goal set
                                 {
 
-                                    if (maxdose.Dose <= Convert.ToDouble(morty.goal))
+                                    if (maxdose <= Convert.ToDouble(morty.goal))
                                     {
                                         kstatus = "PASS";
                                     }
-                                    else if (maxdose.Dose <= Convert.ToDouble(morty.limval))
+                                    else if (maxdose <= Convert.ToDouble(morty.limval))
                                     {
 
-                                        kstatus = "REVIEW";
+                                        kstatus = "REVIEW - GOAL";
 
                                     }
                                     else
@@ -1273,7 +1312,7 @@ namespace VMS.TPS
                                 else
                                 {
 
-                                    if (maxdose.Dose < Convert.ToDouble(morty.limval))
+                                    if (maxdose < Convert.ToDouble(morty.limval))
                                     {
                                         kstatus = "PASS";
                                     }
@@ -1288,7 +1327,7 @@ namespace VMS.TPS
 
                             }
 
-                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = maxdose.Dose, status = kstatus, structvol = structvol, type = "NV" });
+                            ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = maxdose, status = kstatus, structvol = structvol, type = "NV" });
 
 
                         }
@@ -1328,7 +1367,7 @@ namespace VMS.TPS
                                     else if (meandose.Dose < Convert.ToDouble(morty.limval))
                                     {
 
-                                        jstatus = "REVIEW";
+                                        jstatus = "REVIEW - GOAL";
 
                                     }
                                     else
@@ -1370,7 +1409,7 @@ namespace VMS.TPS
                                     else if (meandose.Dose <= Convert.ToDouble(morty.limval))
                                     {
 
-                                        jstatus = "REVIEW";
+                                        jstatus = "REVIEW - GOAL";
 
                                     }
                                     else
@@ -1445,7 +1484,7 @@ namespace VMS.TPS
                                     }
                                     else if (Lvol < Lcomp)
                                     {
-                                        Lstatus = "REVIEW";
+                                        Lstatus = "REVIEW - GOAL";
                                     }
                                     else
                                     {
@@ -1530,7 +1569,7 @@ namespace VMS.TPS
 
                                 }
 
-                                DoseValue Vdose = new DoseValue(Vgy, DoseValue.DoseUnit.Percent);
+                                DoseValue Vdose = new DoseValue(Vgy, DoseValue.DoseUnit.cGy);
 
                                 // Console.WriteLine("\nVDOSE: {0} {1}", Vdose.Dose, Vdose.UnitAsString);
 
@@ -1563,7 +1602,7 @@ namespace VMS.TPS
 
                                 }
 
-                                DoseValue Vdose = new DoseValue(Vgy, DoseValue.DoseUnit.Percent);
+                                DoseValue Vdose = new DoseValue(Vgy, DoseValue.DoseUnit.cGy);
 
                                 //  Console.WriteLine("\nVDOSE: {0} {1}", Vdose.Dose, Vdose.UnitAsString);
 
@@ -1596,7 +1635,7 @@ namespace VMS.TPS
                                     else if (Vvol < comp)
                                     {
 
-                                        fstatus = "REVIEW";
+                                        fstatus = "REVIEW -GOAL";
 
                                     }
                                     else
@@ -1631,7 +1670,7 @@ namespace VMS.TPS
                                     else if (Vvol <= comp)
                                     {
 
-                                        fstatus = "REVIEW";
+                                        fstatus = "REVIEW - GOAL";
 
                                     }
                                     else
@@ -1664,7 +1703,7 @@ namespace VMS.TPS
                                     }
                                     else if (Vvol >= comp)
                                     {
-                                        fstatus = "REVIEW";
+                                        fstatus = "REVIEW - GOAL";
                                     }
                                     else
                                     {
@@ -1760,12 +1799,12 @@ namespace VMS.TPS
                                     else if (qdose.Dose < Convert.ToDouble(morty.goal))
                                     {
 
-                                        qstatus = "WARNING";
+                                        qstatus = "REVIEW - GOAL";
 
                                     }
                                     else
                                     {
-                                        qstatus = "FAIL";
+                                        qstatus = "REVIEW";
 
                                     }
 
@@ -1780,7 +1819,7 @@ namespace VMS.TPS
                                     }
                                     else
                                     {
-                                        qstatus = "FAIL";
+                                        qstatus = "REVIEW";
 
                                     }
 
@@ -1802,12 +1841,12 @@ namespace VMS.TPS
                                     else if (qdose.Dose <= Convert.ToDouble(morty.goal))
                                     {
 
-                                        qstatus = "WARNING";
+                                        qstatus = "REVIEW - GOAL";
 
                                     }
                                     else
                                     {
-                                        qstatus = "FAIL";
+                                        qstatus = "REVIEW";
 
                                     }
 
@@ -1822,7 +1861,7 @@ namespace VMS.TPS
                                     }
                                     else
                                     {
-                                        qstatus = "FAIL";
+                                        qstatus = "REVIEW";
 
                                     }
 
@@ -1894,94 +1933,94 @@ foreach(ROI.ROI aroi in ROIA)
 
 
 
-        public void Execute(ScriptContext context )     // PROGRAM START - sending a return to Execute will end the program
+        public void Execute(ScriptContext context)     // PROGRAM START - sending a return to Execute will end the program
         {
-            //regular variables
 
-            List<ROI.ROI> output = new List<ROI.ROI>();
-            bool T = false;
-            bool Discrim;
+                //regular variables
+
+                List<ROI.ROI> output = new List<ROI.ROI>();
+                bool T = false;
+                bool Discrim;
             
-            //ESAPI variables  NOTE: CANNOT INSTANTIATE ECLIPSE VARIABLES. CAN ONLT GET THEM FROM ECLIPSE.
+                //ESAPI variables  NOTE: CANNOT INSTANTIATE ECLIPSE VARIABLES. CAN ONLT GET THEM FROM ECLIPSE.
 
-            Patient patient = context.Patient;   // creates an object of the patient class called patient equal to the active patient open in Eclipse
-            Course course = context.Course;
-            Image image3D = context.Image;
-            StructureSet structureSet = context.StructureSet;
-            User user = context.CurrentUser;
-            IEnumerable<PlanSum> Plansums = context.PlanSumsInScope;
-            IEnumerable<PlanSetup> Plans = context.PlansInScope;
-
-
-            if (context.Patient == null)
-            {
-                MessageBox.Show("Please load a patient with a treatment Plan before running this script!");
-                return;
-            }
-
-            // this area calls outside functions that perform automatic checks on system
+                Patient patient = context.Patient;   // creates an object of the patient class called patient equal to the active patient open in Eclipse
+                Course course = context.Course;
+                Image image3D = context.Image;
+                StructureSet structureSet = context.StructureSet;
+                User user = context.CurrentUser;
+                IEnumerable<PlanSum> Plansums = context.PlanSumsInScope;
+                IEnumerable<PlanSetup> Plans = context.PlansInScope;
 
 
-           // ContourChecks.CountourChecks.ContoursInBody(structureSet);      
+                if (context.Patient == null)
+                {
+                    MessageBox.Show("Please load a patient with a treatment Plan before running this script!");
+                    return;
+                }
+
+                // this area calls outside functions that perform automatic checks on system
+
+               // ContourChecks.CountourChecks.ContoursInBody(structureSet);      
                 
+                // Functions below here are for the dose objective check program
 
+                Discrim = Discriminator(Plansums, Plans, user);
 
-            // Functions below here are for the dose objective check program
+                if (Discrim == true)
+                {
 
-            Discrim = Discriminator(Plansums, Plans, user);
+                    PlanSum Plansum = PlansumPick(Plansums);
+                    output = PlansumAnalysis(user, patient, course, structureSet, Plansum);
+
+                    foreach (ROI.ROI aroi in output)
+                    {
+                        if (aroi.status == "REVIEW")
+                        {
+                            T = true;
+                        }
+                    }
+
+                    if (T == true)
+                    {
+                        MessageBox.Show("THIS PLAN HAS NOT MET ONE OR MORE DOSE OBJECTIVES AND REQUIRES REVIEW.");
+                    }
+
+                    Console.WriteLine("\n\n\n");
+
+                    Console.WriteLine("A report of the Dose Objective Check will now open in your default PDF viewer. Please rename it and save it in the 'Dose Objective Checker Reports' folder.");
+
+                    PdfReport.PDFGenerator.Program.PlansumMain(patient, course, Plansum, image3D, structureSet, user, output);
+                    
+                }
+                else if (Discrim == false)
+                {
+
+                    PlanSetup Plan = PlanPick(Plans);
+                    output = PlanAnalysis(user, patient, course, structureSet, Plan);
+
+                    foreach (ROI.ROI aroi in output)
+                    {
+                        if (aroi.status == "REVIEW")
+                        {
+                            T = true;
+                        }
+                    }
+
+                    if (T == true)
+                    {
+                        MessageBox.Show("THIS PLAN HAS NOT MET ONE OR MORE DOSE OBJECTIVES AND REQUIRES REVIEW.");
+                    }
+
+                    Console.WriteLine("\n\n\n");
+
+                    Console.WriteLine("A report of the Dose Objective Check will now open in your default PDF viewer. Please rename it and save it in the 'Dose Objective Checker Reports' folder.");
+
+                    PdfReport.PDFGenerator.Program.PlanMain(patient, course, Plan, image3D, structureSet, user, output);
+                    
+                }
+
             
-            if (Discrim == true)
-            {
-
-                PlanSum Plansum = PlansumPick(Plansums);
-                output = PlansumAnalysis(user, patient, course, structureSet, Plansum);
-
-                foreach (ROI.ROI aroi in output)
-                {
-                    if (aroi.status == "REVIEW")
-                    {
-                        T = true;
-                    }
-                }
-
-                if (T == true)
-                {
-                    MessageBox.Show("THIS PLAN HAS NOT MET ONE OR MORE DOSE OBJECTIVES AND REQUIRES REVIEW.");
-                }
-
-                Console.WriteLine("\n\n\n");
-
-                Console.WriteLine("A report of the Dose Objective Check will now open in your default PDF viewer. Please rename it and save it in the 'Dose Objective Checker Reports' folder.");
-
-                PdfReport.PDFGenerator.Program.PlansumMain(patient, course, Plansum, image3D, structureSet, user, output);
-
-            }
-            else if (Discrim == false)
-            {
-
-               PlanSetup Plan = PlanPick(Plans);
-               output = PlanAnalysis(user, patient, course, structureSet, Plan);
-
-                foreach (ROI.ROI aroi in output)
-                {
-                    if (aroi.status == "REVIEW")
-                    {
-                        T = true;
-                    }
-                }
-
-                if (T == true)
-                {
-                    MessageBox.Show("THIS PLAN HAS NOT MET ONE OR MORE DOSE OBJECTIVES AND REQUIRES REVIEW.");
-                }
-
-                Console.WriteLine("\n\n\n");
-
-                Console.WriteLine("A report of the Dose Objective Check will now open in your default PDF viewer. Please rename it and save it in the 'Dose Objective Checker Reports' folder.");
-
-                PdfReport.PDFGenerator.Program.PlanMain(patient, course, Plan, image3D, structureSet, user, output);
-
-            }
     
 
             /*
