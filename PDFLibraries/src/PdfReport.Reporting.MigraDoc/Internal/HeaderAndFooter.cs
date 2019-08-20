@@ -44,7 +44,7 @@ namespace PdfReport.Reporting.MigraDoc.Internal
 
 
             header.AddFormattedText($"{data.Patient.LastName}, {data.Patient.FirstName} (ID: {data.Patient.Id}) - {data.Patient.Sex} " , TextFormat.Bold);
-            header.AddSpace(35);
+            header.AddSpace(42);
             header.AddText($"Generated {DateTime.Now:g}  By: {data.User}");           //first line  ( g is the General Date Short Time Format Specifier)
             header.AddLineBreak();
             

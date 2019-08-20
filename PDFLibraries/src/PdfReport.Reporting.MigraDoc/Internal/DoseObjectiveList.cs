@@ -103,7 +103,7 @@ namespace PdfReport.Reporting.MigraDoc.Internal
             AddHeader(headerRow.Cells[2], "Goal Dose Limit(cGy)");
             AddHeader(headerRow.Cells[3], "Eclipse Estimated Dose (cGy)");
             AddHeader(headerRow.Cells[4], "Status");
-            AddHeader(headerRow.Cells[5], "Structure Volume (CM3)");
+            AddHeader(headerRow.Cells[5], "Structure Volume (cc)");
           
         }
 

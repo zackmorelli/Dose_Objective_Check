@@ -103,7 +103,7 @@ namespace PdfReport.Reporting.MigraDoc.Internal
             AddHeader(headerRow.Cells[2], "Goal Volume Limit");
             AddHeader(headerRow.Cells[3], "Eclipse Estimated Volume");
             AddHeader(headerRow.Cells[4], "Status");
-            AddHeader(headerRow.Cells[5], "Structure Volume (CM3)");
+            AddHeader(headerRow.Cells[5], "Structure Volume (cc)");
           
         }
 
@@ -143,7 +143,7 @@ namespace PdfReport.Reporting.MigraDoc.Internal
                         row.Cells[0].AddParagraph(aroi.ROIName);
                         row.Cells[1].AddParagraph("NA");
                         row.Cells[2].AddParagraph("NA");
-                        row.Cells[3].AddParagraph(Math.Round(aroi.actvol, 2, MidpointRounding.AwayFromZero).ToString() + " CM3");
+                        row.Cells[3].AddParagraph(Math.Round(aroi.actvol, 2, MidpointRounding.AwayFromZero).ToString() + " cc");
                         row.Cells[4].AddParagraph(aroi.status);
                         row.Cells[5].AddParagraph(Math.Round(aroi.structvol, 2, MidpointRounding.AwayFromZero).ToString());
 
@@ -152,9 +152,9 @@ namespace PdfReport.Reporting.MigraDoc.Internal
                     {
 
                         row.Cells[0].AddParagraph(aroi.ROIName);
-                        row.Cells[1].AddParagraph(Math.Round(aroi.limvol, 2, MidpointRounding.AwayFromZero).ToString() + " CM3");
-                        row.Cells[2].AddParagraph(Math.Round(aroi.goalvol, 2, MidpointRounding.AwayFromZero).ToString() + " CM3");
-                        row.Cells[3].AddParagraph(Math.Round(aroi.actvol, 2, MidpointRounding.AwayFromZero).ToString() + " CM3");
+                        row.Cells[1].AddParagraph(Math.Round(aroi.limvol, 2, MidpointRounding.AwayFromZero).ToString() + " cc");
+                        row.Cells[2].AddParagraph(Math.Round(aroi.goalvol, 2, MidpointRounding.AwayFromZero).ToString() + " cc");
+                        row.Cells[3].AddParagraph(Math.Round(aroi.actvol, 2, MidpointRounding.AwayFromZero).ToString() + " cc");
                         row.Cells[4].AddParagraph(aroi.status);
                         row.Cells[5].AddParagraph(Math.Round(aroi.structvol, 2, MidpointRounding.AwayFromZero).ToString());
 

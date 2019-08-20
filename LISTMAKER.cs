@@ -14,7 +14,7 @@ namespace Auto_Report_Script
     {
 
 
-        public static List<ROI.ROI> Listmaker(string Ttype, string Tsite)
+        public static List<ROI.ROI> Listmaker(string Ttype, string Tsite, string [] Si)
         {
 
             List<ROI.ROI> ROIE = new List<ROI.ROI>();                 // OUTPUT - list of actual ROIs for the treatment site given by user
@@ -38,7 +38,7 @@ namespace Auto_Report_Script
             string tstruct = null;
 
 
-            if (Ttype == "Conventional")
+            if (Ttype == "Conventional" | Ttype == "Both")
             {
                 string path = @"\\Wvvrnimbp01ss\va_data$\filedata\ProgramData\Vision\PublishedScripts\ConventionalROIList.txt";
                // Console.WriteLine("TriggerConv1");
@@ -134,7 +134,7 @@ namespace Auto_Report_Script
 
 
             }
-            else if (Ttype == "SRS/SBRT" )
+            else if (Ttype == "SRS/SBRT" | Ttype == "Both" )
             {
 
                 string path = @"\\Wvvrnimbp01ss\va_data$\filedata\ProgramData\Vision\PublishedScripts\SRSROIList.txt";
@@ -201,35 +201,19 @@ namespace Auto_Report_Script
 
 
                             //  Console.WriteLine("Linecount is: {0}", linecount);
-
-
                             // Thread.Sleep(3000);
                             //  Console.WriteLine("TriggeraftROIL");
-
-
                             linecount++;
 
                         } // ends loop that pulls lines
-
-
-
                        // Console.WriteLine("TriggerSRS");
-
-
                     }   // ends open file
-
-
                 }  // ends if file exists
                 else
                 {
                     Console.WriteLine("\n\n File not found!");
-
                 }
-
             }  // ends if Ttype loop
-            
- 
- 
             foreach (ROI.ROI roi in ROIL )       // iterate through all the ROI.ROI elements in the ROIL list
             {
               // Console.WriteLine("ROIL size is: {0}", ROIL.Count);
@@ -241,22 +225,29 @@ namespace Auto_Report_Script
                 {
                   //  Console.WriteLine("This treatsite size is: {0}", roi.treatsite.Length);
                   //  Console.WriteLine("Treatsite index: {0}", k);
-
                    // Console.WriteLine("treatsite {0} is: {1}", k, str);
                     k++;
 
-
-                    if (str == Tsite)
+                    if (Tsite != null)
                     {
-                       // Console.WriteLine("TrigBef____ROIEadd");
-
-                        
-                        ROIE.Add(new ROI.ROI { ROIName = roi.ROIName, Rstruct = roi.Rstruct, ROIId = roi.ROIId, limit = roi.limit, limval = roi.limval, strict = roi.strict, limunit = roi.limunit, goal = roi.goal });
-
-                      //  Console.WriteLine("TrigAft____ROIEadd");
-                      //  Thread.Sleep(4000);
+                        if (str == Tsite)
+                        {
+                            // Console.WriteLine("TrigBef____ROIEadd");
+                            ROIE.Add(new ROI.ROI { ROIName = roi.ROIName, Rstruct = roi.Rstruct, ROIId = roi.ROIId, limit = roi.limit, limval = roi.limval, strict = roi.strict, limunit = roi.limunit, goal = roi.goal });
+                            //  Console.WriteLine("TrigAft____ROIEadd");
+                            //  Thread.Sleep(4000);
+                        }
                     }
-
+                    else if (Tsite == null)
+                    {
+                        foreach (string foo in Si)
+                        {
+                            if (str == foo)
+                            {
+                                ROIE.Add(new ROI.ROI { ROIName = roi.ROIName, Rstruct = roi.Rstruct, ROIId = roi.ROIId, limit = roi.limit, limval = roi.limval, strict = roi.strict, limunit = roi.limunit, goal = roi.goal });
+                            }
+                        }
+                    }
                 }
                 k = 0;
             } 

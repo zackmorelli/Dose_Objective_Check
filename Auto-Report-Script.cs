@@ -144,6 +144,50 @@ namespace VMS.TPS
             return treatsite;
         }
 
+        static List<TreatSite> MakelistBoth()           //treatment site list for Both
+        {
+            List<TreatSite> treatsite = new List<TreatSite>();
+
+            treatsite.Add(new TreatSite() { DisplayName = "Abdomen", Name = "Abdomen", Id = 1 });
+            treatsite.Add(new TreatSite() { DisplayName = "Brain", Name = "Brain", Id = 2 });
+            treatsite.Add(new TreatSite() { DisplayName = "Brain Hypofx", Name = "BrainHypofx", Id = 3 });
+            treatsite.Add(new TreatSite() { DisplayName = "Breast", Name = "Breast", Id = 4 });
+            treatsite.Add(new TreatSite() { DisplayName = "Esophagus", Name = "Esophagus", Id = 5 });
+            treatsite.Add(new TreatSite() { DisplayName = "Gynecological", Name = "Gynecological", Id = 6 });
+            treatsite.Add(new TreatSite() { DisplayName = "Head & Neck", Name = "Head&Neck", Id = 7 });
+            treatsite.Add(new TreatSite() { DisplayName = "Lung", Name = "Lung", Id = 8 });
+            treatsite.Add(new TreatSite() { DisplayName = "Pelvis (Other)", Name = "Pelvis(Other)", Id = 9 });
+            treatsite.Add(new TreatSite() { DisplayName = "Pelvis EBRT + HDR", Name = "PelivsEBRT+HDR", Id = 10 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate", Name = "Prostate", Id = 11 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate Bed", Name = "ProstateBed", Id = 12 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 20fx", Name = "ProstateHypo20fx", Id = 13 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 28fx", Name = "ProstateHypo28fx", Id = 14 });
+            treatsite.Add(new TreatSite() { DisplayName = "Thorax (Other)", Name = "Thorax(Other)", Id = 15 });
+            treatsite.Add(new TreatSite() { DisplayName = " Single fraction", Name = "Singlefraction", Id = 16 });
+            treatsite.Add(new TreatSite() { DisplayName = "3 fraction", Name = "3fraction", Id = 17 });
+            treatsite.Add(new TreatSite() { DisplayName = "4 fraction", Name = "4fraction", Id = 18 });
+            treatsite.Add(new TreatSite() { DisplayName = "5 fraction", Name = "5fraction", Id = 19 });
+            treatsite.Add(new TreatSite() { DisplayName = "6 fraction", Name = "6fraction", Id = 20 });
+            treatsite.Add(new TreatSite() { DisplayName = "8 fraction", Name = "8fraction", Id = 21 });
+            treatsite.Add(new TreatSite() { DisplayName = "10 fraction", Name = "10fraction", Id = 22 });
+            treatsite.Add(new TreatSite() { DisplayName = "Liver", Name = "Liver", Id = 23 });
+            treatsite.Add(new TreatSite() { DisplayName = "Lung 4 fraction", Name = "Lung4fraction", Id = 24 });
+            treatsite.Add(new TreatSite() { DisplayName = "Lung 5 fraction", Name = "Lung5fraction", Id = 25 });
+            treatsite.Add(new TreatSite() { DisplayName = "Lung 8 fraction", Name = "Lung8fraction", Id = 26 });
+            treatsite.Add(new TreatSite() { DisplayName = "Oligomets 1 fraction", Name = "Oligomets1fraction", Id = 27 });
+            treatsite.Add(new TreatSite() { DisplayName = "Oligomets 3 fractions", Name = "Oligomets3fractions", Id = 28 });
+            treatsite.Add(new TreatSite() { DisplayName = "Oligomets 5 fractions", Name = "Oligomets5fractions", Id = 29 });
+            treatsite.Add(new TreatSite() { DisplayName = "Pancreas", Name = "Pancreas", Id = 30 });
+            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial 1 fraction", Name = "SRSCranial1fraction", Id = 31 });
+            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial 3 fraction", Name = "SRSCranial3fraction", Id = 32 });
+            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial 5 fraction", Name = "SRSCranial5fraction", Id = 33 });
+            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial AVM", Name = "SRSCranialAVM", Id = 34 });
+            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial Trigeminal Neuralgia", Name = "SRSCranialTrigeminalNeuralgia", Id = 35 });
+
+            return treatsite;
+        }
+
+
         static bool Discriminator(IEnumerable<PlanSum> Plansums, IEnumerable<PlanSetup> Plans, User user)
         {
 
@@ -154,8 +198,8 @@ namespace VMS.TPS
             AllocConsole();
             Console.Title = "Lahey RadOnc Dose Objective Checker  V 1.0";
 
-            Console.SetWindowSize(230, 83);                                 //these specific values are here for a reason, don't change them
-            Console.SetBufferSize(230, 83);
+            Console.SetWindowSize(200, 75);                                 //these specific values are here for a reason, don't change them
+            Console.SetBufferSize(200, 75);
 
             Console.WriteLine(" Hi {0}, Welcome to the Lahey RadOnc Dose Objective Checker  V 1.0 \n \n", user.Name);
 
@@ -180,12 +224,10 @@ namespace VMS.TPS
                     Console.WriteLine("Let's try that again. You must enter either Y for YES or N for NO.");
                     input = Console.ReadLine();
                 }
-
                 if (input == "y" | input == "Y")
                 {
                     D = true;
                 }
-
                 if (input == "n" | input == "N")
                 {
                     D = false;
@@ -195,25 +237,19 @@ namespace VMS.TPS
             {
                 D = false;
             }    
-
             return D;
         }
 
-
         static PlanSum PlansumPick(IEnumerable<PlanSum> Plansums)
         {
-
-
             IEnumerator TR = Plansums.GetEnumerator();
             TR.MoveNext();
             PlanSum Plansum = (PlanSum)TR.Current;             //creates an enumerator that selects the first plansum
-
             return Plansum;
         }
 
         static PlanSetup PlanPick(IEnumerable<PlanSetup> Plans)
         {
-
             int nt = 0;
             int count = 0;
             int inp = 0;
@@ -221,7 +257,6 @@ namespace VMS.TPS
             IEnumerator TP = Plans.GetEnumerator();    //this is just here to instantiate "Plan"
             TP.MoveNext();
             PlanSetup Plan = (PlanSetup)TP.Current;            //creates an enumerator that selects the first Plan
-
 
             foreach (PlanSetup aplansetup in Plans)
             {
@@ -278,72 +313,143 @@ namespace VMS.TPS
             List<ROI.ROI> ROIA = new List<ROI.ROI>();     // Actual ROI list from Eclipse 
             string Ttype = null;
             string Tsite = null;
+            int [] TxS = new int[35];
+            string [] Si = new string[35]; 
             string input = null;
+            int sc = 0;
             int t = 0;
             List<TreatSite> sitelist = null;
 
             Thread.Sleep(1000);
 
-            Console.WriteLine("You have loaded {0}'s course {1}. The currently selected Plansum of course {1} is {2}.  \n", patient.Name, course.Id, Plansum.Id);
+            Console.WriteLine("\n\nYou have loaded {0}'s course {1}. The currently selected Plansum of course {1} is {2}.  \n", patient.Name, course.Id, Plansum.Id);
             Console.WriteLine("This program will now check the selected Plansum {0} to determine if the Eclipse-calculated Dose values meet the dose objectives established by the Radiation Oncology\nteam for the relevant treatment site. \n", Plansum.Id);
-            Console.WriteLine("In order to do this, you must specify the treatment type and treatment site. Is this a conventionally fractionated Plan or an SRS/SBRT Plan? \n");
-            Console.WriteLine("(Enter C for conventional or S for SRS/SBRT): ");
+            Console.WriteLine("Because a Plansum may contain several different types of plans, you may choose any number of Conventional or Stereotactic treatment site dose objective lists to use in your analysis\n");
+            Console.WriteLine("Does the Plansum contain Conventional plans, SRS plans, or Both?\n");
+
+
+            Console.WriteLine("(Enter C for Conventional, S for SRS, B for Both): ");
             input = Console.ReadLine();
             Console.WriteLine("\n\n ");
 
-            while (input != "c" & input != "C" & input != "S" & input != "s")
+            while (input != "c" & input != "C" & input != "S" & input != "s" & input != "b" & input != "B")
             {
-                Console.WriteLine("Let's try that again. You must enter either C for Conventional or S for SRS/SBRT.");
+                Console.WriteLine("Let's try that again. You must enter either C for Conventional, S for SRS, or B for Both.");
                 input = Console.ReadLine();
             }
-
             if (input == "c" | input == "C")
             {
-                Console.WriteLine("You have chosen a Conventional Plan.");
+                Console.WriteLine("You have chosen Conventional.");
                 Ttype = "Conventional";
                 sitelist = MakelistConv();
             }
-
             else if (input == "s" | input == "S")
             {
-                Console.WriteLine("You have chosen an SRS/SBRT Plan.");
+                Console.WriteLine("You have chosen SRS.");
                 Ttype = "SRS/SBRT";
                 sitelist = MakelistSRS();
             }
-
-            Console.WriteLine("\n\n These are the following treatment sites associated with {0} plans.", Ttype);
-            Console.WriteLine("\n");
-
-            foreach (TreatSite aTreatSite in sitelist)
+            else if (input == "b" | input == "B")
             {
-                Console.WriteLine(aTreatSite);
+                Console.WriteLine("You have chosen Both.");
+                Ttype = "Both";
+                sitelist = MakelistBoth();
             }
 
-            Console.WriteLine("\nPlease enter the Id number associated with the treatment site of the selected plansum: ");
-            t = Convert.ToInt32(Console.ReadLine());
-
-            foreach (TreatSite aTreatSite in sitelist)
+            if (Ttype != "Both")
             {
+                Console.WriteLine("\n\n These are the following treatment sites associated with {0} plans.", Ttype);
+                Console.WriteLine("\n");
 
-                if (aTreatSite.Id == t)
+                foreach (TreatSite aTreatSite in sitelist)
                 {
-                    Console.WriteLine("\nYou have chosen the {0} treatment site.", aTreatSite.DisplayName);
-                    Tsite = aTreatSite.DisplayName;
-                    // Console.WriteLine("\n\nTsite is: {0} \n", Tsite);
-                    Thread.Sleep(2000);
-                    break;
+                    Console.WriteLine(aTreatSite);
                 }
 
+                Console.WriteLine("\nHow many treatment sites would you like to include in your analysis? ");
+                Console.WriteLine("\nThe Program will only report on structures that have been contoured, so there is no harm in adding more treatment sites.");
+                Console.WriteLine("(Enter number of treatment sites): ");
+                sc = Convert.ToInt32(Console.ReadLine());
+
+                TxS = new int[sc];
+                Si = new string[sc];
+                Console.WriteLine("\nPlease enter the Id number(s) associated with the treatment site of the selected plansum: ");
+
+                for (int i = 0; i < sc; i++)
+                {
+                    TxS[i] = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("\n");
+                }
+                Console.WriteLine("\n\n");
+                int jk = 0;
+
+                foreach (int i in TxS)
+                {
+                    foreach (TreatSite aTreatSite in sitelist)
+                    {
+                        if (aTreatSite.Id == i)
+                        {
+                            Console.WriteLine("\nYou have chosen the {0} treatment site.", aTreatSite.DisplayName);
+                            Si[jk] = aTreatSite.DisplayName;
+                            // Console.WriteLine("\n\nTsite is: {0} \n", Tsite);
+                            // Thread.Sleep(2000);
+                            break;
+                        }
+                    }
+                    jk++;
+                }
             }
+            else if (Ttype == "Both")
+            {
+                Console.WriteLine("\n\n This is a list of ALL treatment sites.");
+                Console.WriteLine("\n");
 
+                foreach (TreatSite aTreatSite in sitelist)
+                {
+                    Console.WriteLine(aTreatSite);
+                }
 
-            Console.WriteLine("\n\nStarting dose objectives check ... \n\n");
+                Console.WriteLine("\nHow many treatment sites would you like to include in your analysis? ");
+                Console.WriteLine("\nThe Program will only report on structures that have been contoured, so there is no harm in adding more treatment sites.");
+                Console.WriteLine("(Enter number of treatment sites): ");
+                sc = Convert.ToInt32(Console.ReadLine());
+
+                TxS = new int[sc];
+                Si = new string[sc];
+                Console.WriteLine("\nPlease enter the Id number(s) associated with the treatment site of the selected plansum: ");
+
+                for (int i = 0; i < sc; i++)
+                {
+                    TxS[i] = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("\n");
+                }
+                Console.WriteLine("\n\n");
+                int jk = 0;
+
+                foreach (int i in TxS)
+                {
+                    foreach (TreatSite aTreatSite in sitelist)
+                    {
+                        if (aTreatSite.Id == i)
+                        {
+                            Console.WriteLine("\nYou have chosen the {0} treatment site.", aTreatSite.DisplayName);
+                            Si[jk] = aTreatSite.DisplayName;
+                            // Console.WriteLine("\n\nTsite is: {0} \n", Tsite);
+                            // Thread.Sleep(2000);
+                            break;
+                        }
+                    }
+                    jk++;
+                }
+            }
+            Console.WriteLine("\n\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            Console.WriteLine("\n\nStarting dose objectives check ... \n");
             // ROI.ROI is its own custom class
-            ROIE = Auto_Report_Script.LISTMAKER.Listmaker(Ttype, Tsite);          // separate class with LISTMAKER function which generates a list of ROIs for the given treeatment type and site
+            ROIE = Auto_Report_Script.LISTMAKER.Listmaker(Ttype, Tsite, Si);          // separate class with LISTMAKER function which generates a list of ROIs for the given treeatment type and site
 
 
-            Console.WriteLine("\n{0} dose objective list created successfully.", Tsite);
-            Console.WriteLine("\nThe {0} dose objective list contains {1} unique dose objectives.", Tsite, ROIE.Count);
+            Console.WriteLine("\nThe dose objective list created successfully.", Tsite);
+            Console.WriteLine("\nThe dose objective list contains {1} unique dose objectives.", Tsite, ROIE.Count);
 
             double dosesum = 0.0;
             string dunit = null;
@@ -358,12 +464,12 @@ namespace VMS.TPS
 
             Thread.Sleep(2000);
 
-            Console.WriteLine("\nCorrelating dose objectives with structures in current Plansum ... ");
+            Console.WriteLine("\nMatching dose objectives with contoured structures in current Plansum ... ");
             int county = 0;
 
             foreach (ROI.ROI morty in ROIE)
             {
-                Console.WriteLine("\n {0} Dose objectives calculated... ", county);
+                Console.WriteLine("\n {0} Dose objectives checked... ", county);
                 county++;
 
                 //  Console.WriteLine("\nThe current dose of objective is: {0}", morty.ROIName);
@@ -371,21 +477,16 @@ namespace VMS.TPS
 
                 foreach (Structure S in structureSet.Structures)        // iterates thriugh all the structures in the structureset of the current Plan
                 {
+                    double structvol = S.Volume;
+                    if (structvol < 0.03)
+                    {
+                        continue;
+                    }
 
                     if (S.Id == morty.Rstruct)
                     {
                         // Console.WriteLine("\nThe current structure from the Plan is: {0}", S.Id);
                         //  Console.WriteLine("\nThe current dose of objective has the structure tag: {0}", morty.Rstruct);
-
-                        double structvol = S.Volume;
-
-                        if (structvol == 0.0)
-                        {
-
-                            continue;
-
-                        }
-
                         //  Console.WriteLine("\n\n{0} - STRUCTURE VOLUME: {1}", S.Id, S.Volume);
                         //  Thread.Sleep(3000);
 
@@ -398,18 +499,25 @@ namespace VMS.TPS
                             //Thread.Sleep(1000);
                             double maxdose = 0.0;
 
-                            DVHData kDVH = Plansum.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.AbsoluteCm3, 0.1);
+                            DVHData kDVH = Plansum.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.AbsoluteCm3, 0.01);
+
+                            Console.WriteLine("\n  DVH Point VOLUME UNIT: {0}", kDVH.CurveData[1].VolumeUnit.ToString());
+
+                            Console.WriteLine("\n  NORMAL MAXDOSE: {0}", kDVH.MaxDose.ToString());
+
+                            Thread.Sleep(10000);
 
                             foreach (DVHPoint point in kDVH.CurveData)
                             {
 
-                                if (point.Volume == 0.03)
+                                if (point.Volume < 0.1 && point.Volume > 0.03 )
                                 {
+                                    Console.WriteLine("\n  DVH Point VOLUME: {0}", point.Volume);
+
                                     if (maxdose == 0.0)
                                     {
                                         maxdose = point.DoseValue.Dose;
                                     }
-                                    
                                     if (point.DoseValue.Dose > maxdose)
                                     {
                                         maxdose = point.DoseValue.Dose;
@@ -449,8 +557,6 @@ namespace VMS.TPS
                                         kstatus = "REVIEW";
 
                                     }
-
-
                                 }
                                 else
                                 {
@@ -491,8 +597,6 @@ namespace VMS.TPS
                                         kstatus = "REVIEW";
 
                                     }
-
-
                                 }
                                 else
                                 {
@@ -706,19 +810,17 @@ namespace VMS.TPS
                                 string jerry = morty.limit.Substring(1);
                                 //  Console.WriteLine("\n After V chop, we have (jerry): {0}", jerry);
                                 // Thread.Sleep(2000);
-                                Vgy = Convert.ToDouble(jerry);                                 // "V gray" 
+                                Vgy = (Convert.ToDouble(jerry))*100.0;                                 // "V gray" 
 
                             }
                             else if (morty.limit == "V100%Rx")
                             {
-
                                 Vgy = 100.0;
                             }
                             else
                             {
                                 Vgy = 50000;
                             }
-
                             if (morty.limunit == "%")
                             {
                                 type = "percent";
@@ -754,7 +856,9 @@ namespace VMS.TPS
                                 foreach (DVHPoint point in Vdvh.CurveData)
                                 {
 
-                                    if ((point.DoseValue.Dose >= (Vgy - 0.3)) && (point.DoseValue.Dose <= (Vgy + 0.3)))
+                                  //  Console.WriteLine("\n\n    DVH point UNIT:  ", point.DoseValue.Unit);
+
+                                    if ((point.DoseValue.Dose >= (Vgy - 0.2)) && (point.DoseValue.Dose <= (Vgy + 0.2)))
                                     {
                                        // Console.WriteLine("\nTrigger DVH Point match!!");
                                         Vvol = point.Volume;
@@ -786,15 +890,20 @@ namespace VMS.TPS
 
                                 DVHData Vdvh = Plansum.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.AbsoluteCm3, 0.1);
 
-                               // Console.WriteLine("\nDVH Point Curves Volume Unit CM3: {0}", Vdvh.CurveData[1].VolumeUnit);
-                               // Console.WriteLine("\nDVH Point Curves Dose Unit cGy: {0}", Vdvh.CurveData[1].DoseValue.UnitAsString);
+                                // Console.WriteLine("\nDVH Point Curves Volume Unit CM3: {0}", Vdvh.CurveData[1].VolumeUnit);
+                                // Console.WriteLine("\nDVH Point Curves Dose Unit cGy: {0}", Vdvh.CurveData[1].DoseValue.UnitAsString);
 
-                                Thread.Sleep(2000);
+                                Console.WriteLine("\n\n  DVH point UNIT: {0} ", Vdvh.CurveData[1].DoseValue.Unit.ToString());
+
+                                Thread.Sleep(3000);
 
                                 foreach (DVHPoint point in Vdvh.CurveData)
                                 {
 
-                                    if ((point.DoseValue.Dose >= (Vgy - 0.3)) && (point.DoseValue.Dose <= (Vgy + 0.3)))
+                                  //  Console.WriteLine("\n\n     Point dose value: {0}", point.DoseValue.Dose.ToString());
+                                  //  Thread.Sleep(750);
+
+                                    if ((point.DoseValue.Dose >= (Vgy - 0.2)) && (point.DoseValue.Dose <= (Vgy + 0.2)))
                                     {
                                        // Console.WriteLine("\nTrigger DVH Point match!!");
                                         Vvol = point.Volume;
@@ -1099,7 +1208,7 @@ namespace VMS.TPS
 
             Thread.Sleep(1000);
 
-            Console.WriteLine("You have loaded {0}'s course {1}. The currently selected Plan of course {1} is {2}.  \n", patient.Name, course.Id, Plan.Id);
+            Console.WriteLine("\n\nYou have loaded {0}'s course {1}. The currently selected Plan of course {1} is {2}.  \n", patient.Name, course.Id, Plan.Id);
             Console.WriteLine("This program will now check the selected Plan {0} to determine if the Eclipse-calculated Dose values meet the dose objectives established by the Radiation Oncology\nteam for the relevant treatment site. \n", Plan.Id);
             Console.WriteLine("In order to do this, you must specify the treatment type and treatment site. Is this a conventionally fractionated Plan or an SRS/SBRT Plan? \n");
             Console.WriteLine("(Enter C for conventional or S for SRS/SBRT): ");
@@ -1150,11 +1259,12 @@ namespace VMS.TPS
                 }
 
             }
+            Console.WriteLine("\n\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            Console.WriteLine("\n\nStarting dose objectives check ... \n");
 
-
-            Console.WriteLine("\n\nStarting dose objectives check ... \n\n");
+            string[] Si = new string[5] { "NA", "NA", "NA", "NA", "NA" };
             // ROI.ROI is its own custom class
-            ROIE = Auto_Report_Script.LISTMAKER.Listmaker(Ttype, Tsite);          // separate class with LISTMAKER function which generates a list of ROIs for the given treeatment type and site
+            ROIE = Auto_Report_Script.LISTMAKER.Listmaker(Ttype, Tsite, Si);          // separate class with LISTMAKER function which generates a list of ROIs for the given treeatment type and site
 
 
             Console.WriteLine("\n{0} dose objective list created successfully.", Tsite);
@@ -1170,12 +1280,12 @@ namespace VMS.TPS
 
             Thread.Sleep(2000);
 
-            Console.WriteLine("\nCorrelating dose objectives with structures in current Plan ... ");
+            Console.WriteLine("\nMatching dose objectives with contoured structures in current Plan ... ");
             int county = 0;
 
             foreach (ROI.ROI morty in ROIE)
             {
-                Console.WriteLine("\n {0} Dose objectives calculated... ", county);
+                Console.WriteLine("\n {0} Dose objectives checked... ", county);
                 county++;
 
                 //  Console.WriteLine("\nThe current dose of objective is: {0}", morty.ROIName);
@@ -1183,25 +1293,18 @@ namespace VMS.TPS
 
                 foreach (Structure S in structureSet.Structures)        // iterates thriugh all the structures in the structureset of the current Plan
                 {
+                    double structvol = S.Volume;
+                    if (structvol < 0.03)
+                    {
+                        continue;
+                    }
 
                     if (S.Id == morty.Rstruct)
                     {
                         // Console.WriteLine("\nThe current structure from the Plan is: {0}", S.Id);
                         //  Console.WriteLine("\nThe current dose of objective has the structure tag: {0}", morty.Rstruct);
-
-                        double structvol = S.Volume;
-
-                        if (structvol == 0.0)
-                        {
-
-                            continue;
-
-                        }
-
-
                         //  Console.WriteLine("\n\n{0} - STRUCTURE VOLUME: {1}", S.Id, S.Volume);
                         //  Thread.Sleep(3000);
-
 
                         if (morty.limit == "Max Pt Dose")        // MaxPtDose
                         {
@@ -1211,26 +1314,33 @@ namespace VMS.TPS
                             //   Console.WriteLine("\nMAX PT Dose Limit: {0}  {1}", morty.limval, morty.limunit);
                             //Thread.Sleep(1000);
 
-                            DVHData kDVH = Plan.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.AbsoluteCm3, 0.1);
+                            DVHData kDVH = Plan.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.AbsoluteCm3, 0.01);
+
+                            Console.WriteLine("\n  DVH Point VOLUME UNIT: {0}", kDVH.CurveData[1].VolumeUnit.ToString());
+                            Console.WriteLine("\n  NORMAL MAXDOSE: {0}", kDVH.MaxDose.ToString());
+                            Thread.Sleep(10000);
 
                             double maxdose = 0.0;
+                          //  DoseValue maxdose = kDVH.MaxDose;
+                              foreach (DVHPoint point in kDVH.CurveData)
+                              {
 
-                            foreach (DVHPoint point in kDVH.CurveData)
-                            {
+                                  if (point.Volume < 0.1  &&  point.Volume > 0.03)
+                                  {
+                                    Console.WriteLine("\n  DVH Point VOLUME: {0}", point.Volume);
 
-                                if (point.Volume == 0.03)
-                                {
                                     if (maxdose == 0.0)
                                     {
-                                        maxdose = point.DoseValue.Dose;
+                                          maxdose = point.DoseValue.Dose;
                                     }
 
-                                    if (point.DoseValue.Dose > maxdose)
-                                    {
-                                        maxdose = point.DoseValue.Dose;
-                                    }
-                                }
-                            }
+                                      if (point.DoseValue.Dose > maxdose)
+                                      {
+                                          maxdose = point.DoseValue.Dose;
+                                      }
+                                  }
+                              }
+                            
 
                             //  Console.WriteLine("\nDOSE UNIT: {0}", maxdose.Unit.ToString());
                             //   Console.WriteLine("\nDOSE Value: {0}", maxdose.Dose);
@@ -1239,37 +1349,27 @@ namespace VMS.TPS
 
                             if (morty.strict == "[record]")
                             {
-
                                 kstatus = "PASS";
-
                             }
                             else if (morty.strict == "<")
                             {
-
                                 if (morty.goal != "NA")            // meaning there is a goal set
                                 {
-
                                     if (maxdose < Convert.ToDouble(morty.goal))
                                     {
                                         kstatus = "PASS";
                                     }
                                     else if (maxdose < Convert.ToDouble(morty.limval))
                                     {
-
                                         kstatus = "REVIEW - GOAL";
-
                                     }
                                     else
                                     {
                                         kstatus = "REVIEW";
-
                                     }
-
-
                                 }
                                 else
                                 {
-
                                     if (maxdose < Convert.ToDouble(morty.limval))
                                     {
                                         kstatus = "PASS";
@@ -1277,41 +1377,28 @@ namespace VMS.TPS
                                     else
                                     {
                                         kstatus = "REVIEW";
-
                                     }
-
                                 }
-
-
                             }
                             else if (morty.strict == "<=")
                             {
-
-
                                 if (morty.goal != "NA")            // meaning there is a goal set
                                 {
-
                                     if (maxdose <= Convert.ToDouble(morty.goal))
                                     {
                                         kstatus = "PASS";
                                     }
                                     else if (maxdose <= Convert.ToDouble(morty.limval))
                                     {
-
                                         kstatus = "REVIEW - GOAL";
-
                                     }
                                     else
                                     {
                                         kstatus = "REVIEW";
-
                                     }
-
-
                                 }
                                 else
                                 {
-
                                     if (maxdose < Convert.ToDouble(morty.limval))
                                     {
                                         kstatus = "PASS";
@@ -1319,17 +1406,10 @@ namespace VMS.TPS
                                     else
                                     {
                                         kstatus = "REVIEW";
-
                                     }
-
                                 }
-
-
                             }
-
                             ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = maxdose, status = kstatus, structvol = structvol, type = "NV" });
-
-
                         }
                         else if (morty.limit == "Mean Dose")        // Mean dose
                         {
@@ -1350,37 +1430,27 @@ namespace VMS.TPS
 
                             if (morty.strict == "[record]")
                             {
-
                                 jstatus = "PASS";
-
                             }
                             else if (morty.strict == "<")
                             {
-
                                 if (morty.goal != "NA")            // meaning there is a goal set
                                 {
-
                                     if (meandose.Dose < Convert.ToDouble(morty.goal))
                                     {
                                         jstatus = "PASS";
                                     }
                                     else if (meandose.Dose < Convert.ToDouble(morty.limval))
                                     {
-
                                         jstatus = "REVIEW - GOAL";
-
                                     }
                                     else
                                     {
                                         jstatus = "REVIEW";
-
                                     }
-
-
                                 }
                                 else
                                 {
-
                                     if (meandose.Dose < Convert.ToDouble(morty.limval))
                                     {
                                         jstatus = "PASS";
@@ -1388,41 +1458,28 @@ namespace VMS.TPS
                                     else
                                     {
                                         jstatus = "REVIEW";
-
                                     }
-
                                 }
-
-
                             }
                             else if (morty.strict == "<=")
                             {
-
-
                                 if (morty.goal != "NA")            // meaning there is a goal set
                                 {
-
                                     if (meandose.Dose <= Convert.ToDouble(morty.goal))
                                     {
                                         jstatus = "PASS";
                                     }
                                     else if (meandose.Dose <= Convert.ToDouble(morty.limval))
                                     {
-
                                         jstatus = "REVIEW - GOAL";
-
                                     }
                                     else
                                     {
                                         jstatus = "REVIEW";
-
                                     }
-
-
                                 }
                                 else
                                 {
-
                                     if (meandose.Dose < Convert.ToDouble(morty.limval))
                                     {
                                         jstatus = "PASS";
@@ -1430,18 +1487,10 @@ namespace VMS.TPS
                                     else
                                     {
                                         jstatus = "REVIEW";
-
                                     }
-
                                 }
-
-
                             }
-
-
-
                             ROIA.Add(new ROI.ROI { ROIName = morty.ROIName, limdose = Convert.ToDouble(morty.limval), goal = morty.goal, actdose = meandose.Dose, status = jstatus, structvol = structvol, type = "NV" });
-
                         }
                         else if (morty.limit.StartsWith("CV"))
                         {
@@ -1569,7 +1618,7 @@ namespace VMS.TPS
 
                                 }
 
-                                DoseValue Vdose = new DoseValue(Vgy, DoseValue.DoseUnit.cGy);
+                                DoseValue Vdose = new DoseValue((Vgy*100.0), DoseValue.DoseUnit.cGy);
 
                                 // Console.WriteLine("\nVDOSE: {0} {1}", Vdose.Dose, Vdose.UnitAsString);
 
@@ -1602,7 +1651,7 @@ namespace VMS.TPS
 
                                 }
 
-                                DoseValue Vdose = new DoseValue(Vgy, DoseValue.DoseUnit.cGy);
+                                DoseValue Vdose = new DoseValue((Vgy*100.0), DoseValue.DoseUnit.cGy);
 
                                 //  Console.WriteLine("\nVDOSE: {0} {1}", Vdose.Dose, Vdose.UnitAsString);
 
