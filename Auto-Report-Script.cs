@@ -212,7 +212,7 @@ namespace VMS.TPS
 
             if (cnt > 0)
             {
-                Console.WriteLine("\nA Plan sum has been dectected in your current Scope. \n.");
+                Console.WriteLine("\nA Plan sum has been dectected in your current Scope. \n");
                 Thread.Sleep(600);
 
                 Console.WriteLine("Do you want to run an analysis on this Plan sum?\n");
@@ -501,18 +501,17 @@ namespace VMS.TPS
 
                             DVHData kDVH = Plansum.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.AbsoluteCm3, 0.01);
 
-                            Console.WriteLine("\n  DVH Point VOLUME UNIT: {0}", kDVH.CurveData[1].VolumeUnit.ToString());
+                           // Console.WriteLine("\n  DVH Point VOLUME UNIT: {0}", kDVH.CurveData[1].VolumeUnit.ToString());
 
-                            Console.WriteLine("\n  NORMAL MAXDOSE: {0}", kDVH.MaxDose.ToString());
+                           // Console.WriteLine("\n  NORMAL MAXDOSE: {0}", kDVH.MaxDose.ToString());
 
-                            Thread.Sleep(10000);
+                           // Thread.Sleep(10000);
 
                             foreach (DVHPoint point in kDVH.CurveData)
                             {
-
                                 if (point.Volume < 0.1 && point.Volume > 0.03 )
                                 {
-                                    Console.WriteLine("\n  DVH Point VOLUME: {0}", point.Volume);
+                                   // Console.WriteLine("\n  DVH Point VOLUME: {0}", point.Volume);
 
                                     if (maxdose == 0.0)
                                     {
@@ -529,38 +528,29 @@ namespace VMS.TPS
                             //   Console.WriteLine("\nDOSE Value: {0}", maxdose.Dose);
                             //  Thread.Sleep(4000);
 
-
                             if (morty.strict == "[record]")
                             {
-
                                 kstatus = "PASS";
-
                             }
                             else if (morty.strict == "<")
                             {
-
                                 if (morty.goal != "NA")            // meaning there is a goal set
                                 {
-
                                     if (maxdose < Convert.ToDouble(morty.goal))
                                     {
                                         kstatus = "PASS";
                                     }
                                     else if (maxdose < Convert.ToDouble(morty.limval))
                                     {
-
                                         kstatus = "REVIEW - GOAL";
-
                                     }
                                     else
                                     {
                                         kstatus = "REVIEW";
-
                                     }
                                 }
                                 else
                                 {
-
                                     if (maxdose < Convert.ToDouble(morty.limval))
                                     {
                                         kstatus = "PASS";
@@ -568,39 +558,28 @@ namespace VMS.TPS
                                     else
                                     {
                                         kstatus = "REVIEW";
-
                                     }
-
                                 }
-
-
                             }
                             else if (morty.strict == "<=")
                             {
-
-
                                 if (morty.goal != "NA")            // meaning there is a goal set
                                 {
-
                                     if (maxdose <= Convert.ToDouble(morty.goal))
                                     {
                                         kstatus = "PASS";
                                     }
                                     else if (maxdose <= Convert.ToDouble(morty.limval))
                                     {
-
                                         kstatus = "REVIEW - GOAL";
-
                                     }
                                     else
                                     {
                                         kstatus = "REVIEW";
-
                                     }
                                 }
                                 else
                                 {
-
                                     if (maxdose < Convert.ToDouble(morty.limval))
                                     {
                                         kstatus = "PASS";
@@ -608,7 +587,6 @@ namespace VMS.TPS
                                     else
                                     {
                                         kstatus = "REVIEW";
-
                                     }
                                 }
                             }
@@ -1316,24 +1294,23 @@ namespace VMS.TPS
 
                             DVHData kDVH = Plan.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.AbsoluteCm3, 0.01);
 
-                            Console.WriteLine("\n  DVH Point VOLUME UNIT: {0}", kDVH.CurveData[1].VolumeUnit.ToString());
-                            Console.WriteLine("\n  NORMAL MAXDOSE: {0}", kDVH.MaxDose.ToString());
-                            Thread.Sleep(10000);
+                         //   Console.WriteLine("\n  DVH Point VOLUME UNIT: {0}", kDVH.CurveData[1].VolumeUnit.ToString());
+                          //  Console.WriteLine("\n  NORMAL MAXDOSE: {0}", kDVH.MaxDose.ToString());
+                          //  Thread.Sleep(10000);
 
                             double maxdose = 0.0;
                           //  DoseValue maxdose = kDVH.MaxDose;
+
                               foreach (DVHPoint point in kDVH.CurveData)
                               {
-
                                   if (point.Volume < 0.1  &&  point.Volume > 0.03)
                                   {
-                                    Console.WriteLine("\n  DVH Point VOLUME: {0}", point.Volume);
+                                    // Console.WriteLine("\n  DVH Point VOLUME: {0}", point.Volume);
 
                                     if (maxdose == 0.0)
                                     {
                                           maxdose = point.DoseValue.Dose;
                                     }
-
                                       if (point.DoseValue.Dose > maxdose)
                                       {
                                           maxdose = point.DoseValue.Dose;
@@ -1523,10 +1500,8 @@ namespace VMS.TPS
                             }
                             else if (morty.strict == ">")
                             {
-
                                 if (morty.goal != "NA")            // meaning there is a goal set
                                 {
-
                                     if (Lvol > Lcomp2)
                                     {
                                         Lstatus = "PASS";
@@ -1542,7 +1517,6 @@ namespace VMS.TPS
                                 }
                                 else
                                 {
-
                                     if (Lvol > Lcomp)
                                     {
                                         Lstatus = "PASS";
@@ -1585,16 +1559,12 @@ namespace VMS.TPS
                             }
                             else if (morty.limit == "V100%Rx")
                             {
-
                                 Vgy = 100.0;
                             }
                             else
                             {
-
                                 Vgy = 50000;
-
                             }
-
                             if (morty.limunit == "%")
                             {
                                 type = "percent";
@@ -1683,19 +1653,15 @@ namespace VMS.TPS
                                     }
                                     else if (Vvol < comp)
                                     {
-
-                                        fstatus = "REVIEW -GOAL";
-
+                                        fstatus = "REVIEW - GOAL";
                                     }
                                     else
                                     {
                                         fstatus = "REVIEW";
-
                                     }
                                 }
                                 else
                                 {
-
                                     if (Vvol < comp)
                                     {
                                         fstatus = "PASS";
