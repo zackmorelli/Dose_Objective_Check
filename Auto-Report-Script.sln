@@ -27,7 +27,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfReport.Reporting.MigraDo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ROI", "ROI\ROI.csproj", "{7E8C97E1-151C-4B23-8396-D7340B81A325}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoChecks", "ContourChecks\AutoChecks.csproj", "{E57ECCD3-5AAE-4248-B992-4B12654DDECA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoChecks", "AutoChecks\AutoChecks.csproj", "{E57ECCD3-5AAE-4248-B992-4B12654DDECA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

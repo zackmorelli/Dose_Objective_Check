@@ -1,9 +1,0 @@
-C:\prog\Auto-Report-Script\GUI\bin\Debug\GUI.exe.config
-C:\prog\Auto-Report-Script\GUI\bin\Debug\GUI.exe
-C:\prog\Auto-Report-Script\GUI\bin\Debug\GUI.pdb
-C:\prog\Auto-Report-Script\GUI\obj\Debug\GUI.csprojAssemblyReference.cache
-C:\prog\Auto-Report-Script\GUI\obj\Debug\GUI.Properties.Resources.resources
-C:\prog\Auto-Report-Script\GUI\obj\Debug\GUI.csproj.GenerateResource.cache
-C:\prog\Auto-Report-Script\GUI\obj\Debug\GUI.csproj.CoreCompileInputs.cache
-C:\prog\Auto-Report-Script\GUI\obj\Debug\GUI.exe
-C:\prog\Auto-Report-Script\GUI\obj\Debug\GUI.pdb

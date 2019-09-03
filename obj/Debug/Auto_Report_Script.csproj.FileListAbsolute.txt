@@ -1,0 +1,6 @@
+C:\prog\Auto-Report-Script\obj\Debug\Auto_Report_Script.csprojAssemblyReference.cache
+C:\prog\Auto-Report-Script\obj\Debug\Auto_Report_Script.GUI.resources
+C:\prog\Auto-Report-Script\obj\Debug\Auto_Report_Script.csproj.GenerateResource.cache
+C:\prog\Auto-Report-Script\obj\Debug\Auto_Report_Script.csproj.CoreCompileInputs.cache
+C:\prog\Auto-Report-Script\obj\Debug\Auto-Report-Script.esapi.dll
+C:\prog\Auto-Report-Script\obj\Debug\Auto-Report-Script.esapi.pdb
