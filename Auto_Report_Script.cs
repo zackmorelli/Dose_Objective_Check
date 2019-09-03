@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Windows;
+using System.Windows.Forms;
 using System.ComponentModel;
 using System.Windows.Threading;
 using System.IO;
@@ -14,9 +15,10 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using VMS.TPS.Common.Model.API;
 using VMS.TPS.Common.Model.Types;
-using ContourChecks;
+using AutoChecks;
 using PdfReport.PDFGenerator;
 using ROI;
+using GUI;
 
 
 
@@ -58,7 +60,7 @@ namespace VMS.TPS
 
         // Declaration Space for things outside of "Execute" class
 
-     
+
 
 
         public class TreatSite : IEquatable<TreatSite>        //makes a treatment site class used to make a list of treatment sites 
@@ -1794,40 +1796,29 @@ namespace VMS.TPS
 
                             }
 
-
                             if (morty.strict == "[record]")
                             {
-
                                 qstatus = "PASS";
-
                             }
                             else if (morty.strict == "<")
                             {
-
                                 if (morty.goal != "NA")            // meaning there is a goal set
                                 {
-
                                     if ((qdose.Dose < Convert.ToDouble(morty.limval)) && (qdose.Dose < Convert.ToDouble(morty.goal)))
                                     {
                                         qstatus = "PASS";
                                     }
                                     else if (qdose.Dose < Convert.ToDouble(morty.goal))
                                     {
-
                                         qstatus = "REVIEW - GOAL";
-
                                     }
                                     else
                                     {
                                         qstatus = "REVIEW";
-
                                     }
-
-
                                 }
                                 else
                                 {
-
                                     if (qdose.Dose < Convert.ToDouble(morty.limval))
                                     {
                                         qstatus = "PASS";
@@ -1835,41 +1826,28 @@ namespace VMS.TPS
                                     else
                                     {
                                         qstatus = "REVIEW";
-
                                     }
-
                                 }
-
-
                             }
                             else if (morty.strict == "<=")
                             {
-
-
                                 if (morty.goal != "NA")            // meaning there is a goal set
                                 {
-
                                     if ((qdose.Dose <= Convert.ToDouble(morty.limval)) && (qdose.Dose <= Convert.ToDouble(morty.goal)))
                                     {
                                         qstatus = "PASS";
                                     }
                                     else if (qdose.Dose <= Convert.ToDouble(morty.goal))
                                     {
-
                                         qstatus = "REVIEW - GOAL";
-
                                     }
                                     else
                                     {
                                         qstatus = "REVIEW";
-
                                     }
-
-
                                 }
                                 else
                                 {
-
                                     if (qdose.Dose < Convert.ToDouble(morty.limval))
                                     {
                                         qstatus = "PASS";
@@ -1877,12 +1855,8 @@ namespace VMS.TPS
                                     else
                                     {
                                         qstatus = "REVIEW";
-
                                     }
-
                                 }
-
-
                             }
 
                             //  Console.WriteLine("\nDOSE UNIT: {0}", qdose.Unit.ToString());
@@ -1970,17 +1944,30 @@ foreach(ROI.ROI aroi in ROIA)
 
                 if (context.Patient == null)
                 {
-                    MessageBox.Show("Please load a patient with a treatment Plan before running this script!");
+                System.Windows.MessageBox.Show("Please load a patient with a treatment Plan before running this script!");
                     return;
                 }
 
-                // this area calls outside functions that perform automatic checks on system
+            // GUI STARTS HERE
 
-               // ContourChecks.CountourChecks.ContoursInBody(structureSet);      
-                
-                // Functions below here are for the dose objective check program
+        
 
-                Discrim = Discriminator(Plansums, Plans, user);
+            Thread BackCheck = new Thread(() => CountourChecks.ContoursInBody(structureSet));
+
+            System.Windows.Forms.Application.EnableVisualStyles();
+            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
+            System.Windows.Forms.Application.Run(new Auto_Report_Script.GUI());
+
+
+            // this area calls outside functions that perform automatic checks on system
+
+            // ContourChecks.CountourChecks.ContoursInBody(structureSet);      
+
+            // Functions below here are for the dose objective check program
+
+
+
+            Discrim = Discriminator(Plansums, Plans, user);
 
                 if (Discrim == true)
                 {
@@ -1998,7 +1985,7 @@ foreach(ROI.ROI aroi in ROIA)
 
                     if (T == true)
                     {
-                        MessageBox.Show("THIS PLAN HAS NOT MET ONE OR MORE DOSE OBJECTIVES AND REQUIRES REVIEW.");
+                    System.Windows.MessageBox.Show("THIS PLAN HAS NOT MET ONE OR MORE DOSE OBJECTIVES AND REQUIRES REVIEW.");
                     }
 
                     Console.WriteLine("\n\n\n");
@@ -2024,7 +2011,7 @@ foreach(ROI.ROI aroi in ROIA)
 
                     if (T == true)
                     {
-                        MessageBox.Show("THIS PLAN HAS NOT MET ONE OR MORE DOSE OBJECTIVES AND REQUIRES REVIEW.");
+                    System.Windows.MessageBox.Show("THIS PLAN HAS NOT MET ONE OR MORE DOSE OBJECTIVES AND REQUIRES REVIEW.");
                     }
 
                     Console.WriteLine("\n\n\n");

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auto-Report-Script", "Auto-Report-Script.csproj", "{3E2ABC71-EAF2-4291-A57D-A99515AD5632}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auto_Report_Script", "Auto_Report_Script.csproj", "{3E2ABC71-EAF2-4291-A57D-A99515AD5632}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FFF6FBB2-0BE5-41F9-B656-E0B9D9D17B6A} = {FFF6FBB2-0BE5-41F9-B656-E0B9D9D17B6A}
 		{E57ECCD3-5AAE-4248-B992-4B12654DDECA} = {E57ECCD3-5AAE-4248-B992-4B12654DDECA}
@@ -27,7 +27,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfReport.Reporting.MigraDo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ROI", "ROI\ROI.csproj", "{7E8C97E1-151C-4B23-8396-D7340B81A325}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContourChecks", "ContourChecks\ContourChecks.csproj", "{E57ECCD3-5AAE-4248-B992-4B12654DDECA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoChecks", "ContourChecks\AutoChecks.csproj", "{E57ECCD3-5AAE-4248-B992-4B12654DDECA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

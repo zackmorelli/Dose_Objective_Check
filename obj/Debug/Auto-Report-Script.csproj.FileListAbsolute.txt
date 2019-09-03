@@ -41,3 +41,6 @@ C:\prog\Auto-Report-Script\obj\Debug\Auto-Report-Script.esapi.dll
 C:\prog\Auto-Report-Script\obj\Debug\Auto-Report-Script.esapi.pdb
 C:\prog\Auto-Report-Script\bin\Debug\ContourChecks.dll
 C:\prog\Auto-Report-Script\bin\Debug\ContourChecks.pdb
+C:\prog\Auto-Report-Script\bin\Debug\GUI.exe
+C:\prog\Auto-Report-Script\bin\Debug\GUI.pdb
+C:\prog\Auto-Report-Script\bin\Debug\GUI.exe.config
