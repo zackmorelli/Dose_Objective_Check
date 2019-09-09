@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GUI));
             this.Plan_List = new System.Windows.Forms.ListBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.DirectionText = new System.Windows.Forms.TextBox();
@@ -40,7 +41,7 @@
             // Plan_List
             // 
             this.Plan_List.FormattingEnabled = true;
-            this.Plan_List.Location = new System.Drawing.Point(860, 99);
+            this.Plan_List.Location = new System.Drawing.Point(860, 259);
             this.Plan_List.Name = "Plan_List";
             this.Plan_List.Size = new System.Drawing.Size(416, 56);
             this.Plan_List.TabIndex = 0;
@@ -54,13 +55,15 @@
             // 
             // DirectionText
             // 
+            this.DirectionText.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DirectionText.Location = new System.Drawing.Point(860, 26);
             this.DirectionText.Multiline = true;
             this.DirectionText.Name = "DirectionText";
             this.DirectionText.ReadOnly = true;
-            this.DirectionText.Size = new System.Drawing.Size(416, 48);
+            this.DirectionText.Size = new System.Drawing.Size(416, 211);
             this.DirectionText.TabIndex = 2;
-            this.DirectionText.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
+            this.DirectionText.Text = resources.GetString("DirectionText.Text");
+           // this.DirectionText.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
             // 
             // OuputBox
             // 
@@ -75,15 +78,16 @@
             // TypeList
             // 
             this.TypeList.FormattingEnabled = true;
-            this.TypeList.Location = new System.Drawing.Point(867, 178);
+            this.TypeList.Location = new System.Drawing.Point(860, 405);
             this.TypeList.Name = "TypeList";
             this.TypeList.Size = new System.Drawing.Size(408, 30);
             this.TypeList.TabIndex = 6;
+            this.TypeList.SelectedIndexChanged += new System.EventHandler(this.TypeList_SelectedIndexChanged);
             // 
             // SiteList
             // 
             this.SiteList.FormattingEnabled = true;
-            this.SiteList.Location = new System.Drawing.Point(864, 232);
+            this.SiteList.Location = new System.Drawing.Point(860, 473);
             this.SiteList.Name = "SiteList";
             this.SiteList.Size = new System.Drawing.Size(410, 30);
             this.SiteList.TabIndex = 7;

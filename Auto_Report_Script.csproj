@@ -35,8 +35,9 @@
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ContourChecks">
-      <HintPath>ContourChecks\bin\Debug\ContourChecks.dll</HintPath>
+    <Reference Include="ContourChecks, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>AutoChecks\bin\Debug\ContourChecks.dll</HintPath>
     </Reference>
     <Reference Include="GUI">
       <HintPath>GUI\bin\Debug\GUI.exe</HintPath>
@@ -98,6 +99,9 @@
     <EmbeddedResource Include="GUI.resx">
       <DependentUpon>GUI.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

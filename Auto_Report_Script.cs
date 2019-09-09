@@ -15,7 +15,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using VMS.TPS.Common.Model.API;
 using VMS.TPS.Common.Model.Types;
-using AutoChecks;
 using PdfReport.PDFGenerator;
 using ROI;
 using GUI;
@@ -1944,19 +1943,23 @@ foreach(ROI.ROI aroi in ROIA)
 
                 if (context.Patient == null)
                 {
-                System.Windows.MessageBox.Show("Please load a patient with a treatment Plan before running this script!");
+                System.Windows.MessageBox.Show("Please load a patient with a treatment plan before running this script!");
                     return;
                 }
 
             // GUI STARTS HERE
 
         
-
-            Thread BackCheck = new Thread(() => CountourChecks.ContoursInBody(structureSet));
-
+            // Starts automatic checks on a separate thread
+            Thread BackCheck = new Thread(() => AutoChecks.CountourChecks.ContoursInBody(structureSet));
+           
+            // settings for windows forms GUI
             System.Windows.Forms.Application.EnableVisualStyles();
             System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
-            System.Windows.Forms.Application.Run(new Auto_Report_Script.GUI());
+
+            //Starts GUI for Dose objective check in a separate thread
+            Thread GUIThread = new Thread(() => System.Windows.Forms.Application.Run(new Auto_Report_Script.GUI()));
+
 
 
             // this area calls outside functions that perform automatic checks on system

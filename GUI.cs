@@ -41,5 +41,10 @@ namespace Auto_Report_Script
         {
 
         }
+
+        private void TypeList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
