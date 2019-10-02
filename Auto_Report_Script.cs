@@ -72,7 +72,7 @@ namespace VMS.TPS
 
             public override string ToString()
             {
-                return "ID: " + Id + "   Name: " + DisplayName;
+                return  DisplayName;
             }
             public override bool Equals(object obj)
             {
@@ -94,7 +94,7 @@ namespace VMS.TPS
 
         }
 
-        static List<TreatSite> MakelistConv()           //treatment site list for Conventional plans
+        public static List<TreatSite> MakelistConv()           //treatment site list for Conventional plans
         {
             List<TreatSite> treatsite = new List<TreatSite>();
 
@@ -117,7 +117,7 @@ namespace VMS.TPS
             return treatsite;
         }
 
-        static List<TreatSite> MakelistSRS()           //treatment site list for SRS plans
+       public  static List<TreatSite> MakelistSRS()           //treatment site list for SRS plans
         {
             List<TreatSite> treatsite = new List<TreatSite>();
 
@@ -145,7 +145,7 @@ namespace VMS.TPS
             return treatsite;
         }
 
-        static List<TreatSite> MakelistBoth()           //treatment site list for Both
+        public static List<TreatSite> MakelistBoth()           //treatment site list for Both
         {
             List<TreatSite> treatsite = new List<TreatSite>();
 
@@ -307,150 +307,17 @@ namespace VMS.TPS
         }
 
 
-        static List<ROI.ROI> PlansumAnalysis(User user, Patient patient, Course course, StructureSet structureSet, PlanSum Plansum)
+        public static List<ROI.ROI> PlansumAnalysis(string[] Si, string ptype, Patient patient, Course course, StructureSet structureSet, PlanSum Plansum)
         {
 
             List<ROI.ROI> ROIE = new List<ROI.ROI>();     // Expected ROI made from text file list
             List<ROI.ROI> ROIA = new List<ROI.ROI>();     // Actual ROI list from Eclipse 
-            string Ttype = null;
+            string Ttype = ptype;
             string Tsite = null;
-            int [] TxS = new int[35];
-            string [] Si = new string[35]; 
-            string input = null;
-            int sc = 0;
-            int t = 0;
-            List<TreatSite> sitelist = null;
+          //  string [] Si = new string[35]; 
 
-            Thread.Sleep(1000);
-
-            Console.WriteLine("\n\nYou have loaded {0}'s course {1}. The currently selected Plansum of course {1} is {2}.  \n", patient.Name, course.Id, Plansum.Id);
-            Console.WriteLine("This program will now check the selected Plansum {0} to determine if the Eclipse-calculated Dose values meet the dose objectives established by the Radiation Oncology\nteam for the relevant treatment site. \n", Plansum.Id);
-            Console.WriteLine("Because a Plansum may contain several different types of plans, you may choose any number of Conventional or Stereotactic treatment site dose objective lists to use in your analysis\n");
-            Console.WriteLine("Does the Plansum contain Conventional plans, SRS plans, or Both?\n");
-
-
-            Console.WriteLine("(Enter C for Conventional, S for SRS, B for Both): ");
-            input = Console.ReadLine();
-            Console.WriteLine("\n\n ");
-
-            while (input != "c" & input != "C" & input != "S" & input != "s" & input != "b" & input != "B")
-            {
-                Console.WriteLine("Let's try that again. You must enter either C for Conventional, S for SRS, or B for Both.");
-                input = Console.ReadLine();
-            }
-            if (input == "c" | input == "C")
-            {
-                Console.WriteLine("You have chosen Conventional.");
-                Ttype = "Conventional";
-                sitelist = MakelistConv();
-            }
-            else if (input == "s" | input == "S")
-            {
-                Console.WriteLine("You have chosen SRS.");
-                Ttype = "SRS/SBRT";
-                sitelist = MakelistSRS();
-            }
-            else if (input == "b" | input == "B")
-            {
-                Console.WriteLine("You have chosen Both.");
-                Ttype = "Both";
-                sitelist = MakelistBoth();
-            }
-
-            if (Ttype != "Both")
-            {
-                Console.WriteLine("\n\n These are the following treatment sites associated with {0} plans.", Ttype);
-                Console.WriteLine("\n");
-
-                foreach (TreatSite aTreatSite in sitelist)
-                {
-                    Console.WriteLine(aTreatSite);
-                }
-
-                Console.WriteLine("\nHow many treatment sites would you like to include in your analysis? ");
-                Console.WriteLine("\nThe Program will only report on structures that have been contoured, so there is no harm in adding more treatment sites.");
-                Console.WriteLine("(Enter number of treatment sites): ");
-                sc = Convert.ToInt32(Console.ReadLine());
-
-                TxS = new int[sc];
-                Si = new string[sc];
-                Console.WriteLine("\nPlease enter the Id number(s) associated with the treatment site of the selected plansum: ");
-
-                for (int i = 0; i < sc; i++)
-                {
-                    TxS[i] = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine("\n");
-                }
-                Console.WriteLine("\n\n");
-                int jk = 0;
-
-                foreach (int i in TxS)
-                {
-                    foreach (TreatSite aTreatSite in sitelist)
-                    {
-                        if (aTreatSite.Id == i)
-                        {
-                            Console.WriteLine("\nYou have chosen the {0} treatment site.", aTreatSite.DisplayName);
-                            Si[jk] = aTreatSite.DisplayName;
-                            // Console.WriteLine("\n\nTsite is: {0} \n", Tsite);
-                            // Thread.Sleep(2000);
-                            break;
-                        }
-                    }
-                    jk++;
-                }
-            }
-            else if (Ttype == "Both")
-            {
-                Console.WriteLine("\n\n This is a list of ALL treatment sites.");
-                Console.WriteLine("\n");
-
-                foreach (TreatSite aTreatSite in sitelist)
-                {
-                    Console.WriteLine(aTreatSite);
-                }
-
-                Console.WriteLine("\nHow many treatment sites would you like to include in your analysis? ");
-                Console.WriteLine("\nThe Program will only report on structures that have been contoured, so there is no harm in adding more treatment sites.");
-                Console.WriteLine("(Enter number of treatment sites): ");
-                sc = Convert.ToInt32(Console.ReadLine());
-
-                TxS = new int[sc];
-                Si = new string[sc];
-                Console.WriteLine("\nPlease enter the Id number(s) associated with the treatment site of the selected plansum: ");
-
-                for (int i = 0; i < sc; i++)
-                {
-                    TxS[i] = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine("\n");
-                }
-                Console.WriteLine("\n\n");
-                int jk = 0;
-
-                foreach (int i in TxS)
-                {
-                    foreach (TreatSite aTreatSite in sitelist)
-                    {
-                        if (aTreatSite.Id == i)
-                        {
-                            Console.WriteLine("\nYou have chosen the {0} treatment site.", aTreatSite.DisplayName);
-                            Si[jk] = aTreatSite.DisplayName;
-                            // Console.WriteLine("\n\nTsite is: {0} \n", Tsite);
-                            // Thread.Sleep(2000);
-                            break;
-                        }
-                    }
-                    jk++;
-                }
-            }
-            Console.WriteLine("\n\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-            Console.WriteLine("\n\nStarting dose objectives check ... \n");
             // ROI.ROI is its own custom class
-            ROIE = Auto_Report_Script.LISTMAKER.Listmaker(Ttype, Tsite, Si);          // separate class with LISTMAKER function which generates a list of ROIs for the given treeatment type and site
-
-
-            Console.WriteLine("\nThe dose objective list created successfully.", Tsite);
-            Console.WriteLine("\nThe dose objective list contains {1} unique dose objectives.", Tsite, ROIE.Count);
+            ROIE = Auto_Report_Script.LISTMAKER.Listmaker(Ttype, Tsite, Si);          // separate class with LISTMAKER function which generates a list of ROIs for the given treatment type and site
 
             double dosesum = 0.0;
             string dunit = null;
@@ -461,17 +328,11 @@ namespace VMS.TPS
                 dunit = aplan.TotalPrescribedDose.UnitAsString;
             }
 
-            Console.WriteLine("\nSummed Prescribed doses of component plans: {0} {1}", dosesum, dunit);
-
-            Thread.Sleep(2000);
-
-            Console.WriteLine("\nMatching dose objectives with contoured structures in current Plansum ... ");
             int county = 0;
 
             foreach (ROI.ROI morty in ROIE)
             {
-                Console.WriteLine("\n {0} Dose objectives checked... ", county);
-                county++;
+               county++;
 
                 //  Console.WriteLine("\nThe current dose of objective is: {0}", morty.ROIName);
                 // Thread.Sleep(2000);
@@ -712,7 +573,6 @@ namespace VMS.TPS
                           //  Console.WriteLine("\nDVH Point Curves Volume Unit CM3: {0}", Ldvh.CurveData[1].VolumeUnit);
                           //  Console.WriteLine("\nDVH Point Curves Dose Unit cGy: {0}", Ldvh.CurveData[1].DoseValue.UnitAsString);
 
-                            Thread.Sleep(2000);
 
                             foreach (DVHPoint point in Ldvh.CurveData)
                             {
@@ -829,9 +689,7 @@ namespace VMS.TPS
 
                               //  Console.WriteLine("\nDVH Point Curves Volume Unit PERCENT: {0}", Vdvh.CurveData[1].VolumeUnit);
                               //  Console.WriteLine("\nDVH Point Curves Dose Unit cGy: {0}", Vdvh.CurveData[1].DoseValue.UnitAsString);
-
-                                Thread.Sleep(2000);
-
+                                                            
                                 foreach (DVHPoint point in Vdvh.CurveData)
                                 {
 
@@ -858,11 +716,9 @@ namespace VMS.TPS
 
                                 if (morty.goal != "NA")
                                 {
-
                                     comp2 = Convert.ToDouble(morty.goal);   // VOLUME IN CM3
 
                                     // gfdose = Plan.GetDoseAtVolume(S, Convert.ToDouble(morty.goal), VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
-
                                 }
 
                               // Vvol = Plan.GetVolumeAtDose(S, Vdose, VolumePresentation.AbsoluteCm3);
@@ -872,9 +728,9 @@ namespace VMS.TPS
                                 // Console.WriteLine("\nDVH Point Curves Volume Unit CM3: {0}", Vdvh.CurveData[1].VolumeUnit);
                                 // Console.WriteLine("\nDVH Point Curves Dose Unit cGy: {0}", Vdvh.CurveData[1].DoseValue.UnitAsString);
 
-                                Console.WriteLine("\n\n  DVH point UNIT: {0} ", Vdvh.CurveData[1].DoseValue.Unit.ToString());
+                                //Console.WriteLine("\n\n  DVH point UNIT: {0} ", Vdvh.CurveData[1].DoseValue.Unit.ToString());
 
-                                Thread.Sleep(3000);
+                               // Thread.Sleep(3000);
 
                                 foreach (DVHPoint point in Vdvh.CurveData)
                                 {
@@ -1166,105 +1022,42 @@ namespace VMS.TPS
 
         // Code which gets data from Eclipse ends here. Below this is the ouput for the ROI.ROI comparison.
 
-            Console.WriteLine("\n{0} unique dose objectives matched with structures in the current Plansum.", ROIA.Count);
-
-
-            Console.WriteLine("\nDose objective check complete.");
-
             return ROIA;
         }
 
-        static List<ROI.ROI> PlanAnalysis(User user, Patient patient, Course course, StructureSet structureSet, PlanSetup Plan)
+        public static List<ROI.ROI> PlanAnalysis(string TS, string ptype, User user, Patient patient, Course course, StructureSet structureSet, PlanSetup Plan)
         {
 
             List<ROI.ROI> ROIE = new List<ROI.ROI>();     // Expected ROI made from text file list
             List<ROI.ROI> ROIA = new List<ROI.ROI>();     // Actual ROI list from Eclipse 
-            string Ttype = null;
-            string Tsite = null;
-            string input = null;
-            int t = 0;
-            List<TreatSite> sitelist = null;
+            string Ttype = ptype;
+            string Tsite = TS;
 
-            Thread.Sleep(1000);
-
-            Console.WriteLine("\n\nYou have loaded {0}'s course {1}. The currently selected Plan of course {1} is {2}.  \n", patient.Name, course.Id, Plan.Id);
-            Console.WriteLine("This program will now check the selected Plan {0} to determine if the Eclipse-calculated Dose values meet the dose objectives established by the Radiation Oncology\nteam for the relevant treatment site. \n", Plan.Id);
-            Console.WriteLine("In order to do this, you must specify the treatment type and treatment site. Is this a conventionally fractionated Plan or an SRS/SBRT Plan? \n");
-            Console.WriteLine("(Enter C for conventional or S for SRS/SBRT): ");
-            input = Console.ReadLine();
-            Console.WriteLine("\n\n ");
-
-            while (input != "c" & input != "C" & input != "S" & input != "s")
-            {
-                Console.WriteLine("Let's try that again. You must enter either C for Conventional or S for SRS/SBRT.");
-                input = Console.ReadLine();
-            }
-
-            if (input == "c" | input == "C")
-            {
-                Console.WriteLine("You have chosen a Conventional Plan.");
-                Ttype = "Conventional";
-                sitelist = MakelistConv();
-            }
-
-            else if (input == "s" | input == "S")
-            {
-                Console.WriteLine("You have chosen an SRS/SBRT Plan.");
-                Ttype = "SRS/SBRT";
-                sitelist = MakelistSRS();
-            }
-
-            Console.WriteLine("\n\n These are the following treatment sites associated with {0} plans.", Ttype);
-            Console.WriteLine("\n");
-
-            foreach (TreatSite aTreatSite in sitelist)
-            {
-                Console.WriteLine(aTreatSite);
-            }
-
-            Console.WriteLine("\nPlease enter the Id number associated with the treatment site of the selected Plan: ");
-            t = Convert.ToInt32(Console.ReadLine());
-
-            foreach (TreatSite aTreatSite in sitelist)
-            {
-
-                if (aTreatSite.Id == t)
-                {
-                    Console.WriteLine("\nYou have chosen the {0} treatment site.", aTreatSite.DisplayName);
-                    Tsite = aTreatSite.DisplayName;
-                    // Console.WriteLine("\n\nTsite is: {0} \n", Tsite);
-                    Thread.Sleep(2000);
-                    break;
-                }
-
-            }
-            Console.WriteLine("\n\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-            Console.WriteLine("\n\nStarting dose objectives check ... \n");
-
+           
             string[] Si = new string[5] { "NA", "NA", "NA", "NA", "NA" };
             // ROI.ROI is its own custom class
             ROIE = Auto_Report_Script.LISTMAKER.Listmaker(Ttype, Tsite, Si);          // separate class with LISTMAKER function which generates a list of ROIs for the given treeatment type and site
 
 
-            Console.WriteLine("\n{0} dose objective list created successfully.", Tsite);
-            Console.WriteLine("\nThe {0} dose objective list contains {1} unique dose objectives.", Tsite, ROIE.Count);
-            Thread.Sleep(2000);
+           // Console.WriteLine("\n{0} dose objective list created successfully.", Tsite);
+           // Console.WriteLine("\nThe {0} dose objective list contains {1} unique dose objectives.", Tsite, ROIE.Count);
+           // Thread.Sleep(2000);
 
             // This part of code below gets DVH data from Eclipse. The way it works is different for different limit types, like MaxPtDose, V80, D1cc. etc.
 
 
             double pdose = Plan.TotalPrescribedDose.Dose;       // prescribed dose of the Plan
 
-            Console.WriteLine("\nPRESCRIBED DOSE: {0} {1}", pdose, Plan.TotalPrescribedDose.Unit.ToString());
+           // Console.WriteLine("\nPRESCRIBED DOSE: {0} {1}", pdose, Plan.TotalPrescribedDose.Unit.ToString());
 
-            Thread.Sleep(2000);
+           // Thread.Sleep(2000);
 
-            Console.WriteLine("\nMatching dose objectives with contoured structures in current Plan ... ");
+           // Console.WriteLine("\nMatching dose objectives with contoured structures in current Plan ... ");
             int county = 0;
 
             foreach (ROI.ROI morty in ROIE)
             {
-                Console.WriteLine("\n {0} Dose objectives checked... ", county);
+               // Console.WriteLine("\n {0} Dose objectives checked... ", county);
                 county++;
 
                 //  Console.WriteLine("\nThe current dose of objective is: {0}", morty.ROIName);
@@ -1872,10 +1665,10 @@ namespace VMS.TPS
 
             // Code which gets data from Eclipse ends here. Below this is the ouput for the ROI.ROI comparison.
 
-            Console.WriteLine("\n{0} unique dose objectives matched with structures in the current Plan.", ROIA.Count);
+           // Console.WriteLine("\n{0} unique dose objectives matched with structures in the current Plan.", ROIA.Count);
 
 
-            Console.WriteLine("\nDose objective check complete.");
+           // Console.WriteLine("\nDose objective check complete.");
 
 
             return ROIA;
@@ -1923,14 +1716,17 @@ foreach(ROI.ROI aroi in ROIA)
 
         public void Execute(ScriptContext context)     // PROGRAM START - sending a return to Execute will end the program
         {
-
                 //regular variables
 
                 List<ROI.ROI> output = new List<ROI.ROI>();
                 bool T = false;
                 bool Discrim;
-            
-                //ESAPI variables  NOTE: CANNOT INSTANTIATE ECLIPSE VARIABLES. CAN ONLT GET THEM FROM ECLIPSE.
+
+            // this stuff below is used with the GUI
+
+
+
+            //ESAPI variables  NOTE: CANNOT INSTANTIATE ECLIPSE VARIABLES. CAN ONLT GET THEM FROM ECLIPSE.
 
                 Patient patient = context.Patient;   // creates an object of the patient class called patient equal to the active patient open in Eclipse
                 Course course = context.Course;
@@ -1947,36 +1743,28 @@ foreach(ROI.ROI aroi in ROIA)
                     return;
                 }
 
-            // GUI STARTS HERE
-
-        
-            // Starts automatic checks on a separate thread
+            // this area calls outside functions that perform automatic checks on system
+            // Starts automatic checks on a separate thread  (Work In Progress)
             Thread BackCheck = new Thread(() => AutoChecks.CountourChecks.ContoursInBody(structureSet));
-           
+
+            // GUI STARTS HERE
             // settings for windows forms GUI
             System.Windows.Forms.Application.EnableVisualStyles();
-            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
 
             //Starts GUI for Dose objective check in a separate thread
-            Thread GUIThread = new Thread(() => System.Windows.Forms.Application.Run(new Auto_Report_Script.GUI()));
+            Thread GUIThread = new Thread(() => System.Windows.Forms.Application.Run(new Auto_Report_Script.GUI(patient, course, image3D, user, Plansums, Plans, structureSet)));
 
-
-
-            // this area calls outside functions that perform automatic checks on system
-
-            // ContourChecks.CountourChecks.ContoursInBody(structureSet);      
 
             // Functions below here are for the dose objective check program
 
-
-
+            /*
             Discrim = Discriminator(Plansums, Plans, user);
 
                 if (Discrim == true)
                 {
 
                     PlanSum Plansum = PlansumPick(Plansums);
-                    output = PlansumAnalysis(user, patient, course, structureSet, Plansum);
+                    output = PlansumAnalysis(patient, course, structureSet, Plansum);
 
                     foreach (ROI.ROI aroi in output)
                     {
@@ -2025,7 +1813,7 @@ foreach(ROI.ROI aroi in ROIA)
                     
                 }
 
-            
+            */
     
 
             /*
@@ -2053,69 +1841,11 @@ foreach(ROI.ROI aroi in ROIA)
 
             // code to put images in pdf goes here
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             //script code here
 
             return;
 
         }  //ends Execute  END OF PROGRAM
 
-
-
-
-
-
-            
-
-
-
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                
-
- 
     }   //ends Script class
 }  //ends namespace

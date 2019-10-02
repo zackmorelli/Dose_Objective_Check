@@ -24,11 +24,11 @@ namespace AutoChecks
 
             foreach(Structure astruct in structureSet.Structures)
             {
-                Console.WriteLine("\n {0}  number of separate parts: {1} ", astruct.Id, astruct.GetNumberOfSeparateParts());
+                MessageBox.Show(astruct.Id + " number of separate parts: " + astruct.GetNumberOfSeparateParts());
                 if (astruct.GetNumberOfSeparateParts() > 1)
                 {
 
-                    MessageBox.Show("{0} is not contiguous!");
+                    MessageBox.Show( astruct.Id + " is not contiguous!");
 
 
                 }

@@ -32,80 +32,104 @@
             this.Plan_List = new System.Windows.Forms.ListBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.DirectionText = new System.Windows.Forms.TextBox();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.OuputBox = new System.Windows.Forms.TextBox();
-            this.TypeList = new System.Windows.Forms.ListBox();
-            this.SiteList = new System.Windows.Forms.ListBox();
+            this.TSiteList = new System.Windows.Forms.ListBox();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Plan_List
             // 
+            this.Plan_List.Font = new System.Drawing.Font("Goudy Old Style", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Plan_List.FormattingEnabled = true;
-            this.Plan_List.Location = new System.Drawing.Point(860, 259);
+            this.Plan_List.ItemHeight = 23;
+            this.Plan_List.Location = new System.Drawing.Point(12, 127);
             this.Plan_List.Name = "Plan_List";
-            this.Plan_List.Size = new System.Drawing.Size(416, 56);
+            this.Plan_List.Size = new System.Drawing.Size(358, 96);
             this.Plan_List.TabIndex = 0;
+            this.Plan_List.SelectedIndexChanged += new System.EventHandler(this.PlanList_SelectedIndexChanged);
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(956, 634);
+            this.progressBar1.Location = new System.Drawing.Point(27, 478);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(330, 20);
+            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar1.TabIndex = 1;
             // 
             // DirectionText
             // 
-            this.DirectionText.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.DirectionText.Location = new System.Drawing.Point(860, 26);
+            this.DirectionText.Font = new System.Drawing.Font("Goudy Old Style", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DirectionText.Location = new System.Drawing.Point(12, 12);
             this.DirectionText.Multiline = true;
             this.DirectionText.Name = "DirectionText";
             this.DirectionText.ReadOnly = true;
-            this.DirectionText.Size = new System.Drawing.Size(416, 211);
+            this.DirectionText.Size = new System.Drawing.Size(1108, 109);
             this.DirectionText.TabIndex = 2;
             this.DirectionText.Text = resources.GetString("DirectionText.Text");
-           // this.DirectionText.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
             // 
             // OuputBox
             // 
-            this.OuputBox.Location = new System.Drawing.Point(12, 12);
+            this.OuputBox.Font = new System.Drawing.Font("Goudy Old Style", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.OuputBox.Location = new System.Drawing.Point(12, 240);
             this.OuputBox.Multiline = true;
             this.OuputBox.Name = "OuputBox";
             this.OuputBox.ReadOnly = true;
             this.OuputBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.OuputBox.Size = new System.Drawing.Size(815, 250);
+            this.OuputBox.Size = new System.Drawing.Size(503, 214);
             this.OuputBox.TabIndex = 5;
             // 
-            // TypeList
+            // TSiteList
             // 
-            this.TypeList.FormattingEnabled = true;
-            this.TypeList.Location = new System.Drawing.Point(860, 405);
-            this.TypeList.Name = "TypeList";
-            this.TypeList.Size = new System.Drawing.Size(408, 30);
-            this.TypeList.TabIndex = 6;
-            this.TypeList.SelectedIndexChanged += new System.EventHandler(this.TypeList_SelectedIndexChanged);
+            this.TSiteList.Font = new System.Drawing.Font("Goudy Old Style", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TSiteList.FormattingEnabled = true;
+            this.TSiteList.ItemHeight = 23;
+            this.TSiteList.Location = new System.Drawing.Point(607, 127);
+            this.TSiteList.Name = "TSiteList";
+            this.TSiteList.Size = new System.Drawing.Size(513, 303);
+            this.TSiteList.TabIndex = 7;
+            this.TSiteList.SelectedIndexChanged += new System.EventHandler(this.TSiteList_SelectedIndexChanged);
             // 
-            // SiteList
+            // checkedListBox1
             // 
-            this.SiteList.FormattingEnabled = true;
-            this.SiteList.Location = new System.Drawing.Point(860, 473);
-            this.SiteList.Name = "SiteList";
-            this.SiteList.Size = new System.Drawing.Size(410, 30);
-            this.SiteList.TabIndex = 7;
+            this.checkedListBox1.Font = new System.Drawing.Font("Goudy Old Style", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Items.AddRange(new object[] {
+            "Conventional",
+            "SRS",
+            "Both (Plansums Only)"});
+            this.checkedListBox1.Location = new System.Drawing.Point(386, 127);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(206, 79);
+            this.checkedListBox1.TabIndex = 8;
+            this.checkedListBox1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox1_ItemCheck);
+            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Goudy Old Style", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(790, 452);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(144, 75);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "Execute Dose Objective Check";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1288, 655);
-            this.Controls.Add(this.SiteList);
-            this.Controls.Add(this.TypeList);
+            this.ClientSize = new System.Drawing.Size(1148, 541);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.checkedListBox1);
+            this.Controls.Add(this.TSiteList);
             this.Controls.Add(this.OuputBox);
             this.Controls.Add(this.DirectionText);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.Plan_List);
             this.Name = "GUI";
             this.Text = "Lahey Radiation Oncology Plan Checker";
-            this.Load += new System.EventHandler(this.GUI_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -116,9 +140,9 @@
         private System.Windows.Forms.ListBox Plan_List;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.TextBox DirectionText;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.TextBox OuputBox;
-        private System.Windows.Forms.ListBox TypeList;
-        private System.Windows.Forms.ListBox SiteList;
+        private System.Windows.Forms.ListBox TSiteList;
+        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.Button button1;
     }
 }
