@@ -174,6 +174,11 @@ namespace PdfReport.Reporting.MigraDoc.Internal
                     {
                         row.Shading.Color = Color.FromRgb(255, 0, 0);
                     }
+                    else if (aroi.status == "REVIEW - GOAL")
+                    {
+                        row.Shading.Color = Color.FromRgb(255, 255, 0);
+                    }
+
 
                     if (aroi.strict == "[record]")
                     {                                                                           //V type limits

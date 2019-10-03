@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Written by Zackary T Morelli")]
 [assembly: AssemblyConfiguration("RELEASE 2.0")]
 [assembly: AssemblyCompany("Radiation Oncology Department, Lahey Hospital and Medical Center, Burlington MA")]
-[assembly: AssemblyProduct("Auto-Report-Script")]
+[assembly: AssemblyProduct("DoseObjectiveCheck")]
 [assembly: AssemblyCopyright("Copyright © 2019 Radiation Oncology Department, Lahey Hospital and Medical Center")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

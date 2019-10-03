@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ROI;
-
+using System.Windows.Forms;
 
 namespace Auto_Report_Script
 {
@@ -128,7 +128,7 @@ namespace Auto_Report_Script
                 }  // ends if file exists
                 else
                 {
-                    Console.WriteLine("\n\n File not found!");
+                    MessageBox.Show("\n\n File not found!");
 
                 }
 
@@ -211,7 +211,7 @@ namespace Auto_Report_Script
                 }  // ends if file exists
                 else
                 {
-                    Console.WriteLine("\n\n File not found!");
+                    MessageBox.Show("\n\n File not found!");
                 }
             }  // ends if Ttype loop
             foreach (ROI.ROI roi in ROIL )       // iterate through all the ROI.ROI elements in the ROIL list

@@ -33,7 +33,8 @@ namespace Auto_Report_Script
         {
             InitializeComponent();
 
-            
+            OuputBox.Text = "GUI Initialized";
+
             // MessageBox.Show("Trig 6");
 
             foreach (PlanSum aplansum in Plansums)
@@ -49,20 +50,16 @@ namespace Auto_Report_Script
                 plannames.Add(aplan.Id);
                 // MessageBox.Show("Trig 8");
             }
+            OuputBox.Text = "Plans loaded";
 
             button1.Click += (sender, EventArgs) => { buttonNext_Click(sender, EventArgs, patient, course, image3D, user, Plansums, Plans, structureSet); };
-
 
         }
 
 
-
-
-
-
         private void EXECUTE(string TS, ListBox.SelectedObjectCollection TSA, Patient patient, Course course, VMS.TPS.Common.Model.API.Image image3D, User user, IEnumerable<PlanSum> Plansums, IEnumerable<PlanSetup> Plans, StructureSet structureSet)
         {
-
+            OuputBox.Text = "Execution Initiated";
             if (c1 > 0)
             {
                 // MessageBox.Show("Trig EXE - 2-1");
@@ -101,6 +98,7 @@ namespace Auto_Report_Script
                     GG.MoveNext();
                 }
 
+                OuputBox.Text = "Plansum Analysis Initiated";
                 output = Script.PlansumAnalysis(Si, ptype, patient, course, structureSet, Plansum);
 
                 bool T = false;
@@ -117,6 +115,7 @@ namespace Auto_Report_Script
                     MessageBox.Show("THIS PLAN HAS NOT MET ONE OR MORE DOSE OBJECTIVES AND REQUIRES REVIEW.");
                 }
 
+                OuputBox.Text = "PDF Generation Initiated";
                 PdfReport.PDFGenerator.Program.PlansumMain(patient, course, Plansum, image3D, structureSet, user, output);
 
             }
@@ -163,6 +162,7 @@ namespace Auto_Report_Script
 
                 //EXECUTE PLAN DOSE OBJECTIVE ANALYSIS
 
+                OuputBox.Text = "Plan Analysis Initiated";
                 output = Script.PlanAnalysis(TS, ptype, user, patient, course, structureSet, Plan);
 
                 bool T = false;
@@ -179,6 +179,7 @@ namespace Auto_Report_Script
                     MessageBox.Show("THIS PLAN HAS NOT MET ONE OR MORE DOSE OBJECTIVES AND REQUIRES REVIEW.");
                 }
 
+                OuputBox.Text = "PDF Generation Initiated";
                 PdfReport.PDFGenerator.Program.PlanMain(patient, course, Plan, image3D, structureSet, user, output);
 
             }
@@ -257,6 +258,7 @@ namespace Auto_Report_Script
             k1 = k;
             c = 0;
             k = 0;
+            OuputBox.Text = "Plan Selected";
         }
 
         void TSiteList_SelectedIndexChanged(object sender, EventArgs e)
@@ -264,13 +266,20 @@ namespace Auto_Report_Script
             // MessageBox.Show("OrganList fire");
             if(TSiteList.SelectionMode == SelectionMode.One)
             {
-                TS = TSiteList.SelectedItem.ToString();
+                Object obj = TSiteList.SelectedItem;
+               // MessageBox.Show("Site List object string is: " + obj.ToString());
+                TS = obj.ToString();
+
+
+              //  Type TRF = TSiteList.SelectedItem.GetType();
+              //  MessageBox.Show("Site List object type is: " + TRF.ToString());
             }
             else if (TSiteList.SelectionMode == SelectionMode.MultiSimple)
             {
                 TSA = TSiteList.SelectedItems;
             }
-            
+
+            OuputBox.Text = "Treatment Site List Selected";
         }
 
         void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -316,6 +325,7 @@ namespace Auto_Report_Script
                 ptype = "Both";
                 TSiteList.DataSource = Script.MakelistBoth();               
             }
+            OuputBox.Text = "Plan Type Selected";
         }
 
         private void button1_Click(object sender, EventArgs args)

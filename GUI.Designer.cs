@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GUI));
             this.Plan_List = new System.Windows.Forms.ListBox();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.DirectionText = new System.Windows.Forms.TextBox();
             this.OuputBox = new System.Windows.Forms.TextBox();
             this.TSiteList = new System.Windows.Forms.ListBox();
@@ -43,19 +42,11 @@
             this.Plan_List.Font = new System.Drawing.Font("Goudy Old Style", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Plan_List.FormattingEnabled = true;
             this.Plan_List.ItemHeight = 23;
-            this.Plan_List.Location = new System.Drawing.Point(12, 127);
+            this.Plan_List.Location = new System.Drawing.Point(12, 165);
             this.Plan_List.Name = "Plan_List";
-            this.Plan_List.Size = new System.Drawing.Size(358, 96);
+            this.Plan_List.Size = new System.Drawing.Size(293, 96);
             this.Plan_List.TabIndex = 0;
             this.Plan_List.SelectedIndexChanged += new System.EventHandler(this.PlanList_SelectedIndexChanged);
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(27, 478);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(330, 20);
-            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.progressBar1.TabIndex = 1;
             // 
             // DirectionText
             // 
@@ -64,19 +55,19 @@
             this.DirectionText.Multiline = true;
             this.DirectionText.Name = "DirectionText";
             this.DirectionText.ReadOnly = true;
-            this.DirectionText.Size = new System.Drawing.Size(1108, 109);
+            this.DirectionText.Size = new System.Drawing.Size(938, 132);
             this.DirectionText.TabIndex = 2;
             this.DirectionText.Text = resources.GetString("DirectionText.Text");
             // 
             // OuputBox
             // 
             this.OuputBox.Font = new System.Drawing.Font("Goudy Old Style", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.OuputBox.Location = new System.Drawing.Point(12, 240);
+            this.OuputBox.Location = new System.Drawing.Point(31, 282);
             this.OuputBox.Multiline = true;
             this.OuputBox.Name = "OuputBox";
             this.OuputBox.ReadOnly = true;
             this.OuputBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.OuputBox.Size = new System.Drawing.Size(503, 214);
+            this.OuputBox.Size = new System.Drawing.Size(393, 86);
             this.OuputBox.TabIndex = 5;
             // 
             // TSiteList
@@ -84,9 +75,9 @@
             this.TSiteList.Font = new System.Drawing.Font("Goudy Old Style", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TSiteList.FormattingEnabled = true;
             this.TSiteList.ItemHeight = 23;
-            this.TSiteList.Location = new System.Drawing.Point(607, 127);
+            this.TSiteList.Location = new System.Drawing.Point(562, 165);
             this.TSiteList.Name = "TSiteList";
-            this.TSiteList.Size = new System.Drawing.Size(513, 303);
+            this.TSiteList.Size = new System.Drawing.Size(388, 303);
             this.TSiteList.TabIndex = 7;
             this.TSiteList.SelectedIndexChanged += new System.EventHandler(this.TSiteList_SelectedIndexChanged);
             // 
@@ -98,7 +89,7 @@
             "Conventional",
             "SRS",
             "Both (Plansums Only)"});
-            this.checkedListBox1.Location = new System.Drawing.Point(386, 127);
+            this.checkedListBox1.Location = new System.Drawing.Point(327, 165);
             this.checkedListBox1.Name = "checkedListBox1";
             this.checkedListBox1.Size = new System.Drawing.Size(206, 79);
             this.checkedListBox1.TabIndex = 8;
@@ -108,7 +99,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Goudy Old Style", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(790, 452);
+            this.button1.Location = new System.Drawing.Point(140, 393);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(144, 75);
             this.button1.TabIndex = 9;
@@ -120,13 +111,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1148, 541);
+            this.ClientSize = new System.Drawing.Size(967, 497);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.checkedListBox1);
             this.Controls.Add(this.TSiteList);
             this.Controls.Add(this.OuputBox);
             this.Controls.Add(this.DirectionText);
-            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.Plan_List);
             this.Name = "GUI";
             this.Text = "Lahey Radiation Oncology Plan Checker";
@@ -138,7 +128,6 @@
         #endregion
 
         private System.Windows.Forms.ListBox Plan_List;
-        private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.TextBox DirectionText;
         private System.Windows.Forms.TextBox OuputBox;
         private System.Windows.Forms.ListBox TSiteList;
