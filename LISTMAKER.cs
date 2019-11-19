@@ -8,6 +8,29 @@ using System.Threading.Tasks;
 using ROI;
 using System.Windows.Forms;
 
+
+/*
+    Lahey RadOnc Dose Objective Checker - LISTMAKER
+    Copyright (c) 2019 Radiation Oncology Department, Lahey Hospital and Medical Center
+    Written by: Zackary T Morelli
+
+    This program is expressely written as a plug-in script for use with Varian's Eclipse Treatment Planning System, and requires Varian's API files to run properly.
+    This program also requires .NET Framework 4.5.0 to run properly.
+
+    This is the source code for a .NET Framework assembly file, however this functions as an executable file in Eclipse.
+    In addition to Varian's APIs and .NET Framework, this program uses the following commonly available libraries:
+    MigraDoc
+    PdfSharp
+
+    Release 2.1 - 11/19/2019
+
+    Description:
+    This is an internal helper class of the Dose Objective Check program which contains a function that is used to read in the dose objectives of the Lahey Hospital Radiation Oncology Department, which are maintained in specifically formatted text files.
+    There are two text documents, one for Conventional plans, one for SRS/SBRT plans.
+*/
+
+
+
 namespace Auto_Report_Script
 {
     public class LISTMAKER
@@ -90,7 +113,6 @@ namespace Auto_Report_Script
 
                                 }
 
-
                             }
                             else
                             {
@@ -105,7 +127,6 @@ namespace Auto_Report_Script
                                     ttreatsite[i] = temp;
 
                                 }
-
                             }
 
                             ROIL.Add(new ROI.ROI { ROIName = tname, Rstruct = tstruct, ROIId = tid, limit = tlimit, limval = tlimval, strict = tstrict, limunit = tlimunit, status = tstatus, goal = tgoal, treatsite = ttreatsite});

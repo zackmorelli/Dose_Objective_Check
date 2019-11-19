@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("PdfReport.Reporting.MigraDoc")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PdfReport.Reporting.MigraDoc")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyDescription("This is a separate helper program that generates the PDF report for the Dose Objective Check program using the MigraDoc and PDFSharp packages. This code was originally developed by Carlos J Anderson and was obtained from him via his website. It was modified by Zackary T Morelli for use with the Dose Objective Check program.")]
+[assembly: AssemblyConfiguration("RELEASE 2.1 - 11/19/2019")]
+[assembly: AssemblyCompany("Radiation Oncology Department, Lahey Hospital and Medical Center, Burlington MA")]
+[assembly: AssemblyProduct("DoseObjectiveCheck")]
+[assembly: AssemblyCopyright("Copyright © 2019 Radiation Oncology Department, Lahey Hospital and Medical Center")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("2.1")]
+[assembly: AssemblyFileVersion("2.1")]

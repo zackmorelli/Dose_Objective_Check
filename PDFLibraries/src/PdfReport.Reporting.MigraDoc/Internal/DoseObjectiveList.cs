@@ -41,7 +41,7 @@ namespace PdfReport.Reporting.MigraDoc.Internal
             //  str.Insert(28, patient.FirstName);
             //  str.Insert(36, plan.Id);
 
-            AddTableTitle(section, "DOSE OBJECTIVE REPORT, DOSE BASED - (Total Prescribed Dose: " + plansum.TotalPrescribedDose + " cGy )");
+            AddTableTitle(section, "DOSE OBJECTIVE REPORT (Total Prescribed Dose: " + plansum.TotalPrescribedDose + " cGy )");
             AddDoseListTable(section, PROI);
         }
 
@@ -53,7 +53,7 @@ namespace PdfReport.Reporting.MigraDoc.Internal
           //  str.Insert(28, patient.FirstName);
           //  str.Insert(36, plan.Id);
 
-            AddTableTitle(section, "DOSE OBJECTIVE REPORT, DOSE BASED - (Total Prescribed Dose: " + plan.TotalPrescribedDose.ToString() + " cGy )");
+            AddTableTitle(section, "DOSE OBJECTIVE REPORT (Total Prescribed Dose: " + plan.TotalPrescribedDose.ToString() + " cGy )");
             AddDoseListTable(section, PROI);
         }
 
@@ -89,21 +89,23 @@ namespace PdfReport.Reporting.MigraDoc.Internal
         {
             var width = Size.GetWidth(table.Section);
             table.AddColumn(width * 0.34);
+            table.AddColumn(width * 0.09);
+            table.AddColumn(width * 0.09);
             table.AddColumn(width * 0.13);
             table.AddColumn(width * 0.13);
-            table.AddColumn(width * 0.13);
-            table.AddColumn(width * 0.13);
+            table.AddColumn(width * 0.09);
             table.AddColumn(width * 0.13);
 
             var headerRow = table.AddRow();
             headerRow.Borders.Bottom.Width = 1;
 
             AddHeader(headerRow.Cells[0], "Name");
-            AddHeader(headerRow.Cells[1], "Hard Dose Limit (cGy)");
-            AddHeader(headerRow.Cells[2], "Goal Dose Limit(cGy)");
-            AddHeader(headerRow.Cells[3], "Eclipse Estimated Dose (cGy)");
-            AddHeader(headerRow.Cells[4], "Status");
-            AddHeader(headerRow.Cells[5], "Structure Volume (cc)");
+            AddHeader(headerRow.Cells[1], "Limit");
+            AddHeader(headerRow.Cells[2], "Goal");
+            AddHeader(headerRow.Cells[3], "Eclipse Estimated Value");
+            AddHeader(headerRow.Cells[4], "Unit");
+            AddHeader(headerRow.Cells[5], "Status");
+            AddHeader(headerRow.Cells[6], "Structure Volume (cc)");
           
         }
 
@@ -118,7 +120,63 @@ namespace PdfReport.Reporting.MigraDoc.Internal
             foreach(ROI.ROI aroi in PROI)
             {
 
+                if(aroi.goal == null)
+                {
+                    aroi.goal = "Null";
+                }
+                else if (aroi.limunit == null)
+                {
+                    aroi.limunit = "Null";
+                }
+                else if (aroi.status == null)
+                {
+                    aroi.status = "Null";
+                }
+                else if (aroi.ROIName == null)
+                {
+                    aroi.ROIName = "Null";
+                }
+
                 if (aroi.type == "NV")
+                {
+                    var row = table.AddRow();
+                    row.VerticalAlignment = VerticalAlignment.Center;
+
+                    if (aroi.status == "PASS")
+                    {
+                        row.Cells[5].Shading.Color = Color.FromRgb(0, 255, 0);
+                    }
+                    else if (aroi.status == "REVIEW")
+                    {
+                        row.Cells[5].Shading.Color = Color.FromRgb(255, 0, 0);
+                    }
+                    else if (aroi.status == "REVIEW - GOAL")
+                    {
+                        row.Cells[5].Shading.Color = Color.FromRgb(255, 255, 0);
+                    }
+
+                    if (aroi.strict == "[record]")
+                    {
+                        row.Cells[0].AddParagraph(aroi.ROIName);
+                        row.Cells[1].AddParagraph("NA");
+                        row.Cells[2].AddParagraph(aroi.goal);
+                        row.Cells[3].AddParagraph(Math.Round(aroi.actdose, 0, MidpointRounding.AwayFromZero).ToString());
+                        row.Cells[4].AddParagraph(aroi.limunit);
+                        row.Cells[5].AddParagraph(aroi.status);
+                        row.Cells[6].AddParagraph(Math.Round(aroi.structvol, 2, MidpointRounding.AwayFromZero).ToString());
+                    }
+                    else
+                    {
+                        row.Cells[0].AddParagraph(aroi.ROIName);
+                        row.Cells[1].AddParagraph(aroi.limdose.ToString());
+                        row.Cells[2].AddParagraph(aroi.goal);
+                        row.Cells[3].AddParagraph(Math.Round(aroi.actdose, 0, MidpointRounding.AwayFromZero).ToString());
+                        row.Cells[4].AddParagraph(aroi.limunit);
+                        row.Cells[5].AddParagraph(aroi.status);
+                        row.Cells[6].AddParagraph(Math.Round(aroi.structvol, 2, MidpointRounding.AwayFromZero).ToString());
+                    }
+                }
+                else if (aroi.type == "cm3")
                 {
 
                     var row = table.AddRow();
@@ -126,40 +184,80 @@ namespace PdfReport.Reporting.MigraDoc.Internal
 
                     if (aroi.status == "PASS")
                     {
-                        row.Shading.Color = Color.FromRgb(0, 255, 0);
+                        row.Cells[5].Shading.Color = Color.FromRgb(0, 255, 0);
                     }
                     else if (aroi.status == "REVIEW")
                     {
-                        row.Shading.Color = Color.FromRgb(255, 0, 0);
+                        row.Cells[5].Shading.Color = Color.FromRgb(255, 0, 0);
                     }
                     else if (aroi.status == "REVIEW - GOAL")
                     {
-                        row.Shading.Color = Color.FromRgb(255, 255, 0);
+                        row.Cells[5].Shading.Color = Color.FromRgb(255, 255, 0);
                     }
 
-
-
                     if (aroi.strict == "[record]")
-                    {
+                    {                                                                           //V type limits
 
                         row.Cells[0].AddParagraph(aroi.ROIName);
                         row.Cells[1].AddParagraph("NA");
-                        row.Cells[2].AddParagraph(aroi.goal);
-                        row.Cells[3].AddParagraph(Math.Round(aroi.actdose, 0, MidpointRounding.AwayFromZero).ToString());
-                        row.Cells[4].AddParagraph(aroi.status);
-                        row.Cells[5].AddParagraph(Math.Round(aroi.structvol, 2, MidpointRounding.AwayFromZero).ToString());
+                        row.Cells[2].AddParagraph("NA");
+                        row.Cells[3].AddParagraph(Math.Round(aroi.actvol, 2, MidpointRounding.AwayFromZero).ToString());
+                        row.Cells[4].AddParagraph(aroi.limunit);
+                        row.Cells[5].AddParagraph(aroi.status);
+                        row.Cells[6].AddParagraph(Math.Round(aroi.structvol, 2, MidpointRounding.AwayFromZero).ToString());
 
                     }
                     else
                     {
 
                         row.Cells[0].AddParagraph(aroi.ROIName);
-                        row.Cells[1].AddParagraph(aroi.limdose.ToString());
+                        row.Cells[1].AddParagraph(Math.Round(aroi.limvol, 2, MidpointRounding.AwayFromZero).ToString());
                         row.Cells[2].AddParagraph(aroi.goal);
-                        row.Cells[3].AddParagraph(Math.Round(aroi.actdose, 0, MidpointRounding.AwayFromZero).ToString());
-                        row.Cells[4].AddParagraph(aroi.status);
-                        row.Cells[5].AddParagraph(Math.Round(aroi.structvol, 2, MidpointRounding.AwayFromZero).ToString());
+                        row.Cells[3].AddParagraph(Math.Round(aroi.actvol, 2, MidpointRounding.AwayFromZero).ToString());
+                        row.Cells[4].AddParagraph(aroi.limunit);
+                        row.Cells[5].AddParagraph(aroi.status);
+                        row.Cells[6].AddParagraph(Math.Round(aroi.structvol, 2, MidpointRounding.AwayFromZero).ToString());
 
+                    }
+                }
+                else if (aroi.type == "percent")
+                {
+
+                    var row = table.AddRow();
+                    row.VerticalAlignment = VerticalAlignment.Center;
+
+                    if (aroi.status == "PASS")
+                    {
+                        row.Cells[5].Shading.Color = Color.FromRgb(0, 255, 0);
+                    }
+                    else if (aroi.status == "REVIEW")
+                    {
+                        row.Cells[5].Shading.Color = Color.FromRgb(255, 0, 0);
+                    }
+                    else if (aroi.status == "REVIEW - GOAL")
+                    {
+                        row.Cells[5].Shading.Color = Color.FromRgb(255, 255, 0);
+                    }
+
+                    if (aroi.strict == "[record]")
+                    {                                                                           //V type limits
+                        row.Cells[0].AddParagraph(aroi.ROIName);
+                        row.Cells[1].AddParagraph("NA");
+                        row.Cells[2].AddParagraph("NA");
+                        row.Cells[3].AddParagraph(Math.Round(aroi.actvol, 2, MidpointRounding.AwayFromZero).ToString());
+                        row.Cells[4].AddParagraph(aroi.limunit);
+                        row.Cells[5].AddParagraph(aroi.status);
+                        row.Cells[6].AddParagraph(Math.Round(aroi.structvol, 2, MidpointRounding.AwayFromZero).ToString());
+                    }
+                    else
+                    {
+                        row.Cells[0].AddParagraph(aroi.ROIName);
+                        row.Cells[1].AddParagraph(Math.Round(aroi.limvol, 2, MidpointRounding.AwayFromZero).ToString());
+                        row.Cells[2].AddParagraph(aroi.goal);
+                        row.Cells[3].AddParagraph(Math.Round(aroi.actvol, 2, MidpointRounding.AwayFromZero).ToString());
+                        row.Cells[4].AddParagraph(aroi.limunit);
+                        row.Cells[5].AddParagraph(aroi.status);
+                        row.Cells[6].AddParagraph(Math.Round(aroi.structvol, 2, MidpointRounding.AwayFromZero).ToString());
                     }
                 }
             }

@@ -126,15 +126,15 @@ namespace PdfReport.Reporting.MigraDoc.Internal
 
                     if (aroi.status == "PASS")
                     {
-                        row.Shading.Color = Color.FromRgb(0, 255, 0);
+                        row.Cells[4].Shading.Color = Color.FromRgb(0, 255, 0);
                     }
                     else if (aroi.status == "REVIEW")
                     {
-                        row.Shading.Color = Color.FromRgb(255, 0, 0);
+                        row.Cells[4].Shading.Color = Color.FromRgb(255, 0, 0);
                     }
                     else if (aroi.status == "REVIEW - GOAL")
                     {
-                        row.Shading.Color = Color.FromRgb(255, 255, 0);
+                        row.Cells[4].Shading.Color = Color.FromRgb(255, 255, 0);
                     }
 
                     if (aroi.strict == "[record]")
@@ -168,21 +168,19 @@ namespace PdfReport.Reporting.MigraDoc.Internal
 
                     if (aroi.status == "PASS")
                     {
-                        row.Shading.Color = Color.FromRgb(0, 255, 0);
+                        row.Cells[4].Shading.Color = Color.FromRgb(0, 255, 0);
                     }
                     else if (aroi.status == "REVIEW")
                     {
-                        row.Shading.Color = Color.FromRgb(255, 0, 0);
+                        row.Cells[4].Shading.Color = Color.FromRgb(255, 0, 0);
                     }
                     else if (aroi.status == "REVIEW - GOAL")
                     {
-                        row.Shading.Color = Color.FromRgb(255, 255, 0);
+                        row.Cells[4].Shading.Color = Color.FromRgb(255, 255, 0);
                     }
-
 
                     if (aroi.strict == "[record]")
                     {                                                                           //V type limits
-
                         row.Cells[0].AddParagraph(aroi.ROIName);
                         row.Cells[1].AddParagraph("NA");
                         row.Cells[2].AddParagraph("NA");
@@ -192,17 +190,14 @@ namespace PdfReport.Reporting.MigraDoc.Internal
                     }
                     else
                     {
-
                         row.Cells[0].AddParagraph(aroi.ROIName);
                         row.Cells[1].AddParagraph(Math.Round(aroi.limvol, 2, MidpointRounding.AwayFromZero).ToString() + " %");
                         row.Cells[2].AddParagraph(Math.Round(aroi.goalvol, 2, MidpointRounding.AwayFromZero).ToString() + " %");
                         row.Cells[3].AddParagraph(Math.Round(aroi.actvol, 2, MidpointRounding.AwayFromZero).ToString() + " %");
                         row.Cells[4].AddParagraph(aroi.status);
                         row.Cells[5].AddParagraph(Math.Round(aroi.structvol, 2, MidpointRounding.AwayFromZero).ToString());
-
                     }
                 }
-
             }
         }
 

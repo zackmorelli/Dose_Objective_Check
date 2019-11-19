@@ -8,6 +8,30 @@ using PdfReport.Reporting.MigraDoc;
 using VMS.TPS.Common.Model.API;
 using VMS.TPS.Common.Model.Types;
 using ROI;
+using System.Collections;
+
+
+/*
+    Lahey RadOnc Dose Objective Checker - PDF Generator
+    Copyright (c) 2019 Radiation Oncology Department, Lahey Hospital and Medical Center
+    Written by: Zackary T Morelli
+
+    This program is expressely written as a plug-in script for use with Varian's Eclipse Treatment Planning System, and requires Varian's API files to run properly.
+    This program also requires .NET Framework 4.5.0 to run properly.
+
+    This is the source code for a .NET Framework assembly file, however this functions as an executable file in Eclipse.
+    In addition to Varian's APIs and .NET Framework, this program uses the following commonly available libraries:
+    MigraDoc
+    PdfSharp
+
+    Release 2.1 - 11/19/2019
+
+    Description:
+    This is an internal helper class that is involved in creating the PDF report made by the Dose Objective Check Program. 
+    This code was originally developed by Carlos J Anderson and was obtained from him via his website. It was significatly modified for use with the Dose Objective Check program.
+
+*/
+
 
 namespace PdfReport.PDFGenerator
 {
@@ -31,13 +55,13 @@ namespace PdfReport.PDFGenerator
         }
 
 
-        public static void PlansumMain(VMS.TPS.Common.Model.API.Patient patient, VMS.TPS.Common.Model.API.Course course, VMS.TPS.Common.Model.API.PlanSum plansum, VMS.TPS.Common.Model.API.Image image3D, VMS.TPS.Common.Model.API.StructureSet structureSet, VMS.TPS.Common.Model.API.User user, List<ROI.ROI> output)
+        public static void PlansumMain(VMS.TPS.Common.Model.API.Patient patient, VMS.TPS.Common.Model.API.Course course, VMS.TPS.Common.Model.API.PlanSum plansum, VMS.TPS.Common.Model.API.Image image3D, VMS.TPS.Common.Model.API.StructureSet structureSet, VMS.TPS.Common.Model.API.User user, List<ROI.ROI> output, int dt, double dd)
         {
 
             // MessageBox.Show("Trigger plansum main start");
 
             var reportService = new PdfReport.Reporting.MigraDoc.ReportPdf();
-            var reportData = CreateReportDataPlansum(patient, course, plansum, image3D, structureSet, user, output);
+            var reportData = CreateReportDataPlansum(patient, course, plansum, image3D, structureSet, user, output, dt, dd);
             // MessageBox.Show("Trigger main middle");
             var path = GetTempPdfPath();
             // MessageBox.Show(path);
@@ -104,7 +128,7 @@ namespace PdfReport.PDFGenerator
         }
 
 
-        private static ReportData CreateReportDataPlansum(VMS.TPS.Common.Model.API.Patient patient, VMS.TPS.Common.Model.API.Course course, VMS.TPS.Common.Model.API.PlanSum plansum, VMS.TPS.Common.Model.API.Image image3D, VMS.TPS.Common.Model.API.StructureSet structureSet, VMS.TPS.Common.Model.API.User user, List<ROI.ROI> output)
+        private static ReportData CreateReportDataPlansum(VMS.TPS.Common.Model.API.Patient patient, VMS.TPS.Common.Model.API.Course course, VMS.TPS.Common.Model.API.PlanSum plansum, VMS.TPS.Common.Model.API.Image image3D, VMS.TPS.Common.Model.API.StructureSet structureSet, VMS.TPS.Common.Model.API.User user, List<ROI.ROI> output, int dt, double dd)
         {
 
            //  MessageBox.Show("Trigger report data sum");
@@ -116,10 +140,26 @@ namespace PdfReport.PDFGenerator
             double dosesum = 0.0;
             string dunit = null;
 
-            foreach (PlanSetup aplan in plansum.PlanSetups)
+            if (dt == 1)
             {
-                dosesum += aplan.TotalPrescribedDose.Dose;
-                dunit = aplan.TotalPrescribedDose.UnitAsString;
+
+                foreach (PlanSetup aplan in plansum.PlanSetups)
+                {
+                    dosesum += aplan.TotalPrescribedDose.Dose;
+                    dunit = aplan.TotalPrescribedDose.UnitAsString;
+                }
+            }
+            else if (dt == 2)
+            {
+                IEnumerator lk = plansum.PlanSetups.GetEnumerator();
+                lk.MoveNext();
+                PlanSetup PS = (PlanSetup)lk.Current;
+                dosesum = PS.TotalPrescribedDose.Dose;
+                dunit = PS.TotalPrescribedDose.UnitAsString;
+            }
+            else if (dt == 3)
+            {
+                dosesum = dd;
             }
 
             return new ReportData
@@ -154,7 +194,7 @@ namespace PdfReport.PDFGenerator
 
                     Id = plansum.Id,
                     Course = course.Id,
-                    TotalPrescribedDose = dosesum,
+                    TotalPrescribedDose = dosesum,   // in cGy
                 
                     //  Type = Enum.GetName(typeof(PlanType),
 

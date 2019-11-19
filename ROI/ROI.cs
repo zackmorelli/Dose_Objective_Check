@@ -4,6 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+    Lahey RadOnc Dose Objective Checker - ROI
+    Copyright (c) 2019 Radiation Oncology Department, Lahey Hospital and Medical Center
+    Written by: Zackary T Morelli
+
+    This program is expressely written as a plug-in script for use with Varian's Eclipse Treatment Planning System, and requires Varian's API files to run properly.
+    This program also requires .NET Framework 4.5.0 to run properly.
+
+    This is the source code for a .NET Framework assembly file, however this functions as an executable file in Eclipse.
+    In addition to Varian's APIs and .NET Framework, this program uses the following commonly available libraries:
+    MigraDoc
+    PdfSharp
+
+    Release 2.1 - 11/19/2019
+
+    Description:
+    This is an internal helper class of the Dose Objective Check program. This defines the ROI class, which is a custom class which is used to store all of the information of individual dose objectives.
+    This is crucual to the proper and efficient functioning of the overall program.
+
+*/
+
+
+
 namespace ROI
 {
     public class ROI : IEquatable<ROI>

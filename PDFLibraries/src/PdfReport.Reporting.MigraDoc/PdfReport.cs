@@ -6,6 +6,29 @@ using System;
 using System.Collections.Generic;
 
 
+/*
+    Lahey RadOnc Dose Objective Checker - PdfReport
+    Copyright (c) 2019 Radiation Oncology Department, Lahey Hospital and Medical Center
+    Written by: Zackary T Morelli
+
+    This program is expressely written as a plug-in script for use with Varian's Eclipse Treatment Planning System, and requires Varian's API files to run properly.
+    This program also requires .NET Framework 4.5.0 to run properly.
+
+    This is the source code for a .NET Framework assembly file, however this functions as an executable file in Eclipse.
+    In addition to Varian's APIs and .NET Framework, this program uses the following commonly available libraries:
+    MigraDoc
+    PdfSharp
+
+    Release 2.1 - 11/19/2019
+
+    Description:
+    PdfReport, and the other files in the Pdf.Reporting.MigraDoc Visual Studio project (as well as the Pdf.Reporting project, which doesn't have a "main" file to put a description like this in), are an internal helper class of the Dose Objective Check program that are involved in the generation of the PDF report.
+    All of the code in the Pdf.Reporting namespace was originally developed by Carlos J Anderson and was obtained from him via his website. It was significantly modified by Zackary T Morelli for use with the Dose Objective Check program. 
+
+*/
+
+
+
 namespace PdfReport.Reporting.MigraDoc
 {
     public class ReportPdf : IReport
@@ -30,7 +53,7 @@ namespace PdfReport.Reporting.MigraDoc
             var doc = new Document();
             CustomStyles.Define(doc);
             doc.Add(CreateMainSection(reportdata));
-            doc.Add(CreateMainSection2(reportdata));
+         //   doc.Add(CreateMainSection2(reportdata));
           //  MessageBox.Show("Trigger create report");
             return doc;
 
@@ -46,15 +69,15 @@ namespace PdfReport.Reporting.MigraDoc
             return section;
         }
 
-        private Section CreateMainSection2(ReportData reportdata)
-        {
-            var section = new Section();
-            SetUpPage(section);
-            AddHeaderAndFooter(section, reportdata);
-            AddVolDoseObjectiveList(section, reportdata);
+     //   private Section CreateMainSection2(ReportData reportdata)
+     //   {
+      //      var section = new Section();
+       //     SetUpPage(section);
+        //    AddHeaderAndFooter(section, reportdata);
+        //    AddVolDoseObjectiveList(section, reportdata);
           //  MessageBox.Show("Trigger main section2");
-            return section;
-        }
+         //   return section;
+       // }
 
         private void SetUpPage(Section section)
         {
@@ -83,7 +106,7 @@ namespace PdfReport.Reporting.MigraDoc
           //  MessageBox.Show("Trigger ADDCONTENTS");
             // Addold(section, data.Patient);
             AddDoseObjectiveList(section, data);
-            AddVolDoseObjectiveList(section, data);
+         //   AddVolDoseObjectiveList(section, data);
            // MessageBox.Show("Trigger Dose objective Add1");
         }
 
@@ -100,13 +123,13 @@ namespace PdfReport.Reporting.MigraDoc
          //   MessageBox.Show("Trigger Dose Objective end");
         }
 
-        private void AddVolDoseObjectiveList(Section section, ReportData data)
-        {
+     //   private void AddVolDoseObjectiveList(Section section, ReportData data)
+     //   {
 
           //  MessageBox.Show("Trigger Vol Dose objective start");
-            new VolDoseObjectiveList().Add(section, data);
+     //       new VolDoseObjectiveList().Add(section, data);
           //  MessageBox.Show("Trigger Vol Dose Objective end");
-        }
+      //  }
 
 
 

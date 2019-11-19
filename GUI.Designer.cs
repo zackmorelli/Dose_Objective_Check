@@ -62,12 +62,12 @@
             // OuputBox
             // 
             this.OuputBox.Font = new System.Drawing.Font("Goudy Old Style", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.OuputBox.Location = new System.Drawing.Point(31, 282);
+            this.OuputBox.Location = new System.Drawing.Point(12, 267);
             this.OuputBox.Multiline = true;
             this.OuputBox.Name = "OuputBox";
             this.OuputBox.ReadOnly = true;
             this.OuputBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.OuputBox.Size = new System.Drawing.Size(393, 86);
+            this.OuputBox.Size = new System.Drawing.Size(393, 39);
             this.OuputBox.TabIndex = 5;
             // 
             // TSiteList
@@ -87,7 +87,7 @@
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Items.AddRange(new object[] {
             "Conventional",
-            "SRS",
+            "SRS/SBRT",
             "Both (Plansums Only)"});
             this.checkedListBox1.Location = new System.Drawing.Point(327, 165);
             this.checkedListBox1.Name = "checkedListBox1";
@@ -99,7 +99,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Goudy Old Style", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(140, 393);
+            this.button1.Location = new System.Drawing.Point(21, 410);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(144, 75);
             this.button1.TabIndex = 9;
@@ -133,5 +133,7 @@
         private System.Windows.Forms.ListBox TSiteList;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckedListBox checkedListBox2;
+        private System.Windows.Forms.Label label1;
     }
 }
