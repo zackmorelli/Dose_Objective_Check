@@ -42,28 +42,29 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="PdfReport.Reporting">
-      <HintPath>src\PdfReport.Reporting.MigraDoc\bin\Debug\PdfReport.Reporting.dll</HintPath>
+    <Reference Include="PdfReport.Reporting, Version=2.1.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>src\PdfReport.Reporting\bin\Debug\PdfReport.Reporting.dll</HintPath>
     </Reference>
-    <Reference Include="PdfReport.Reporting.MigraDoc">
+    <Reference Include="PdfReport.Reporting.MigraDoc, Version=2.1.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>src\PdfReport.Reporting.MigraDoc\bin\Debug\PdfReport.Reporting.MigraDoc.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="ROI, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ROI\bin\Debug\ROI.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="VMS.TPS.Common.Model.API">
       <HintPath>..\..\ESAPI\VMS.TPS.Common.Model.API.dll</HintPath>
     </Reference>
     <Reference Include="VMS.TPS.Common.Model.Types">
       <HintPath>..\..\ESAPI\VMS.TPS.Common.Model.Types.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ROI\ROI.csproj">
-      <Project>{7E8C97E1-151C-4B23-8396-D7340B81A325}</Project>
-      <Name>ROI</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

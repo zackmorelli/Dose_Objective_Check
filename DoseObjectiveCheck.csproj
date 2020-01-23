@@ -42,12 +42,14 @@
     <Reference Include="GUI">
       <HintPath>GUI\bin\Debug\GUI.exe</HintPath>
     </Reference>
-    <Reference Include="PdfReport.PDFGenerator">
+    <Reference Include="PdfReport.PDFGenerator, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>PDFLibraries\bin\Debug\PdfReport.PDFGenerator.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="ROI">
+    <Reference Include="ROI, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>ROI\bin\Debug\ROI.dll</HintPath>
     </Reference>
     <Reference Include="System" />

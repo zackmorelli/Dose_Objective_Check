@@ -7,6 +7,9 @@ using System.Windows.Forms;
 using System.Threading;
 using VMS.TPS.Common.Model.API;
 using VMS.TPS.Common.Model.Types;
+using GUI;
+using ROI;
+using DoseObjectiveCheck;
 
 
 
@@ -304,17 +307,17 @@ namespace VMS.TPS
         }
 
 
-        public static List<ROI.ROI> PlansumAnalysis(string[] Si, string ptype, Patient patient, Course course, StructureSet structureSet, PlanSum Plansum, int dt, double dd)
+        public static List<ROI.ROI> PlansumAnalysis(string[] Si, string ptype, Patient patient, Course course, StructureSet structureSet, PlanSum Plansum, int dt, double dd, TextBox OuputBox, string gyntype)
         {
 
             List<ROI.ROI> ROIE = new List<ROI.ROI>();     // Expected ROI made from text file list
             List<ROI.ROI> ROIA = new List<ROI.ROI>();     // Actual ROI list from Eclipse 
             string Ttype = ptype;
             string Tsite = null;
-            //  string [] Si = new string[36]; 
+            //  string [] Si = new string[40]; 
 
             // ROI.ROI is its own custom class
-            ROIE = Auto_Report_Script.LISTMAKER.Listmaker(Ttype, Tsite, Si);          // separate class with LISTMAKER function which generates a list of ROIs for the given treatment type and site
+            ROIE = LISTMAKER.Listmaker(Ttype, Tsite, Si);          // separate class with LISTMAKER function which generates a list of ROIs for the given treatment type and site
 
             double dosesum = 0.0;
             string dunit = null;
@@ -347,10 +350,13 @@ namespace VMS.TPS
             {
                 county++;
 
+                // OuputBox.AppendText(Environment.NewLine);
+               // OuputBox.AppendText("Dose Objectives checked: " + county + "/" + ROIE.Count);
+
                 //  Console.WriteLine("\nThe current dose of objective is: {0}", morty.ROIName);
                 // Thread.Sleep(2000);
 
-                foreach (Structure S in structureSet.Structures)        // iterates thriugh all the structures in the structureset of the current Plan
+                foreach (Structure S in structureSet.Structures)        // iterates through all the structures in the structureset of the current Plan
                 {
                     double structvol = S.Volume;
                     if (structvol < 0.03)
@@ -435,7 +441,7 @@ namespace VMS.TPS
                                 }
                             }
 
-                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limdose = Convert.ToDouble(Erika.limval), goal = Erika.goal, actdose = DM, status = kstatus, structvol = structvol, type = "NV", limunit = Erika.limunit });
+                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limdose = Convert.ToDouble(Erika.limval), strict = Erika.strict, goal = Erika.goal, actdose = DM, status = kstatus, structvol = structvol, type = "NV", limunit = Erika.limunit, applystatus = Erika.applystatus });
                           //  System.Windows.Forms.MessageBox.Show("Scorpia 0");
 
                         }
@@ -471,6 +477,20 @@ namespace VMS.TPS
                                         maxdose = point.DoseValue.Dose;
                                     }
                                 }
+                            }
+
+                            if((Erika.ROIName == "Bladder_Max Pt Dose <= 5000cGy" | Erika.ROIName == "Rectum_Max Pt Dose < 5000cGy" | Erika.ROIName == "SmBowel_Loops_Max Pt Dose < 5000cGy") & (gyntype == "Dose Painted"))
+                            {
+                                Erika.limval = Convert.ToString(1.15 * dosesum);
+
+                                if(Erika.ROIName == "SmBowel_Loops_Max Pt Dose < 5000cGy")
+                                {
+                                    Erika.applystatus = false;
+                                }
+                            }
+                            else if((Erika.ROIName == "Bladder_Max Pt Dose <= 5000cGy" | Erika.ROIName == "Rectum_Max Pt Dose < 5000cGy" | Erika.ROIName == "SmBowel_Loops_Max Pt Dose < 5000cGy") & (gyntype == "Sequential Courses"))
+                            {
+                                Erika.limval = Convert.ToString(1.10 * dosesum);
                             }
 
                             //  Console.WriteLine("\nDOSE UNIT: {0}", maxdose.Unit.ToString());
@@ -540,7 +560,7 @@ namespace VMS.TPS
                                 }
                             }
 
-                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limdose = Convert.ToDouble(Erika.limval), goal = Erika.goal, actdose = maxdose, status = kstatus, structvol = structvol, type = "NV", limunit = Erika.limunit });
+                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limdose = Convert.ToDouble(Erika.limval), strict = Erika.strict, goal = Erika.goal, actdose = maxdose, status = kstatus, structvol = structvol, type = "NV", limunit = Erika.limunit, applystatus = Erika.applystatus });
 
                         }
                         else if (Erika.limit == "Mean Dose")        // Mean dose
@@ -628,7 +648,7 @@ namespace VMS.TPS
                                 }
                             }
 
-                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limdose = Convert.ToDouble(Erika.limval), goal = Erika.goal, actdose = meandose.Dose, status = jstatus, structvol = structvol, type = "NV", limunit = Erika.limunit });
+                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limdose = Convert.ToDouble(Erika.limval), strict = Erika.strict, goal = Erika.goal, actdose = meandose.Dose, status = jstatus, structvol = structvol, type = "NV", limunit = Erika.limunit, applystatus = Erika.applystatus });
 
                         }
                         else if (Erika.limit.StartsWith("CV"))
@@ -645,7 +665,7 @@ namespace VMS.TPS
 
 
                             string jerry = Erika.limit.Substring(2);
-                            Llimit = Convert.ToDouble(jerry);
+                            Llimit = Convert.ToDouble(jerry);    // in Gy
 
                             Lcomp = Convert.ToDouble(Erika.limval);  // VOLUME IN CM3
 
@@ -654,7 +674,7 @@ namespace VMS.TPS
                                 Lcomp2 = Convert.ToDouble(Erika.goal);   // VOLUME IN CM3
                             }
 
-                            Ldose = (Llimit / 100.0) * dosesum;    // this calculates an absolute dose from the fractional value of Vgy
+                            Ldose = Llimit * 100.0;
 
                             DVHData Ldvh = Plansum.GetDVHCumulativeData(S, DoseValuePresentation.Absolute, VolumePresentation.AbsoluteCm3, 0.1);
 
@@ -711,7 +731,7 @@ namespace VMS.TPS
                                 }
                             }
 
-                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limvol = Lcomp, goal = Erika.goal, actvol = compvol, status = Lstatus, structvol = structvol, type = type, limunit = Erika.limunit });
+                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limvol = Lcomp, strict = Erika.strict, goal = Erika.goal, actvol = compvol, status = Lstatus, structvol = structvol, type = type, limunit = Erika.limunit, applystatus = Erika.applystatus });
 
                         }
                         else if (Erika.limit.StartsWith("V"))         // V45   45 is the dose in cGy which specifies a maximum dose that a specific amount (percentage or absolute amount) of the volume of a structure can recieve
@@ -732,7 +752,7 @@ namespace VMS.TPS
 
                                 }
 
-                                ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limvol = 700.0, goal = "NA", actvol = S.Volume, status = fstatus, structvol = structvol, type = "cm3", limunit = Erika.limunit });
+                                ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limvol = 700.0, strict = Erika.strict, goal = "NA", actvol = S.Volume, status = fstatus, structvol = structvol, type = "cm3", limunit = Erika.limunit, applystatus = Erika.applystatus });
                                 continue;
                             }
                             else if (Erika.limit == "V100%Rx")
@@ -764,12 +784,17 @@ namespace VMS.TPS
 
                                 }
 
-                                ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limvol = 100.0, goal = "NA", actvol = ctvvol, status = fstatus, structvol = structvol, type = "percent", limunit = Erika.limunit });
+                                ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limvol = 100.0, strict = Erika.strict, goal = "NA", actvol = ctvvol, status = fstatus, structvol = structvol, type = "percent", limunit = Erika.limunit, applystatus = Erika.applystatus });
                                 continue;
                             }
                             else if (Erika.limit == "Veff" || Erika.limit == "V60 is NOT Circumferential")
                             {
                                 continue;
+                            }
+
+                            if (gyntype == "Sequential Courses" & Erika.ROIName == "SmBowel_Loops_V55 <= 15cc")
+                            {
+                                Erika.applystatus = false;
                             }
 
                             //  DoseValue fdose = new DoseValue();
@@ -989,14 +1014,14 @@ namespace VMS.TPS
                             // Console.WriteLine("\nDOSE Value: {0}", fdose.Dose);
                             //  Thread.Sleep(5000);
 
-                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limvol = comp, goal = Erika.goal, actvol = Vvol, status = fstatus, structvol = structvol, type = type, limunit = Erika.limunit });
+                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limvol = comp, strict = Erika.strict, goal = Erika.goal, actvol = Vvol, status = fstatus, structvol = structvol, type = type, limunit = Erika.limunit, applystatus = Erika.applystatus });
 
                         }
                         else if (Erika.limit.StartsWith("D"))            // D5%  - 5% is 5% of the volume of the structure that must be under a specific dose limit
                         {
 
                             string qstatus = null;
-                            Double qdose = 0.0;
+                            double qdose = 0.0;
 
                             //  Console.WriteLine("\nTRIGGER D ");
                             //  Console.WriteLine("\nD Dose Limit: {0}  {1}", morty.limval, morty.limunit);
@@ -1026,7 +1051,7 @@ namespace VMS.TPS
                                 foreach (DVHPoint point in Qdvh.CurveData)
                                 {
 
-                                    if ((point.Volume == qvol))
+                                    if ((point.Volume >= (qvol - 0.3)) && (point.Volume <= (qvol + 0.3)))
                                     {
 
                                         qdose = point.DoseValue.Dose;
@@ -1054,7 +1079,7 @@ namespace VMS.TPS
                                 foreach (DVHPoint point in Qdvh.CurveData)
                                 {
 
-                                    if ((point.Volume == qvol))
+                                    if ((point.Volume >= (qvol - 0.3)) && (point.Volume <= (qvol + 0.3)))
                                     {
 
                                         qdose = point.DoseValue.Dose;
@@ -1155,7 +1180,7 @@ namespace VMS.TPS
                             //  Console.WriteLine("\nDOSE Value: {0}", qdose.Dose);
                             //  Thread.Sleep(5000);
 
-                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limdose = Convert.ToDouble(Erika.limval), goal = Erika.goal, actdose = qdose, status = qstatus, structvol = structvol, type = "NV", limunit = Erika.limunit });
+                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limdose = Convert.ToDouble(Erika.limval), strict = Erika.strict, goal = Erika.goal, actdose = qdose, status = qstatus, structvol = structvol, type = "NV", applystatus = Erika.applystatus });
 
 
                         }  // ends the D loop
@@ -1169,7 +1194,7 @@ namespace VMS.TPS
             return ROIA;
         }
 
-        public static List<ROI.ROI> PlanAnalysis(string TS, string ptype, User user, Patient patient, Course course, StructureSet structureSet, PlanSetup Plan)
+        public static List<ROI.ROI> PlanAnalysis(string TS, string ptype, User user, Patient patient, Course course, StructureSet structureSet, PlanSetup Plan, TextBox OuputBox, string gyntype)
         {
             //  System.Windows.Forms.MessageBox.Show("TS is: " + TS);
             //  System.Windows.Forms.MessageBox.Show("ptype is: " + ptype);
@@ -1181,8 +1206,9 @@ namespace VMS.TPS
 
             string[] Si = new string[5] { "NA", "NA", "NA", "NA", "NA" };
             // ROI.ROI is its own custom class
-            ROIE = Auto_Report_Script.LISTMAKER.Listmaker(Ttype, Tsite, Si);          // separate class with LISTMAKER function which generates a list of ROIs for the given treatment type and site
+            ROIE = LISTMAKER.Listmaker(Ttype, Tsite, Si);          // separate class with LISTMAKER function which generates a list of ROIs for the given treatment type and site
 
+            
 
           //  MessageBox.Show(Tsite + " dose objective list created successfully.");
             // Console.WriteLine("\nThe {0} dose objective list contains {1} unique dose objectives.", Tsite, ROIE.Count);
@@ -1202,11 +1228,14 @@ namespace VMS.TPS
 
             foreach (ROI.ROI Erika in ROIE)
             {
-                // Console.WriteLine("\n {0} Dose objectives checked... ", county);
+                
                 county++;
-                // System.Windows.Forms.MessageBox.Show("Plan A ROI iterate");
+               //  System.Windows.Forms.MessageBox.Show("Plan A ROI iterate " + county);
                 //  Console.WriteLine("\nThe current dose of objective is: {0}", morty.ROIName);
                 // Thread.Sleep(2000);
+
+              //  OuputBox.AppendText(Environment.NewLine);
+              //  OuputBox.AppendText("Dose Objectives checked: " + county + "/" + ROIE.Count);
 
                 foreach (Structure S in structureSet.Structures)        // iterates thriugh all the structures in the structureset of the current Plan
                 {
@@ -1220,6 +1249,7 @@ namespace VMS.TPS
 
                     if (S.Id == Erika.Rstruct)
                     {
+
                         // System.Windows.Forms.MessageBox.Show("Plan A struct match");
                         // Console.WriteLine("\nThe current structure from the Plan is: {0}", S.Id);
                         //  Console.WriteLine("\nThe current dose of objective has the structure tag: {0}", morty.Rstruct);
@@ -1296,8 +1326,8 @@ namespace VMS.TPS
                                 }
                             }
 
-                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limdose = Convert.ToDouble(Erika.limval), goal = Erika.goal, actdose = DM, status = kstatus, structvol = structvol, type = "NV", limunit = Erika.limunit });
-                           // System.Windows.Forms.MessageBox.Show("Scorpia 0");
+                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limdose = Convert.ToDouble(Erika.limval), strict = Erika.strict, goal = Erika.goal, actdose = DM, status = kstatus, structvol = structvol, type = "NV", limunit = Erika.limunit, applystatus = Erika.applystatus });
+                           //  System.Windows.Forms.MessageBox.Show("Scorpia 0");
 
                         }
                         else if (Erika.limit == "Max Pt Dose")        // MaxPtDose
@@ -1334,11 +1364,23 @@ namespace VMS.TPS
                                 }
                             }
 
+                            if ((Erika.ROIName == "Bladder_Max Pt Dose <= 5000cGy" | Erika.ROIName == "Rectum_Max Pt Dose < 5000cGy" | Erika.ROIName == "SmBowel_Loops_Max Pt Dose < 5000cGy") & (gyntype == "Dose Painted"))
+                            {
+                                Erika.limval = Convert.ToString(1.15 * pdose);
+
+                                if (Erika.ROIName == "SmBowel_Loops_Max Pt Dose < 5000cGy")
+                                {
+                                    Erika.applystatus = false;
+                                }
+                            }
+                            else if ((Erika.ROIName == "Bladder_Max Pt Dose <= 5000cGy" | Erika.ROIName == "Rectum_Max Pt Dose < 5000cGy" | Erika.ROIName == "SmBowel_Loops_Max Pt Dose < 5000cGy") & (gyntype == "Sequential Courses"))
+                            {
+                                Erika.limval = Convert.ToString(1.10 * pdose);
+                            }
 
                             //  Console.WriteLine("\nDOSE UNIT: {0}", maxdose.Unit.ToString());
                             //   Console.WriteLine("\nDOSE Value: {0}", maxdose.Dose);
                             //  Thread.Sleep(4000);
-
 
                             if (Erika.strict == "[record]")
                             {
@@ -1403,13 +1445,13 @@ namespace VMS.TPS
                                 }
                             }
 
-                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limdose = Convert.ToDouble(Erika.limval), goal = Erika.goal, actdose = maxdose, status = kstatus, structvol = structvol, type = "NV", limunit = Erika.limunit });
+                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limdose = Convert.ToDouble(Erika.limval), strict = Erika.strict, goal = Erika.goal, actdose = maxdose, status = kstatus, structvol = structvol, type = "NV", limunit = Erika.limunit, applystatus = Erika.applystatus });
                             // System.Windows.Forms.MessageBox.Show("Scorpia 1");
                         }
                         else if (Erika.limit == "Mean Dose")        // Mean dose
                         {
                             string jstatus = null;
-                           //  System.Windows.Forms.MessageBox.Show("Plan A Mean Dose");
+                            // System.Windows.Forms.MessageBox.Show("Plan A Mean Dose");
                             //  Console.WriteLine("\nTRIGGER Mean");
                             //  Console.WriteLine("\nMean Dose Limit: {0}  {1}", morty.limval, morty.limunit);
                             // Thread.Sleep(1000);
@@ -1485,12 +1527,12 @@ namespace VMS.TPS
                                     }
                                 }
                             }
-                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limdose = Convert.ToDouble(Erika.limval), goal = Erika.goal, actdose = meandose.Dose, status = jstatus, structvol = structvol, type = "NV", limunit = Erika.limunit });
-                             // System.Windows.Forms.MessageBox.Show("Scorpia 2");
+                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limdose = Convert.ToDouble(Erika.limval), strict = Erika.strict, goal = Erika.goal, actdose = meandose.Dose, status = jstatus, structvol = structvol, type = "NV", limunit = Erika.limunit, applystatus = Erika.applystatus });
+                            //  System.Windows.Forms.MessageBox.Show("Scorpia 2");
                         }
                         else if (Erika.limit.StartsWith("CV"))
                         {
-                           //  System.Windows.Forms.MessageBox.Show("Plan A CV");
+                            // System.Windows.Forms.MessageBox.Show("Plan A CV");
                             string Lstatus = null;
                             double Lcomp = 0.0;    //compare
                             double Lcomp2 = 0.0;
@@ -1506,19 +1548,26 @@ namespace VMS.TPS
 
                             Lcomp = Convert.ToDouble(Erika.limval);  // VOLUME IN CM3
 
-                          //  System.Windows.Forms.MessageBox.Show("Trig 2");
+                           // System.Windows.Forms.MessageBox.Show("CV Llimit is: " + Llimit);
 
                             if (Erika.goal != "NA")
                             {
                                 Lcomp2 = Convert.ToDouble(Erika.goal);   // VOLUME IN CM3
                             }
 
-                            DoseValue Ldose = new DoseValue(Llimit, DoseValue.DoseUnit.Percent);
+                            DoseValue Ldose = new DoseValue((Llimit * 100.0), DoseValue.DoseUnit.cGy);
+
+                          //  System.Windows.Forms.MessageBox.Show("CV Ldose is: " + Ldose.Dose + "  Unit: " + Ldose.UnitAsString);
 
                             Lvol = Plan.GetVolumeAtDose(S, Ldose, VolumePresentation.AbsoluteCm3);
+
+                           // System.Windows.Forms.MessageBox.Show("CV Lvol is: " + Lvol);
+                           
                             compvol = S.Volume - Lvol;
 
-                         //   System.Windows.Forms.MessageBox.Show("Trig 3");
+                           // System.Windows.Forms.MessageBox.Show("CV compvol is: " + compvol);
+
+                            //   System.Windows.Forms.MessageBox.Show("Trig 3");
 
                             if (Erika.strict == "[record]")
                             {
@@ -1554,9 +1603,9 @@ namespace VMS.TPS
                                 }
                             }
 
-                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limvol = Lcomp, goal = Erika.goal, actvol = compvol, status = Lstatus, structvol = structvol, type = type, limunit = Erika.limunit });
+                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limvol = Lcomp, strict = Erika.strict, goal = Erika.goal, actvol = compvol, status = Lstatus, structvol = structvol, type = type, limunit = Erika.limunit, applystatus = Erika.applystatus });
 
-                           //  System.Windows.Forms.MessageBox.Show("Scorpia 3");
+                            // System.Windows.Forms.MessageBox.Show("Scorpia 3");
                         }
                         else if (Erika.limit.StartsWith("V"))         // V45   45 is the dose in cGy which specifies a maximum dose that a specific amount (percentage or absolute amount) of the volume of a structure can recieve
                         {
@@ -1565,8 +1614,8 @@ namespace VMS.TPS
 
                             if (Erika.limit == "Volume")
                             {
-                                //THIS IS SPECIFICALLY FOR THE "LIVER-GTV_VOLUME > 700CC" DOE OBJECTIVE FOR SBRT LIVER PLANS
-                               // System.Windows.Forms.MessageBox.Show("Volume limit fire");
+                                //THIS IS SPECIFICALLY FOR THE "LIVER-GTV_VOLUME > 700CC" DOSE OBJECTIVE FOR SBRT LIVER PLANS
+                              //  System.Windows.Forms.MessageBox.Show("Volume limit fire");
 
                                 if (S.Volume > 700.0)
                                 {
@@ -1578,13 +1627,13 @@ namespace VMS.TPS
 
                                 }
 
-                                ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limvol = 700.0, goal = "NA", actvol = S.Volume, status = fstatus, structvol = structvol, type = "cm3", limunit = Erika.limunit });
+                                ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limvol = 700.0, strict = Erika.strict, goal = "NA", actvol = S.Volume, status = fstatus, structvol = structvol, type = "cm3", limunit = Erika.limunit, applystatus = Erika.applystatus });
                                 continue;
                             }
                             else if (Erika.limit == "V100%Rx")
                             {
-                                // THIS IS SPECIFICALLY FOR THE "_CTV_V100%Rx>=100%" DOSE OBJECTIVE FOR SBRT LIVER PLANS
-                              //  System.Windows.Forms.MessageBox.Show("V100%Rx fire");
+                               // THIS IS SPECIFICALLY FOR THE "_CTV_V100%Rx>=100%" DOSE OBJECTIVE FOR SBRT LIVER PLANS
+                              // System.Windows.Forms.MessageBox.Show("V100%Rx fire");
 
                                 DoseValue tdose = new DoseValue(pdose, DoseValue.DoseUnit.cGy);
                                 double ctvvol = Plan.GetVolumeAtDose(S, tdose, VolumePresentation.Relative);
@@ -1599,12 +1648,17 @@ namespace VMS.TPS
 
                                 }
 
-                                ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limvol = 100.0, goal = "NA" , actvol = ctvvol, status = fstatus, structvol = structvol, type = "percent", limunit = Erika.limunit });
+                                ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limvol = 100.0, strict = Erika.strict, goal = "NA" , actvol = ctvvol, status = fstatus, structvol = structvol, type = "percent", limunit = Erika.limunit, applystatus = Erika.applystatus });
                                 continue;
                             }
                             else if (Erika.limit == "Veff" || Erika.limit == "V60 is NOT Circumferential")
                             {
                                 continue;
+                            }
+
+                            if (gyntype == "Sequential Courses" & Erika.ROIName == "SmBowel_Loops_V55 <= 15cc")
+                            {
+                                Erika.applystatus = false;
                             }
 
                             //  DoseValue fdose = new DoseValue();
@@ -1825,12 +1879,12 @@ namespace VMS.TPS
                             // Console.WriteLine("\nDOSE Value: {0}", fdose.Dose);
                             //  Thread.Sleep(5000);
 
-                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limvol = comp, goal = Erika.goal, actvol = Vvol, status = fstatus, structvol = structvol, type = type, limunit = Erika.limunit });
+                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limvol = comp, strict = Erika.strict, goal = Erika.goal, actvol = Vvol, status = fstatus, structvol = structvol, type = type, limunit = Erika.limunit, applystatus = Erika.applystatus });
                             // System.Windows.Forms.MessageBox.Show("Scorpia 4");
                         }
                         else if (Erika.limit.StartsWith("D"))            // D5%  - 5% is 5% of the volume of the structure that must be under a specific dose limit
                         {
-                            //  System.Windows.Forms.MessageBox.Show("Plan A D");
+                             // System.Windows.Forms.MessageBox.Show("Plan A D");
                             string qstatus = null;
                             DoseValue qdose = new DoseValue();
 
@@ -1854,6 +1908,8 @@ namespace VMS.TPS
                                 qdose = Plan.GetDoseAtVolume(S, Convert.ToDouble(q2str), VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
 
                                 //  Console.WriteLine("\n ABS DOSE: {0}", qdose.Dose);
+                               // System.Windows.Forms.MessageBox.Show("qdose is: " + qdose);
+
                                 //  Thread.Sleep(4000);
 
                             }
@@ -1942,8 +1998,8 @@ namespace VMS.TPS
                             //  Console.WriteLine("\nDOSE Value: {0}", qdose.Dose);
                             //  Thread.Sleep(5000);
 
-                           //  System.Windows.Forms.MessageBox.Show("Scorpia 5");
-                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limdose = Convert.ToDouble(Erika.limval), goal = Erika.goal, actdose = qdose.Dose, status = qstatus, structvol = structvol, type = "NV", limunit = Erika.limunit });
+                            // System.Windows.Forms.MessageBox.Show("Scorpia 5");
+                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limdose = Convert.ToDouble(Erika.limval), strict = Erika.strict, goal = Erika.goal, actdose = qdose.Dose, status = qstatus, structvol = structvol, type = "NV", limunit = Erika.limunit, applystatus = Erika.applystatus });
 
 
                         }  // ends the D loop
@@ -2014,7 +2070,7 @@ foreach(ROI.ROI aroi in ROIA)
             Patient patient = context.Patient;   // creates an object of the patient class called patient equal to the active patient open in Eclipse
             Course course = context.Course;
             Image image3D = context.Image;
-            StructureSet structureSet = context.StructureSet;
+           // StructureSet structureSet = context.StructureSet;
             User user = context.CurrentUser;
             IEnumerable<PlanSum> Plansums = context.PlanSumsInScope;
             IEnumerable<PlanSetup> Plans = context.PlansInScope;
@@ -2041,7 +2097,7 @@ foreach(ROI.ROI aroi in ROIA)
             System.Windows.Forms.Application.EnableVisualStyles();
 
             //Starts GUI for Dose objective check in a separate thread
-            System.Windows.Forms.Application.Run(new Auto_Report_Script.GUI(patient, course, image3D, user, Plansums, Plans, structureSet));
+            System.Windows.Forms.Application.Run(new DoseObjectiveCheck.GUI(patient, course, image3D, user, Plansums, Plans));
 
 
 

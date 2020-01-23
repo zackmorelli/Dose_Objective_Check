@@ -31,7 +31,7 @@ using System.Windows.Forms;
 
 
 
-namespace Auto_Report_Script
+namespace DoseObjectiveCheck
 {
     public class LISTMAKER
     {
@@ -129,7 +129,7 @@ namespace Auto_Report_Script
                                 }
                             }
 
-                            ROIL.Add(new ROI.ROI { ROIName = tname, Rstruct = tstruct, ROIId = tid, limit = tlimit, limval = tlimval, strict = tstrict, limunit = tlimunit, status = tstatus, goal = tgoal, treatsite = ttreatsite});
+                            ROIL.Add(new ROI.ROI { ROIName = tname, Rstruct = tstruct, ROIId = tid, limit = tlimit, limval = tlimval, strict = tstrict, limunit = tlimunit, status = tstatus, goal = tgoal, treatsite = ttreatsite, applystatus = true});
 
                           //  Console.WriteLine("Linecount is: {0}", linecount);
 
@@ -218,7 +218,7 @@ namespace Auto_Report_Script
                                 }
                             }
 
-                            ROIL.Add(new ROI.ROI { ROIName = tname, Rstruct = tstruct, ROIId = tid, limit = tlimit, limval = tlimval, strict = tstrict, limunit = tlimunit, status = tstatus, goal = tgoal, treatsite = ttreatsite });
+                            ROIL.Add(new ROI.ROI { ROIName = tname, Rstruct = tstruct, ROIId = tid, limit = tlimit, limval = tlimval, strict = tstrict, limunit = tlimunit, status = tstatus, goal = tgoal, treatsite = ttreatsite, applystatus = true });
 
 
                             //  Console.WriteLine("Linecount is: {0}", linecount);
@@ -254,7 +254,7 @@ namespace Auto_Report_Script
                         if (str == Tsite)
                         {
                             // Console.WriteLine("TrigBef____ROIEadd");
-                            ROIE.Add(new ROI.ROI { ROIName = roi.ROIName, Rstruct = roi.Rstruct, ROIId = roi.ROIId, limit = roi.limit, limval = roi.limval, strict = roi.strict, limunit = roi.limunit, goal = roi.goal });
+                            ROIE.Add(new ROI.ROI { ROIName = roi.ROIName, Rstruct = roi.Rstruct, ROIId = roi.ROIId, limit = roi.limit, limval = roi.limval, strict = roi.strict, limunit = roi.limunit, goal = roi.goal, applystatus = true });
                             //  Console.WriteLine("TrigAft____ROIEadd");
                             //  Thread.Sleep(4000);
                         }
@@ -265,7 +265,7 @@ namespace Auto_Report_Script
                         {
                             if (str == foo)
                             {
-                                ROIE.Add(new ROI.ROI { ROIName = roi.ROIName, Rstruct = roi.Rstruct, ROIId = roi.ROIId, limit = roi.limit, limval = roi.limval, strict = roi.strict, limunit = roi.limunit, goal = roi.goal });
+                                ROIE.Add(new ROI.ROI { ROIName = roi.ROIName, Rstruct = roi.Rstruct, ROIId = roi.ROIId, limit = roi.limit, limval = roi.limval, strict = roi.strict, limunit = roi.limunit, goal = roi.goal, applystatus = true });
                             }
                         }
                     }

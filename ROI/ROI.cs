@@ -62,6 +62,7 @@ namespace ROI
         public double goalvol { get; set; }
         public double actvol { get; set; }
         public string type { get; set; }      // differentiates between absolute and realative V type limits
+        public bool applystatus { get; set; }
         public override string ToString()
         {
             return "ID: " + ROIId + "   Name: " + ROIName + "   Limit:" + limit + "   Strictness: " + strict + "   Limit Value: " + limval + "   Limit Unit: " + limunit;

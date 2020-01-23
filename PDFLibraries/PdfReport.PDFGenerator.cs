@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
+using System.Windows.Forms;
 using PdfReport.Reporting;
 using PdfReport.Reporting.MigraDoc;
 using VMS.TPS.Common.Model.API;
@@ -76,11 +77,24 @@ namespace PdfReport.PDFGenerator
         private static ReportData CreateReportDataPlan(VMS.TPS.Common.Model.API.Patient patient, VMS.TPS.Common.Model.API.Course course, VMS.TPS.Common.Model.API.PlanSetup plan, VMS.TPS.Common.Model.API.Image image3D, VMS.TPS.Common.Model.API.StructureSet structureSet, VMS.TPS.Common.Model.API.User user, List<ROI.ROI> output)
         {
 
-          //  MessageBox.Show("Trigger report data plan");
+            //  MessageBox.Show("Trigger report data plan");
 
             // some variables used to help convert between Varian stuff and the classes for the pdf
 
-            DateTime DOB = (DateTime)patient.DateOfBirth;  //casts nullable DateTime varriable from Varian's API to a normal one
+            DateTime DOB;
+
+            try
+            {
+                 DOB = (DateTime)patient.DateOfBirth;  //casts nullable DateTime variable from Varian's API to a normal one
+            }
+            catch(InvalidOperationException e)
+            {
+                // nullable object must have a value. this happens when there is no date of birth for the patient
+                System.Windows.Forms.MessageBox.Show("Alert: This patient does not have a Date of Birth that is stored in Eclipse. Today's date will be used as their date of birth so the program can continue.");
+
+                 DOB = DateTime.Today;
+            }
+
 
 
             return new ReportData
@@ -131,11 +145,25 @@ namespace PdfReport.PDFGenerator
         private static ReportData CreateReportDataPlansum(VMS.TPS.Common.Model.API.Patient patient, VMS.TPS.Common.Model.API.Course course, VMS.TPS.Common.Model.API.PlanSum plansum, VMS.TPS.Common.Model.API.Image image3D, VMS.TPS.Common.Model.API.StructureSet structureSet, VMS.TPS.Common.Model.API.User user, List<ROI.ROI> output, int dt, double dd)
         {
 
-           //  MessageBox.Show("Trigger report data sum");
+            //  MessageBox.Show("Trigger report data sum");
 
             // some variables used to help convert between Varian stuff and the classes for the pdf
 
-            DateTime DOB = (DateTime)patient.DateOfBirth;  //casts nullable DateTime varriable from Varian's API to a normal one
+
+            DateTime DOB;
+
+            try
+            {
+                DOB = (DateTime)patient.DateOfBirth;  //casts nullable DateTime variable from Varian's API to a normal one
+            }
+            catch (InvalidOperationException e)
+            {
+                // nullable object must have a value. this happens when there is no date of birth for the patient
+                System.Windows.Forms.MessageBox.Show("Alert: This patient does not have a Date of Birth that is stored in Eclipse. Today's date will be used as their date of birth so the program can continue.");
+
+                DOB = DateTime.Today;
+            }
+
 
             double dosesum = 0.0;
             string dunit = null;

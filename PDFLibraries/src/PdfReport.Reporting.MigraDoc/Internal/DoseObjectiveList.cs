@@ -2,6 +2,7 @@
 using MigraDoc.DocumentObjectModel.Tables;
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 
 namespace PdfReport.Reporting.MigraDoc.Internal
@@ -88,13 +89,13 @@ namespace PdfReport.Reporting.MigraDoc.Internal
         private void AddColumnsAndHeaders(Table table)
         {
             var width = Size.GetWidth(table.Section);
-            table.AddColumn(width * 0.34);
-            table.AddColumn(width * 0.09);
-            table.AddColumn(width * 0.09);
-            table.AddColumn(width * 0.13);
-            table.AddColumn(width * 0.13);
-            table.AddColumn(width * 0.09);
-            table.AddColumn(width * 0.13);
+            table.AddColumn(width * 0.30);
+            table.AddColumn(width * 0.07);
+            table.AddColumn(width * 0.07);
+            table.AddColumn(width * 0.14);
+            table.AddColumn(width * 0.07);
+            table.AddColumn(width * 0.21);
+            table.AddColumn(width * 0.14);
 
             var headerRow = table.AddRow();
             headerRow.Borders.Bottom.Width = 1;
@@ -111,16 +112,27 @@ namespace PdfReport.Reporting.MigraDoc.Internal
 
         private void AddHeader(Cell cell, string header)
         {
-            var p = cell.AddParagraph(header);
+            var p = cell.AddParagraph();
             p.Style = CustomStyles.ColumnHeader;
+            FormattedText formattedText = new FormattedText();
+            formattedText = p.AddFormattedText(header);
+            formattedText.Font.Size = 15.0;
         }
 
         private void AddStructureRows(Table table, List<ROI.ROI> PROI)
         {
-            foreach(ROI.ROI aroi in PROI)
-            {
 
-                if(aroi.goal == null)
+            foreach (ROI.ROI aroi in PROI)
+            {
+                if(aroi.applystatus == false)
+                {
+                   // MessageBox.Show("Trig when apply");
+                    continue;
+                }
+
+               // MessageBox.Show("Trig after apply");
+
+                if (aroi.goal == null)
                 {
                     aroi.goal = "Null";
                 }
@@ -160,20 +172,33 @@ namespace PdfReport.Reporting.MigraDoc.Internal
                         row.Cells[0].AddParagraph(aroi.ROIName);
                         row.Cells[1].AddParagraph("NA");
                         row.Cells[2].AddParagraph(aroi.goal);
-                        row.Cells[3].AddParagraph(Math.Round(aroi.actdose, 0, MidpointRounding.AwayFromZero).ToString());
+                        Paragraph para1 = new Paragraph();
+                        para1.Format.Font.Size = 14.5;
+                        para1.AddFormattedText(Math.Round(aroi.actdose, 0, MidpointRounding.AwayFromZero).ToString(), TextFormat.Bold);
+                        row.Cells[3].Add(para1);
                         row.Cells[4].AddParagraph(aroi.limunit);
-                        row.Cells[5].AddParagraph(aroi.status);
-                        row.Cells[6].AddParagraph(Math.Round(aroi.structvol, 2, MidpointRounding.AwayFromZero).ToString());
+                        Paragraph para2 = new Paragraph();
+                        para2.Format.Font.Size = 14.5;
+                        para2.AddFormattedText(aroi.status, TextFormat.Bold);
+                        row.Cells[5].Add(para2);
+                        row.Cells[6].AddParagraph(Math.Round(aroi.structvol, 0, MidpointRounding.AwayFromZero).ToString());
                     }
                     else
                     {
+                       // MessageBox.Show("Trig ");
                         row.Cells[0].AddParagraph(aroi.ROIName);
                         row.Cells[1].AddParagraph(aroi.limdose.ToString());
                         row.Cells[2].AddParagraph(aroi.goal);
-                        row.Cells[3].AddParagraph(Math.Round(aroi.actdose, 0, MidpointRounding.AwayFromZero).ToString());
+                        Paragraph para3 = new Paragraph();
+                        para3.Format.Font.Size = 14.5;
+                        para3.AddFormattedText(Math.Round(aroi.actdose, 0, MidpointRounding.AwayFromZero).ToString(), TextFormat.Bold);
+                        row.Cells[3].Add(para3);
                         row.Cells[4].AddParagraph(aroi.limunit);
-                        row.Cells[5].AddParagraph(aroi.status);
-                        row.Cells[6].AddParagraph(Math.Round(aroi.structvol, 2, MidpointRounding.AwayFromZero).ToString());
+                        Paragraph para4 = new Paragraph();
+                        para4.Format.Font.Size = 14.5;
+                        para4.AddFormattedText(aroi.status, TextFormat.Bold);
+                        row.Cells[5].Add(para4);
+                        row.Cells[6].AddParagraph(Math.Round(aroi.structvol, 0, MidpointRounding.AwayFromZero).ToString());
                     }
                 }
                 else if (aroi.type == "cm3")
@@ -201,23 +226,33 @@ namespace PdfReport.Reporting.MigraDoc.Internal
                         row.Cells[0].AddParagraph(aroi.ROIName);
                         row.Cells[1].AddParagraph("NA");
                         row.Cells[2].AddParagraph("NA");
-                        row.Cells[3].AddParagraph(Math.Round(aroi.actvol, 2, MidpointRounding.AwayFromZero).ToString());
+                        Paragraph para5 = new Paragraph();
+                        para5.Format.Font.Size = 14.5;
+                        para5.AddFormattedText(Math.Round(aroi.actvol, 0, MidpointRounding.AwayFromZero).ToString(), TextFormat.Bold);
+                        row.Cells[3].Add(para5);
                         row.Cells[4].AddParagraph(aroi.limunit);
-                        row.Cells[5].AddParagraph(aroi.status);
-                        row.Cells[6].AddParagraph(Math.Round(aroi.structvol, 2, MidpointRounding.AwayFromZero).ToString());
-
+                        Paragraph para6 = new Paragraph();
+                        para6.Format.Font.Size = 14.5;
+                        para6.AddFormattedText(aroi.status, TextFormat.Bold);
+                        row.Cells[5].Add(para6);
+                        row.Cells[6].AddParagraph(Math.Round(aroi.structvol, 0, MidpointRounding.AwayFromZero).ToString());
                     }
                     else
                     {
 
                         row.Cells[0].AddParagraph(aroi.ROIName);
-                        row.Cells[1].AddParagraph(Math.Round(aroi.limvol, 2, MidpointRounding.AwayFromZero).ToString());
+                        row.Cells[1].AddParagraph(Math.Round(aroi.limvol, 0, MidpointRounding.AwayFromZero).ToString());
                         row.Cells[2].AddParagraph(aroi.goal);
-                        row.Cells[3].AddParagraph(Math.Round(aroi.actvol, 2, MidpointRounding.AwayFromZero).ToString());
+                        Paragraph para7 = new Paragraph();
+                        para7.Format.Font.Size = 14.5;
+                        para7.AddFormattedText(Math.Round(aroi.actvol, 0, MidpointRounding.AwayFromZero).ToString(), TextFormat.Bold);
+                        row.Cells[3].Add(para7);
                         row.Cells[4].AddParagraph(aroi.limunit);
-                        row.Cells[5].AddParagraph(aroi.status);
-                        row.Cells[6].AddParagraph(Math.Round(aroi.structvol, 2, MidpointRounding.AwayFromZero).ToString());
-
+                        Paragraph para8 = new Paragraph();
+                        para8.Format.Font.Size = 14.5;
+                        para8.AddFormattedText(aroi.status, TextFormat.Bold);
+                        row.Cells[5].Add(para8);
+                        row.Cells[6].AddParagraph(Math.Round(aroi.structvol, 0, MidpointRounding.AwayFromZero).ToString());
                     }
                 }
                 else if (aroi.type == "percent")
@@ -244,20 +279,32 @@ namespace PdfReport.Reporting.MigraDoc.Internal
                         row.Cells[0].AddParagraph(aroi.ROIName);
                         row.Cells[1].AddParagraph("NA");
                         row.Cells[2].AddParagraph("NA");
-                        row.Cells[3].AddParagraph(Math.Round(aroi.actvol, 2, MidpointRounding.AwayFromZero).ToString());
+                        Paragraph para9 = new Paragraph();
+                        para9.Format.Font.Size = 14.5;
+                        para9.AddFormattedText(Math.Round(aroi.actvol, 0, MidpointRounding.AwayFromZero).ToString(), TextFormat.Bold);
+                        row.Cells[3].Add(para9);
                         row.Cells[4].AddParagraph(aroi.limunit);
-                        row.Cells[5].AddParagraph(aroi.status);
-                        row.Cells[6].AddParagraph(Math.Round(aroi.structvol, 2, MidpointRounding.AwayFromZero).ToString());
+                        Paragraph para10 = new Paragraph();
+                        para10.Format.Font.Size = 14.5;
+                        para10.AddFormattedText(aroi.status, TextFormat.Bold);
+                        row.Cells[5].Add(para10);
+                        row.Cells[6].AddParagraph(Math.Round(aroi.structvol, 0, MidpointRounding.AwayFromZero).ToString());
                     }
                     else
                     {
                         row.Cells[0].AddParagraph(aroi.ROIName);
-                        row.Cells[1].AddParagraph(Math.Round(aroi.limvol, 2, MidpointRounding.AwayFromZero).ToString());
+                        row.Cells[1].AddParagraph(Math.Round(aroi.limvol, 0, MidpointRounding.AwayFromZero).ToString());
                         row.Cells[2].AddParagraph(aroi.goal);
-                        row.Cells[3].AddParagraph(Math.Round(aroi.actvol, 2, MidpointRounding.AwayFromZero).ToString());
+                        Paragraph para11 = new Paragraph();
+                        para11.Format.Font.Size = 14.5;
+                        para11.AddFormattedText(Math.Round(aroi.actvol, 0, MidpointRounding.AwayFromZero).ToString(), TextFormat.Bold);
+                        row.Cells[3].Add(para11);
                         row.Cells[4].AddParagraph(aroi.limunit);
-                        row.Cells[5].AddParagraph(aroi.status);
-                        row.Cells[6].AddParagraph(Math.Round(aroi.structvol, 2, MidpointRounding.AwayFromZero).ToString());
+                        Paragraph para12 = new Paragraph();
+                        para12.Format.Font.Size = 14.5;
+                        para12.AddFormattedText(aroi.status, TextFormat.Bold);
+                        row.Cells[5].Add(para12);
+                        row.Cells[6].AddParagraph(Math.Round(aroi.structvol, 0, MidpointRounding.AwayFromZero).ToString());
                     }
                 }
             }

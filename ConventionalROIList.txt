@@ -1,5 +1,9 @@
-_PTV_Max Pt Dose <= 7700cGy,_PTV,Max Pt Dose,<=,7700,cGy,7490,Prostate Hypo 28fx
+_CTV_7000_D99% >= 6650cGy,_CTV_7000,D99%,>=,6650,cGy,7000,Prostate NRG Prot Arm 1
 _PTV_D1cc <= 6300cGy,_PTV,D1cc,<=,6300,cGy,NA,Prostate Hypo 20fx
+_PTV_Max Pt Dose <= 7700cGy,_PTV,Max Pt Dose,<=,7700,cGy,7490,Prostate Hypo 28fx
+PTV_7000_D99% >= 6510cGy,PTV_7000,D99%,>=,6510,cGy,7000,Prostate NRG Prot Arm 1
+PTV_7000_D98% >= 6650cGy,PTV_7000,D98%,>=,6650,cGy,7000,Prostate NRG Prot Arm 1
+PTV_7000_Max Pt Dose <= 8050cGy,PTV_7000,Max Pt Dose,<=,8050,cGy,7700,Prostate NRG Prot Arm 1
 Body-PTV_10_D1cc [record],Body-PTV_10,D1cc,[record],cGy,NA,Head & Neck,Prostate,Prostate Bed,Abdomen,Brain Hypofx,Pelvis EBRT + HDR,Prostate Hypo 28fx,Prostate Hypo 20fx,Gynecological,Thorax (Other),Breast,Brain,Esophagus,Lung,Pelvis (Other)
 Bladder_V80 <= 15%,Bladder,V80,<=,15,%,NA,Pelvis (Other),Prostate,Prostate Bed
 Bladder_V75 <= 25%,Bladder,V75,<=,25,%,NA,Pelvis (Other),Prostate,Prostate Bed
@@ -11,12 +15,12 @@ Bladder_V50 <= 25%,Bladder,V50,<=,25,%,NA,Pelvis EBRT + HDR
 Bladder_V45 <= 50%,Bladder,V45,<=,50,%,35,Gynecological
 Bladder_V45 <= 35%,Bladder,V45,<=,35,%,NA,Pelvis EBRT + HDR
 Bladder_V40 <= 35%,Bladder,V40,<=,35,%,NA,Prostate Hypo 28fx
+Bladder_D90% <= 4000cGy,Bladder,D90%,<=,4000,cGy,3500,Prostate NRG Prot Arm 1	
+Bladder_D50% <= 6800cGy,Bladder,D50%,<=,6800,cGy,6500,Prostate NRG Prot Arm 1	
+Bladder_D35% <= 7350cGy,Bladder,D35%,<=,7350,cGy,7000,Prostate NRG Prot Arm 1
 Bladder_D2cc [record],Bladder,D2cc,[record],cGy,NA,Pelvis EBRT + HDR,Gynecological
-Bladder_D35% <= 7350cGy,Bladder,D35%,<=,7350,cGy,7000, Prostate NRG Prot Arm 1									
-Bladder_D50% <= 6800cGy,Bladder,D50%,<=,6800,cGy,6500, Prostate NRG Prot Arm 1									
-Bladder_D90% <= 4000cGy,Bladder,D90%,<=,4000,cGy,3500, Prostate NRG Prot Arm 1									
 Bladder_Max Pt Dose <= 5000cGy,Bladder,Max Pt Dose,<,5000,cGy,NA,Gynecological
-Bladder_Max Pt Dose <= 7500cGy,Bladder,Max Pt Dose,<=,7500,cGy,7350,Prostate NRG Prot Arm 1									
+Bladder_Max Pt Dose <= 7500cGy,Bladder,Max Pt Dose,<=,7500,cGy,7350,Prostate NRG Prot Arm 1
 Bladder-CTV_V65 <= 50%,Bladder-CTV,V65,<=,50,%,NA,Prostate Bed
 Bladder-CTV_V40 <= 70%,Bladder-CTV,V40,<=,70,%,NA,Prostate Bed
 BladderWall_5mm_D50% <= 3700cGy,BladderWall_5mm,D50%,<=,3700,cGy,NA,Prostate Hypo 20fx
@@ -49,31 +53,28 @@ Duodenum_V50 <= 5cc,Duodenum,V50,<=,5,cc,NA,Pelvis (Other),Abdomen,Esophagus
 Esophagus_V70 <= 20%,Esophagus,V70,<=,20,%,NA,Thorax (Other),Abdomen,Lung
 Esophagus_V60 is NOT Circumferential,Esophagus,V60 is NOT Circumferential,=,TRUE,True/False,NA,Thorax (Other),Lung
 Esophagus_V50 <= 40%,Esophagus,V50,<=,40,%,NA,Thorax (Other),Abdomen,Lung
-Esophagus_Mean Dose <= 3400cGy,Esophagus,Mean Dose,<=,3400,cGy,3000,Thorax (Other),Abdomen,Lung
-Esophagus_Mean Dose <= 3400cGy,Esophagus,Mean Dose,<=,3400,cGy,3000,Head & Neck
+Esophagus_Mean Dose <= 3400cGy,Esophagus,Mean Dose,<=,3400,cGy,3000,Head & Neck,Thorax (Other),Breast,Abdomen,Lung
 Eye_L_V45 <= 50%,Eye_L,V45,<=,50,%,NA,Brain
 Eye_L_V39 <= 50%,Eye_L,V39,<=,50,%,NA,Brain Hypofx
-Eye_L_Mean Dose <= 3000cGy,Eye_L,Mean Dose,<=,3000,cGy,NA,Brain Hypofx
-Eye_L_Mean Dose <= 3500cGy,Eye_L,Mean Dose,<=,3500,cGy,NA,Head & Neck,Brain
 Eye_L_Max Pt Dose <= 4250cGy,Eye_L,Max Pt Dose,<=,4250,cGy,NA,Brain Hypofx
 Eye_L_Max Pt Dose <= 5000cGy,Eye_L,Max Pt Dose,<=,5000,cGy,2000,Head & Neck,Brain
+Eye_L_Mean Dose <= 3000cGy,Eye_L,Mean Dose,<=,3000,cGy,NA,Brain Hypofx
+Eye_L_Mean Dose <= 3500cGy,Eye_L,Mean Dose,<=,3500,cGy,NA,Head & Neck,Brain
 Eye_R_V45 <= 50%,Eye_R,V45,<=,50,%,NA,Brain
 Eye_R_V39 <= 50%,Eye_R,V39,<=,50,%,NA,Brain Hypofx
-Eye_R_Mean Dose <= 3000cGy,Eye_R,Mean Dose,<=,3000,cGy,NA,Brain Hypofx
-Eye_R_Mean Dose <= 3500cGy,Eye_R,Mean Dose,<=,3500,cGy,NA,Head & Neck,Brain
 Eye_R_Max Pt Dose <= 4250cGy,Eye_R,Max Pt Dose,<=,4250,cGy,NA,Brain Hypofx
 Eye_R_Max Pt Dose <= 5000cGy,Eye_R,Max Pt Dose,<=,5000,cGy,2000,Head & Neck,Brain
+Eye_R_Mean Dose <= 3000cGy,Eye_R,Mean Dose,<=,3000,cGy,NA,Brain Hypofx
+Eye_R_Mean Dose <= 3500cGy,Eye_R,Mean Dose,<=,3500,cGy,NA,Head & Neck,Brain
 FemHeadNeck_L_V50 <= 10%,FemHeadNeck_L,V50,<=,10,%,NA,Pelvis (Other),Prostate,Prostate Bed
 FemHeadNeck_L_V35 < 15%,FemHeadNeck_L,V35,<,15,%,NA,Gynecological
 FemHeadNeck_L_D5% <= 4300cGy,FemHeadNeck_L,D5%,<=,4300,cGy,NA,Prostate Hypo 20fx
-FemHeadNeck_L_D5% <= 4700cGy,FemHeadNeck_L,D5%,<=,4700,cGy,NA,Prostate Hypo 28fx
-FemHeadNeck_L_D0.1cc <= 3500cGy,FemHeadNeck_L,D0.1cc,<=,3500,cGy,Pelvis EBRT + HDR
-FemHeadNeck_L_Max Pt Dose < 5000cGy,FemHeadNeck_L,Max Pt Dose,<,5000,cGy,Gynecological
-FemHeadNeck_L_Max Pt Dose <= 4000cGy,FemHeadNeck_L,Max Pt Dose,<=,4000,cGy,Prostate Hypo 28fx
+FemHeadNeck_L_D0.1cc <= 3500cGy,FemHeadNeck_L,D0.1cc,<=,3500,cGy,NA,Pelvis EBRT + HDR
+FemHeadNeck_L_Max Pt Dose < 5000cGy,FemHeadNeck_L,Max Pt Dose,<,5000,cGy,NA,Gynecological
+FemHeadNeck_L_Max Pt Dose <= 4000cGy,FemHeadNeck_L,Max Pt Dose,<=,4000,cGy,NA,Prostate Hypo 28fx
 FemHeadNeck_R_V50 <= 10%,FemHeadNeck_R,V50,<=,10,%,NA,Pelvis (Other),Prostate,Prostate Bed
 FemHeadNeck_R_V35 < 15%,FemHeadNeck_R,V35,<,15,%,NA,Gynecological
 FemHeadNeck_R_D5% <= 4300cGy,FemHeadNeck_R,D5%,<=,4300,cGy,NA,Prostate Hypo 20fx
-FemHeadNeck_R_D5% <= 4700cGy,FemHeadNeck_R,D5%,<=,4700,cGy,NA,Prostate Hypo 28fx
 FemHeadNeck_R_D0.1cc <= 3500cGy,FemHeadNeck_R,D0.1cc,<=,3500,cGy,NA,Pelvis EBRT + HDR
 FemHeadNeck_R_Max Pt Dose < 5000cGy,FemHeadNeck_R,Max Pt Dose,<,5000,cGy,NA,Gynecological
 FemHeadNeck_R_Max Pt Dose <= 4000cGy,FemHeadNeck_R,Max Pt Dose,<=,4000,cGy,NA,Prostate Hypo 28fx
@@ -84,14 +85,14 @@ Heart_Peric [breast patients]_Mean Dose <= 500cGy,Heart_Peric,Mean Dose,<=,500,c
 Heart_Peric [lymphoma patients]_Mean Dose <= 1500cGy,Heart_Peric,Mean Dose,<=,1500,cGy,NA,Thorax (Other),Lung
 Heart_Peric [non-breast patients]_V50 <= 25%,Heart_Peric,V50,<=,25,%,NA,Thorax (Other),Esophagus,Lung
 Heart_Peric [non-breast patients]_Mean Dose <= 3000cGy,Heart_Peric,Mean Dose,<=,3000,cGy,2000,Thorax (Other),Esophagus,Lung
-Hippocampus_Mean Dose <= 900cGy,Hippocampus,Mean Dose,<=,900,cGy,800,Head & Neck,Brain
 Hippocampus_Max Pt Dose <= 1600cGy,Hippocampus,Max Pt Dose,<=,1600,cGy,NA,Head & Neck,Brain
-Ilium_L_V30 <= 50%,Ilium_L,V30,<=,50,%,NA,Pelvis (Other),Prostate,Prostate Bed,Pelvis EBRT + HDR																
-Ilium_R_V30 <= 50%,Ilium_R,V30,<=,50,%,NA,Pelvis (Other),Prostate,Prostate Bed,Pelvis EBRT + HDR																
-Ilium_L_V28 <= 50%,Ilium_L,V28,<=,50,%,NA,Prostate Hypo 28fx															
-Ilium_R_V28 <= 50%,Ilium_R,V28,<=,50,%,NA,Prostate Hypo 28fx															
-Ilium_L_V26 <= 50%,Ilium_L,V26,<=,50,%,NA,Prostate Hypo 20fx															
-Ilium_R_V26 <= 50%,Ilium_R,V26,<=,50,%,NA,Prostate Hypo 20fx															
+Hippocampus_Mean Dose <= 900cGy,Hippocampus,Mean Dose,<=,900,cGy,800,Head & Neck,Brain
+Ilium_L_V30 <= 50%,Ilium_L,V30,<=,50,%,NA,Pelvis (Other),Prostate,Prostate Bed,Pelvis EBRT + HDR
+Ilium_L_V28 <= 50%,Ilium_L,V28,<=,50,%,NA,Prostate Hypo 28fx
+Ilium_L_V26 <= 50%,Ilium_L,V26,<=,50,%,NA,Prostate Hypo 20fx
+Ilium_R_V30 <= 50%,Ilium_R,V30,<=,50,%,NA,Pelvis (Other),Prostate,Prostate Bed,Pelvis EBRT + HDR
+Ilium_R_V28 <= 50%,Ilium_R,V28,<=,50,%,NA,Prostate Hypo 28fx
+Ilium_R_V26 <= 50%,Ilium_R,V26,<=,50,%,NA,Prostate Hypo 20fx
 Jejunum_V54 <= 1cc,Jejunum,V54,<=,1,cc,NA,Abdomen,Esophagus
 Jejunum_V50 <= 5cc,Jejunum,V50,<=,5,cc,NA,Abdomen,Esophagus
 Kidney_L_V18 < 30%,Kidney_L,V18,<,30,%,NA,Gynecological
@@ -104,25 +105,26 @@ Kidneys_Bilat_V20 <= 32%,Kidneys_Bilat,V20,<=,32,%,NA,Pelvis (Other),Abdomen,Eso
 Kidneys_Bilat_V12 <= 55%,Kidneys_Bilat,V12,<=,55,%,NA,Pelvis (Other),Abdomen,Esophagus
 LacrimalGland_L_Mean Dose <= 2000cGy,LacrimalGland_L,Mean Dose,<=,2000,cGy,NA,Brain Hypofx
 LacrimalGland_L_Mean Dose <= 3000cGy,LacrimalGland_L,Mean Dose,<=,3000,cGy,2000,Head & Neck,Brain
-LacrimalGland_L_Max Pt Dose <= 5000cGy,LacrimalGland_L,Max Pt Dose,<=,5000,cGy,NA
 LacrimalGland_R_Mean Dose <= 2000cGy,LacrimalGland_R,Mean Dose,<=,2000,cGy,NA,Brain Hypofx
 LacrimalGland_R_Mean Dose <= 3000cGy,LacrimalGland_R,Mean Dose,<=,3000,cGy,2000,Head & Neck,Brain
-LacrimalGland_R_Max Pt Dose <= 5000cGy,LacrimalGland_R,Max Pt Dose,<=,5000,cGy,NA
 Larynx_V50 <= 30%,Larynx,V50,<=,30,%,NA,Thorax (Other),Esophagus,Lung
 Larynx_Mean Dose <= 4400cGy,Larynx,Mean Dose,<=,4400,cGy,3500,Head & Neck,Thorax (Other),Esophagus,Lung
 Lens_L_Max Pt Dose <= 1000cGy,Lens_L,Max Pt Dose,<=,1000,cGy,NA,Head & Neck,Brain,Brain Hypofx
 Lens_R_Max Pt Dose <= 1000cGy,Lens_R,Max Pt Dose,<=,1000,cGy,NA,Head & Neck,Brain,Brain Hypofx
+LgBowel_Loops_V55 <= 1cc,LgBowel_Loops,V55,<=,1,cc,NA,Pelvis (Other),Prostate,Prostate Bed,Pelvis EBRT + HDR,Prostate Hypo 28fx,Gynecological
+LgBowel_Loops_V50 <= 1cc,LgBowel_Loops,V50,<=,1,cc,NA,Prostate Hypo 20fx
 LgBowel_Loops_V15 <= 200cc,LgBowel_Loops,V15,<=,200,cc,NA,Gynecological
-LgBowel_Loops_V55 <= 1cc,LgBowel_Loops,V55,<=,1,cc,NA,Pelvis (Other),Prostate,Prostate Bed,Pelvis EBRT + HDR,Prostate Hypo 28fx,Gynecological													
-LgBowel_Loops_V50 <= 1cc,LgBowel_Loops,V50,<=,1,cc,NA,Prostate Hypo 20fx														
 LgBowel_Loops_D2cc [record],LgBowel_Loops,D2cc,[record],cGy,NA,Pelvis EBRT + HDR,Gynecological
-LgBowel_Loops_Max Pt Dose <= 5500cGy,LgBowel_Loops,Max Pt Dose,<=,5500,cGy,NA,Pelvis (Other),Prostate,Prostate Bed,Abdomen,Esophagus,Gynecological
+LgBowel_Loops_Max Pt Dose <= 5500cGy,LgBowel_Loops,Max Pt Dose,<=,5500,cGy,NA,Abdomen,Esophagus
 Lips [non-oral cancer patients]_Mean Dose <= 2000cGy,Lips,Mean Dose,<=,2000,cGy,NA,Head & Neck
 Lips [oral cancer patients]_Max Pt Dose <= 5000cGy,Lips,Max Pt Dose,<=,5000,cGy,NA,Head & Neck
 Liver_Mean Dose <= 2800cGy,Liver,Mean Dose,<=,2800,cGy,NA,Thorax (Other),Breast,Abdomen,Esophagus,Lung
-Lung [breast patients]_Contralateral_V5 <= 15%,Lung,V5,<=,15,%,NA,Breast
-Lung [breast patients]_Ipsilateral_V20 <= 20%,Lung,V20,<=,20,%,NA,Breast
-Lung [breast patients]_Ipsilateral_V5 <= 55%,Lung,V5,<=,55,%,NA,Breast
+Lung_L [breast patients]_Contralateral_V5 <= 15%,Lung_L,V5,<=,15,%,NA,Breast
+Lung_L [breast patients]_Ipsilateral_V20 <= 20%,Lung_L,V20,<=,20,%,NA,Breast
+Lung_L [breast patients]_Ipsilateral_V5 <= 55%,Lung_L,V5,<=,55,%,NA,Breast
+Lung_R [breast patients]_Contralateral_V5 <= 15%,Lung_R,V5,<=,15,%,NA,Breast
+Lung_R [breast patients]_Ipsilateral_V20 <= 20%,Lung_R,V20,<=,20,%,NA,Breast
+Lung_R [breast patients]_Ipsilateral_V5 <= 55%,Lung_R,V5,<=,55,%,NA,Breast
 Lungs-GTV_V20 <= 35%,Lungs-GTV,V20,<=,35,%,30,Thorax (Other),Esophagus,Lung
 Lungs-GTV_V5 <= 70%,Lungs-GTV,V5,<=,70,%,65,Thorax (Other),Esophagus,Lung
 Mandible_Max Pt Dose <= 7000cGy,Mandible,Max Pt Dose,<=,7000,cGy,6600,Head & Neck
@@ -144,47 +146,45 @@ Parotid_R_Mean Dose <= 2600cGy,Parotid_R,Mean Dose,<=,2600,cGy,2400,Head & Neck
 Parotids_V20 <= 20cc,Parotids,V20,<=,20,cc,NA
 PenileBulb_Mean Dose <= 4000cGy,PenileBulb,Mean Dose,<=,4000,cGy,NA,Prostate Hypo 20fx
 PenileBulb_Mean Dose <= 5000cGy,PenileBulb,Mean Dose,<=,5000,cGy,NA,Pelvis (Other),Prostate,Prostate Bed,Prostate Hypo 28fx
+PenileBulb_Mean Dose <= 5250cGy,PenileBulb,Mean Dose,<=,5250,cGy,NA,Prostate NRG Prot Arm 1
 PharynxConstr_Mean Dose <= 5000cGy,PharynxConstr,Mean Dose,<=,5000,cGy,4000,Head & Neck
 Pitui_Hypothal_Mean Dose <= 4000cGy,Pitui_Hypothal,Mean Dose,<=,4000,cGy,2000,Head & Neck,Brain
 Pituitary_Mean Dose <= 3000cGy,Pituitary,Mean Dose,<=,3000,cGy,NA,Head & Neck,Brain
-PTV_7000_D98% >= 6650cGy,PTV_7000,D98%,>=,6650,cGy,7000,Prostate NRG Prot Arm 1									
-PTV_7000_D99% >= 6510cGy,PTV_7000,D99%,>=,6510,cGy,7000,Prostate NRG Prot Arm 1									
-PTV_7000_Max Pt Dose <= 8050cGy,PTV_7000,Max Pt Dose,<=,8050,cGy,7700,Prostate NRG Prot Arm 1									
 RectalWall_5mm_D50% <= 3700cGy,RectalWall_5mm,D50%,<=,3700,cGy,NA,Prostate Hypo 20fx
 RectalWall_5mm_D30% <= 4600cGy,RectalWall_5mm,D30%,<=,4600,cGy,NA,Prostate Hypo 20fx
 Rectum_V75 <= 15%,Rectum,V75,<=,15,%,NA,Pelvis (Other),Prostate,Prostate Bed
-Rectum_V70 <= 20%,Rectum,V70,<=,20,%,NA,Pelvis (Other),Prostate,Prostate Bed
 Rectum_V70 <= 10cc,Rectum,V70,<=,10,cc,NA,Prostate Hypo 28fx
+Rectum_V70 <= 20%,Rectum,V70,<=,20,%,NA,Pelvis (Other),Prostate,Prostate Bed
 Rectum_V65 <= 10%,Rectum,V65,<=,10,%,NA,Prostate Hypo 28fx
 Rectum_V65 <= 25%,Rectum,V65,<=,25,%,NA,Pelvis (Other),Prostate,Prostate Bed
 Rectum_V50 <= 25%,Rectum,V50,<=,25,%,NA,Pelvis EBRT + HDR
 Rectum_V50 <= 50%,Rectum,V50,<=,50,%,NA,Pelvis (Other),Prostate,Prostate Bed
 Rectum_V45 < 50%,Rectum,V45,<,50,%,NA,Gynecological
-Rectum_V40 <= 55%,Rectum,V40,<=,55,%,NA,Prostate Bed
 Rectum_V40 <= 35%,Rectum,V40,<=,35,%,NA,Prostate Hypo 28fx
+Rectum_V40 <= 55%,Rectum,V40,<=,55,%,NA,Prostate Bed
 Rectum_V30 <= 60%,Rectum,V30,<=,60,%,NA,Pelvis EBRT + HDR
+Rectum_D50% <= 6500cGy,Rectum,D50%,<=,6500,cGy,6000,Prostate NRG Prot Arm 1
+Rectum_D35% <= 7000cGy,Rectum,D35%,<=,7000,cGy,6500,Prostate NRG Prot Arm 1
 Rectum_D2cc [record],Rectum,D2cc,[record],cGy,NA,Pelvis EBRT + HDR,Gynecological
-Rectum_D15% <= 8000cGy,Rectum,D15%,<=,8000,cGy,7500,Prostate NRG Prot Arm 1									
-Rectum_D25% <= 7500cGy,Rectum,D25%,<=,7500,cGy,7000,Prostate NRG Prot Arm 1									
-Rectum_D35% <= 7000cGy,Rectum,D35%,<=,7000,cGy,6500,Prostate NRG Prot Arm 1									
-Rectum_D50% <= 6500cGy,Rectum,D50%,<=,6500,cGy,6000,Prostate NRG Prot Arm 1									
+Rectum_D25% <= 7500cGy,Rectum,D25%,<=,7500,cGy,7000,Prostate NRG Prot Arm 1
+Rectum_D15% <= 8000cGy,Rectum,D15%,<=,8000,cGy,7500,Prostate NRG Prot Arm 1
 Rectum_Max Pt Dose < 5000cGy,Rectum,Max Pt Dose,<,5000,cGy,NA,Gynecological
 Skin_3mm_D1cc [record],Skin_3mm,D1cc,[record],cGy,NA,Head & Neck,Brain,Brain Hypofx
 Skin_3mm_Max Pt Dose [record],Skin_3mm,Max Pt Dose,[record],cGy,NA,Head & Neck,Brain,Brain Hypofx
 Skin_4mm_D1cc [record],Skin_4mm,D1cc,[record],cGy,NA,Brain,Brain Hypofx
 Skin_5mm_D1cc [record],Skin_5mm,D1cc,[record],cGy,NA,Pelvis (Other),Prostate,Prostate Bed,Abdomen,Esophagus,Pelvis EBRT + HDR,Prostate Hypo 28fx,Prostate Hypo 20fx,Gynecological,Breast,Lung,Thorax (Other)
 Skin_5mm_Max Pt Dose [record],Skin_5mm,Max Pt Dose,[record],cGy,NA,Pelvis (Other),Prostate,Prostate Bed,Abdomen,Esophagus,Pelvis EBRT + HDR,Prostate Hypo 28fx,Prostate Hypo 20fx,Gynecological,Breast,Lung,Thorax (Other)
-SmBowel_Loops_V55 <= 1cc,SmBowel_Loops,V55,<=,1,cc,NA,Pelvis (Other),Prostate,Prostate Bed,Abdomen,Esophagus
+SmBowel_Loops_V55 <= 1cc,SmBowel_Loops,V55,<=,1,cc,NA,Pelvis (Other),Prostate,Prostate Bed,Abdomen,Esophagus,Prostate Hypo 28fx
 SmBowel_Loops_V55 <= 15cc,SmBowel_Loops,V55,<=,15,cc,NA,Gynecological
+SmBowel_Loops_V50 <= 1cc,SmBowel_Loops,V50,<=,1,cc,NA,Prostate Hypo 20fx
 SmBowel_Loops_V50 <= 5cc,SmBowel_Loops,V50,<=,5,cc,NA,Pelvis (Other),Prostate,Prostate Bed,Abdomen,Esophagus
-SmBowel_Loops_V50 <= 1cc,SmBowel_Loops,V50,<=,1,cc,NA,Prostate Hypo 20fx														
 SmBowel_Loops_V45 <= 150cc,SmBowel_Loops,V45,<=,150,cc,NA,Pelvis (Other),Prostate,Prostate Bed,Abdomen,Esophagus,Pelvis EBRT + HDR
 SmBowel_Loops_V40 <= 30%,SmBowel_Loops,V40,<=,30,%,NA,Pelvis EBRT + HDR
 SmBowel_Loops_V30 <= 300cc,SmBowel_Loops,V30,<=,300,cc,NA,Pelvis (Other),Prostate,Prostate Bed,Abdomen,Esophagus,Pelvis EBRT + HDR
 SmBowel_Loops_V15 <= 200cc,SmBowel_Loops,V15,<=,200,cc,NA,Gynecological
 SmBowel_Loops_D2cc [record],SmBowel_Loops,D2cc,[record],cGy,NA,Pelvis EBRT + HDR,Gynecological
 SmBowel_Loops_Max Pt Dose < 5000cGy,SmBowel_Loops,Max Pt Dose,<,5000,cGy,NA,Gynecological
-Spc_Bowel_Max Pt Dose <= 5500cGy,Spc_Bowel,Max Pt Dose,<=,5500,cGy,5040,Prostate NRG Prot Arm 1									
+Spc_Bowel_Max Pt Dose <= 5500cGy,Spc_Bowel,Max Pt Dose,<=,5500,cGy,5040,Prostate NRG Prot Arm 1
 SpinalCord_Max Pt Dose <= 4500cGy,SpinalCord,Max Pt Dose,<=,4500,cGy,NA,Head & Neck,Thorax (Other),Breast,Abdomen,Esophagus,Lung
 SpinalCord_05_Max Pt Dose <= 5000cGy,SpinalCord_05,Max Pt Dose,<=,5000,cGy,4500,Head & Neck,Thorax (Other),Breast,Abdomen,Esophagus,Lung
 Sternum_Max Pt Dose <= 7000cGy,Sternum,Max Pt Dose,<=,7000,cGy,NA,Thorax (Other),Breast,Lung
@@ -196,4 +196,8 @@ Thyroid [when outside Tx vol]_Max Pt Dose <= 2000cGy,Thyroid,Max Pt Dose,<=,2000
 Urethra_D30% [record],Urethra,D30%,[record],cGy,NA,Pelvis EBRT + HDR
 Urethra_D10% [record],Urethra,D10%,[record],cGy,NA,Pelvis EBRT + HDR
 Urethra_D0.1cc [record],Urethra,D0.1cc,[record],cGy,NA,Pelvis EBRT + HDR
+Body Max Point Dose (Global Max),Body,Max Pt Dose,[record],cGy,NA,Head & Neck,Prostate,Prostate Bed,Abdomen,Brain Hypofx,Pelvis EBRT + HDR,Prostate Hypo 28fx,Prostate Hypo 20fx,Gynecological,Thorax (Other),Breast,Brain,Esophagus,Lung,Pelvis (Other),Prostate NRG Prot Arm 1
 END
+updated 1/21/2020 ZM
+
+The body max point dose is not a specific dose objective, it is included at the end here so that the script reports it to make it easier to fill out the Global max dose box in the TPDS.
