@@ -335,7 +335,7 @@ namespace DoseObjectiveCheck
 
                     //EXECUTE PLANSUM DOSE OBJECTIVE ANALYSIS
 
-                    string[] Si = new string[40];
+                    string[] Si = new string[50];
 
                     // this is here to make sure the list of selected treatment sites exists, because if the user selects a plansum after running a plan without clicking on the treatment site again, this can cause a problem
                     if( TSA == null)
@@ -352,6 +352,16 @@ namespace DoseObjectiveCheck
                        //  MessageBox.Show("Trig EXE - 7.5");
                         Si[i] = Convert.ToString(GG.Current);
                         GG.MoveNext();
+                    }
+
+                    try
+                    {
+                        string strctid = Plansum.StructureSet.Id;
+                    }
+                    catch (NullReferenceException e)
+                    {
+                        MessageBox.Show("This plansum does not have a structure set. The script can only perform an analysis on plansums with structure sets. The script will now end.");
+                        return;
                     }
 
                     OuputBox.AppendText(Environment.NewLine);
@@ -380,7 +390,16 @@ namespace DoseObjectiveCheck
 
             if (LOCKPLAN == false)  // plans
             {
-                //  MessageBox.Show("Plan Id is: " + Plan.Id);
+               
+                try
+                {
+                    string strctid = Plan.StructureSet.Id;
+                }
+                catch(NullReferenceException e)
+                {
+                    MessageBox.Show("This plan does not have a structure set. The script can only perform an analysis on plans with structure sets. The script will now end.");
+                    return;
+                }
 
                 OuputBox.AppendText(Environment.NewLine);
                 OuputBox.AppendText("Plan Analysis Initiated, please be patient");

@@ -86,7 +86,7 @@ namespace DoseObjectiveCheck
                             tstatus = null;
                             tgoal = null;
                             tstruct = null;
-                            string[] ttreatsite = new string[20] { "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element" };
+                            string[] ttreatsite = new string[30] { "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element" };
                             words = null;
 
 
@@ -178,7 +178,7 @@ namespace DoseObjectiveCheck
                             tlimunit = null;
                             tstatus = null;
                             tgoal = null;
-                            string[] ttreatsite = new string[20] { "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element" };
+                            string[] ttreatsite = new string[30] { "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element", "element" };
                             words = null;
                             tstruct = null;
 
@@ -253,7 +253,7 @@ namespace DoseObjectiveCheck
                     {
                         if (str == Tsite)
                         {
-                            // Console.WriteLine("TrigBef____ROIEadd");
+                           // MessageBox.Show("Add Tsite");
                             ROIE.Add(new ROI.ROI { ROIName = roi.ROIName, Rstruct = roi.Rstruct, ROIId = roi.ROIId, limit = roi.limit, limval = roi.limval, strict = roi.strict, limunit = roi.limunit, goal = roi.goal, applystatus = true });
                             //  Console.WriteLine("TrigAft____ROIEadd");
                             //  Thread.Sleep(4000);
@@ -265,6 +265,8 @@ namespace DoseObjectiveCheck
                         {
                             if (str == foo)
                             {
+
+                               // MessageBox.Show("Add SI");
                                 ROIE.Add(new ROI.ROI { ROIName = roi.ROIName, Rstruct = roi.Rstruct, ROIId = roi.ROIId, limit = roi.limit, limval = roi.limval, strict = roi.strict, limunit = roi.limunit, goal = roi.goal, applystatus = true });
                             }
                         }

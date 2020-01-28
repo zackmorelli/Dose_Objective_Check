@@ -314,7 +314,7 @@ namespace VMS.TPS
             List<ROI.ROI> ROIA = new List<ROI.ROI>();     // Actual ROI list from Eclipse 
             string Ttype = ptype;
             string Tsite = null;
-            //  string [] Si = new string[40]; 
+            //  string [] Si = new string[50]; 
 
             // ROI.ROI is its own custom class
             ROIE = LISTMAKER.Listmaker(Ttype, Tsite, Si);          // separate class with LISTMAKER function which generates a list of ROIs for the given treatment type and site
@@ -1204,25 +1204,23 @@ namespace VMS.TPS
             string Tsite = TS;
 
 
-            string[] Si = new string[5] { "NA", "NA", "NA", "NA", "NA" };
+            string[] Si = new string[10] { "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA" };
             // ROI.ROI is its own custom class
             ROIE = LISTMAKER.Listmaker(Ttype, Tsite, Si);          // separate class with LISTMAKER function which generates a list of ROIs for the given treatment type and site
 
-            
-
-          //  MessageBox.Show(Tsite + " dose objective list created successfully.");
+           // MessageBox.Show(Tsite + " dose objective list created successfully.");
+          //  MessageBox.Show("testr");
+           // MessageBox.Show("struct -r " + structureSet.Id);
             // Console.WriteLine("\nThe {0} dose objective list contains {1} unique dose objectives.", Tsite, ROIE.Count);
             // Thread.Sleep(2000);
-
             // This part of code below gets DVH data from Eclipse. The way it works is different for different limit types, like MaxPtDose, V80, D1cc. etc.
 
             double pdose = Plan.TotalPrescribedDose.Dose;       // prescribed dose of the Plan
 
             // Console.WriteLine("\nPRESCRIBED DOSE: {0} {1}", pdose, Plan.TotalPrescribedDose.Unit.ToString());
-
             // Thread.Sleep(2000);
-
-          //  MessageBox.Show("Matching dose objectives with contoured structures in current Plan ... ");
+           // MessageBox.Show("struct -o " + structureSet.Id);
+           // MessageBox.Show("Matching dose objectives with contoured structures in current Plan ... ");
 
             int county = 0;
 
@@ -1230,18 +1228,19 @@ namespace VMS.TPS
             {
                 
                 county++;
-               //  System.Windows.Forms.MessageBox.Show("Plan A ROI iterate " + county);
+                //  System.Windows.Forms.MessageBox.Show("Plan A ROI iterate " + county);
                 //  Console.WriteLine("\nThe current dose of objective is: {0}", morty.ROIName);
                 // Thread.Sleep(2000);
+                // MessageBox.Show("struct - " + structureSet.Id);
 
-              //  OuputBox.AppendText(Environment.NewLine);
-              //  OuputBox.AppendText("Dose Objectives checked: " + county + "/" + ROIE.Count);
+               //  OuputBox.AppendText(Environment.NewLine);
+               //  OuputBox.AppendText("Dose Objectives checked: " + county + "/" + ROIE.Count);
 
                 foreach (Structure S in structureSet.Structures)        // iterates thriugh all the structures in the structureset of the current Plan
                 {
                     double structvol = S.Volume;
 
-                    // System.Windows.Forms.MessageBox.Show("Plan A struct iterate");
+                   //  System.Windows.Forms.MessageBox.Show("Plan A struct iterate");
                     if (structvol < 0.03)
                     {
                         continue;
@@ -1610,7 +1609,7 @@ namespace VMS.TPS
                         else if (Erika.limit.StartsWith("V"))         // V45   45 is the dose in cGy which specifies a maximum dose that a specific amount (percentage or absolute amount) of the volume of a structure can recieve
                         {
                             string fstatus = null;
-                             // System.Windows.Forms.MessageBox.Show("Plan A V");
+                            // System.Windows.Forms.MessageBox.Show("Plan A V");
 
                             if (Erika.limit == "Volume")
                             {
@@ -1880,7 +1879,7 @@ namespace VMS.TPS
                             //  Thread.Sleep(5000);
 
                             ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limvol = comp, strict = Erika.strict, goal = Erika.goal, actvol = Vvol, status = fstatus, structvol = structvol, type = type, limunit = Erika.limunit, applystatus = Erika.applystatus });
-                            // System.Windows.Forms.MessageBox.Show("Scorpia 4");
+                           //  System.Windows.Forms.MessageBox.Show("end v type ");
                         }
                         else if (Erika.limit.StartsWith("D"))            // D5%  - 5% is 5% of the volume of the structure that must be under a specific dose limit
                         {
