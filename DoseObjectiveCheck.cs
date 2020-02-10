@@ -97,19 +97,20 @@ namespace VMS.TPS
             treatsite.Add(new TreatSite() { DisplayName = "Abdomen", Name = "Abdomen", Id = 1 });
             treatsite.Add(new TreatSite() { DisplayName = "Brain", Name = "Brain", Id = 2 });
             treatsite.Add(new TreatSite() { DisplayName = "Brain Hypofx", Name = "BrainHypofx", Id = 3 });
-            treatsite.Add(new TreatSite() { DisplayName = "Breast", Name = "Breast", Id = 4 });
-            treatsite.Add(new TreatSite() { DisplayName = "Esophagus", Name = "Esophagus", Id = 5 });
-            treatsite.Add(new TreatSite() { DisplayName = "Gynecological", Name = "Gynecological", Id = 6 });
-            treatsite.Add(new TreatSite() { DisplayName = "Head & Neck", Name = "Head&Neck", Id = 7 });
-            treatsite.Add(new TreatSite() { DisplayName = "Lung", Name = "Lung", Id = 8 });
-            treatsite.Add(new TreatSite() { DisplayName = "Pelvis (Other)", Name = "Pelvis(Other)", Id = 9 });
-            treatsite.Add(new TreatSite() { DisplayName = "Pelvis EBRT + HDR", Name = "PelivsEBRT+HDR", Id = 10 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate", Name = "Prostate", Id = 11 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate Bed", Name = "ProstateBed", Id = 12 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 20fx", Name = "ProstateHypo20fx", Id = 13 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 28fx", Name = "ProstateHypo28fx", Id = 14 });
-            treatsite.Add(new TreatSite() { DisplayName = "Thorax (Other)", Name = "Thorax(Other)", Id = 15 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate NRG Prot Arm 1", Name = "ProstateNRGProtArm1", Id = 16 });
+            treatsite.Add(new TreatSite() { DisplayName = "Breast 23+fx", Name = "Breast23+fx", Id = 4 });
+            treatsite.Add(new TreatSite() { DisplayName = "Breast Hypofx", Name = "BreastHypofx", Id = 5 });
+            treatsite.Add(new TreatSite() { DisplayName = "Esophagus", Name = "Esophagus", Id = 6 });
+            treatsite.Add(new TreatSite() { DisplayName = "Gynecological", Name = "Gynecological", Id = 7 });
+            treatsite.Add(new TreatSite() { DisplayName = "Head & Neck", Name = "Head&Neck", Id = 8 });
+            treatsite.Add(new TreatSite() { DisplayName = "Lung", Name = "Lung", Id = 9 });
+            treatsite.Add(new TreatSite() { DisplayName = "Pelvis (Other)", Name = "Pelvis(Other)", Id = 10 });
+            treatsite.Add(new TreatSite() { DisplayName = "Pelvis EBRT + HDR", Name = "PelivsEBRT+HDR", Id = 11 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate", Name = "Prostate", Id = 12 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate Bed", Name = "ProstateBed", Id = 13 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 20fx", Name = "ProstateHypo20fx", Id = 14 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 28fx", Name = "ProstateHypo28fx", Id = 15 });
+            treatsite.Add(new TreatSite() { DisplayName = "Thorax (Other)", Name = "Thorax(Other)", Id = 16 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate NRG Prot Arm 1", Name = "ProstateNRGProtArm1", Id = 17 });
 
             return treatsite;
         }
@@ -150,40 +151,41 @@ namespace VMS.TPS
             treatsite.Add(new TreatSite() { DisplayName = "Abdomen", Name = "Abdomen", Id = 1 });
             treatsite.Add(new TreatSite() { DisplayName = "Brain", Name = "Brain", Id = 2 });
             treatsite.Add(new TreatSite() { DisplayName = "Brain Hypofx", Name = "BrainHypofx", Id = 3 });
-            treatsite.Add(new TreatSite() { DisplayName = "Breast", Name = "Breast", Id = 4 });
-            treatsite.Add(new TreatSite() { DisplayName = "Esophagus", Name = "Esophagus", Id = 5 });
-            treatsite.Add(new TreatSite() { DisplayName = "Gynecological", Name = "Gynecological", Id = 6 });
-            treatsite.Add(new TreatSite() { DisplayName = "Head & Neck", Name = "Head&Neck", Id = 7 });
-            treatsite.Add(new TreatSite() { DisplayName = "Lung", Name = "Lung", Id = 8 });
-            treatsite.Add(new TreatSite() { DisplayName = "Pelvis (Other)", Name = "Pelvis(Other)", Id = 9 });
-            treatsite.Add(new TreatSite() { DisplayName = "Pelvis EBRT + HDR", Name = "PelivsEBRT+HDR", Id = 10 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate", Name = "Prostate", Id = 11 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate Bed", Name = "ProstateBed", Id = 12 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 20fx", Name = "ProstateHypo20fx", Id = 13 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 28fx", Name = "ProstateHypo28fx", Id = 14 });
-            treatsite.Add(new TreatSite() { DisplayName = "Thorax (Other)", Name = "Thorax(Other)", Id = 15 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate NRG Prot Arm 1", Name = "ProstateNRGProtArm1", Id = 16 });
-            treatsite.Add(new TreatSite() { DisplayName = " Single fraction", Name = "Singlefraction", Id = 17 });
-            treatsite.Add(new TreatSite() { DisplayName = "3 fraction", Name = "3fraction", Id = 18 });
-            treatsite.Add(new TreatSite() { DisplayName = "4 fraction", Name = "4fraction", Id = 18 });
-            treatsite.Add(new TreatSite() { DisplayName = "5 fraction", Name = "5fraction", Id = 20 });
-            treatsite.Add(new TreatSite() { DisplayName = "6 fraction", Name = "6fraction", Id = 21 });
-            treatsite.Add(new TreatSite() { DisplayName = "8 fraction", Name = "8fraction", Id = 22 });
-            treatsite.Add(new TreatSite() { DisplayName = "10 fraction", Name = "10fraction", Id = 23 });
-            treatsite.Add(new TreatSite() { DisplayName = "Liver", Name = "Liver", Id = 24 });
-            treatsite.Add(new TreatSite() { DisplayName = "Lung 4 fraction", Name = "Lung4fraction", Id = 25 });
-            treatsite.Add(new TreatSite() { DisplayName = "Lung 5 fraction", Name = "Lung5fraction", Id = 26 });
-            treatsite.Add(new TreatSite() { DisplayName = "Lung 8 fraction", Name = "Lung8fraction", Id = 27 });
-            treatsite.Add(new TreatSite() { DisplayName = "Oligomets 1 fraction", Name = "Oligomets1fraction", Id = 28 });
-            treatsite.Add(new TreatSite() { DisplayName = "Oligomets 3 fractions", Name = "Oligomets3fractions", Id = 29 });
-            treatsite.Add(new TreatSite() { DisplayName = "Oligomets 5 fractions", Name = "Oligomets5fractions", Id = 30 });
-            treatsite.Add(new TreatSite() { DisplayName = "Pancreas", Name = "Pancreas", Id = 31 });
-            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial 1 fraction", Name = "SRSCranial1fraction", Id = 32 });
-            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial 3 fraction", Name = "SRSCranial3fraction", Id = 33 });
-            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial 5 fraction", Name = "SRSCranial5fraction", Id = 34 });
-            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial AVM", Name = "SRSCranialAVM", Id = 35 });
-            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial Trigeminal Neuralgia", Name = "SRSCranialTrigeminalNeuralgia", Id = 36 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate NRG Prot Arm 2", Name = "ProstateNRGProtArm2", Id = 37 });
+            treatsite.Add(new TreatSite() { DisplayName = "Breast 23+fx", Name = "Breast23+fx", Id = 4 });
+            treatsite.Add(new TreatSite() { DisplayName = "Breast Hypofx", Name = "BreastHypofx", Id = 5 });
+            treatsite.Add(new TreatSite() { DisplayName = "Esophagus", Name = "Esophagus", Id = 6 });
+            treatsite.Add(new TreatSite() { DisplayName = "Gynecological", Name = "Gynecological", Id = 7 });
+            treatsite.Add(new TreatSite() { DisplayName = "Head & Neck", Name = "Head&Neck", Id = 8 });
+            treatsite.Add(new TreatSite() { DisplayName = "Lung", Name = "Lung", Id = 9 });
+            treatsite.Add(new TreatSite() { DisplayName = "Pelvis (Other)", Name = "Pelvis(Other)", Id = 10 });
+            treatsite.Add(new TreatSite() { DisplayName = "Pelvis EBRT + HDR", Name = "PelivsEBRT+HDR", Id = 11 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate", Name = "Prostate", Id = 12 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate Bed", Name = "ProstateBed", Id = 13 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 20fx", Name = "ProstateHypo20fx", Id = 14 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 28fx", Name = "ProstateHypo28fx", Id = 15 });
+            treatsite.Add(new TreatSite() { DisplayName = "Thorax (Other)", Name = "Thorax(Other)", Id = 16 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate NRG Prot Arm 1", Name = "ProstateNRGProtArm1", Id = 17 });
+            treatsite.Add(new TreatSite() { DisplayName = " Single fraction", Name = "Singlefraction", Id = 18 });
+            treatsite.Add(new TreatSite() { DisplayName = "3 fraction", Name = "3fraction", Id = 19 });
+            treatsite.Add(new TreatSite() { DisplayName = "4 fraction", Name = "4fraction", Id = 20 });
+            treatsite.Add(new TreatSite() { DisplayName = "5 fraction", Name = "5fraction", Id = 21 });
+            treatsite.Add(new TreatSite() { DisplayName = "6 fraction", Name = "6fraction", Id = 22 });
+            treatsite.Add(new TreatSite() { DisplayName = "8 fraction", Name = "8fraction", Id = 23 });
+            treatsite.Add(new TreatSite() { DisplayName = "10 fraction", Name = "10fraction", Id = 24 });
+            treatsite.Add(new TreatSite() { DisplayName = "Liver", Name = "Liver", Id = 25 });
+            treatsite.Add(new TreatSite() { DisplayName = "Lung 4 fraction", Name = "Lung4fraction", Id = 26 });
+            treatsite.Add(new TreatSite() { DisplayName = "Lung 5 fraction", Name = "Lung5fraction", Id = 27 });
+            treatsite.Add(new TreatSite() { DisplayName = "Lung 8 fraction", Name = "Lung8fraction", Id = 28 });
+            treatsite.Add(new TreatSite() { DisplayName = "Oligomets 1 fraction", Name = "Oligomets1fraction", Id = 29 });
+            treatsite.Add(new TreatSite() { DisplayName = "Oligomets 3 fractions", Name = "Oligomets3fractions", Id = 30 });
+            treatsite.Add(new TreatSite() { DisplayName = "Oligomets 5 fractions", Name = "Oligomets5fractions", Id = 31 });
+            treatsite.Add(new TreatSite() { DisplayName = "Pancreas", Name = "Pancreas", Id = 32 });
+            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial 1 fraction", Name = "SRSCranial1fraction", Id = 33 });
+            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial 3 fraction", Name = "SRSCranial3fraction", Id = 34 });
+            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial 5 fraction", Name = "SRSCranial5fraction", Id = 35 });
+            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial AVM", Name = "SRSCranialAVM", Id = 36 });
+            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial Trigeminal Neuralgia", Name = "SRSCranialTrigeminalNeuralgia", Id = 37 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate NRG Prot Arm 2", Name = "ProstateNRGProtArm2", Id = 38 });
 
             return treatsite;
         }
@@ -1180,9 +1182,8 @@ namespace VMS.TPS
                             //  Console.WriteLine("\nDOSE Value: {0}", qdose.Dose);
                             //  Thread.Sleep(5000);
 
-                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limdose = Convert.ToDouble(Erika.limval), strict = Erika.strict, goal = Erika.goal, actdose = qdose, status = qstatus, structvol = structvol, type = "NV", applystatus = Erika.applystatus });
-
-
+                            ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limdose = Convert.ToDouble(Erika.limval), strict = Erika.strict, goal = Erika.goal, actdose = qdose, status = qstatus, structvol = structvol, type = "NV", limunit = Erika.limunit, applystatus = Erika.applystatus });
+    
                         }  // ends the D loop
                     }   // ends the if structure match loop
                 }   // ends structure iterating through current ROIE loop

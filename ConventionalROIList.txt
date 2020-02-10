@@ -1,10 +1,11 @@
+Body Max Point Dose (Global Max),Body,Max Pt Dose,[record],cGy,NA,Head & Neck,Prostate,Prostate Bed,Abdomen,Brain Hypofx,Pelvis EBRT + HDR,Prostate Hypo 28fx,Prostate Hypo 20fx,Gynecological,Thorax (Other),Breast 23+fx,Breast Hypofx,Brain,Esophagus,Lung,Pelvis (Other),Prostate NRG Prot Arm 1
 _CTV_7000_D99% >= 6650cGy,_CTV_7000,D99%,>=,6650,cGy,7000,Prostate NRG Prot Arm 1
 _PTV_D1cc <= 6300cGy,_PTV,D1cc,<=,6300,cGy,NA,Prostate Hypo 20fx
 _PTV_Max Pt Dose <= 7700cGy,_PTV,Max Pt Dose,<=,7700,cGy,7490,Prostate Hypo 28fx
 PTV_7000_D99% >= 6510cGy,PTV_7000,D99%,>=,6510,cGy,7000,Prostate NRG Prot Arm 1
 PTV_7000_D98% >= 6650cGy,PTV_7000,D98%,>=,6650,cGy,7000,Prostate NRG Prot Arm 1
 PTV_7000_Max Pt Dose <= 8050cGy,PTV_7000,Max Pt Dose,<=,8050,cGy,7700,Prostate NRG Prot Arm 1
-Body-PTV_10_D1cc [record],Body-PTV_10,D1cc,[record],cGy,NA,Head & Neck,Prostate,Prostate Bed,Abdomen,Brain Hypofx,Pelvis EBRT + HDR,Prostate Hypo 28fx,Prostate Hypo 20fx,Gynecological,Thorax (Other),Breast,Brain,Esophagus,Lung,Pelvis (Other)
+Body-PTV_10_D1cc [record],Body-PTV_10,D1cc,[record],cGy,NA,Head & Neck,Prostate,Prostate Bed,Abdomen,Brain Hypofx,Pelvis EBRT + HDR,Prostate Hypo 28fx,Prostate Hypo 20fx,Gynecological,Thorax (Other),Breast 23+fx,Brain,Esophagus,Lung,Pelvis (Other),Breast Hypofx
 Bladder_V80 <= 15%,Bladder,V80,<=,15,%,NA,Pelvis (Other),Prostate,Prostate Bed
 Bladder_V75 <= 25%,Bladder,V75,<=,25,%,NA,Pelvis (Other),Prostate,Prostate Bed
 Bladder_V70 <= 35%,Bladder,V70,<=,35,%,NA,Pelvis (Other),Prostate,Prostate Bed
@@ -29,10 +30,14 @@ BoneMarrow_V20 < 75%,BoneMarrow,V20,<,75,%,66,Gynecological
 BoneMarrow_V10 < 90%,BoneMarrow,V10,<,90,%,80,Gynecological
 BowelSpace_V45 <= 195cc,BowelSpace,V45,<=,195,cc,NA,Gynecological
 BowelSpace_V40 < 30%,BowelSpace,V40,<,30,%,NA,Gynecological
-BrachPlexus_L_V60 <= 5%,BrachPlexus_L,V60,<=,5,%,NA,Thorax (Other),Breast,Esophagus,Lung
-BrachPlexus_L_Max Pt Dose <= 6600cGy,BrachPlexus_L,Max Pt Dose,<=,6600,cGy,6000,Head & Neck,Thorax (Other),Breast,Esophagus,Lung
-BrachPlexus_R_V60 <= 5%,BrachPlexus_R,V60,<=,5,%,NA,Thorax (Other),Breast,Esophagus,Lung
-BrachPlexus_R_Max Pt Dose <= 6600cGy,BrachPlexus_R,Max Pt Dose,<=,6600,cGy,6000,Head & Neck,Thorax (Other),Breast,Esophagus,Lung
+BrachPlexus_L_V60 <= 5%,BrachPlexus_L,V60,<=,5,%,NA,Thorax (Other),Breast 23+fx,Esophagus,Lung
+BrachPlexus_L_V52 <= 5%,BrachPlexus_L,V52,<=,5,%,NA,Breast Hypofx						
+BrachPlexus_L_Max Pt Dose <= 6600cGy,BrachPlexus_L,Max Pt Dose,<=,6600,cGy,6000,Head & Neck,Thorax (Other),Breast 23+fx,Esophagus,Lung
+BrachPlexus_L_Max Pt Dose <= 5700cGy,BrachPlexus_L,Max Pt Dose,<=,5700,cGy,5200,Breast Hypofx						
+BrachPlexus_R_V60 <= 5%,BrachPlexus_R,V60,<=,5,%,NA,Thorax (Other),Breast 23+fx,Esophagus,Lung
+BrachPlexus_R_V52 <= 5%,BrachPlexus_R,V52,<=,5,%,NA,Breast Hypofx						
+BrachPlexus_R_Max Pt Dose <= 6600cGy,BrachPlexus_R,Max Pt Dose,<=,6600,cGy,6000,Head & Neck,Thorax (Other),Breast 23+fx,Esophagus,Lung
+BrachPlexus_R_Max Pt Dose <= 5700cGy,BrachPlexus_R,Max Pt Dose,<=,5700,cGy,5200,Breast Hypofx						
 Brain_Max Pt Dose <= 6000cGy,Brain,Max Pt Dose,<=,6000,cGy,4800,Brain Hypofx
 Brain_Max Pt Dose <= 7200cGy,Brain,Max Pt Dose,<=,7200,cGy,5000,Head & Neck,Brain
 Brain-PTV_07_Mean Dose <= 2650cGy,Brain-PTV_07,Mean Dose,<=,2650,cGy,2000,Brain Hypofx
@@ -53,7 +58,8 @@ Duodenum_V50 <= 5cc,Duodenum,V50,<=,5,cc,NA,Pelvis (Other),Abdomen,Esophagus
 Esophagus_V70 <= 20%,Esophagus,V70,<=,20,%,NA,Thorax (Other),Abdomen,Lung
 Esophagus_V60 is NOT Circumferential,Esophagus,V60 is NOT Circumferential,=,TRUE,True/False,NA,Thorax (Other),Lung
 Esophagus_V50 <= 40%,Esophagus,V50,<=,40,%,NA,Thorax (Other),Abdomen,Lung
-Esophagus_Mean Dose <= 3400cGy,Esophagus,Mean Dose,<=,3400,cGy,3000,Head & Neck,Thorax (Other),Breast,Abdomen,Lung
+Esophagus_Mean Dose <= 3400cGy,Esophagus,Mean Dose,<=,3400,cGy,3000,Head & Neck,Thorax (Other),Breast 23+fx,Abdomen,Lung
+Esophagus_Mean Dose <= 3000cGy,Esophagus,Mean Dose,<=,3000,cGy,Breast Hypofx						
 Eye_L_V45 <= 50%,Eye_L,V45,<=,50,%,NA,Brain
 Eye_L_V39 <= 50%,Eye_L,V39,<=,50,%,NA,Brain Hypofx
 Eye_L_Max Pt Dose <= 4250cGy,Eye_L,Max Pt Dose,<=,4250,cGy,NA,Brain Hypofx
@@ -80,11 +86,13 @@ FemHeadNeck_R_Max Pt Dose < 5000cGy,FemHeadNeck_R,Max Pt Dose,<,5000,cGy,NA,Gyne
 FemHeadNeck_R_Max Pt Dose <= 4000cGy,FemHeadNeck_R,Max Pt Dose,<=,4000,cGy,NA,Prostate Hypo 28fx
 Glottis_Mean Dose <= 2000cGy,Glottis,Mean Dose,<=,2000,cGy,NA,Head & Neck
 GreatVessels_V66 <= 10cc,GreatVessels,V66,<=,10,cc,NA,Thorax (Other),Abdomen,Esophagus,Lung
-Heart_Peric [breast patients]_V25 <= 5%,Heart_Peric,V25,<=,5,%,NA,Breast
-Heart_Peric [breast patients]_Mean Dose <= 500cGy,Heart_Peric,Mean Dose,<=,500,cGy,NA,Breast
+Heart_Peric [Breast patients]_V25 <= 5%,Heart_Peric,V25,<=,5,%,NA,Breast 23+fx
+Heart_Peric [breast patients]_V23 <= 5%,Heart_Peric,V23,<=,5,%,NA,Breast Hypofx						
+Heart_Peric [Breast patients]_Mean Dose <= 500cGy,Heart_Peric,Mean Dose,<=,500,cGy,NA,Breast 23+fx
+Heart_Peric [breast patients]_Mean Dose <= 200cGy,Heart_Peric,Mean Dose,<=,200,cGy,NA,Breast Hypofx						
 Heart_Peric [lymphoma patients]_Mean Dose <= 1500cGy,Heart_Peric,Mean Dose,<=,1500,cGy,NA,Thorax (Other),Lung
-Heart_Peric [non-breast patients]_V50 <= 25%,Heart_Peric,V50,<=,25,%,NA,Thorax (Other),Esophagus,Lung
-Heart_Peric [non-breast patients]_Mean Dose <= 3000cGy,Heart_Peric,Mean Dose,<=,3000,cGy,2000,Thorax (Other),Esophagus,Lung
+Heart_Peric [non-Breast patients]_V50 <= 25%,Heart_Peric,V50,<=,25,%,NA,Thorax (Other),Esophagus,Lung
+Heart_Peric [non-Breast patients]_Mean Dose <= 3000cGy,Heart_Peric,Mean Dose,<=,3000,cGy,2000,Thorax (Other),Esophagus,Lung
 Hippocampus_Max Pt Dose <= 1600cGy,Hippocampus,Max Pt Dose,<=,1600,cGy,NA,Head & Neck,Brain
 Hippocampus_Mean Dose <= 900cGy,Hippocampus,Mean Dose,<=,900,cGy,800,Head & Neck,Brain
 Ilium_L_V30 <= 50%,Ilium_L,V30,<=,50,%,NA,Pelvis (Other),Prostate,Prostate Bed,Pelvis EBRT + HDR
@@ -118,13 +126,16 @@ LgBowel_Loops_D2cc [record],LgBowel_Loops,D2cc,[record],cGy,NA,Pelvis EBRT + HDR
 LgBowel_Loops_Max Pt Dose <= 5500cGy,LgBowel_Loops,Max Pt Dose,<=,5500,cGy,NA,Abdomen,Esophagus
 Lips [non-oral cancer patients]_Mean Dose <= 2000cGy,Lips,Mean Dose,<=,2000,cGy,NA,Head & Neck
 Lips [oral cancer patients]_Max Pt Dose <= 5000cGy,Lips,Max Pt Dose,<=,5000,cGy,NA,Head & Neck
-Liver_Mean Dose <= 2800cGy,Liver,Mean Dose,<=,2800,cGy,NA,Thorax (Other),Breast,Abdomen,Esophagus,Lung
-Lung_L [breast patients]_Contralateral_V5 <= 15%,Lung_L,V5,<=,15,%,NA,Breast
-Lung_L [breast patients]_Ipsilateral_V20 <= 20%,Lung_L,V20,<=,20,%,NA,Breast
-Lung_L [breast patients]_Ipsilateral_V5 <= 55%,Lung_L,V5,<=,55,%,NA,Breast
-Lung_R [breast patients]_Contralateral_V5 <= 15%,Lung_R,V5,<=,15,%,NA,Breast
-Lung_R [breast patients]_Ipsilateral_V20 <= 20%,Lung_R,V20,<=,20,%,NA,Breast
-Lung_R [breast patients]_Ipsilateral_V5 <= 55%,Lung_R,V5,<=,55,%,NA,Breast
+Liver_Mean Dose <= 2800cGy,Liver,Mean Dose,<=,2800,cGy,NA,Thorax (Other),Breast 23+fx,Abdomen,Esophagus,Lung
+Liver_Mean Dose <= 2500cGy,Liver,Mean Dose,<=,2500,cGy,NA,Breast Hypofx						
+Lung_L [Breast patients]_Contralateral_V5 <= 15%,Lung_L,V5,<=,15,%,NA,Breast 23+fx
+Lung_L [Breast patients]_Ipsilateral_V20 <= 20%,Lung_L,V20,<=,20,%,NA,Breast 23+fx
+Lung_L [breast patients]_Ipsilateral_V16 <= 20%,Lung_L,V16,<=,20,%,15,Breast Hypofx						
+Lung_L [Breast patients]_Ipsilateral_V5 <= 55%,Lung_L,V5,<=,55,%,NA,Breast 23+fx
+Lung_R [Breast patients]_Contralateral_V5 <= 15%,Lung_R,V5,<=,15,%,NA,Breast 23+fx
+Lung_R [Breast patients]_Ipsilateral_V20 <= 20%,Lung_R,V20,<=,20,%,NA,Breast 23+fx
+Lung_R [breast patients]_Ipsilateral_V16 <= 20%,Lung_R,V16,<=,20,%,15,Breast Hypofx
+Lung_R [Breast patients]_Ipsilateral_V5 <= 55%,Lung_R,V5,<=,55,%,NA,Breast 23+fx
 Lungs-GTV_V20 <= 35%,Lungs-GTV,V20,<=,35,%,30,Thorax (Other),Esophagus,Lung
 Lungs-GTV_V5 <= 70%,Lungs-GTV,V5,<=,70,%,65,Thorax (Other),Esophagus,Lung
 Mandible_Max Pt Dose <= 7000cGy,Mandible,Max Pt Dose,<=,7000,cGy,6600,Head & Neck
@@ -172,8 +183,8 @@ Rectum_Max Pt Dose < 5000cGy,Rectum,Max Pt Dose,<,5000,cGy,NA,Gynecological
 Skin_3mm_D1cc [record],Skin_3mm,D1cc,[record],cGy,NA,Head & Neck,Brain,Brain Hypofx
 Skin_3mm_Max Pt Dose [record],Skin_3mm,Max Pt Dose,[record],cGy,NA,Head & Neck,Brain,Brain Hypofx
 Skin_4mm_D1cc [record],Skin_4mm,D1cc,[record],cGy,NA,Brain,Brain Hypofx
-Skin_5mm_D1cc [record],Skin_5mm,D1cc,[record],cGy,NA,Pelvis (Other),Prostate,Prostate Bed,Abdomen,Esophagus,Pelvis EBRT + HDR,Prostate Hypo 28fx,Prostate Hypo 20fx,Gynecological,Breast,Lung,Thorax (Other)
-Skin_5mm_Max Pt Dose [record],Skin_5mm,Max Pt Dose,[record],cGy,NA,Pelvis (Other),Prostate,Prostate Bed,Abdomen,Esophagus,Pelvis EBRT + HDR,Prostate Hypo 28fx,Prostate Hypo 20fx,Gynecological,Breast,Lung,Thorax (Other)
+Skin_5mm_D1cc [record],Skin_5mm,D1cc,[record],cGy,NA,Pelvis (Other),Prostate,Prostate Bed,Abdomen,Esophagus,Pelvis EBRT + HDR,Prostate Hypo 28fx,Prostate Hypo 20fx,Gynecological,Breast 23+fx,Lung,Thorax (Other)
+Skin_5mm_Max Pt Dose [record],Skin_5mm,Max Pt Dose,[record],cGy,NA,Pelvis (Other),Prostate,Prostate Bed,Abdomen,Esophagus,Pelvis EBRT + HDR,Prostate Hypo 28fx,Prostate Hypo 20fx,Gynecological,Breast 23+fx,Lung,Thorax (Other)
 SmBowel_Loops_V55 <= 1cc,SmBowel_Loops,V55,<=,1,cc,NA,Pelvis (Other),Prostate,Prostate Bed,Abdomen,Esophagus,Prostate Hypo 28fx
 SmBowel_Loops_V55 <= 15cc,SmBowel_Loops,V55,<=,15,cc,NA,Gynecological
 SmBowel_Loops_V50 <= 1cc,SmBowel_Loops,V50,<=,1,cc,NA,Prostate Hypo 20fx
@@ -185,9 +196,12 @@ SmBowel_Loops_V15 <= 200cc,SmBowel_Loops,V15,<=,200,cc,NA,Gynecological
 SmBowel_Loops_D2cc [record],SmBowel_Loops,D2cc,[record],cGy,NA,Pelvis EBRT + HDR,Gynecological
 SmBowel_Loops_Max Pt Dose < 5000cGy,SmBowel_Loops,Max Pt Dose,<,5000,cGy,NA,Gynecological
 Spc_Bowel_Max Pt Dose <= 5500cGy,Spc_Bowel,Max Pt Dose,<=,5500,cGy,5040,Prostate NRG Prot Arm 1
-SpinalCord_Max Pt Dose <= 4500cGy,SpinalCord,Max Pt Dose,<=,4500,cGy,NA,Head & Neck,Thorax (Other),Breast,Abdomen,Esophagus,Lung
-SpinalCord_05_Max Pt Dose <= 5000cGy,SpinalCord_05,Max Pt Dose,<=,5000,cGy,4500,Head & Neck,Thorax (Other),Breast,Abdomen,Esophagus,Lung
-Sternum_Max Pt Dose <= 7000cGy,Sternum,Max Pt Dose,<=,7000,cGy,NA,Thorax (Other),Breast,Lung
+SpinalCord_Max Pt Dose <= 4500cGy,SpinalCord,Max Pt Dose,<=,4500,cGy,NA,Head & Neck,Thorax (Other),Breast 23+fx,Abdomen,Esophagus,Lung
+SpinalCord_Max Pt Dose <= 3900cGy,SpinalCord,Max Pt Dose,<=,3900,cGy,Breast Hypofx						
+SpinalCord_05_Max Pt Dose <= 5000cGy,SpinalCord_05,Max Pt Dose,<=,5000,cGy,4500,Head & Neck,Thorax (Other),Breast 23+fx,Abdomen,Esophagus,Lung
+SpinalCord_05_Max Pt Dose <= 4300cGy,SpinalCord_05,Max Pt Dose,<=,4300,cGy,Breast Hypofx						
+Sternum_Max Pt Dose <= 7000cGy,Sternum,Max Pt Dose,<=,7000,cGy,NA,Thorax (Other),Breast 23+fx,Lung
+Sternum_Max Pt Dose <= 6000cGy,Sternum,Max Pt Dose,<=,6000,cGy,NA,Breast Hypofx						
 Stomach_V54 <= 1cc,Stomach,V54,<=,1,cc,NA,Thorax (Other),Abdomen,Esophagus,Lung
 Stomach_V50 <= 5cc,Stomach,V50,<=,5,cc,NA,Thorax (Other),Abdomen,Esophagus,Lung
 Submandibular_L_Mean Dose <= 3900cGy,Submandibular_L,Mean Dose,<=,3900,cGy,3000,Head & Neck
@@ -196,8 +210,7 @@ Thyroid [when outside Tx vol]_Max Pt Dose <= 2000cGy,Thyroid,Max Pt Dose,<=,2000
 Urethra_D30% [record],Urethra,D30%,[record],cGy,NA,Pelvis EBRT + HDR
 Urethra_D10% [record],Urethra,D10%,[record],cGy,NA,Pelvis EBRT + HDR
 Urethra_D0.1cc [record],Urethra,D0.1cc,[record],cGy,NA,Pelvis EBRT + HDR
-Body Max Point Dose (Global Max),Body,Max Pt Dose,[record],cGy,NA,Head & Neck,Prostate,Prostate Bed,Abdomen,Brain Hypofx,Pelvis EBRT + HDR,Prostate Hypo 28fx,Prostate Hypo 20fx,Gynecological,Thorax (Other),Breast,Brain,Esophagus,Lung,Pelvis (Other),Prostate NRG Prot Arm 1
 END
-updated 1/21/2020 ZM
+updated 2/10/2020 ZM
 
-The body max point dose is not a specific dose objective, it is included at the end here so that the script reports it to make it easier to fill out the Global max dose box in the TPDS.
+The body max point dose is not a specific dose objective; it is included at the top here so that the script reports it to make it easier to fill out the Global max dose box in the TPDS.

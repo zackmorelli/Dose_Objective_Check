@@ -168,27 +168,36 @@ namespace PdfReport.PDFGenerator
             double dosesum = 0.0;
             string dunit = null;
 
-            if (dt == 1)
+            try
             {
-
-                foreach (PlanSetup aplan in plansum.PlanSetups)
+                if (dt == 1)
                 {
-                    dosesum += aplan.TotalPrescribedDose.Dose;
-                    dunit = aplan.TotalPrescribedDose.UnitAsString;
+
+                    foreach (PlanSetup aplan in plansum.PlanSetups)
+                    {
+                        dosesum += aplan.TotalPrescribedDose.Dose;
+                        dunit = aplan.TotalPrescribedDose.UnitAsString;
+                    }
+                }
+                else if (dt == 2)
+                {
+                    IEnumerator lk = plansum.PlanSetups.GetEnumerator();
+                    lk.MoveNext();
+                    PlanSetup PS = (PlanSetup)lk.Current;
+                    dosesum = PS.TotalPrescribedDose.Dose;
+                    dunit = PS.TotalPrescribedDose.UnitAsString;
+                }
+                else if (dt == 3)
+                {
+                    dosesum = dd;
                 }
             }
-            else if (dt == 2)
+            catch
             {
-                IEnumerator lk = plansum.PlanSetups.GetEnumerator();
-                lk.MoveNext();
-                PlanSetup PS = (PlanSetup)lk.Current;
-                dosesum = PS.TotalPrescribedDose.Dose;
-                dunit = PS.TotalPrescribedDose.UnitAsString;
+                System.Windows.Forms.MessageBox.Show("Something has gone wrong while trying to select the Total Dose of this plansum. Please try running the script again and make sure you select one of the three options for the total dose when prompted.");
+
             }
-            else if (dt == 3)
-            {
-                dosesum = dd;
-            }
+
 
             return new ReportData
             {
