@@ -1,4 +1,6 @@
-﻿namespace PdfReport.Reporting
+﻿using System;
+
+namespace PdfReport.Reporting
 {
     public class Plansum
     {
@@ -9,7 +11,14 @@
         public string[] Energies { get; set; }
         public Beam[] Beams { get; set; }
         public string ApprovalStatus { get; set; }
-        
+
+        public Nullable<DateTime> CreationDateTime { get; set; }
+
+ 
+        public DateTime LastModifiedDateTime { get; set; }
+
+        public string LastModifiedUser { get; set; }
+
         public double TotalPrescribedDose { get; set; }
     }
 }

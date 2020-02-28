@@ -37,7 +37,7 @@ namespace DoseObjectiveCheck
     {
 
 
-        public static List<ROI.ROI> Listmaker(string Ttype, string Tsite, string [] Si)
+        public static List<ROI.ROI> Listmaker(string Ttype, string Tsite, string [] Si, string laterality)
         {
 
             List<ROI.ROI> ROIE = new List<ROI.ROI>();                 // OUTPUT - list of actual ROIs for the treatment site given by user
@@ -253,7 +253,38 @@ namespace DoseObjectiveCheck
                     {
                         if (str == Tsite)
                         {
-                           // MessageBox.Show("Add Tsite");
+                            // snippet to deal with breast plan laterality is below
+
+                            // if Right, then Lung_R is Ipsilateral and Lung_L is Contralateral
+                            // if Left, then Lung_L is Ipsilateral and Lung_R is Contralateral
+
+                            if (Tsite == "Breast 23+fx" || Tsite == "Breast Hypofx")
+                            {
+                                if(laterality == "Right")
+                                {
+                                    if(roi.ROIName.Contains("Lung_L") & roi.ROIName.Contains("Ipsilateral"))
+                                    {
+                                        continue;
+                                    }
+                                    else if(roi.ROIName.Contains("Lung_R") & roi.ROIName.Contains("Contralateral"))
+                                    {
+                                        continue;
+                                    }
+                                }
+                                else if(laterality == "Left")
+                                {
+                                    if (roi.ROIName.Contains("Lung_R") & roi.ROIName.Contains("Ipsilateral"))
+                                    {
+                                        continue;
+                                    }
+                                    else if (roi.ROIName.Contains("Lung_L") & roi.ROIName.Contains("Contralateral"))
+                                    {
+                                        continue;
+                                    }
+                                }
+                            }
+
+                            // MessageBox.Show("Add Tsite");
                             ROIE.Add(new ROI.ROI { ROIName = roi.ROIName, Rstruct = roi.Rstruct, ROIId = roi.ROIId, limit = roi.limit, limval = roi.limval, strict = roi.strict, limunit = roi.limunit, goal = roi.goal, applystatus = true });
                             //  Console.WriteLine("TrigAft____ROIEadd");
                             //  Thread.Sleep(4000);
@@ -265,8 +296,33 @@ namespace DoseObjectiveCheck
                         {
                             if (str == foo)
                             {
+                                if (foo == "Breast 23+fx" || foo == "Breast Hypofx")
+                                {
+                                    if (laterality == "Right")
+                                    {
+                                        if (roi.ROIName.Contains("Lung_L") & roi.ROIName.Contains("Ipsilateral"))
+                                        {
+                                            continue;
+                                        }
+                                        else if (roi.ROIName.Contains("Lung_R") & roi.ROIName.Contains("Contralateral"))
+                                        {
+                                            continue;
+                                        }
+                                    }
+                                    else if (laterality == "Left")
+                                    {
+                                        if (roi.ROIName.Contains("Lung_R") & roi.ROIName.Contains("Ipsilateral"))
+                                        {
+                                            continue;
+                                        }
+                                        else if (roi.ROIName.Contains("Lung_L") & roi.ROIName.Contains("Contralateral"))
+                                        {
+                                            continue;
+                                        }
+                                    }
+                                }
 
-                               // MessageBox.Show("Add SI");
+                                // MessageBox.Show("Add SI");
                                 ROIE.Add(new ROI.ROI { ROIName = roi.ROIName, Rstruct = roi.Rstruct, ROIId = roi.ROIId, limit = roi.limit, limval = roi.limval, strict = roi.strict, limunit = roi.limunit, goal = roi.goal, applystatus = true });
                             }
                         }

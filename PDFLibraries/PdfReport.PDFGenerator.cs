@@ -130,7 +130,11 @@ namespace PdfReport.PDFGenerator
                     Id = plan.Id,
                     Course = course.Id,
                     ApprovalStatus = plan.ApprovalStatus.ToString(),
-                    TotalPrescribedDose = plan.TotalPrescribedDose.Dose
+                    TotalPrescribedDose = plan.TotalPrescribedDose.Dose,
+                    CreationDateTime = plan.CreationDateTime,
+                    CreationUser = plan.CreationUserName,
+                    LastModifiedDateTime = plan.HistoryDateTime,
+                    LastModifiedUser = plan.HistoryUserName
 
                     //  Type = Enum.GetName(typeof(PlanType),
 
@@ -232,7 +236,11 @@ namespace PdfReport.PDFGenerator
                     Id = plansum.Id,
                     Course = course.Id,
                     TotalPrescribedDose = dosesum,   // in cGy
-                
+                    CreationDateTime = plansum.CreationDateTime,
+                    LastModifiedDateTime = plansum.HistoryDateTime,
+                    LastModifiedUser = plansum.HistoryUserName
+
+
                     //  Type = Enum.GetName(typeof(PlanType),
 
                 },

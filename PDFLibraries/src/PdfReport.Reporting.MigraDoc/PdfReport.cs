@@ -64,6 +64,7 @@ namespace PdfReport.Reporting.MigraDoc
             var section = new Section();
             SetUpPage(section);
             AddHeaderAndFooter(section, reportdata);
+            AddFirstPageStuff(section, reportdata);
             AddDoseObjectiveList(section, reportdata);
           //  MessageBox.Show("Trigger main section");
             return section;
@@ -113,6 +114,11 @@ namespace PdfReport.Reporting.MigraDoc
         private void Addold(Section section, Patient patient)
         {
             new old().Add(section, patient);
+        }
+
+        private void AddFirstPageStuff(Section section, ReportData data)
+        {
+            new FirstPageStuff().Add(section, data);
         }
 
         private void AddDoseObjectiveList(Section section, ReportData data)

@@ -43,6 +43,7 @@ namespace DoseObjectiveCheck
         public double dd = 0.0;
         public string ptype = null;
         public string TS = null;
+        public string laterality = null;
         public ListBox.SelectedObjectCollection TSA;
         public string pl = null;
         public int c = 0;
@@ -81,7 +82,7 @@ namespace DoseObjectiveCheck
         }
 
 
-        private void EXECUTE(string TS, ListBox.SelectedObjectCollection TSA, Patient patient, Course course, VMS.TPS.Common.Model.API.Image image3D, User user, IEnumerable<PlanSum> Plansums, IEnumerable<PlanSetup> Plans)
+        private void EXECUTE(string laterality, string TS, ListBox.SelectedObjectCollection TSA, Patient patient, Course course, VMS.TPS.Common.Model.API.Image image3D, User user, IEnumerable<PlanSum> Plansums, IEnumerable<PlanSetup> Plans)
         {
 
             // MessageBox.Show("Trig EXE - 1");
@@ -366,7 +367,7 @@ namespace DoseObjectiveCheck
 
                     OuputBox.AppendText(Environment.NewLine);
                     OuputBox.AppendText("Plansum Analysis Initiated, please be patient");
-                    output = Script.PlansumAnalysis(Si, ptype, patient, course, Plansum.StructureSet, Plansum, dt, dd, OuputBox, gyntype);
+                    output = Script.PlansumAnalysis(laterality, Si, ptype, patient, course, Plansum.StructureSet, Plansum, dt, dd, OuputBox, gyntype);
                   //  MessageBox.Show("Trig EXE - 8");
                     bool T = false;
                     foreach (ROI.ROI aroi in output)
@@ -403,7 +404,7 @@ namespace DoseObjectiveCheck
 
                 OuputBox.AppendText(Environment.NewLine);
                 OuputBox.AppendText("Plan Analysis Initiated, please be patient");
-                output = Script.PlanAnalysis(TS, ptype, user, patient, course, Plan.StructureSet, Plan, OuputBox, gyntype);
+                output = Script.PlanAnalysis(laterality, TS, ptype, user, patient, course, Plan.StructureSet, Plan, OuputBox, gyntype);
               //  MessageBox.Show("Trig EXE - 9");
                 bool T = false;
 
@@ -483,22 +484,36 @@ namespace DoseObjectiveCheck
             OuputBox.Text = "Plan Selected: " + pl;
         }
 
+        void lateralitybox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Object latobj = lateralitybox.SelectedItem;
+            // MessageBox.Show("Site List object string is: " + obj.ToString());
+            laterality = latobj.ToString();
+        }
+
+
         void TSiteList_SelectedIndexChanged(object sender, EventArgs e)
         {
-         
+
             // MessageBox.Show("OrganList fire");
-            if(TSiteList.SelectionMode == SelectionMode.One)
+            if (TSiteList.SelectionMode == SelectionMode.One)
             {
                 Object obj = TSiteList.SelectedItem;
-               // MessageBox.Show("Site List object string is: " + obj.ToString());
+                // MessageBox.Show("Site List object string is: " + obj.ToString());
                 TS = obj.ToString();
 
                 OuputBox.AppendText(Environment.NewLine);
                 OuputBox.AppendText("Treatment Site Selected: " + TS);
 
-                if(TS == "Gynecological")
+                if (TS == "Gynecological")
                 {
                     gyntype = GynecologicalEdits();
+                }
+
+                if (TS == "Breast 23+fx" || TS == "Breast Hypofx")
+                {
+                    lateralitybox.Visible = true;
+                    MessageBox.Show("Please select the laterality of the breast plan (above the execute button). ");
                 }
 
                 //  Type TRF = TSiteList.SelectedItem.GetType();
@@ -513,16 +528,21 @@ namespace DoseObjectiveCheck
                 {
                     ject = ject + obj.ToString();
 
-                    if(obj.ToString() == "Gynecological")
+                    if (obj.ToString() == "Gynecological")
                     {
                         gyntype = GynecologicalEdits();
                     }
+
+                    if (obj.ToString() == "Breast 23+fx" || obj.ToString() == "Breast Hypofx")
+                    {
+                        lateralitybox.Visible = true;
+                        MessageBox.Show("Please select the laterality of the breast plan (above the execute button). ");
+                    }
+
+                    OuputBox.AppendText(Environment.NewLine);
+                    OuputBox.AppendText("Treatment Site(s) Selected: " + ject);
                 }
-
-                OuputBox.AppendText(Environment.NewLine);
-                OuputBox.AppendText("Treatment Site(s) Selected: " + ject);
             }
-
         }
 
         public string GynecologicalEdits()
@@ -641,7 +661,7 @@ namespace DoseObjectiveCheck
         void buttonNext_Click(object sender, EventArgs e, Patient patient, Course course, VMS.TPS.Common.Model.API.Image image3D, User user, IEnumerable<PlanSum> Plansums, IEnumerable<PlanSetup> Plans)
         {
             // MessageBox.Show("Trig MORTY");
-            EXECUTE(TS, TSA, patient, course, image3D, user, Plansums, Plans);
+            EXECUTE(laterality, TS, TSA, patient, course, image3D, user, Plansums, Plans);
         }
 
         public static string Dialog1()

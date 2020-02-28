@@ -104,13 +104,14 @@ namespace VMS.TPS
             treatsite.Add(new TreatSite() { DisplayName = "Head & Neck", Name = "Head&Neck", Id = 8 });
             treatsite.Add(new TreatSite() { DisplayName = "Lung", Name = "Lung", Id = 9 });
             treatsite.Add(new TreatSite() { DisplayName = "Pelvis (Other)", Name = "Pelvis(Other)", Id = 10 });
-            treatsite.Add(new TreatSite() { DisplayName = "Pelvis EBRT + HDR", Name = "PelivsEBRT+HDR", Id = 11 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate", Name = "Prostate", Id = 12 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate Bed", Name = "ProstateBed", Id = 13 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 20fx", Name = "ProstateHypo20fx", Id = 14 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 28fx", Name = "ProstateHypo28fx", Id = 15 });
-            treatsite.Add(new TreatSite() { DisplayName = "Thorax (Other)", Name = "Thorax(Other)", Id = 16 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate NRG Prot Arm 1", Name = "ProstateNRGProtArm1", Id = 17 });
+            treatsite.Add(new TreatSite() { DisplayName = "Pelvis EBRT 25fx + HDR", Name = "PelivsEBRT25fx+HDR", Id = 11 });
+            treatsite.Add(new TreatSite() { DisplayName = "Pelvis EBRT 15fx + HDR", Name = "PelivsEBRT15fx+HDR", Id = 12 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate", Name = "Prostate", Id = 13 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate Bed", Name = "ProstateBed", Id = 14 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 20fx", Name = "ProstateHypo20fx", Id = 15 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 28fx", Name = "ProstateHypo28fx", Id = 16 });
+            treatsite.Add(new TreatSite() { DisplayName = "Thorax (Other)", Name = "Thorax(Other)", Id = 17 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate NRG Prot Arm 1", Name = "ProstateNRGProtArm1", Id = 18 });
 
             return treatsite;
         }
@@ -158,34 +159,35 @@ namespace VMS.TPS
             treatsite.Add(new TreatSite() { DisplayName = "Head & Neck", Name = "Head&Neck", Id = 8 });
             treatsite.Add(new TreatSite() { DisplayName = "Lung", Name = "Lung", Id = 9 });
             treatsite.Add(new TreatSite() { DisplayName = "Pelvis (Other)", Name = "Pelvis(Other)", Id = 10 });
-            treatsite.Add(new TreatSite() { DisplayName = "Pelvis EBRT + HDR", Name = "PelivsEBRT+HDR", Id = 11 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate", Name = "Prostate", Id = 12 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate Bed", Name = "ProstateBed", Id = 13 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 20fx", Name = "ProstateHypo20fx", Id = 14 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 28fx", Name = "ProstateHypo28fx", Id = 15 });
-            treatsite.Add(new TreatSite() { DisplayName = "Thorax (Other)", Name = "Thorax(Other)", Id = 16 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate NRG Prot Arm 1", Name = "ProstateNRGProtArm1", Id = 17 });
-            treatsite.Add(new TreatSite() { DisplayName = " Single fraction", Name = "Singlefraction", Id = 18 });
-            treatsite.Add(new TreatSite() { DisplayName = "3 fraction", Name = "3fraction", Id = 19 });
-            treatsite.Add(new TreatSite() { DisplayName = "4 fraction", Name = "4fraction", Id = 20 });
-            treatsite.Add(new TreatSite() { DisplayName = "5 fraction", Name = "5fraction", Id = 21 });
-            treatsite.Add(new TreatSite() { DisplayName = "6 fraction", Name = "6fraction", Id = 22 });
-            treatsite.Add(new TreatSite() { DisplayName = "8 fraction", Name = "8fraction", Id = 23 });
-            treatsite.Add(new TreatSite() { DisplayName = "10 fraction", Name = "10fraction", Id = 24 });
-            treatsite.Add(new TreatSite() { DisplayName = "Liver", Name = "Liver", Id = 25 });
-            treatsite.Add(new TreatSite() { DisplayName = "Lung 4 fraction", Name = "Lung4fraction", Id = 26 });
-            treatsite.Add(new TreatSite() { DisplayName = "Lung 5 fraction", Name = "Lung5fraction", Id = 27 });
-            treatsite.Add(new TreatSite() { DisplayName = "Lung 8 fraction", Name = "Lung8fraction", Id = 28 });
-            treatsite.Add(new TreatSite() { DisplayName = "Oligomets 1 fraction", Name = "Oligomets1fraction", Id = 29 });
-            treatsite.Add(new TreatSite() { DisplayName = "Oligomets 3 fractions", Name = "Oligomets3fractions", Id = 30 });
-            treatsite.Add(new TreatSite() { DisplayName = "Oligomets 5 fractions", Name = "Oligomets5fractions", Id = 31 });
-            treatsite.Add(new TreatSite() { DisplayName = "Pancreas", Name = "Pancreas", Id = 32 });
-            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial 1 fraction", Name = "SRSCranial1fraction", Id = 33 });
-            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial 3 fraction", Name = "SRSCranial3fraction", Id = 34 });
-            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial 5 fraction", Name = "SRSCranial5fraction", Id = 35 });
-            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial AVM", Name = "SRSCranialAVM", Id = 36 });
-            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial Trigeminal Neuralgia", Name = "SRSCranialTrigeminalNeuralgia", Id = 37 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate NRG Prot Arm 2", Name = "ProstateNRGProtArm2", Id = 38 });
+            treatsite.Add(new TreatSite() { DisplayName = "Pelvis EBRT 25fx + HDR", Name = "PelivsEBRT25fx+HDR", Id = 11 });
+            treatsite.Add(new TreatSite() { DisplayName = "Pelvis EBRT 15fx + HDR", Name = "PelivsEBRT+HDR", Id = 12 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate", Name = "Prostate", Id = 13 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate Bed", Name = "ProstateBed", Id = 14 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 20fx", Name = "ProstateHypo20fx", Id = 15 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 28fx", Name = "ProstateHypo28fx", Id = 16 });
+            treatsite.Add(new TreatSite() { DisplayName = "Thorax (Other)", Name = "Thorax(Other)", Id = 17 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate NRG Prot Arm 1", Name = "ProstateNRGProtArm1", Id = 18 });
+            treatsite.Add(new TreatSite() { DisplayName = " Single fraction", Name = "Singlefraction", Id = 19 });
+            treatsite.Add(new TreatSite() { DisplayName = "3 fraction", Name = "3fraction", Id = 20 });
+            treatsite.Add(new TreatSite() { DisplayName = "4 fraction", Name = "4fraction", Id = 21 });
+            treatsite.Add(new TreatSite() { DisplayName = "5 fraction", Name = "5fraction", Id = 22 });
+            treatsite.Add(new TreatSite() { DisplayName = "6 fraction", Name = "6fraction", Id = 23 });
+            treatsite.Add(new TreatSite() { DisplayName = "8 fraction", Name = "8fraction", Id = 24 });
+            treatsite.Add(new TreatSite() { DisplayName = "10 fraction", Name = "10fraction", Id = 25 });
+            treatsite.Add(new TreatSite() { DisplayName = "Liver", Name = "Liver", Id = 26 });
+            treatsite.Add(new TreatSite() { DisplayName = "Lung 4 fraction", Name = "Lung4fraction", Id = 27 });
+            treatsite.Add(new TreatSite() { DisplayName = "Lung 5 fraction", Name = "Lung5fraction", Id = 28 });
+            treatsite.Add(new TreatSite() { DisplayName = "Lung 8 fraction", Name = "Lung8fraction", Id = 29 });
+            treatsite.Add(new TreatSite() { DisplayName = "Oligomets 1 fraction", Name = "Oligomets1fraction", Id = 30 });
+            treatsite.Add(new TreatSite() { DisplayName = "Oligomets 3 fractions", Name = "Oligomets3fractions", Id = 31 });
+            treatsite.Add(new TreatSite() { DisplayName = "Oligomets 5 fractions", Name = "Oligomets5fractions", Id = 32 });
+            treatsite.Add(new TreatSite() { DisplayName = "Pancreas", Name = "Pancreas", Id = 33 });
+            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial 1 fraction", Name = "SRSCranial1fraction", Id = 34 });
+            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial 3 fraction", Name = "SRSCranial3fraction", Id = 35 });
+            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial 5 fraction", Name = "SRSCranial5fraction", Id = 36 });
+            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial AVM", Name = "SRSCranialAVM", Id = 37 });
+            treatsite.Add(new TreatSite() { DisplayName = "SRS Cranial Trigeminal Neuralgia", Name = "SRSCranialTrigeminalNeuralgia", Id = 38 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate NRG Prot Arm 2", Name = "ProstateNRGProtArm2", Id = 39 });
 
             return treatsite;
         }
@@ -309,7 +311,7 @@ namespace VMS.TPS
         }
 
 
-        public static List<ROI.ROI> PlansumAnalysis(string[] Si, string ptype, Patient patient, Course course, StructureSet structureSet, PlanSum Plansum, int dt, double dd, TextBox OuputBox, string gyntype)
+        public static List<ROI.ROI> PlansumAnalysis(string laterality, string[] Si, string ptype, Patient patient, Course course, StructureSet structureSet, PlanSum Plansum, int dt, double dd, TextBox OuputBox, string gyntype)
         {
 
             List<ROI.ROI> ROIE = new List<ROI.ROI>();     // Expected ROI made from text file list
@@ -319,7 +321,7 @@ namespace VMS.TPS
             //  string [] Si = new string[50]; 
 
             // ROI.ROI is its own custom class
-            ROIE = LISTMAKER.Listmaker(Ttype, Tsite, Si);          // separate class with LISTMAKER function which generates a list of ROIs for the given treatment type and site
+            ROIE = LISTMAKER.Listmaker(Ttype, Tsite, Si, laterality);          // separate class with LISTMAKER function which generates a list of ROIs for the given treatment type and site
 
             double dosesum = 0.0;
             string dunit = null;
@@ -810,13 +812,19 @@ namespace VMS.TPS
                             double fdose = 0.0;    //functional dose
                             string type = null;
 
+                            if (Erika.limval == "NA")
+                            {
+                                Erika.limval = "-1";
+                            }
+
+
                             //   Console.WriteLine("\nTRIGGER V ");
                             //  Console.WriteLine("\nV Dose Limit: {0}  {1}", morty.limval, morty.limunit);
                             //  Thread.Sleep(2000);
 
                             // "Substring" is an extremely useful string method that creates a new string starting at a specific character position.
-                              // This allows the "V" in the limit string to be omitted so we just get the number    
-                            
+                            // This allows the "V" in the limit string to be omitted so we just get the number    
+
                             string jerry = Erika.limit.Substring(1);
                             //  Console.WriteLine("\n After V chop, we have (jerry): {0}", jerry);
                             // Thread.Sleep(2000);
@@ -926,6 +934,18 @@ namespace VMS.TPS
                             {
                                 if (Erika.goal != "NA")            // meaning there is a goal set
                                 {
+                                    if (Erika.limval == "-1")
+                                    {
+                                        if (Vvol < comp2)
+                                        {
+                                            fstatus = "PASS";
+                                        }
+                                        else if (Vvol > comp2)
+                                        {
+                                            fstatus = "REVIEW - GOAL";
+                                        }
+                                    }
+
                                     if (Vvol < comp2)
                                     {
                                         fstatus = "PASS";
@@ -955,6 +975,18 @@ namespace VMS.TPS
                             {
                                 if (Erika.goal != "NA")            // meaning there is a goal set
                                 {
+                                    if (Erika.limval == "-1")
+                                    {
+                                        if (Vvol <= comp2)
+                                        {
+                                            fstatus = "PASS";
+                                        }
+                                        else if (Vvol >= comp2)
+                                        {
+                                            fstatus = "REVIEW - GOAL";
+                                        }
+                                    }
+
                                     if (Vvol <= comp2)
                                     {
                                         fstatus = "PASS";
@@ -984,6 +1016,18 @@ namespace VMS.TPS
                             {
                                 if (Erika.goal != "NA")            // meaning there is a goal set
                                 {
+                                    if (Erika.limval == "-1")
+                                    {
+                                        if (Vvol >= comp2)
+                                        {
+                                            fstatus = "PASS";
+                                        }
+                                        else if (Vvol <= comp2)
+                                        {
+                                            fstatus = "REVIEW - GOAL";
+                                        }
+                                    }
+
                                     if (Vvol >= comp2)
                                     {
                                         fstatus = "PASS";
@@ -1024,6 +1068,11 @@ namespace VMS.TPS
 
                             string qstatus = null;
                             double qdose = 0.0;
+
+                            if (Erika.limval == "NA")
+                            {
+                                Erika.limval = "-1";
+                            }
 
                             //  Console.WriteLine("\nTRIGGER D ");
                             //  Console.WriteLine("\nD Dose Limit: {0}  {1}", morty.limval, morty.limunit);
@@ -1108,21 +1157,29 @@ namespace VMS.TPS
 
                                 if (Erika.goal != "NA")            // meaning there is a goal set
                                 {
+                                    if(Erika.limval == "-1")
+                                    {
+                                        if (qdose < Convert.ToDouble(Erika.goal))
+                                        {
+                                            qstatus = "PASS";
+                                        }
+                                        else if (qdose > Convert.ToDouble(Erika.goal))
+                                        {
+                                            qstatus = "REVIEW - GOAL";
+                                        }
+                                    }
 
-                                    if ((qdose < Convert.ToDouble(Erika.limval)) && (qdose < Convert.ToDouble(Erika.goal)))
+                                    if (qdose < Convert.ToDouble(Erika.goal))
                                     {
                                         qstatus = "PASS";
                                     }
-                                    else if (qdose < Convert.ToDouble(Erika.goal))
+                                    else if ((qdose < Convert.ToDouble(Erika.limval)) && (qdose > Convert.ToDouble(Erika.goal)))
                                     {
-
                                         qstatus = "REVIEW - GOAL";
-
                                     }
-                                    else
+                                    else if (qdose > Convert.ToDouble(Erika.limval))
                                     {
                                         qstatus = "REVIEW";
-
                                     }
                                 }
                                 else
@@ -1139,41 +1196,129 @@ namespace VMS.TPS
                                     }
                                 }
                             }
-                            else if (Erika.strict == "<=")
+                            else if (Erika.strict == ">")
                             {
-
 
                                 if (Erika.goal != "NA")            // meaning there is a goal set
                                 {
+                                    if (Erika.limval == "-1")
+                                    {
+                                        if (qdose > Convert.ToDouble(Erika.goal))
+                                        {
+                                            qstatus = "PASS";
+                                        }
+                                        else if (qdose < Convert.ToDouble(Erika.goal))
+                                        {
+                                            qstatus = "REVIEW - GOAL";
+                                        }
+                                    }
 
-                                    if ((qdose <= Convert.ToDouble(Erika.limval)) && (qdose <= Convert.ToDouble(Erika.goal)))
+                                    if (qdose > Convert.ToDouble(Erika.goal))
                                     {
                                         qstatus = "PASS";
                                     }
-                                    else if (qdose <= Convert.ToDouble(Erika.goal))
+                                    else if ((qdose > Convert.ToDouble(Erika.limval)) && (qdose < Convert.ToDouble(Erika.goal)))
                                     {
-
                                         qstatus = "REVIEW - GOAL";
-
                                     }
-                                    else
+                                    else if (qdose < Convert.ToDouble(Erika.limval))
                                     {
                                         qstatus = "REVIEW";
-
                                     }
-
                                 }
                                 else
                                 {
 
-                                    if (qdose < Convert.ToDouble(Erika.limval))
+                                    if (qdose > Convert.ToDouble(Erika.limval))
                                     {
                                         qstatus = "PASS";
                                     }
                                     else
                                     {
                                         qstatus = "REVIEW";
+                                    }
+                                }
+                            }
+                            else if (Erika.strict == ">=")
+                            {
 
+                                if (Erika.goal != "NA")            // meaning there is a goal set
+                                {
+                                    if (Erika.limval == "-1")
+                                    {
+                                        if (qdose >= Convert.ToDouble(Erika.goal))
+                                        {
+                                            qstatus = "PASS";
+                                        }
+                                        else if (qdose <= Convert.ToDouble(Erika.goal))
+                                        {
+                                            qstatus = "REVIEW - GOAL";
+                                        }
+                                    }
+
+                                    if (qdose >= Convert.ToDouble(Erika.goal))
+                                    {
+                                        qstatus = "PASS";
+                                    }
+                                    else if ((qdose >= Convert.ToDouble(Erika.limval)) && (qdose <= Convert.ToDouble(Erika.goal)))
+                                    {
+                                        qstatus = "REVIEW - GOAL";
+                                    }
+                                    else if (qdose <=Convert.ToDouble(Erika.limval))
+                                    {
+                                        qstatus = "REVIEW";
+                                    }
+                                }
+                                else
+                                {
+                                    if (qdose >= Convert.ToDouble(Erika.limval))
+                                    {
+                                        qstatus = "PASS";
+                                    }
+                                    else
+                                    {
+                                        qstatus = "REVIEW";
+                                    }
+                                }
+                            }
+                            else if (Erika.strict == "<=")
+                            {
+                                if (Erika.goal != "NA")            // meaning there is a goal set
+                                {
+                                    if (Erika.limval == "-1")
+                                    {
+                                        if (qdose <= Convert.ToDouble(Erika.goal))
+                                        {
+                                            qstatus = "PASS";
+                                        }
+                                        else if (qdose >= Convert.ToDouble(Erika.goal))
+                                        {
+                                            qstatus = "REVIEW - GOAL";
+                                        }
+                                    }
+
+                                    if ((qdose <= Convert.ToDouble(Erika.goal)))
+                                    {
+                                        qstatus = "PASS";
+                                    }
+                                    else if ((qdose <= Convert.ToDouble(Erika.limval)) && (qdose >= Convert.ToDouble(Erika.goal)))
+                                    {
+                                        qstatus = "REVIEW - GOAL";
+                                    }
+                                    else
+                                    {
+                                        qstatus = "REVIEW";
+                                    }
+                                }
+                                else
+                                {
+                                    if (qdose <= Convert.ToDouble(Erika.limval))
+                                    {
+                                        qstatus = "PASS";
+                                    }
+                                    else
+                                    {
+                                        qstatus = "REVIEW";
                                     }
                                 }
                             }
@@ -1195,7 +1340,7 @@ namespace VMS.TPS
             return ROIA;
         }
 
-        public static List<ROI.ROI> PlanAnalysis(string TS, string ptype, User user, Patient patient, Course course, StructureSet structureSet, PlanSetup Plan, TextBox OuputBox, string gyntype)
+        public static List<ROI.ROI> PlanAnalysis(string laterality, string TS, string ptype, User user, Patient patient, Course course, StructureSet structureSet, PlanSetup Plan, TextBox OuputBox, string gyntype)
         {
             //  System.Windows.Forms.MessageBox.Show("TS is: " + TS);
             //  System.Windows.Forms.MessageBox.Show("ptype is: " + ptype);
@@ -1207,7 +1352,7 @@ namespace VMS.TPS
 
             string[] Si = new string[10] { "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA" };
             // ROI.ROI is its own custom class
-            ROIE = LISTMAKER.Listmaker(Ttype, Tsite, Si);          // separate class with LISTMAKER function which generates a list of ROIs for the given treatment type and site
+            ROIE = LISTMAKER.Listmaker(Ttype, Tsite, Si, laterality);          // separate class with LISTMAKER function which generates a list of ROIs for the given treatment type and site
 
            // MessageBox.Show(Tsite + " dose objective list created successfully.");
           //  MessageBox.Show("testr");
@@ -1612,6 +1757,15 @@ namespace VMS.TPS
                             string fstatus = null;
                             // System.Windows.Forms.MessageBox.Show("Plan A V");
 
+
+
+
+
+
+
+
+
+
                             if (Erika.limit == "Volume")
                             {
                                 //THIS IS SPECIFICALLY FOR THE "LIVER-GTV_VOLUME > 700CC" DOSE OBJECTIVE FOR SBRT LIVER PLANS
@@ -1624,7 +1778,6 @@ namespace VMS.TPS
                                 else
                                 {
                                     fstatus = "REVIEW";
-
                                 }
 
                                 ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limvol = 700.0, strict = Erika.strict, goal = "NA", actvol = S.Volume, status = fstatus, structvol = structvol, type = "cm3", limunit = Erika.limunit, applystatus = Erika.applystatus });
@@ -1645,7 +1798,6 @@ namespace VMS.TPS
                                 else 
                                 {
                                     fstatus = "REVIEW";
-
                                 }
 
                                 ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limvol = 100.0, strict = Erika.strict, goal = "NA" , actvol = ctvvol, status = fstatus, structvol = structvol, type = "percent", limunit = Erika.limunit, applystatus = Erika.applystatus });
@@ -1671,14 +1823,19 @@ namespace VMS.TPS
                             double Vvol = 0.0;
                             string type = null;
 
+                            if (Erika.limval == "NA")
+                            {
+                                Erika.limval = "-1";
+                            }
+
                             //   Console.WriteLine("\nTRIGGER V ");
                             //  Console.WriteLine("\nV Dose Limit: {0}  {1}", morty.limval, morty.limunit);
                             //  Thread.Sleep(2000);
-                           // System.Windows.Forms.MessageBox.Show("Trig 4");
+                            // System.Windows.Forms.MessageBox.Show("Trig 4");
 
                             // "Substring" is an extremely useful string method that creates a new string starting at a specific character position.
-                             // This allows the "V" in the limit string to be omitted so we just get the number    
-                            
+                            // This allows the "V" in the limit string to be omitted so we just get the number    
+
                             string jerry = Erika.limit.Substring(1);
                            //  System.Windows.Forms.MessageBox.Show("Plan jerry is: " + jerry);
                                 //  Console.WriteLine("\n After V chop, we have (jerry): {0}", jerry);
@@ -1781,18 +1938,31 @@ namespace VMS.TPS
 
                                 if (Erika.goal != "NA")            // meaning there is a goal set
                                 {
-
-                                    if (Vvol < comp2)
+                                    if (Erika.limval == "-1")
                                     {
-                                        fstatus = "PASS";
-                                    }
-                                    else if (Vvol < comp)
-                                    {
-                                        fstatus = "REVIEW - GOAL";
+                                        if (Vvol < comp2)
+                                        {
+                                            fstatus = "PASS";
+                                        }
+                                        else if (Vvol > comp2)
+                                        {
+                                            fstatus = "REVIEW - GOAL";
+                                        }
                                     }
                                     else
                                     {
-                                        fstatus = "REVIEW";
+                                        if (Vvol < comp2)
+                                        {
+                                            fstatus = "PASS";
+                                        }
+                                        else if (Vvol < comp)
+                                        {
+                                            fstatus = "REVIEW - GOAL";
+                                        }
+                                        else
+                                        {
+                                            fstatus = "REVIEW";
+                                        }
                                     }
                                 }
                                 else
@@ -1812,26 +1982,35 @@ namespace VMS.TPS
                             {
                                 if (Erika.goal != "NA")            // meaning there is a goal set
                                 {
-
-                                    if (Vvol <= comp2)
+                                    if (Erika.limval == "-1")
                                     {
-                                        fstatus = "PASS";
-                                    }
-                                    else if (Vvol <= comp)
-                                    {
-
-                                        fstatus = "REVIEW - GOAL";
-
+                                        if (Vvol <= comp2)
+                                        {
+                                            fstatus = "PASS";
+                                        }
+                                        else if (Vvol >= comp2)
+                                        {
+                                            fstatus = "REVIEW - GOAL";
+                                        }
                                     }
                                     else
                                     {
-                                        fstatus = "REVIEW";
-
+                                        if (Vvol <= comp2)
+                                        {
+                                            fstatus = "PASS";
+                                        }
+                                        else if (Vvol <= comp)
+                                        {
+                                            fstatus = "REVIEW - GOAL";
+                                        }
+                                        else
+                                        {
+                                            fstatus = "REVIEW";
+                                        }
                                     }
                                 }
                                 else
                                 {
-
                                     if (Vvol <= comp)
                                     {
                                         fstatus = "PASS";
@@ -1846,18 +2025,31 @@ namespace VMS.TPS
                             {
                                 if (Erika.goal != "NA")            // meaning there is a goal set
                                 {
-
-                                    if (Vvol >= comp2)
+                                    if (Erika.limval == "-1")
                                     {
-                                        fstatus = "PASS";
-                                    }
-                                    else if (Vvol >= comp)
-                                    {
-                                        fstatus = "REVIEW - GOAL";
+                                        if (Vvol >= comp2)
+                                        {
+                                            fstatus = "PASS";
+                                        }
+                                        else if (Vvol <= comp2)
+                                        {
+                                            fstatus = "REVIEW - GOAL";
+                                        }
                                     }
                                     else
                                     {
-                                        fstatus = "REVIEW";
+                                        if (Vvol >= comp2)
+                                        {
+                                            fstatus = "PASS";
+                                        }
+                                        else if (Vvol >= comp)
+                                        {
+                                            fstatus = "REVIEW - GOAL";
+                                        }
+                                        else
+                                        {
+                                            fstatus = "REVIEW";
+                                        }
                                     }
                                 }
                                 else
@@ -1887,6 +2079,11 @@ namespace VMS.TPS
                              // System.Windows.Forms.MessageBox.Show("Plan A D");
                             string qstatus = null;
                             DoseValue qdose = new DoseValue();
+
+                            if (Erika.limval == "NA")
+                            {
+                                Erika.limval = "-1";
+                            }
 
                             //  Console.WriteLine("\nTRIGGER D ");
                             //  Console.WriteLine("\nD Dose Limit: {0}  {1}", morty.limval, morty.limunit);
@@ -1933,28 +2130,136 @@ namespace VMS.TPS
 
                             if (Erika.strict == "[record]")
                             {
+
                                 qstatus = "";
+
                             }
                             else if (Erika.strict == "<")
                             {
+
                                 if (Erika.goal != "NA")            // meaning there is a goal set
                                 {
-                                    if ((qdose.Dose < Convert.ToDouble(Erika.limval)) && (qdose.Dose < Convert.ToDouble(Erika.goal)))
+                                    if (Erika.limval == "-1")
                                     {
-                                        qstatus = "PASS";
-                                    }
-                                    else if (qdose.Dose < Convert.ToDouble(Erika.goal))
-                                    {
-                                        qstatus = "REVIEW - GOAL";
+                                        if (qdose.Dose < Convert.ToDouble(Erika.goal))
+                                        {
+                                            qstatus = "PASS";
+                                        }
+                                        else if (qdose.Dose > Convert.ToDouble(Erika.goal))
+                                        {
+                                            qstatus = "REVIEW - GOAL";
+                                        }
                                     }
                                     else
                                     {
-                                        qstatus = "REVIEW";
+                                        if (qdose.Dose < Convert.ToDouble(Erika.goal))
+                                        {
+                                            qstatus = "PASS";
+                                        }
+                                        else if ((qdose.Dose < Convert.ToDouble(Erika.limval)) && (qdose.Dose > Convert.ToDouble(Erika.goal)))
+                                        {
+                                            qstatus = "REVIEW - GOAL";
+                                        }
+                                        else if (qdose.Dose > Convert.ToDouble(Erika.limval))
+                                        {
+                                            qstatus = "REVIEW";
+                                        }
                                     }
                                 }
                                 else
                                 {
                                     if (qdose.Dose < Convert.ToDouble(Erika.limval))
+                                    {
+                                        qstatus = "PASS";
+                                    }
+                                    else
+                                    {
+                                        qstatus = "REVIEW";
+
+                                    }
+                                }
+                            }
+                            else if (Erika.strict == ">")
+                            {
+
+                                if (Erika.goal != "NA")            // meaning there is a goal set
+                                {
+                                    if (Erika.limval == "-1")
+                                    {
+                                        if (qdose.Dose > Convert.ToDouble(Erika.goal))
+                                        {
+                                            qstatus = "PASS";
+                                        }
+                                        else if (qdose.Dose < Convert.ToDouble(Erika.goal))
+                                        {
+                                            qstatus = "REVIEW - GOAL";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (qdose.Dose > Convert.ToDouble(Erika.goal))
+                                        {
+                                            qstatus = "PASS";
+                                        }
+                                        else if ((qdose.Dose > Convert.ToDouble(Erika.limval)) && (qdose.Dose < Convert.ToDouble(Erika.goal)))
+                                        {
+                                            qstatus = "REVIEW - GOAL";
+                                        }
+                                        else if (qdose.Dose < Convert.ToDouble(Erika.limval))
+                                        {
+                                            qstatus = "REVIEW";
+                                        }
+                                    }
+                                }
+                                else
+                                {
+
+                                    if (qdose.Dose > Convert.ToDouble(Erika.limval))
+                                    {
+                                        qstatus = "PASS";
+                                    }
+                                    else
+                                    {
+                                        qstatus = "REVIEW";
+
+                                    }
+                                }
+                            }
+                            else if (Erika.strict == ">=")
+                            {
+
+                                if (Erika.goal != "NA")            // meaning there is a goal set
+                                {
+                                    if (Erika.limval == "-1")
+                                    {
+                                        if (qdose.Dose >= Convert.ToDouble(Erika.goal))
+                                        {
+                                            qstatus = "PASS";
+                                        }
+                                        else if (qdose.Dose <= Convert.ToDouble(Erika.goal))
+                                        {
+                                            qstatus = "REVIEW - GOAL";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (qdose.Dose >= Convert.ToDouble(Erika.goal))
+                                        {
+                                            qstatus = "PASS";
+                                        }
+                                        else if ((qdose.Dose >= Convert.ToDouble(Erika.limval)) && (qdose.Dose <= Convert.ToDouble(Erika.goal)))
+                                        {
+                                            qstatus = "REVIEW - GOAL";
+                                        }
+                                        else if (qdose.Dose <= Convert.ToDouble(Erika.limval))
+                                        {
+                                            qstatus = "REVIEW";
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (qdose.Dose >= Convert.ToDouble(Erika.limval))
                                     {
                                         qstatus = "PASS";
                                     }
@@ -1968,22 +2273,36 @@ namespace VMS.TPS
                             {
                                 if (Erika.goal != "NA")            // meaning there is a goal set
                                 {
-                                    if ((qdose.Dose <= Convert.ToDouble(Erika.limval)) && (qdose.Dose <= Convert.ToDouble(Erika.goal)))
+                                    if (Erika.limval == "-1")
                                     {
-                                        qstatus = "PASS";
-                                    }
-                                    else if (qdose.Dose <= Convert.ToDouble(Erika.goal))
-                                    {
-                                        qstatus = "REVIEW - GOAL";
+                                        if (qdose.Dose <= Convert.ToDouble(Erika.goal))
+                                        {
+                                            qstatus = "PASS";
+                                        }
+                                        else if (qdose.Dose >= Convert.ToDouble(Erika.goal))
+                                        {
+                                            qstatus = "REVIEW - GOAL";
+                                        }
                                     }
                                     else
                                     {
-                                        qstatus = "REVIEW";
+                                        if ((qdose.Dose <= Convert.ToDouble(Erika.goal)))
+                                        {
+                                            qstatus = "PASS";
+                                        }
+                                        else if ((qdose.Dose <= Convert.ToDouble(Erika.limval)) && (qdose.Dose >= Convert.ToDouble(Erika.goal)))
+                                        {
+                                            qstatus = "REVIEW - GOAL";
+                                        }
+                                        else
+                                        {
+                                            qstatus = "REVIEW";
+                                        }
                                     }
                                 }
                                 else
                                 {
-                                    if (qdose.Dose < Convert.ToDouble(Erika.limval))
+                                    if (qdose.Dose <= Convert.ToDouble(Erika.limval))
                                     {
                                         qstatus = "PASS";
                                     }
@@ -1997,6 +2316,7 @@ namespace VMS.TPS
                             //  Console.WriteLine("\nDOSE UNIT: {0}", qdose.Unit.ToString());
                             //  Console.WriteLine("\nDOSE Value: {0}", qdose.Dose);
                             //  Thread.Sleep(5000);
+
 
                             // System.Windows.Forms.MessageBox.Show("Scorpia 5");
                             ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limdose = Convert.ToDouble(Erika.limval), strict = Erika.strict, goal = Erika.goal, actdose = qdose.Dose, status = qstatus, structvol = structvol, type = "NV", limunit = Erika.limunit, applystatus = Erika.applystatus });

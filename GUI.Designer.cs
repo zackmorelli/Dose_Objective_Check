@@ -35,6 +35,7 @@
             this.TSiteList = new System.Windows.Forms.ListBox();
             this.button1 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.lateralitybox = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // Plan_List
@@ -84,7 +85,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Goudy Old Style", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(448, 300);
+            this.button1.Location = new System.Drawing.Point(448, 325);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(146, 77);
             this.button1.TabIndex = 9;
@@ -107,11 +108,28 @@
             this.listBox1.TabIndex = 8;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
+            // lateralitybox
+            // 
+            this.lateralitybox.Font = new System.Drawing.Font("Goudy Old Style", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lateralitybox.FormattingEnabled = true;
+            this.lateralitybox.ItemHeight = 23;
+            this.lateralitybox.Items.AddRange(new object[] {
+            "Right",
+            "Left",
+            "Bilateral"});
+            this.lateralitybox.Location = new System.Drawing.Point(468, 230);
+            this.lateralitybox.Name = "lateralitybox";
+            this.lateralitybox.Size = new System.Drawing.Size(86, 73);
+            this.lateralitybox.TabIndex = 10;
+            this.lateralitybox.Visible = false;
+            this.lateralitybox.SelectedIndexChanged += new System.EventHandler(this.lateralitybox_SelectedIndexChanged);
+            // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1023, 547);
+            this.Controls.Add(this.lateralitybox);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.TSiteList);
@@ -135,5 +153,6 @@
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox lateralitybox;
     }
 }

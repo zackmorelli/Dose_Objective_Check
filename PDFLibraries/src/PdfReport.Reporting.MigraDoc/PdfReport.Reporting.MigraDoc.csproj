@@ -67,6 +67,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Internal\FirstPageStuff.cs" />
     <Compile Include="Internal\VolDoseObjectiveList.cs" />
     <Compile Include="Internal\HeaderAndFooter.cs" />
     <Compile Include="Internal\old.cs" />

@@ -11,7 +11,7 @@ namespace PdfReport.Reporting.MigraDoc.Internal
         {
            // MessageBox.Show("Trigger main Header ADD1");
             AddHeader(section, data);    
-            AddFooter(section);
+            AddFooter(section, data);
            // MessageBox.Show("Trigger main Header ADD2");
         }
 
@@ -42,63 +42,76 @@ namespace PdfReport.Reporting.MigraDoc.Internal
             MessageBox.Show(data.Plan.ApprovalStatus);
             */
 
-
-            header.AddFormattedText($"{data.Patient.LastName}, {data.Patient.FirstName} (ID: {data.Patient.Id}) - {data.Patient.Sex} " , TextFormat.Bold);
-            header.AddSpace(42);
             header.AddText($"Generated {DateTime.Now:g}  By: {data.User}");           //first line  ( g is the General Date Short Time Format Specifier)
-            header.AddLineBreak();
-            
-            header.AddText("Birthdate: ");
-            header.AddFormattedText(Format(data.Patient.Birthdate), TextFormat.Bold );    // second line
-            header.AddTab();
-            header.AddText("Primary Oncologist: ");
-            header.AddFormattedText($"{data.Patient.Doctor.Name} ", TextFormat.Bold);
-            header.AddLineBreak();
-
-            header.AddText("Plan: ");
-
-            if (data.Plansum == null)
-            {
-                header.AddFormattedText($"{data.Plan.Id} - {data.Plan.ApprovalStatus}", TextFormat.Bold);    // third line
-            }
-            else
-            {
-                header.AddFormattedText($"{data.Plansum.Id} - {data.Plansum.ApprovalStatus}", TextFormat.Bold);    // third line
-            }
+          
             header.AddTab();
             header.AddText($"{data.Hospital.Name}, {data.Hospital.Address} ");
-            header.AddLineBreak();
-            header.AddSpace(60);
+
+            header.Format.Borders.Bottom = new Border() { Width = "1pt", Color = Colors.DarkGray };
         }
 
        
-        private void AddFooter(Section section)
+        private void AddFooter(Section section, ReportData data)
         {
             var footer = section.Footers.Primary.AddParagraph();
             footer.Format.AddTabStop(Size.GetWidth(section), TabAlignment.Right);
+            footer.Format.Borders.Top = new Border() { Width = "1pt", Color = Colors.DarkGray };
+
+            footer.AddFormattedText($"{data.Patient.LastName}, {data.Patient.FirstName} (ID: {data.Patient.Id}) - {data.Patient.Sex} ", TextFormat.Bold);
+
+            footer.AddLineBreak();
+            if (data.Plansum == null)
+            {
+                footer.AddText("Course: " + data.Plan.Course);
+            }
+            else
+            {
+                footer.AddText("Course: " + data.Plansum.Course);
+            }
+
+            footer.AddLineBreak();
+            if (data.Plansum == null)
+            {
+                footer.AddText("Plan: " + data.Plan.Id + " - " + data.Plan.ApprovalStatus);    
+            }
+            else
+            {
+                footer.AddText("Plansum: " + data.Plansum.Id + " - " + data.Plansum.ApprovalStatus);    
+            }
 
             footer.AddTab();
             footer.AddText("Page ");
             footer.AddPageField();
             footer.AddText(" of ");
             footer.AddNumPagesField();
+
+
+            footer.AddLineBreak();
+            if (data.Plansum == null)
+            {
+                footer.AddText("Plan Created: ");
+                footer.AddText(data.Plan.CreationDateTime.ToString() + " By " + data.Plan.CreationUser.ToString());    
+            }
+            else
+            {
+                footer.AddText("Plansum Created: ");
+                footer.AddText(data.Plansum.CreationDateTime.ToString());    
+            }
+
+            footer.AddLineBreak();
+            
+            if (data.Plansum == null)
+            {
+                footer.AddText("Plan Last Modified: ");
+                footer.AddText(data.Plan.LastModifiedDateTime.ToString() + " By " + data.Plan.LastModifiedUser.ToString());
+            }
+            else
+            {
+                footer.AddText("Plansum Last Modified: ");
+                footer.AddText(data.Plansum.LastModifiedDateTime.ToString() + " By " + data.Plansum.LastModifiedUser.ToString());
+            }
+
+
         }
-
-       
-
-
-
-
-
-
-
-
-
-
-
     }
-
-
-
-
 }
