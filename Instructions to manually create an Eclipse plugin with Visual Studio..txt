@@ -37,5 +37,3 @@ This allows us to make an Eclipse script with the structure of a normal program,
 The drawback of doing this is after the binary plug-in is running, you cannot recompile it or run another plug-in with th same name without closing Eclipse first, because the plugin has been loaded into Eclipses' memory.
 
 
-However, we can use Carlos Andersons' EclipsePlugInRunner to soft test our scripts before testing them in Eclipse.
-More on This later.

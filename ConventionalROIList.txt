@@ -190,7 +190,7 @@ Rectum_D35% <= 7000cGy,Rectum,D35%,<=,7000,cGy,6500,Prostate NRG Prot Arm 1
 Rectum_D2cc [record],Rectum,D2cc,[record],cGy,NA,Pelvis EBRT 25fx + HDR,Gynecological, Pelvis EBRT 15fx + HDR
 Rectum_D25% <= 7500cGy,Rectum,D25%,<=,7500,cGy,7000,Prostate NRG Prot Arm 1
 Rectum_D15% <= 8000cGy,Rectum,D15%,<=,8000,cGy,7500,Prostate NRG Prot Arm 1
-Rectum_D0.01% <= 6000cGy,Rectum,D0.01%,<=,NA,cGy,6000,Prostate Hypo 20fx
+Rectum_Max Pt Dose <= 6000cGy,Rectum,Max Pt Dose,<=,NA,cGy,6000,Prostate Hypo 20fx														
 Rectum_Max Pt Dose < 5000cGy,Rectum,Max Pt Dose,<,5000,cGy,NA,Gynecological
 Skin_3mm_D1cc [record],Skin_3mm,D1cc,[record],cGy,NA,Head & Neck,Brain,Brain Hypofx
 Skin_3mm_Max Pt Dose [record],Skin_3mm,Max Pt Dose,[record],cGy,NA,Head & Neck,Brain,Brain Hypofx
