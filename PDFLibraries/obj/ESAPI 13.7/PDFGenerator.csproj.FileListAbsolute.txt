@@ -1,0 +1,32 @@
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\PdfReport.PDFGenerator.dll.config
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\PdfReport.PDFGenerator.dll
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\PdfReport.PDFGenerator.pdb
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\PdfReport.Reporting.dll
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\PdfReport.Reporting.MigraDoc.dll
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\ROI.dll
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\VMS.TPS.Common.Model.API.dll
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\VMS.TPS.Common.Model.Types.dll
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\MigraDoc.DocumentObjectModel.dll
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\MigraDoc.Rendering.dll
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\PdfSharp.dll
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\VMS.TPS.Common.Calculation.Interface.dll
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\VMS.TPS.Common.Model.Interface.dll
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\PdfSharp.Charting.dll
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\PdfReport.Reporting.pdb
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\PdfReport.Reporting.MigraDoc.pdb
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\ROI.pdb
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\VMS.TPS.Common.Model.API.xml
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\VMS.TPS.Common.Model.Types.xml
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\MigraDoc.DocumentObjectModel.xml
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\MigraDoc.Rendering.xml
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\PdfSharp.xml
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\PdfSharp.Charting.xml
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\de\MigraDoc.DocumentObjectModel.resources.dll
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\de\MigraDoc.Rendering.resources.dll
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\de\PdfSharp.resources.dll
+C:\prog\Auto-Report-Script\PDFLibraries\bin\Debug\de\PdfSharp.Charting.resources.dll
+C:\prog\Auto-Report-Script\PDFLibraries\obj\ESAPI 13.7\PDFGenerator.csprojAssemblyReference.cache
+C:\prog\Auto-Report-Script\PDFLibraries\obj\ESAPI 13.7\PDFGenerator.csproj.CoreCompileInputs.cache
+C:\prog\Auto-Report-Script\PDFLibraries\obj\ESAPI 13.7\PDFGenerator.csproj.CopyComplete
+C:\prog\Auto-Report-Script\PDFLibraries\obj\ESAPI 13.7\PdfReport.PDFGenerator.dll
+C:\prog\Auto-Report-Script\PDFLibraries\obj\ESAPI 13.7\PdfReport.PDFGenerator.pdb

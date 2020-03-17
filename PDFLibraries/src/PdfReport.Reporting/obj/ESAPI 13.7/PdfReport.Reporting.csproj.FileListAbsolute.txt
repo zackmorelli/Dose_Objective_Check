@@ -1,0 +1,9 @@
+C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\bin\Debug\PdfReport.Reporting.dll
+C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\bin\Debug\PdfReport.Reporting.pdb
+C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\bin\Debug\ROI.dll
+C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\bin\Debug\ROI.pdb
+C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\obj\ESAPI 13.7\PdfReport.Reporting.csprojAssemblyReference.cache
+C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\obj\ESAPI 13.7\PdfReport.Reporting.csproj.CoreCompileInputs.cache
+C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\obj\ESAPI 13.7\PdfReport.Reporting.csproj.CopyComplete
+C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\obj\ESAPI 13.7\PdfReport.Reporting.dll
+C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\obj\ESAPI 13.7\PdfReport.Reporting.pdb

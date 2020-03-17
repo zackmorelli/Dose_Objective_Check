@@ -1,0 +1,13 @@
+C:\prog\Auto-Report-Script\AutoChecks\bin\Debug\ContourChecks.dll
+C:\prog\Auto-Report-Script\AutoChecks\bin\Debug\ContourChecks.pdb
+C:\prog\Auto-Report-Script\AutoChecks\bin\Debug\VMS.TPS.Common.Model.API.dll
+C:\prog\Auto-Report-Script\AutoChecks\bin\Debug\VMS.TPS.Common.Model.Types.dll
+C:\prog\Auto-Report-Script\AutoChecks\bin\Debug\VMS.TPS.Common.Calculation.Interface.dll
+C:\prog\Auto-Report-Script\AutoChecks\bin\Debug\VMS.TPS.Common.Model.Interface.dll
+C:\prog\Auto-Report-Script\AutoChecks\bin\Debug\VMS.TPS.Common.Model.API.xml
+C:\prog\Auto-Report-Script\AutoChecks\bin\Debug\VMS.TPS.Common.Model.Types.xml
+C:\prog\Auto-Report-Script\AutoChecks\obj\ESAPI 13.7\AutoChecks.csprojAssemblyReference.cache
+C:\prog\Auto-Report-Script\AutoChecks\obj\ESAPI 13.7\AutoChecks.csproj.CoreCompileInputs.cache
+C:\prog\Auto-Report-Script\AutoChecks\obj\ESAPI 13.7\AutoChecks.csproj.CopyComplete
+C:\prog\Auto-Report-Script\AutoChecks\obj\ESAPI 13.7\ContourChecks.dll
+C:\prog\Auto-Report-Script\AutoChecks\obj\ESAPI 13.7\ContourChecks.pdb
