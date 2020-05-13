@@ -6,7 +6,7 @@ namespace PdfReport.Reporting
     {
         public string Id { get; set; }
         public string Course { get; set; }
-        public string Type { get; set; }
+        public string[] TreatmentSites { get; set; }         // A collection of the department's standarized treatment sites in this plansum.
         public int Fractions { get; set; }
         public string[] Energies { get; set; }
         public Beam[] Beams { get; set; }

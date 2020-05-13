@@ -385,7 +385,7 @@ namespace DoseObjectiveCheck
 
                     OuputBox.AppendText(Environment.NewLine);
                     OuputBox.AppendText("PDF Generation Initiated");
-                    PdfReport.PDFGenerator.Program.PlansumMain(patient, course, Plansum, image3D, Plansum.StructureSet, user, output, dt, dd);
+                    PdfReport.PDFGenerator.Program.PlansumMain(patient, course, Si, Plansum, image3D, Plansum.StructureSet, user, output, dt, dd);
                 }
             }
 
@@ -423,7 +423,7 @@ namespace DoseObjectiveCheck
 
                 OuputBox.AppendText(Environment.NewLine);
                 OuputBox.AppendText("PDF Generation Initiated");
-                PdfReport.PDFGenerator.Program.PlanMain(patient, course, Plan, image3D, Plan.StructureSet, user, output);
+                PdfReport.PDFGenerator.Program.PlanMain(patient, course, TS, Plan, image3D, Plan.StructureSet, user, output);
             }
         }
 

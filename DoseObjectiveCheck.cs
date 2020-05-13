@@ -497,6 +497,14 @@ namespace VMS.TPS
                                 Erika.limval = Convert.ToString(1.10 * dosesum);
                             }
 
+                            if (Erika.ROIName == "Trachea_Bronc_Max Pt Dose <= 105% Rx")
+                            {
+                                Erika.limval = Convert.ToString(1.05 * dosesum);
+                            }
+
+
+
+
                             //  Console.WriteLine("\nDOSE UNIT: {0}", maxdose.Unit.ToString());
                             //   Console.WriteLine("\nDOSE Value: {0}", maxdose.Dose);
                             //  Thread.Sleep(4000);
@@ -1372,7 +1380,7 @@ namespace VMS.TPS
 
             foreach (ROI.ROI Erika in ROIE)
             {
-                
+               // System.Windows.Forms.MessageBox.Show("ROI: " + Erika.ROIName);
                 county++;
                 //  System.Windows.Forms.MessageBox.Show("Plan A ROI iterate " + county);
                 //  Console.WriteLine("\nThe current dose of objective is: {0}", morty.ROIName);
@@ -1391,6 +1399,7 @@ namespace VMS.TPS
                     {
                         continue;
                     }
+
 
                     if (S.Id == Erika.Rstruct)
                     {
@@ -1523,9 +1532,12 @@ namespace VMS.TPS
                                 Erika.limval = Convert.ToString(1.10 * pdose);
                             }
 
-                            //  Console.WriteLine("\nDOSE UNIT: {0}", maxdose.Unit.ToString());
-                            //   Console.WriteLine("\nDOSE Value: {0}", maxdose.Dose);
-                            //  Thread.Sleep(4000);
+                            if (Erika.ROIName == "Trachea_Bronc_Max Pt Dose <= 105 Percent Rx")
+                            {
+                                Erika.limval = Convert.ToString(1.05 * pdose);
+                            }
+
+
 
                             if (Erika.strict == "[record]")
                             {
@@ -1756,15 +1768,6 @@ namespace VMS.TPS
                         {
                             string fstatus = null;
                             // System.Windows.Forms.MessageBox.Show("Plan A V");
-
-
-
-
-
-
-
-
-
 
                             if (Erika.limit == "Volume")
                             {

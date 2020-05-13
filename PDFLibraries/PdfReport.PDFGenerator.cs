@@ -38,13 +38,13 @@ namespace PdfReport.PDFGenerator
 {
      public class Program
     {
-        public static void PlanMain(VMS.TPS.Common.Model.API.Patient patient, VMS.TPS.Common.Model.API.Course course, VMS.TPS.Common.Model.API.PlanSetup plan, VMS.TPS.Common.Model.API.Image image3D, VMS.TPS.Common.Model.API.StructureSet structureSet, VMS.TPS.Common.Model.API.User user, List<ROI.ROI> output)
+        public static void PlanMain(VMS.TPS.Common.Model.API.Patient patient, VMS.TPS.Common.Model.API.Course course, string TS, VMS.TPS.Common.Model.API.PlanSetup plan, VMS.TPS.Common.Model.API.Image image3D, VMS.TPS.Common.Model.API.StructureSet structureSet, VMS.TPS.Common.Model.API.User user, List<ROI.ROI> output)
         {
 
            // MessageBox.Show("Trigger plan main start");
 
             var reportService = new PdfReport.Reporting.MigraDoc.ReportPdf();
-            var reportData = CreateReportDataPlan(patient, course, plan, image3D, structureSet, user, output);
+            var reportData = CreateReportDataPlan(patient, course, TS, plan, image3D, structureSet, user, output);
           //  MessageBox.Show("Trigger main middle plan");
             var path = GetTempPdfPath();
            // MessageBox.Show(path);
@@ -56,13 +56,13 @@ namespace PdfReport.PDFGenerator
         }
 
 
-        public static void PlansumMain(VMS.TPS.Common.Model.API.Patient patient, VMS.TPS.Common.Model.API.Course course, VMS.TPS.Common.Model.API.PlanSum plansum, VMS.TPS.Common.Model.API.Image image3D, VMS.TPS.Common.Model.API.StructureSet structureSet, VMS.TPS.Common.Model.API.User user, List<ROI.ROI> output, int dt, double dd)
+        public static void PlansumMain(VMS.TPS.Common.Model.API.Patient patient, VMS.TPS.Common.Model.API.Course course, string[] Si, VMS.TPS.Common.Model.API.PlanSum plansum, VMS.TPS.Common.Model.API.Image image3D, VMS.TPS.Common.Model.API.StructureSet structureSet, VMS.TPS.Common.Model.API.User user, List<ROI.ROI> output, int dt, double dd)
         {
 
             // MessageBox.Show("Trigger plansum main start");
 
             var reportService = new PdfReport.Reporting.MigraDoc.ReportPdf();
-            var reportData = CreateReportDataPlansum(patient, course, plansum, image3D, structureSet, user, output, dt, dd);
+            var reportData = CreateReportDataPlansum(patient, course, Si, plansum, image3D, structureSet, user, output, dt, dd);
             // MessageBox.Show("Trigger main middle");
             var path = GetTempPdfPath();
             // MessageBox.Show(path);
@@ -74,7 +74,7 @@ namespace PdfReport.PDFGenerator
         }
 
 
-        private static ReportData CreateReportDataPlan(VMS.TPS.Common.Model.API.Patient patient, VMS.TPS.Common.Model.API.Course course, VMS.TPS.Common.Model.API.PlanSetup plan, VMS.TPS.Common.Model.API.Image image3D, VMS.TPS.Common.Model.API.StructureSet structureSet, VMS.TPS.Common.Model.API.User user, List<ROI.ROI> output)
+        private static ReportData CreateReportDataPlan(VMS.TPS.Common.Model.API.Patient patient, VMS.TPS.Common.Model.API.Course course, string TS, VMS.TPS.Common.Model.API.PlanSetup plan, VMS.TPS.Common.Model.API.Image image3D, VMS.TPS.Common.Model.API.StructureSet structureSet, VMS.TPS.Common.Model.API.User user, List<ROI.ROI> output)
         {
 
             //  MessageBox.Show("Trigger report data plan");
@@ -134,7 +134,8 @@ namespace PdfReport.PDFGenerator
                     CreationDateTime = plan.CreationDateTime,
                     CreationUser = plan.CreationUserName,
                     LastModifiedDateTime = plan.HistoryDateTime,
-                    LastModifiedUser = plan.HistoryUserName
+                    LastModifiedUser = plan.HistoryUserName,
+                    TreatmentSite = TS
 
                     //  Type = Enum.GetName(typeof(PlanType),
 
@@ -146,7 +147,7 @@ namespace PdfReport.PDFGenerator
         }
 
 
-        private static ReportData CreateReportDataPlansum(VMS.TPS.Common.Model.API.Patient patient, VMS.TPS.Common.Model.API.Course course, VMS.TPS.Common.Model.API.PlanSum plansum, VMS.TPS.Common.Model.API.Image image3D, VMS.TPS.Common.Model.API.StructureSet structureSet, VMS.TPS.Common.Model.API.User user, List<ROI.ROI> output, int dt, double dd)
+        private static ReportData CreateReportDataPlansum(VMS.TPS.Common.Model.API.Patient patient, VMS.TPS.Common.Model.API.Course course, string[] Si, VMS.TPS.Common.Model.API.PlanSum plansum, VMS.TPS.Common.Model.API.Image image3D, VMS.TPS.Common.Model.API.StructureSet structureSet, VMS.TPS.Common.Model.API.User user, List<ROI.ROI> output, int dt, double dd)
         {
 
             //  MessageBox.Show("Trigger report data sum");
@@ -202,7 +203,6 @@ namespace PdfReport.PDFGenerator
 
             }
 
-
             return new ReportData
             {
 
@@ -232,13 +232,13 @@ namespace PdfReport.PDFGenerator
 
                 Plansum = new PdfReport.Reporting.Plansum
                 {
-
                     Id = plansum.Id,
                     Course = course.Id,
                     TotalPrescribedDose = dosesum,   // in cGy
                     CreationDateTime = plansum.CreationDateTime,
                     LastModifiedDateTime = plansum.HistoryDateTime,
-                    LastModifiedUser = plansum.HistoryUserName
+                    LastModifiedUser = plansum.HistoryUserName,
+                    TreatmentSites = Si
 
 
                     //  Type = Enum.GetName(typeof(PlanType),

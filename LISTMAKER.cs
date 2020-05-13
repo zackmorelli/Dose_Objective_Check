@@ -129,6 +129,7 @@ namespace DoseObjectiveCheck
                                 }
                             }
 
+                            
                             ROIL.Add(new ROI.ROI { ROIName = tname, Rstruct = tstruct, ROIId = tid, limit = tlimit, limval = tlimval, strict = tstrict, limunit = tlimunit, status = tstatus, goal = tgoal, treatsite = ttreatsite, applystatus = true});
 
                           //  Console.WriteLine("Linecount is: {0}", linecount);
@@ -218,8 +219,8 @@ namespace DoseObjectiveCheck
                                 }
                             }
 
-                            ROIL.Add(new ROI.ROI { ROIName = tname, Rstruct = tstruct, ROIId = tid, limit = tlimit, limval = tlimval, strict = tstrict, limunit = tlimunit, status = tstatus, goal = tgoal, treatsite = ttreatsite, applystatus = true });
 
+                            ROIL.Add(new ROI.ROI { ROIName = tname, Rstruct = tstruct, ROIId = tid, limit = tlimit, limval = tlimval, strict = tstrict, limunit = tlimunit, status = tstatus, goal = tgoal, treatsite = ttreatsite, applystatus = true });
 
                             //  Console.WriteLine("Linecount is: {0}", linecount);
                             // Thread.Sleep(3000);
@@ -251,12 +252,18 @@ namespace DoseObjectiveCheck
 
                     if (Tsite != null)
                     {
+
                         if (str == Tsite)
                         {
+
+                           // MessageBox.Show("Tsite: " + Tsite);
+                          //  MessageBox.Show("ROI Name " + roi.ROIName);
+
                             // snippet to deal with breast plan laterality is below
 
                             // if Right, then Lung_R is Ipsilateral and Lung_L is Contralateral
                             // if Left, then Lung_L is Ipsilateral and Lung_R is Contralateral
+
 
                             if (Tsite == "Breast 23+fx" || Tsite == "Breast Hypofx")
                             {
@@ -264,7 +271,7 @@ namespace DoseObjectiveCheck
                                 {
                                     if(roi.ROIName.Contains("Lung_L") & roi.ROIName.Contains("Ipsilateral"))
                                     {
-                                        continue;
+                                        continue;    // continue means nothing gets added to the ROIE list at the end...
                                     }
                                     else if(roi.ROIName.Contains("Lung_R") & roi.ROIName.Contains("Contralateral"))
                                     {
@@ -284,7 +291,7 @@ namespace DoseObjectiveCheck
                                 }
                             }
 
-                            // MessageBox.Show("Add Tsite");
+                           // MessageBox.Show("Roi name befor list add: " + roi.ROIName);
                             ROIE.Add(new ROI.ROI { ROIName = roi.ROIName, Rstruct = roi.Rstruct, ROIId = roi.ROIId, limit = roi.limit, limval = roi.limval, strict = roi.strict, limunit = roi.limunit, goal = roi.goal, applystatus = true });
                             //  Console.WriteLine("TrigAft____ROIEadd");
                             //  Thread.Sleep(4000);

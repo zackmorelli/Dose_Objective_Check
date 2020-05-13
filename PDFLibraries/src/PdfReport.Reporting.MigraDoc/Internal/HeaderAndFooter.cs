@@ -85,6 +85,15 @@ namespace PdfReport.Reporting.MigraDoc.Internal
             footer.AddText(" of ");
             footer.AddNumPagesField();
 
+            footer.AddLineBreak();
+            if (data.Plansum == null)
+            {
+                footer.AddText("Treatment Site: " + data.Plan.TreatmentSite);
+            }
+            else
+            {
+                footer.AddText("Treatment Site(s): " + data.Plansum.TreatmentSites);
+            }
 
             footer.AddLineBreak();
             if (data.Plansum == null)

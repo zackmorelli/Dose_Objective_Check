@@ -3,6 +3,7 @@ using MigraDoc.DocumentObjectModel.Tables;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Linq;
 
 
 namespace PdfReport.Reporting.MigraDoc.Internal
@@ -42,7 +43,7 @@ namespace PdfReport.Reporting.MigraDoc.Internal
             //  str.Insert(28, patient.FirstName);
             //  str.Insert(36, plan.Id);
 
-            AddTableTitle(section, "DOSE OBJECTIVE REPORT (Total Prescribed Dose: " + plansum.TotalPrescribedDose + " cGy )");
+            AddTableTitle(section, "DOSE OBJECTIVE REPORT " + plansum.TreatmentSites[1] + " (Total Prescribed Dose: " + plansum.TotalPrescribedDose + " cGy )");
             AddDoseListTable(section, PROI);
         }
 
@@ -54,7 +55,7 @@ namespace PdfReport.Reporting.MigraDoc.Internal
           //  str.Insert(28, patient.FirstName);
           //  str.Insert(36, plan.Id);
 
-            AddTableTitle(section, "DOSE OBJECTIVE REPORT (Total Prescribed Dose: " + plan.TotalPrescribedDose.ToString() + " cGy )");
+            AddTableTitle(section, "DOSE OBJECTIVE REPORT " + plan.TreatmentSite + " (Total Prescribed Dose: " + plan.TotalPrescribedDose.ToString() + " cGy )");
             AddDoseListTable(section, PROI);
         }
 
