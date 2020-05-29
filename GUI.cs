@@ -437,30 +437,36 @@ namespace DoseObjectiveCheck
             foreach (string str in sumnames)
             {
                 c++;
+
                 if (pl == str)
                 {
                     LOCK = true;
 
                     string sid = null;
 
-                    sid = Dialog1();
+                    sid = PlansumTotalDoseDialog();
 
-                    if (sid == "Sum of Rx dose of the constituent plans")
+                    if (sid == "Sum of the Rx doses of the constituent plans (Normal Plansum)")
                     {
                         // add Rx doses of the two plans in the plansum
                         dt = 1;
                     }
-                    else if (sid == "Rx dose of one of the constituent plans")
+                    else if (sid == "The Rx dose of the plans (assuming they have the same Rx, \"fake plansum\")")
                     {
                         //use the Rx dose of one of the plans
                         dt = 2;
                     }
-                    else if (sid == "Enter your own dose")
+                    else if (sid == "Enter your own dose (Use this if you want to use the Rx dose of one of the constituent plans, but they are not the same. You will have to enter the dose in.")
                     {
                         //Enter your own dose
                         dt = 3;
                         dd = Convert.ToDouble(Dialog());
                     }
+                  //  else if (sid == "The Rx dose of one plan (assuming they have different Rx)")
+                 //   {
+                 //       dd = PlansumTotalDoseChoice4Dialog(sumnames);
+                 //       dt = 4;
+                 //   }
 
                     OuputBox.AppendText(Environment.NewLine);
                     OuputBox.AppendText("Plansum Dose Type Selected: " + sid);
@@ -664,7 +670,34 @@ namespace DoseObjectiveCheck
             EXECUTE(laterality, TS, TSA, patient, course, image3D, user, Plansums, Plans);
         }
 
-        public static string Dialog1()
+        public static string PlansumTotalDoseDialog()
+        {
+            Form Dialog = new Form()
+            {
+                Width = 950,
+                Height = 450,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                Text = "Plansum Dose",
+                StartPosition = FormStartPosition.CenterScreen,
+                Font = new System.Drawing.Font("Goudy Old Style", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)))
+            };
+            Label txtlab = new Label() { Left = 10, Top = 15, Width = 320, Height = 140, Text = "How do you want the Total Dose of this Plansum to be calculated?" };
+            Button confirm = new Button() { Text = "Ok", Left = 120, Width = 100, Top = 500, DialogResult = DialogResult.OK };
+            ListBox opt = new ListBox() { Left = 30, Top = 90, Width = 800};
+            opt.Items.AddRange(new object[] {
+                     "Sum of the Rx dose of the constituent plans (Normal Plansum)",
+                     "The Rx dose of the plans (assuming they have the same Rx, \"fake plansum\")",
+                     "Enter your own dose (Use this if you want to use the Rx dose of one of the constituent plans, but they are not the same.You will have to enter the dose in."});
+            confirm.Click += (sender, e) => { Dialog.Close(); };
+            Dialog.Controls.Add(opt);
+            Dialog.Controls.Add(confirm);
+            Dialog.Controls.Add(txtlab);
+            Dialog.AcceptButton = confirm;
+
+            return Dialog.ShowDialog() == DialogResult.OK ? (string)opt.SelectedItem : "";
+        }
+
+        public static string PlansumTotalDoseChoice4Dialog(List<string> sumnames)
         {
             Form Dialog = new Form()
             {
@@ -675,13 +708,15 @@ namespace DoseObjectiveCheck
                 StartPosition = FormStartPosition.CenterScreen,
                 Font = new System.Drawing.Font("Goudy Old Style", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)))
             };
-            Label txtlab = new Label() { Left = 10, Top = 15, Width = 320, Height = 140, Text = "How do you want the Total Dose of this Plansum to be calculated?" };
+            Label txtlab = new Label() { Left = 10, Top = 15, Width = 320, Height = 140, Text = "Please choose which plan you want to use the Rx dose of to evaluate the dose objectives" };
             Button confirm = new Button() { Text = "Ok", Left = 120, Width = 100, Top = 500, DialogResult = DialogResult.OK };
             ListBox opt = new ListBox() { Left = 30, Top = 90, Width = 450 };
             opt.Items.AddRange(new object[] {
-                     "Sum of Rx dose of the constituent plans",
-                     "Rx dose of one of the constituent plans",
-                     "Enter your own dose"});
+                        sumnames[0]
+
+
+
+                                            });
             confirm.Click += (sender, e) => { Dialog.Close(); };
             Dialog.Controls.Add(opt);
             Dialog.Controls.Add(confirm);
@@ -690,6 +725,11 @@ namespace DoseObjectiveCheck
 
             return Dialog.ShowDialog() == DialogResult.OK ? (string)opt.SelectedItem : "";
         }
+
+
+
+
+
 
         public static string Dialog()
         {
@@ -702,7 +742,7 @@ namespace DoseObjectiveCheck
                 StartPosition = FormStartPosition.CenterScreen,
                 Font = new System.Drawing.Font("Goudy Old Style", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)))
             };
-            Label txtlab = new Label() { Left = 10, Top = 15, Width = 320, Height = 140, Text = "Please enter the dose (in cGy) that you would like to use as the total dose of the PlanSum" };
+            Label txtlab = new Label() { Left = 10, Top = 15, Width = 320, Height = 140, Text = "Please enter the dose (in cGy) that you would like to use as the total dose of the PlanSum." };
             TextBox txtb = new TextBox() { Left = 20, Top = 80, Width = 200 };
             Button confirm = new Button() { Text = "Ok", Left = 120, Width = 100, Top = 110, DialogResult = DialogResult.OK };
             confirm.Click += (sender, e) => { Dialog.Close(); };
@@ -713,6 +753,7 @@ namespace DoseObjectiveCheck
 
             return Dialog.ShowDialog() == DialogResult.OK ? txtb.Text : "";
         }
+
     }
 }
 

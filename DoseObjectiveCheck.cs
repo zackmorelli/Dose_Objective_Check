@@ -363,8 +363,10 @@ namespace VMS.TPS
                 foreach (Structure S in structureSet.Structures)        // iterates through all the structures in the structureset of the current Plan
                 {
                     double structvol = S.Volume;
-                    if (structvol < 0.03)
+
+                    if (S.IsEmpty == true || S.Volume < 0.0)
                     {
+                        // MessageBox.Show("The structure " + S.Id + " has been omitted from the DVH analysis because it is not contoured.");
                         continue;
                     }
 
@@ -1121,6 +1123,13 @@ namespace VMS.TPS
                                 //  Console.WriteLine("\n ABS DOSE: {0}", qdose.Dose);
                                 //  Thread.Sleep(4000);
 
+                                // special case for dynamic Body-PTV D1cc objective (Liver only)
+                                if (Erika.ROIName == "Body-PTV_D1cc <= 115%Rx")
+                                {
+                                    Erika.limval = Convert.ToString(1.15 * dosesum);
+                                    Erika.goal = Convert.ToString(1.10 * dosesum);
+                                }
+
                             }
                             else if (Erika.limit.EndsWith("%"))
                             {
@@ -1394,9 +1403,10 @@ namespace VMS.TPS
                 {
                     double structvol = S.Volume;
 
-                   //  System.Windows.Forms.MessageBox.Show("Plan A struct iterate");
-                    if (structvol < 0.03)
+                    //  System.Windows.Forms.MessageBox.Show("Plan A struct iterate");
+                    if (S.IsEmpty == true || S.Volume < 0.0)
                     {
+                       // MessageBox.Show("The structure " + S.Id + " has been omitted from the DVH analysis because it is not contoured.");
                         continue;
                     }
 
@@ -2108,9 +2118,17 @@ namespace VMS.TPS
                                 qdose = Plan.GetDoseAtVolume(S, Convert.ToDouble(q2str), VolumePresentation.AbsoluteCm3, DoseValuePresentation.Absolute);
 
                                 //  Console.WriteLine("\n ABS DOSE: {0}", qdose.Dose);
-                               // System.Windows.Forms.MessageBox.Show("qdose is: " + qdose);
+                                // System.Windows.Forms.MessageBox.Show("qdose is: " + qdose);
 
                                 //  Thread.Sleep(4000);
+
+                                // special case for dynamic Body-PTV D1cc objective (Liver only)
+                                if (Erika.ROIName == "Body-PTV_D1cc <= 115%Rx")
+                                {
+                                    Erika.limval = Convert.ToString(1.15 * pdose);
+                                    Erika.goal = Convert.ToString(1.10 * pdose);
+                                }
+
 
                             }
                             else if (Erika.limit.EndsWith("%"))
