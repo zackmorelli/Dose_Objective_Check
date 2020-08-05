@@ -36,3 +36,19 @@ C:\prog\Auto-Report-Script\obj\ESAPI 13.7\DoseObjectiveCheck.csproj.CoreCompileI
 C:\prog\Auto-Report-Script\obj\ESAPI 13.7\DoseObjectiveCheck.csproj.CopyComplete
 C:\prog\Auto-Report-Script\obj\ESAPI 13.7\DoseObjectiveCheck.esapi.dll
 C:\prog\Auto-Report-Script\obj\ESAPI 13.7\DoseObjectiveCheck.esapi.pdb
+C:\prog\Auto-Report-Script\obj\ESAPI 13.7\Auto_Report_Script.Properties.Resources.resources
+C:\prog\Auto-Report-Script\bin\Debug\DoseObjectiveCheck.esapi.dll.config
+C:\prog\Auto-Report-Script\bin\Debug\ARIA_QUERY.dll
+C:\prog\Auto-Report-Script\bin\Debug\EntityFramework.dll
+C:\prog\Auto-Report-Script\bin\Debug\EntityFramework.SqlServer.dll
+C:\prog\Auto-Report-Script\bin\Debug\ARIA_QUERY.pdb
+C:\prog\Auto-Report-Script\bin\Debug\ARIA_QUERY.dll.config
+C:\prog\Auto-Report-Script\bin\Debug\EntityFramework.xml
+C:\prog\Auto-Report-Script\bin\Debug\EntityFramework.SqlServer.xml
+C:\prog\Auto-Report-Script\bin\Debug\packages\fo-dicom.Desktop.4.0.5\build\net45\Dicom.Native64.dll
+C:\prog\Auto-Report-Script\bin\Debug\Dicom.Core.dll
+C:\prog\Auto-Report-Script\bin\Debug\Dicom.Native64.dll
+C:\prog\Auto-Report-Script\bin\Debug\Dicom.Core.pdb
+C:\prog\Auto-Report-Script\bin\Debug\Dicom.Core.xml
+C:\prog\Auto-Report-Script\bin\Debug\VMS.TPS.Common.Model.APIExtensions.dll
+C:\prog\Auto-Report-Script\bin\Debug\geometry3Sharp.dll

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -7,7 +8,6 @@ using System.Windows.Forms;
 using System.Threading;
 using VMS.TPS.Common.Model.API;
 using VMS.TPS.Common.Model.Types;
-using GUI;
 using ROI;
 using DoseObjectiveCheck;
 
@@ -103,15 +103,16 @@ namespace VMS.TPS
             treatsite.Add(new TreatSite() { DisplayName = "Gynecological", Name = "Gynecological", Id = 7 });
             treatsite.Add(new TreatSite() { DisplayName = "Head & Neck", Name = "Head&Neck", Id = 8 });
             treatsite.Add(new TreatSite() { DisplayName = "Lung", Name = "Lung", Id = 9 });
-            treatsite.Add(new TreatSite() { DisplayName = "Pelvis (Other)", Name = "Pelvis(Other)", Id = 10 });
-            treatsite.Add(new TreatSite() { DisplayName = "Pelvis EBRT 25fx + HDR", Name = "PelivsEBRT25fx+HDR", Id = 11 });
-            treatsite.Add(new TreatSite() { DisplayName = "Pelvis EBRT 15fx + HDR", Name = "PelivsEBRT15fx+HDR", Id = 12 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate", Name = "Prostate", Id = 13 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate Bed", Name = "ProstateBed", Id = 14 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 20fx", Name = "ProstateHypo20fx", Id = 15 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 28fx", Name = "ProstateHypo28fx", Id = 16 });
-            treatsite.Add(new TreatSite() { DisplayName = "Thorax (Other)", Name = "Thorax(Other)", Id = 17 });
-            treatsite.Add(new TreatSite() { DisplayName = "Prostate NRG Prot Arm 1", Name = "ProstateNRGProtArm1", Id = 18 });
+            treatsite.Add(new TreatSite() { DisplayName = "Lung Hypofx", Name = "LungHypofx", Id = 10 });
+            treatsite.Add(new TreatSite() { DisplayName = "Pelvis (Other)", Name = "Pelvis(Other)", Id = 11 });
+            treatsite.Add(new TreatSite() { DisplayName = "Pelvis EBRT 25fx + HDR", Name = "PelivsEBRT25fx+HDR", Id = 12 });
+            treatsite.Add(new TreatSite() { DisplayName = "Pelvis EBRT 15fx + HDR", Name = "PelivsEBRT15fx+HDR", Id = 13 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate", Name = "Prostate", Id = 14 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate Bed", Name = "ProstateBed", Id = 15 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 20fx", Name = "ProstateHypo20fx", Id = 16 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate Hypo 28fx", Name = "ProstateHypo28fx", Id = 17 });
+            treatsite.Add(new TreatSite() { DisplayName = "Thorax (Other)", Name = "Thorax(Other)", Id = 18 });
+            treatsite.Add(new TreatSite() { DisplayName = "Prostate NRG Prot Arm 1", Name = "ProstateNRGProtArm1", Id = 19 });
 
             return treatsite;
         }
@@ -311,7 +312,7 @@ namespace VMS.TPS
         }
 
 
-        public static List<ROI.ROI> PlansumAnalysis(string laterality, string[] Si, string ptype, Patient patient, Course course, StructureSet structureSet, PlanSum Plansum, int dt, double dd, TextBox OuputBox, string gyntype)
+        public static List<ROI.ROI> PlansumAnalysis(string laterality, string[] Si, string ptype, Patient patient, Course course, StructureSet structureSet, PlanSum Plansum, int dt, double dd, TextBox OuputBox, string gyntype, ProgressBar pBar)
         {
 
             List<ROI.ROI> ROIE = new List<ROI.ROI>();     // Expected ROI made from text file list
@@ -323,6 +324,13 @@ namespace VMS.TPS
             // ROI.ROI is its own custom class
             ROIE = LISTMAKER.Listmaker(Ttype, Tsite, Si, laterality);          // separate class with LISTMAKER function which generates a list of ROIs for the given treatment type and site
 
+            pBar.Style = ProgressBarStyle.Continuous;
+            pBar.Visible = true;
+            pBar.Minimum = 0;
+            pBar.Value = 0;
+            pBar.Maximum = ROIE.Count;
+            pBar.Step = 1;
+
             double dosesum = 0.0;
             string dunit = null;
 
@@ -331,8 +339,8 @@ namespace VMS.TPS
 
                 foreach (PlanSetup aplan in Plansum.PlanSetups)
                 {
-                    dosesum += aplan.TotalPrescribedDose.Dose;
-                    dunit = aplan.TotalPrescribedDose.UnitAsString;
+                    dosesum += aplan.TotalDose.Dose;
+                    dunit = aplan.TotalDose.UnitAsString;
                 }
             }
             else if (dt == 2)
@@ -340,8 +348,8 @@ namespace VMS.TPS
                 IEnumerator lk = Plansum.PlanSetups.GetEnumerator();
                 lk.MoveNext();
                 PlanSetup PS = (PlanSetup)lk.Current;
-                dosesum = PS.TotalPrescribedDose.Dose;
-                dunit = PS.TotalPrescribedDose.UnitAsString;
+                dosesum = PS.TotalDose.Dose;
+                dunit = PS.TotalDose.UnitAsString;
             }
             else if (dt == 3)
             {
@@ -504,7 +512,10 @@ namespace VMS.TPS
                                 Erika.limval = Convert.ToString(1.05 * dosesum);
                             }
 
-
+                            if (Erika.limval == "NA")
+                            {
+                                Erika.limval = "-1";
+                            }
 
 
                             //  Console.WriteLine("\nDOSE UNIT: {0}", maxdose.Unit.ToString());
@@ -519,17 +530,31 @@ namespace VMS.TPS
                             {
                                 if (Erika.goal != "NA")            // meaning there is a goal set
                                 {
-                                    if (maxdose < Convert.ToDouble(Erika.goal))
+                                    if (Erika.limval == "-1")
                                     {
-                                        kstatus = "PASS";
-                                    }
-                                    else if (maxdose < Convert.ToDouble(Erika.limval))
-                                    {
-                                        kstatus = "REVIEW - GOAL";
+                                        if (maxdose < Convert.ToDouble(Erika.goal))
+                                        {
+                                            kstatus = "PASS";
+                                        }
+                                        else 
+                                        {
+                                            kstatus = "REVIEW - GOAL";
+                                        }
                                     }
                                     else
                                     {
-                                        kstatus = "REVIEW";
+                                        if (maxdose < Convert.ToDouble(Erika.goal))
+                                        {
+                                            kstatus = "PASS";
+                                        }
+                                        else if (maxdose < Convert.ToDouble(Erika.limval))
+                                        {
+                                            kstatus = "REVIEW - GOAL";
+                                        }
+                                        else
+                                        {
+                                            kstatus = "REVIEW";
+                                        }
                                     }
                                 }
                                 else
@@ -1349,6 +1374,7 @@ namespace VMS.TPS
                         }  // ends the D loop
                     }   // ends the if structure match loop
                 }   // ends structure iterating through current ROIE loop
+                pBar.PerformStep();
             }// Ends ROIE iterator loop
 
 
@@ -1371,14 +1397,25 @@ namespace VMS.TPS
             // ROI.ROI is its own custom class
             ROIE = LISTMAKER.Listmaker(Ttype, Tsite, Si, laterality);          // separate class with LISTMAKER function which generates a list of ROIs for the given treatment type and site
 
-           // MessageBox.Show(Tsite + " dose objective list created successfully.");
-          //  MessageBox.Show("testr");
-           // MessageBox.Show("struct -r " + structureSet.Id);
+           // using (StreamWriter fs = new StreamWriter(@"C:\Users\ztm00\Desktop\Reports\ROIE.txt"))
+           // {
+          //      foreach (ROI.ROI t in ROIE)
+          //      {
+          //          fs.WriteLine(t);
+          //      }
+          //  }
+
+
+
+
+            // MessageBox.Show(Tsite + " dose objective list created successfully.");
+            //  MessageBox.Show("testr");
+            // MessageBox.Show("struct -r " + structureSet.Id);
             // Console.WriteLine("\nThe {0} dose objective list contains {1} unique dose objectives.", Tsite, ROIE.Count);
             // Thread.Sleep(2000);
             // This part of code below gets DVH data from Eclipse. The way it works is different for different limit types, like MaxPtDose, V80, D1cc. etc.
 
-            double pdose = Plan.TotalPrescribedDose.Dose;       // prescribed dose of the Plan
+            double pdose = Plan.TotalDose.Dose;       // prescribed dose of the Plan
 
             // Console.WriteLine("\nPRESCRIBED DOSE: {0} {1}", pdose, Plan.TotalPrescribedDose.Unit.ToString());
             // Thread.Sleep(2000);
@@ -1414,7 +1451,7 @@ namespace VMS.TPS
                     if (S.Id == Erika.Rstruct)
                     {
 
-                        // System.Windows.Forms.MessageBox.Show("Plan A struct match");
+                       //  System.Windows.Forms.MessageBox.Show("Struct match: " + Erika.Rstruct + " Name: " + Erika.ROIName);
                         // Console.WriteLine("\nThe current structure from the Plan is: {0}", S.Id);
                         //  Console.WriteLine("\nThe current dose of objective has the structure tag: {0}", morty.Rstruct);
                         //  Console.WriteLine("\n\n{0} - STRUCTURE VOLUME: {1}", S.Id, S.Volume);
@@ -1547,6 +1584,12 @@ namespace VMS.TPS
                                 Erika.limval = Convert.ToString(1.05 * pdose);
                             }
 
+                            if (Erika.limval == "NA")
+                            {
+                                Erika.limval = "-1";
+                               // System.Windows.Forms.MessageBox.Show("Limval NA Trig");
+
+                            }
 
 
                             if (Erika.strict == "[record]")
@@ -1557,17 +1600,31 @@ namespace VMS.TPS
                             {
                                 if (Erika.goal != "NA")            // meaning there is a goal set
                                 {
-                                    if (maxdose < Convert.ToDouble(Erika.goal))
+                                    if (Erika.limval == "-1")
                                     {
-                                        kstatus = "PASS";
-                                    }
-                                    else if (maxdose < Convert.ToDouble(Erika.limval))
-                                    {
-                                        kstatus = "REVIEW - GOAL";
+                                        if (maxdose < Convert.ToDouble(Erika.goal))
+                                        {
+                                            kstatus = "PASS";
+                                        }
+                                        else
+                                        {
+                                            kstatus = "REVIEW - GOAL";
+                                        }
                                     }
                                     else
                                     {
-                                        kstatus = "REVIEW";
+                                        if (maxdose < Convert.ToDouble(Erika.goal))
+                                        {
+                                            kstatus = "PASS";
+                                        }
+                                        else if (maxdose < Convert.ToDouble(Erika.limval))
+                                        {
+                                            kstatus = "REVIEW - GOAL";
+                                        }
+                                        else
+                                        {
+                                            kstatus = "REVIEW";
+                                        }
                                     }
                                 }
                                 else
@@ -1613,7 +1670,7 @@ namespace VMS.TPS
                             }
 
                             ROIA.Add(new ROI.ROI { ROIName = Erika.ROIName, limdose = Convert.ToDouble(Erika.limval), strict = Erika.strict, goal = Erika.goal, actdose = maxdose, status = kstatus, structvol = structvol, type = "NV", limunit = Erika.limunit, applystatus = Erika.applystatus });
-                            // System.Windows.Forms.MessageBox.Show("Scorpia 1");
+                            
                         }
                         else if (Erika.limit == "Mean Dose")        // Mean dose
                         {

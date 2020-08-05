@@ -36,6 +36,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.lateralitybox = new System.Windows.Forms.ListBox();
+            this.pBar = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // Plan_List
@@ -124,11 +125,21 @@
             this.lateralitybox.Visible = false;
             this.lateralitybox.SelectedIndexChanged += new System.EventHandler(this.lateralitybox_SelectedIndexChanged);
             // 
+            // pBar
+            // 
+            this.pBar.Location = new System.Drawing.Point(438, 520);
+            this.pBar.Name = "pBar";
+            this.pBar.Size = new System.Drawing.Size(567, 23);
+            this.pBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.pBar.TabIndex = 11;
+            this.pBar.Visible = false;
+            // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1023, 547);
+            this.ClientSize = new System.Drawing.Size(1013, 547);
+            this.Controls.Add(this.pBar);
             this.Controls.Add(this.lateralitybox);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.button1);
@@ -154,5 +165,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.ListBox lateralitybox;
+        private System.Windows.Forms.ProgressBar pBar;
     }
 }

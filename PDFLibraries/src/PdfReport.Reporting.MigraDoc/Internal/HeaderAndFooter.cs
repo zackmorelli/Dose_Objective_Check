@@ -76,7 +76,14 @@ namespace PdfReport.Reporting.MigraDoc.Internal
             }
             else
             {
-                footer.AddText("Plansum: " + data.Plansum.Id + " - " + data.Plansum.ApprovalStatus);    
+                if (data.Plansum.ApprovalStatus == "")
+                {
+                    footer.AddText("Plansum: " + data.Plansum.Id);
+                }
+                else
+                {
+                    footer.AddText("Plansum: " + data.Plansum.Id + " - " + data.Plansum.ApprovalStatus);
+                }
             }
 
             footer.AddTab();
@@ -92,7 +99,7 @@ namespace PdfReport.Reporting.MigraDoc.Internal
             }
             else
             {
-                footer.AddText("Treatment Site(s): " + data.Plansum.TreatmentSites);
+                footer.AddText("Treatment Site(s): " + data.Plansum.TreatmentSites[0]);
             }
 
             footer.AddLineBreak();

@@ -18,8 +18,6 @@ namespace PdfReport.Reporting.MigraDoc.Internal
 
             stuff.AddTab();
 
-
-
             if (data.Plansum == null)
             {
                 stuff.AddText("Plan: ");
@@ -28,7 +26,15 @@ namespace PdfReport.Reporting.MigraDoc.Internal
             else
             {
                 stuff.AddText("Plansum: ");
-                stuff.AddFormattedText("Plansum: " + data.Plansum.Id + " - " + data.Plansum.ApprovalStatus, TextFormat.Bold);
+
+                if (data.Plansum.ApprovalStatus == "")
+                {
+                    stuff.AddFormattedText(data.Plansum.Id);
+                }
+                else
+                {
+                    stuff.AddFormattedText(data.Plansum.Id + " - " + data.Plansum.ApprovalStatus, TextFormat.Bold);
+                }
             }
 
             stuff.AddLineBreak();

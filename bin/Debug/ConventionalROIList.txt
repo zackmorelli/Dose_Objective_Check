@@ -209,6 +209,7 @@ Rectum_D25% <= 7500cGy,Rectum,D25%,<=,7500,cGy,7000,Prostate NRG Prot Arm 1
 Rectum_D15% <= 8000cGy,Rectum,D15%,<=,8000,cGy,7500,Prostate NRG Prot Arm 1
 Rectum_Max Pt Dose <= 6000cGy,Rectum,Max Pt Dose,<=,NA,cGy,6000,Prostate Hypo 20fx														
 Rectum_Max Pt Dose < 5000cGy,Rectum,Max Pt Dose,<,5000,cGy,NA,Gynecological
+Ribs_V49 <= 5cc,Ribs,V49,<=,5,cc,NA,Lung Hypofx
 Skin_3mm_D1cc [record],Skin_3mm,D1cc,[record],cGy,NA,Head & Neck,Brain,Brain Hypofx
 Skin_3mm_Max Pt Dose [record],Skin_3mm,Max Pt Dose,[record],cGy,NA,Head & Neck,Brain,Brain Hypofx
 Skin_4mm_D1cc [record],Skin_4mm,D1cc,[record],cGy,NA,Brain,Brain Hypofx
@@ -243,11 +244,12 @@ Stomach_V40 <= 5cc,Stomach,V40,<=,5,cc,NA,Lung Hypofx
 Submandibular_L_Mean Dose <= 3900cGy,Submandibular_L,Mean Dose,<=,3900,cGy,3000,Head & Neck
 Submandibular_R_Mean Dose <= 3900cGy,Submandibular_R,Mean Dose,<=,3900,cGy,3000,Head & Neck
 Thyroid [when outside Tx vol]_Max Pt Dose <= 2000cGy,Thyroid,Max Pt Dose,<=,2000,cGy,NA,Head & Neck
+Trachea_Bronc_V40 <= 5cc,Trachea_Bronc,V40,<=,5,cc,NA,Lung Hypofx
 Urethra_D30% [record],Urethra,D30%,[record],cGy,NA,Pelvis EBRT 25fx + HDR,Pelvis EBRT 15fx + HDR
 Urethra_D10% [record],Urethra,D10%,[record],cGy,NA,Pelvis EBRT 25fx + HDR,Pelvis EBRT 15fx + HDR
 Urethra_D0.1cc [record],Urethra,D0.1cc,[record],cGy,NA,Pelvis EBRT 25fx + HDR,Pelvis EBRT 15fx + HDR
 END
-updated 5/29/2020 ZM - updated with Lung Hypofx objectives
+updated 7/06/2020 ZM - added additional two objectives for Lung Hypofx
 
 
 The body max point dose is not a specific dose objective; it is included at the top here so that the script reports it to make it easier to fill out the Global max dose box in the TPDS.

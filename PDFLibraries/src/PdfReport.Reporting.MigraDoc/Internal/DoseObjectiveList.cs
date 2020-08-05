@@ -43,7 +43,7 @@ namespace PdfReport.Reporting.MigraDoc.Internal
             //  str.Insert(28, patient.FirstName);
             //  str.Insert(36, plan.Id);
 
-            AddTableTitle(section, "DOSE OBJECTIVE REPORT " + plansum.TreatmentSites[1] + " (Total Prescribed Dose: " + plansum.TotalPrescribedDose + " cGy )");
+            AddTableTitle(section, "DOSE OBJECTIVE REPORT " + plansum.TreatmentSites[0] + " (Total Prescribed Dose: " + plansum.TotalPrescribedDose + " cGy )");
             AddDoseListTable(section, PROI);
         }
 

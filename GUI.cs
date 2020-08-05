@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 using System.Linq;
 using System.IO;
 using System.Text;
@@ -12,6 +15,8 @@ using System.Windows.Forms;
 using VMS.TPS.Common.Model.API;
 using VMS.TPS.Common.Model.Types;
 using VMS.TPS;
+using g3;
+
 
 /*
     Lahey RadOnc Dose Objective Checker - GUI
@@ -367,7 +372,7 @@ namespace DoseObjectiveCheck
 
                     OuputBox.AppendText(Environment.NewLine);
                     OuputBox.AppendText("Plansum Analysis Initiated, please be patient");
-                    output = Script.PlansumAnalysis(laterality, Si, ptype, patient, course, Plansum.StructureSet, Plansum, dt, dd, OuputBox, gyntype);
+                    output = Script.PlansumAnalysis(laterality, Si, ptype, patient, course, Plansum.StructureSet, Plansum, dt, dd, OuputBox, gyntype, pBar);
                   //  MessageBox.Show("Trig EXE - 8");
                     bool T = false;
                     foreach (ROI.ROI aroi in output)
@@ -424,9 +429,295 @@ namespace DoseObjectiveCheck
                 OuputBox.AppendText(Environment.NewLine);
                 OuputBox.AppendText("PDF Generation Initiated");
                 PdfReport.PDFGenerator.Program.PlanMain(patient, course, TS, Plan, image3D, Plan.StructureSet, user, output);
+
+
+                // 512 by 512 is the pixel dimensions of the CT scan
+                //86th plane should be the middle of a 175 plane, 0.2 slice thickness CT scan. if the scan is set up so that the middle is at iso, this will work
+
+                //try
+                //{
+
+                //    //var dimage = new Dicom.Imaging.DicomImage(@"\\wvvrnimbp01ss\va_data$\filedata\Patients\_59438\DICOM\Image\PE.1.2.840.113619.2.131.481048305.1568124641.768257.dcm_ID2200594");
+                //    //dimage.RenderImage().As<Bitmap>().Save(@"C:\Users\ztm00\Desktop\Reports\fodicomtest.bmp");
+                //    //PicBox.Image = dimage.RenderImage().As<Bitmap>();
+                //    //PicBox.Visible = true;
+
+                //    //VMS.TPS.Common.Model.API.Image image = Plan.StructureSet.Image;
+
+                //    //VVector[] dirVecs = new VVector[]
+                //    //{
+                //    //    Plan.StructureSet.Image.XDirection,
+                //    //    Plan.StructureSet.Image.YDirection,
+                //    //    Plan.StructureSet.Image.ZDirection
+                //    //};
+
+                //    //double[] steps = new double[]
+                //    //{
+                //    //    Plan.StructureSet.Image.XRes,
+                //    //    Plan.StructureSet.Image.YRes,
+                //    //    Plan.StructureSet.Image.ZRes
+                //    //};
+
+                //    //VVector PlanIso = Plan.Beams.First().IsocenterPosition;
+
+                //    //List<ImageProfile> imagerows = new List<ImageProfile>();
+
+
+                //    VVector ISOCENTER = Plan.Beams.First().IsocenterPosition;
+                //    MessageBox.Show("ISOCENTER (in DICOM): (" + ISOCENTER.x + ", " + ISOCENTER.y + ", " + ISOCENTER.z + ")");
+
+                //    //MessageBox.Show("Series image size: " + Plan.Series.Images.Count());
+
+                //    //var beamlist = Plan.Beams.ToList();
+                //    // var APMv= beamlist.Single(b => b.Id.Equals("AP Mv"));
+                //    var CTimage = Plan.StructureSet.Image;
+
+                //    VVector ImageOrigin = CTimage.Origin;   // upper left hand voxel of first image plane
+                //    VVector ImageOriginUser = Plan.StructureSet.Image.DicomToUser(ImageOrigin, Plan);
+                //    MessageBox.Show("CT image origin (in DICOM): (" + ImageOrigin.x + ", " + ImageOrigin.y + ", " + ImageOrigin.z + ")");
+                //    MessageBox.Show("CT image origin (in USER): (" + ImageOriginUser.x + ", " + ImageOriginUser.y + ", " + ImageOriginUser.z + ")");
+
+
+                //    int Isoplane = Math.Abs(Convert.ToInt32(Math.Round(((ISOCENTER.z - ImageOrigin.z) / 3.0), 0, MidpointRounding.AwayFromZero)));
+                //    MessageBox.Show("Isoplane number: " + Isoplane);
+
+                //    int xsize = CTimage.XSize;
+                //    int ysize = CTimage.YSize;
+
+                //    // MessageBox.Show("X voxel size: " + xsize);
+                //    // MessageBox.Show("Y voxel size: " + ysize);
+
+                //    int LEVEL = CTimage.Level;
+                //    int WINDOW = CTimage.Window;
+
+
+                //    //   MessageBox.Show("Level: " + LEVEL);
+                //    //   MessageBox.Show("Window: " + WINDOW);
+
+                //    // Level is the voxel intensity that is in the middle of the selected window of intensity values
+                //    // Window is the absolute length of the window
+                //    // so, if a CT scan image is windowed form -60 HU to 60 HU, then the Level is 0 and the window is 120.
+                //    //THE WINDOW LEVEL LITERALLY DEFINES THE GRAYSCALE RANGE. ANYTHING BELOW THE SELCTED RANGE IS JUST BLACK, ANYTHING ABOVE IS WHITE. ONLY PIXEL VALUES WITHIN THE RANGE ARE DISPLAYED IN GRAYSCALE 
+
+                //    int VOXEL_LOWER_BOUND = LEVEL - (WINDOW / 2);
+                //    int VOXEL_UPPER_BOUND = LEVEL + (WINDOW / 2);
+                //    //  MessageBox.Show("VOXEL upper bound: " + VOXEL_UPPER_BOUND);
+                //    //  MessageBox.Show("VOXEL Lower bound: " + VOXEL_LOWER_BOUND);
+
+                //    double colorconversion = Convert.ToDouble(WINDOW) / 254.0;
+                //    //  MessageBox.Show("colorconversion: " + colorconversion);
+                //    double convtemp = 0.0;
+                //    int iconvtemp = 0;
+
+                //    int[,] pixels = new int[xsize, ysize];
+                //    // long[,] lpixels = new long[xsize, ysize];
+                //   // byte[] realpixels = new byte[xsize * ysize * sizeof(int)];
+
+                //    // Plan.Beams.First().ReferenceImage.GetVoxels(0, pixels);
+                //    CTimage.GetVoxels(Isoplane, pixels);  //86 plane should be Iso
+
+                //    Bitmap imag = new Bitmap(xsize, ysize, PixelFormat.Format32bppArgb);
+                //    imag.SetResolution(26, 26);
+
+                //    //ColorPalette pal = imag.Palette;
+                //    //Color[] colors = pal.Entries;
+
+                //    //for (int i = 0; i < 256; i++)
+                //    //{
+                //    //    Color c = new Color();
+                //    //    c = Color.FromArgb(i, i, i);
+                //    //    colors[i] = c;
+                //    //}
+
+                //    //imag.Palette = pal;
+
+                //        for (int x = 0; x < imag.Width; x++)
+                //        {
+                //            for (int y = 0; y < imag.Height; y++)
+                //            {
+                //                if (pixels[x, y] < VOXEL_LOWER_BOUND)
+                //                {
+                //                    imag.SetPixel(x, y, Color.FromArgb(0,0,0));
+                //                }
+                //                else if (pixels[x, y] > VOXEL_UPPER_BOUND)
+                //                {
+                //                    imag.SetPixel(x, y, Color.FromArgb(255, 255, 255));
+                //                }
+                //                else if (pixels[x, y] >= VOXEL_LOWER_BOUND & pixels[x, y] <= VOXEL_UPPER_BOUND)
+                //                {
+                //                    // MessageBox.Show("in range pixel: " + pixels[x, y]);
+                //                    convtemp = (pixels[x, y] - VOXEL_LOWER_BOUND) / colorconversion;
+                //                    // MessageBox.Show("convtemp: " + convtemp);
+                //                    iconvtemp = Convert.ToInt32(convtemp);
+
+                //                    imag.SetPixel(x, y, Color.FromArgb(iconvtemp, iconvtemp, iconvtemp));
+                //                }
+                //            }
+                //        }
+                    
+                //    //Buffer.BlockCopy(pixels, 0, realpixels, 0, realpixels.Length);
+                //    //BitmapData bmpdata = imag.LockBits(new Rectangle(0, 0, imag.Width, imag.Height), ImageLockMode.ReadWrite, imag.PixelFormat);
+                //    //Marshal.Copy(realpixels, 0, bmpdata.Scan0, pixels.Length);
+
+                //    //imag.UnlockBits(bmpdata);
+
+                //    imag.Save(@"C:\Users\ztm00\Desktop\Reports\CTimage", ImageFormat.MemoryBmp);
+
+                //    //now dose info
+                //    //xsize = Plan.Dose.XSize;
+                //    //ysize = Plan.Dose.YSize;
+
+                //    //MessageBox.Show("Dose X size: " + xsize + " Dose Y size: " + ysize);
+
+                //    //int[,] dpixels = new int[xsize, ysize];
+
+                //    //Plan.Dose.GetVoxels(86, dpixels);
+
+
+                //    //for (int x = 0; x < imag.Width; x++)
+                //    //{
+                //    //    for (int y = 0; y < imag.Height; y++)
+                //    //    {
+                //    //        DoseValue dv = Plan.Dose.VoxelToDoseValue(dpixels[x, y]);
+
+                //    //        MessageBox.Show("Dose value unit: " + dv.Unit.ToString());
+
+                //    //        break;
+                //    //        //imag.SetPixel(x, y, );
+
+                //    //    }
+                //    //    break;
+                //    //}
+                //    double tempval = 0.0;
+                //    double[,] dpixelsxraster = new double[Plan.Dose.XSize, Plan.Dose.YSize];
+                //    double[,] dpixelsyraster = new double[Plan.Dose.XSize, Plan.Dose.YSize];
+                //    double[] yprof = new double[Plan.Dose.YSize];  //Y direction dose profile
+                //    double[] xprof = new double[Plan.Dose.XSize];  //X direction dose profile
+
+                //    MessageBox.Show("Dose matrix Y Res (mm): " + Plan.Dose.YRes);   // resolution is in mm!
+                //    MessageBox.Show("Dose matrix Y size (voxels): " + Plan.Dose.YSize);
+
+                //    double DoseMatrixYlength = Plan.Dose.YRes * Plan.Dose.YSize;
+                //    double DoseMatrixXlength = Plan.Dose.XRes * Plan.Dose.XSize;
+                //    string doseunit = "unit";
+
+                //    VVector DoseMatrixOrigin = Plan.Dose.Origin;  // Upper left hand corner of the first dose plane, in DICOM coordinates. assuming first dose plan is same as first image plane.
+                //    VVector DoseMatrixOriginUser = Plan.StructureSet.Image.DicomToUser(DoseMatrixOrigin, Plan);
+                //    MessageBox.Show("Dose Matrix Origin (in DICOM): (" + DoseMatrixOrigin.x + ", " + DoseMatrixOrigin.y + ", " + DoseMatrixOrigin.z + ")");
+                //    MessageBox.Show("Dose MAtrix Origin (in USER): (" + DoseMatrixOriginUser.x + ", " + DoseMatrixOriginUser.y + ", " + DoseMatrixOriginUser.z + ")");
+
+
+                //    //DOUBLE RASTER
+                //    for (int xi = 0; xi < Plan.Dose.XSize; xi++) // iterates dose profiles in the x-direction
+                //    {
+                //        VVector Start = new VVector(DoseMatrixOrigin.x + (xi * Plan.Dose.XRes) + (Plan.Dose.XRes / 2) , DoseMatrixOrigin.y, ISOCENTER.z);
+                //        VVector Stop = new VVector(DoseMatrixOrigin.x + (xi * Plan.Dose.XRes) + (Plan.Dose.XRes / 2), DoseMatrixOrigin.y + DoseMatrixYlength, ISOCENTER.z);
+
+                //        var v = Plan.Dose.GetDoseProfile(Start, Stop, yprof);
+                //        doseunit = v.Unit.ToString();
+
+                //       // MessageBox.Show("ydprof length: " + ydprof.Length);
+ 
+                //        for (int yi = 0; yi < Plan.Dose.YSize; yi++)
+                //        {
+                //            tempval = yprof[yi];
+                //            dpixelsxraster[xi, yi] = tempval;
+                //        }
+                //    }
+
+                //    // MessageBox.Show("Dose profile unit: " + doseunit);
+                //    for (int yi = 0; yi < Plan.Dose.YSize; yi++) // iterates dose profiles in the y-direction
+                //    {
+                //        VVector Start = new VVector(DoseMatrixOrigin.x, DoseMatrixOrigin.y + (yi * Plan.Dose.YRes) + (Plan.Dose.YRes / 2 ), ISOCENTER.z);
+                //        VVector Stop = new VVector(DoseMatrixOrigin.x + DoseMatrixXlength, DoseMatrixOrigin.y + (yi * Plan.Dose.YRes) + (Plan.Dose.YRes / 2),  ISOCENTER.z);
+
+                //        var v = Plan.Dose.GetDoseProfile(Start, Stop, xprof);
+                //        doseunit = v.Unit.ToString();
+
+                //       //  MessageBox.Show("ydprof length: " + yprof.Length);
+
+                //        for (int xi = 0; xi < Plan.Dose.XSize; xi++)
+                //        {
+                //            tempval = xprof[xi];
+                //            dpixelsyraster[xi, yi] = tempval;
+                //        }
+                //    }
+
+                //    using (StreamWriter file = new StreamWriter(@"C:\Users\ztm00\Desktop\Reports\doseinfo.txt"))
+                //    {
+                //        foreach(double db in dpixelsxraster)
+                //        {
+                //            file.WriteLine(db);
+                //        }
+                //    }
+
+                //    // need to figure out how to map the dose to the image using Iso
+
+                //    Bitmap dimag = new Bitmap(Plan.Dose.XSize, Plan.Dose.YSize, PixelFormat.Format32bppArgb);
+                //    dimag.SetResolution(25, 25);
+
+                //    for (int x = 0; x < dimag.Width; x++)
+                //    {
+                //        for (int y = 0; y < dimag.Height; y++)
+                //        {
+                //            if((dpixelsxraster[x, y] > 29.5 & dpixelsxraster[x, y] < 30.5) | (dpixelsyraster[x, y] > 29.5 & dpixelsyraster[x, y] < 30.5))
+                //            {
+                //                dimag.SetPixel(x, y, Color.FromArgb(120, Color.Brown));
+                //            }
+                //            else if((dpixelsxraster[x, y] > 49.5 & dpixelsxraster[x, y] < 50.5) | (dpixelsyraster[x, y] > 49.5 & dpixelsyraster[x, y] < 50.5))
+                //            {
+                //                dimag.SetPixel(x, y, Color.FromArgb(120, Color.Pink));
+                //            }
+                //            else if ((dpixelsxraster[x, y] > 79.5 & dpixelsxraster[x, y] < 80.5) | (dpixelsyraster[x, y] > 79.5 & dpixelsyraster[x, y] < 80.5))
+                //            {
+                //                dimag.SetPixel(x, y, Color.FromArgb(120, Color.DarkBlue));
+                //            }
+                //            else if ((dpixelsxraster[x, y] > 89.5 & dpixelsxraster[x, y] < 90.5) | (dpixelsyraster[x, y] > 89.5 & dpixelsyraster[x, y] < 90.5))
+                //            {
+                //                dimag.SetPixel(x, y, Color.FromArgb(120, Color.Green));
+                //            }
+                //            else if ((dpixelsxraster[x, y] > 94.5 & dpixelsxraster[x, y] < 95.5) | (dpixelsyraster[x, y] > 94.5 & dpixelsyraster[x, y] < 95.5))
+                //            {
+                //                dimag.SetPixel(x, y, Color.FromArgb(120, Color.Blue));
+                //            }
+                //            else if ((dpixelsxraster[x, y] > 97.5 & dpixelsxraster[x, y] < 98.5) | (dpixelsyraster[x, y] > 97.5 & dpixelsyraster[x, y] < 98.5))
+                //            {
+                //                dimag.SetPixel(x, y, Color.FromArgb(120, Color.Orange));
+                //            }
+                //            else if ((dpixelsxraster[x, y] > 99.5 & dpixelsxraster[x, y] < 100.5) | (dpixelsyraster[x, y] > 99.5 & dpixelsyraster[x, y] < 100.5))
+                //            {
+                //                dimag.SetPixel(x, y, Color.FromArgb(120, Color.Yellow));
+                //            }
+                //            else if ((dpixelsxraster[x, y] > 104.5 & dpixelsxraster[x, y] < 105.5) | (dpixelsyraster[x, y] > 104.5 & dpixelsyraster[x, y] < 105.5))
+                //            {
+                //                dimag.SetPixel(x, y, Color.FromArgb(120, Color.Cyan));
+                //            }
+                //            else if ((dpixelsxraster[x, y] > 109.5 & dpixelsxraster[x, y] < 110.5) | (dpixelsyraster[x, y] > 109.5 & dpixelsyraster[x, y] < 110.5))
+                //            {
+                //                dimag.SetPixel(x, y, Color.FromArgb(120, Color.Magenta));
+                //            }
+                //            else 
+                //            {
+                //                dimag.SetPixel(x, y, Color.FromArgb(0, 255, 255, 255));
+                //            }
+                //        }
+                //    }
+
+                //    dimag.Save(@"C:\Users\ztm00\Desktop\Reports\Doseimage", ImageFormat.MemoryBmp);
+
+
+                //    PicBox.Image = imag;
+                //    PicBox.Visible = true;
+                //    MessageBox.Show("DONE");
+                //}
+                //catch(Exception e)
+                //{
+                //    MessageBox.Show(e.ToString());
+                //}
+
+
             }
         }
-
 
         void PlanList_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -674,7 +965,7 @@ namespace DoseObjectiveCheck
         {
             Form Dialog = new Form()
             {
-                Width = 950,
+                Width = 1250,
                 Height = 450,
                 FormBorderStyle = FormBorderStyle.FixedDialog,
                 Text = "Plansum Dose",
@@ -682,10 +973,10 @@ namespace DoseObjectiveCheck
                 Font = new System.Drawing.Font("Goudy Old Style", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)))
             };
             Label txtlab = new Label() { Left = 10, Top = 15, Width = 320, Height = 140, Text = "How do you want the Total Dose of this Plansum to be calculated?" };
-            Button confirm = new Button() { Text = "Ok", Left = 120, Width = 100, Top = 500, DialogResult = DialogResult.OK };
-            ListBox opt = new ListBox() { Left = 30, Top = 90, Width = 800};
+            Button confirm = new Button() { Text = "Ok", Left = 120, Width = 75, Top = 320, DialogResult = DialogResult.OK };
+            ListBox opt = new ListBox() { Left = 30, Top = 90, Width = 1200};
             opt.Items.AddRange(new object[] {
-                     "Sum of the Rx dose of the constituent plans (Normal Plansum)",
+                     "Sum of the Rx doses of the constituent plans (Normal Plansum)",
                      "The Rx dose of the plans (assuming they have the same Rx, \"fake plansum\")",
                      "Enter your own dose (Use this if you want to use the Rx dose of one of the constituent plans, but they are not the same.You will have to enter the dose in."});
             confirm.Click += (sender, e) => { Dialog.Close(); };

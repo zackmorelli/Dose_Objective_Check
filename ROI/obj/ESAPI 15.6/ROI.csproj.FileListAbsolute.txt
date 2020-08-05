@@ -1,0 +1,5 @@
+C:\prog\Auto-Report-Script\ROI\bin\ESAPI 15.6\ROI.dll
+C:\prog\Auto-Report-Script\ROI\bin\ESAPI 15.6\ROI.pdb
+C:\prog\Auto-Report-Script\ROI\obj\ESAPI 15.6\ROI.csproj.CoreCompileInputs.cache
+C:\prog\Auto-Report-Script\ROI\obj\ESAPI 15.6\ROI.dll
+C:\prog\Auto-Report-Script\ROI\obj\ESAPI 15.6\ROI.pdb

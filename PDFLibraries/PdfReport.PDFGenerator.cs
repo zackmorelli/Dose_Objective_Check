@@ -130,7 +130,7 @@ namespace PdfReport.PDFGenerator
                     Id = plan.Id,
                     Course = course.Id,
                     ApprovalStatus = plan.ApprovalStatus.ToString(),
-                    TotalPrescribedDose = plan.TotalPrescribedDose.Dose,
+                    TotalPrescribedDose = plan.TotalDose.Dose,
                     CreationDateTime = plan.CreationDateTime,
                     CreationUser = plan.CreationUserName,
                     LastModifiedDateTime = plan.HistoryDateTime,
@@ -180,8 +180,8 @@ namespace PdfReport.PDFGenerator
 
                     foreach (PlanSetup aplan in plansum.PlanSetups)
                     {
-                        dosesum += aplan.TotalPrescribedDose.Dose;
-                        dunit = aplan.TotalPrescribedDose.UnitAsString;
+                        dosesum += aplan.TotalDose.Dose;
+                        dunit = aplan.TotalDose.UnitAsString;
                     }
                 }
                 else if (dt == 2)
@@ -189,8 +189,8 @@ namespace PdfReport.PDFGenerator
                     IEnumerator lk = plansum.PlanSetups.GetEnumerator();
                     lk.MoveNext();
                     PlanSetup PS = (PlanSetup)lk.Current;
-                    dosesum = PS.TotalPrescribedDose.Dose;
-                    dunit = PS.TotalPrescribedDose.UnitAsString;
+                    dosesum = PS.TotalDose.Dose;
+                    dunit = PS.TotalDose.UnitAsString;
                 }
                 else if (dt == 3)
                 {
