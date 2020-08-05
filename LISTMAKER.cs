@@ -63,7 +63,7 @@ namespace DoseObjectiveCheck
 
             if (Ttype == "Conventional" | Ttype == "Both")
             {
-                string path = @"\\Wvvrnimbp01ss\va_data$\filedata\ProgramData\Vision\PublishedScripts\ConventionalROIList.txt";
+                string path = @"\\shceclipseimg\VA_DATA$\ProgramData\Vision\PublishedScripts\ConventionalROIList.txt";
                // Console.WriteLine("TriggerConv1");
 
                 if(File.Exists(path))
@@ -159,7 +159,7 @@ namespace DoseObjectiveCheck
             else if (Ttype == "SRS/SBRT" | Ttype == "Both" )
             {
 
-                string path = @"\\Wvvrnimbp01ss\va_data$\filedata\ProgramData\Vision\PublishedScripts\SRSROIList.txt";
+                string path = @"\\shceclipseimg\VA_DATA$\ProgramData\Vision\PublishedScripts\SRSROIList.txt";
 
                 if (File.Exists(path))
                 {
