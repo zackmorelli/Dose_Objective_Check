@@ -2,6 +2,7 @@ C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\bin\ESAPI 15.6\P
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\bin\ESAPI 15.6\PdfReport.Reporting.pdb
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\bin\ESAPI 15.6\ROI.dll
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\bin\ESAPI 15.6\ROI.pdb
+C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\obj\ESAPI 15.6\PdfReport.Reporting.csprojAssemblyReference.cache
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\obj\ESAPI 15.6\PdfReport.Reporting.csproj.CoreCompileInputs.cache
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\obj\ESAPI 15.6\PdfReport.Reporting.csproj.CopyComplete
 C:\prog\Auto-Report-Script\PDFLibraries\src\PdfReport.Reporting\obj\ESAPI 15.6\PdfReport.Reporting.dll

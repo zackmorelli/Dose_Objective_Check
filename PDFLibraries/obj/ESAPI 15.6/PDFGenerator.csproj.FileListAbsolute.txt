@@ -26,3 +26,7 @@ C:\prog\Auto-Report-Script\PDFLibraries\obj\ESAPI 15.6\PDFGenerator.csproj.CoreC
 C:\prog\Auto-Report-Script\PDFLibraries\obj\ESAPI 15.6\PDFGenerator.csproj.CopyComplete
 C:\prog\Auto-Report-Script\PDFLibraries\obj\ESAPI 15.6\PdfReport.PDFGenerator.dll
 C:\prog\Auto-Report-Script\PDFLibraries\obj\ESAPI 15.6\PdfReport.PDFGenerator.pdb
+C:\prog\Auto-Report-Script\PDFLibraries\bin\ESAPI 15.6\VMS.TPS.Common.Calculation.Interface.dll
+C:\prog\Auto-Report-Script\PDFLibraries\bin\ESAPI 15.6\VMS.TPS.Common.Model.Interface.dll
+C:\prog\Auto-Report-Script\PDFLibraries\bin\ESAPI 15.6\VMS.TPS.Common.Model.API.xml
+C:\prog\Auto-Report-Script\PDFLibraries\bin\ESAPI 15.6\VMS.TPS.Common.Model.Types.xml

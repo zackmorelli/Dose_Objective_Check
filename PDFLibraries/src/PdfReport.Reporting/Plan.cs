@@ -11,6 +11,7 @@ namespace PdfReport.Reporting
         public string[] Energies { get; set; }
         public Beam[] Beams { get; set; }
         public string ApprovalStatus { get; set; }
+
          
         public Nullable<DateTime> CreationDateTime { get; set; }
 

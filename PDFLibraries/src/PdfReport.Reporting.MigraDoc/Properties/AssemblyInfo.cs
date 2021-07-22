@@ -7,10 +7,10 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("PdfReport.Reporting.MigraDoc")]
 [assembly: AssemblyDescription("This is a separate helper program that generates the PDF report for the Dose Objective Check program using the MigraDoc and PDFSharp packages. This code was originally developed by Carlos J Anderson and was obtained from him via his website. It was modified by Zackary T Morelli for use with the Dose Objective Check program.")]
-[assembly: AssemblyConfiguration("RELEASE 2.1 - 11/19/2019")]
+[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Radiation Oncology Department, Lahey Hospital and Medical Center, Burlington MA")]
 [assembly: AssemblyProduct("DoseObjectiveCheck")]
-[assembly: AssemblyCopyright("Copyright © 2019 Radiation Oncology Department, Lahey Hospital and Medical Center")]
+[assembly: AssemblyCopyright("Copyright © 2021 Radiation Oncology Department, Lahey Hospital and Medical Center")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

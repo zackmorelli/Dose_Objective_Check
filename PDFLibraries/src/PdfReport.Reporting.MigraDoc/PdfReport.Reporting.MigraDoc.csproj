@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PdfReport.Reporting.MigraDoc</RootNamespace>
     <AssemblyName>PdfReport.Reporting.MigraDoc</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -30,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ESAPI 15.6|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -56,7 +57,7 @@
     </Reference>
     <Reference Include="PdfReport.Reporting, Version=2.1.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\PdfReport.Reporting\bin\Debug\PdfReport.Reporting.dll</HintPath>
+      <HintPath>..\PdfReport.Reporting\bin\Release\PdfReport.Reporting.dll</HintPath>
     </Reference>
     <Reference Include="PdfSharp, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\..\packages\PDFsharp-MigraDoc.1.50.5147\lib\net20\PdfSharp.dll</HintPath>
@@ -68,28 +69,27 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="ROI, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ROI\bin\Debug\ROI.dll</HintPath>
+      <HintPath>..\..\..\ROI\bin\Release\ROI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Internal\FirstPageStuff.cs" />
-    <Compile Include="Internal\VolDoseObjectiveList.cs" />
-    <Compile Include="Internal\HeaderAndFooter.cs" />
-    <Compile Include="Internal\old.cs" />
-    <Compile Include="Internal\Size.cs" />
-    <Compile Include="PdfReport.cs" />
+    <Compile Include="PDFGenerator Internal\ConvStats.cs" />
+    <Compile Include="PDFGenerator Internal\FirstPageStuff.cs" />
+    <Compile Include="PDFGenerator Internal\SRSstats.cs" />
+    <Compile Include="PDFGenerator Internal\VolDoseObjectiveList.cs" />
+    <Compile Include="PDFGenerator Internal\HeaderAndFooter.cs" />
+    <Compile Include="PDFGenerator Internal\old.cs" />
+    <Compile Include="PDFGenerator Internal\Size.cs" />
+    <Compile Include="PDFGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Internal\CustomStyles.cs" />
-    <Compile Include="Internal\DoseObjectiveList.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\female-symbol.png" />
-    <EmbeddedResource Include="Resources\male-symbol.png" />
-    <EmbeddedResource Include="Resources\other-symbol.png" />
+    <Compile Include="PDFGenerator Internal\CustomStyles.cs" />
+    <Compile Include="PDFGenerator Internal\DoseObjectiveList.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

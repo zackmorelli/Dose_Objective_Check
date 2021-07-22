@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Lahey RadOnc Dose Objective Checker")]
-[assembly: AssemblyDescription("Written by Zackary T Morelli")]
-[assembly: AssemblyConfiguration("RELEASE 2.2 - 3/12/2020")]
+[assembly: AssemblyTitle("Dose Objective Check")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("RELEASE 3.3.0 - 7/19/2021")]
 [assembly: AssemblyCompany("Radiation Oncology Department, Lahey Hospital and Medical Center, Burlington MA")]
-[assembly: AssemblyProduct("DoseObjectiveCheck")]
-[assembly: AssemblyCopyright("Copyright © 2020 Radiation Oncology Department, Lahey Hospital and Medical Center")]
+[assembly: AssemblyProduct("Dose Objective Check")]
+[assembly: AssemblyCopyright("Copyright © 2021 Zackary Thomas Ricci Morelli")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.2")]
-[assembly: AssemblyFileVersion("2.2")]
+[assembly: AssemblyVersion("3.3.0")]
+[assembly: AssemblyFileVersion("3.3.0")]

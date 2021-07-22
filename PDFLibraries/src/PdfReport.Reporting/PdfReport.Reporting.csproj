@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PdfReport.Reporting</RootNamespace>
     <AssemblyName>PdfReport.Reporting</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -30,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ESAPI 15.6|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -43,13 +44,15 @@
   <ItemGroup>
     <Reference Include="ROI, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ROI\bin\Debug\ROI.dll</HintPath>
+      <HintPath>..\..\..\ROI\bin\Release\ROI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Beam.cs" />
+    <Compile Include="ConventionalCoverageStats.cs" />
+    <Compile Include="SRScoveragestats.cs" />
     <Compile Include="Doctor.cs" />
     <Compile Include="Hospital.cs" />
     <Compile Include="Image.cs" />

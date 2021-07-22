@@ -11,39 +11,61 @@ using System.Linq;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using VMS.TPS.Common.Model.API;
 using VMS.TPS.Common.Model.Types;
-using VMS.TPS;
 using g3;
 
 
 /*
-    Lahey RadOnc Dose Objective Checker - GUI
-    Copyright (c) 2019 Radiation Oncology Department, Lahey Hospital and Medical Center
-    Written by: Zackary T Morelli
-
-    This program is expressely written as a plug-in script for use with Varian's Eclipse Treatment Planning System, and requires Varian's API files to run properly.
-    This program also requires .NET Framework 4.5.0 to run properly.
-
-    This is the source code for a .NET Framework assembly file, however this functions as an executable file in Eclipse.
-    In addition to Varian's APIs and .NET Framework, this program uses the following commonly available libraries:
-    MigraDoc
-    PdfSharp
-
-    Release 2.1 - 11/19/2019
+    Dose Objective Check - GUI
 
     Description:
-    This is the GUI of the Dose Objective Check program.
+    This is the main GUI of the Dose Objective Check program. The GUI is called by the the Execute method of the Script class, in the main .cs file called "ScriptExecute".
+    The GUI is a Windows Form that gathers information needed from the user to run the program. The user indicates the plan they want to run the program on (from among the plans they
+    have open in Eclipse at the moment they run the script), the type of plan (Conventional or SRS, or both for a plansum), the specific treatment site of the plan, and the laterality for certain treatment sites
+    that have laterality-dependent objectives. Conventional plans and SBRT plans have separate lists of standard treatment sites which are used in planning. These are hard-coded into the TreatSite class
+    and used to populate a list box in the GUI that the user selects the treatment site of their plan from. Each treatment site has a standard list of dose objectives that accompanies it. 
+    The dose objective lists for each treatment site are not hard-coded. They are dynamically generated each time the program runs by reading in a text file. This makes editing the standard dose objective lists easier.
+    The user can also use the GUI to indicate that they want the program to add Clinical Goals they have made in Eclipse to the dose objective list created by the program, and if they want the report
+    to include target dose coverage information. The GUI simply collects the users's input through event handlers and passes of all of this information to the dose objective analysis methods which are called
+    when the usr clicks the "Execute" button. The dose objective analysis methods return a list of the dose objectives (containing all of the information determined in the analysis) to GUI.
+    It then calls the PDF preparation methods, which it passes the analyzed dose objective list too. The program continues on from there without being called back to the GUI.
+
+    This program is expressely written as a plug-in script for use with Varian's Eclipse Treatment Planning System, and requires Varian's API files to run properly.
+    This program runs on .NET Framework 4.6.1. It also uses MigraDoc and PDFSharp for the PDF generation, commonly available libraries which can be found on NuGet
+
+    Copyright (C) 2021 Zackary Thomas Ricci Morelli
+    
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+    I can be contacted at: zackmorelli@gmail.com
+
+
+    Release 3.2 - 6/8/2021
+
 
 */
 
 
-
 namespace DoseObjectiveCheck
 {
+    //This declares a Windows Form class called GUI
     public partial class GUI : Form
     {
+        //variables used by the GUI
         public int dt = 0;
         public double dd = 0.0;
         public string ptype = null;
@@ -56,18 +78,30 @@ namespace DoseObjectiveCheck
         public int c1 = 0;
         public int k1 = 0;
         public string gyntype = null;
+        public string[] SRScoverageRequirements = new string[2];
+        public string[] ConvCoverageRequirements = new string[8];
+        public string[] BothCoverageRequirements = new string[10];
+        public bool DoseStat = false;
         List<string> plannames = new List<string>();
         List<string> sumnames = new List<string>();
-        List<ROI.ROI> output = new List<ROI.ROI>();
-
-        public GUI(Patient patient, Course course, VMS.TPS.Common.Model.API.Image image3D, User user, IEnumerable<PlanSum> Plansums, IEnumerable<PlanSetup> Plans)
+        List<DoseObjective> output = new List<DoseObjective>();
+        
+        //This method, which has the same name as the Windows Form class, is the method that is actually called when this GUI class is instantiated.
+        //So, in the Execute method in DoseObjectiveCheck, this method is called when the GUI object is created inside the Application.Run method
+        //The Run method interacts with the Windows operating system for us and makes the GUI appear onscreen and makes a message loop so it can actually work.
+        // So, this is where you put code that needs to be executed when the GUI starts
+        public GUI(VMS.TPS.Common.Model.API.Patient patient, Course course, VMS.TPS.Common.Model.API.Image image3D, User user, IEnumerable<PlanSum> Plansums, IEnumerable<PlanSetup> Plans)
         {
+            //Initialize Component is very important. This calls all of the code in the GUI.Designer class, which Visual Studio makes for you
+            //when you create a new Windows Form class. Of course, you can make your own Form from scratch, which I think can be useful.
+            //But here I used Visual Studio to make a Form.
+            //If you are not familiar with Windows Forms, I reccomend opening a clean solution in Visual Studio and playing around with making your own Form.
             InitializeComponent();
 
             OuputBox.Text = "GUI Initialized";
 
             // MessageBox.Show("Trig 6");
-
+            //These loops populate the Plan_List listbox with all the plans and plansums the user had open.
             foreach (PlanSum aplansum in Plansums)
             {
                 Plan_List.Items.Add(aplansum.Id);
@@ -83,14 +117,74 @@ namespace DoseObjectiveCheck
             }
             OuputBox.Text = "Plans loaded";
 
-            button1.Click += (sender, EventArgs) => { buttonNext_Click(sender, EventArgs, patient, course, image3D, user, Plansums, Plans); };
+
+            //This line below requires some explanation. The EXECUTE method, which does all the work that this GUI needs to do once the user has filled everything
+            //out and clicked the button, requires a number of variables, bascially all of the plan information required by the rest of the program.
+
+            //So, we have a bit of a problem here. When we make the GUI, everything we pass to it gets passed to this special executable GUI method that we are
+            //sitting in right now. But, all of the other methods in this GUI class, which are all used by the GUI's event handlers, or called by one of the other methods,
+            //don't know anything about these variables. Because of this special executable method which recieves the variables we passed to the GUI,
+            //they are not global variables available to the entire GUI class, which you might expect when you make the GUI object and pass stuff to it.
+
+            //Now, normally this would not be a problem, we would just pass the variables that the other methods need when we call them.
+            //But, in a Windows Form class like this, all the other methods are event driven. They are reacting to user input, that is what a GUI does.
+            //So, the other methods are not being called from the executable GUI method. They are called through the Event Handlers and the message pump.
+            //So, how are we supposed to pass these variables to the other methods that need them?
+            //The workaround is putting a custom event handler in the GUI method, which is the line below. This creates an Event handler which continues running after
+            //this method is done executing. The line below creates a Click event handler for the GUI's button, called button1. Now, there is a separate event handler
+            //method below which is called by the click event handler in the designer code, but as you can see it doesn't do anything. I'm not sure if it is neccesary
+            //to have this empty method, but it is there. 
+
+            //The Click Event handler below uses a lambda expression (the =>). If you don't know, this is a more recent syntax of C#, and also Java, that is not in C++.
+            //It provides an easy way of using what are called delegates in C#. Delegates don't exist in C++ either. They are like pointers in C++, except they
+            //are actually fully object-oriented and can pass parameters to the method they point to, which is what we are doing here.
+            //So, the lambda expression points to a method called buttonNext_Click and passes all the variables we need to it. buttonNext_Click then calls EXECUTE and
+            //it all the variables it needs.
+             button1.Click += (sender, EventArgs) => { buttonNext_Click(sender, EventArgs, patient, course, image3D, user, Plansums, Plans); };
         }
 
 
-        private void EXECUTE(string laterality, string TS, ListBox.SelectedObjectCollection TSA, Patient patient, Course course, VMS.TPS.Common.Model.API.Image image3D, User user, IEnumerable<PlanSum> Plansums, IEnumerable<PlanSetup> Plans)
+        private async void EXECUTE(string laterality, string TS, ListBox.SelectedObjectCollection TSA, VMS.TPS.Common.Model.API.Patient patient, Course course, VMS.TPS.Common.Model.API.Image image3D, User user, IEnumerable<PlanSum> Plansums, IEnumerable<PlanSetup> Plans)
         {
+            //This is where everything happens after the execute button is clicked. Most of the code is a series of if - else statements that goes through the list of plans,
+            //or plansums, to find the plan that mwatches with the string pl. This is very clunky since I wrote it a long time ago, but it works fine, so I
+            //would just leave it alone.
 
             // MessageBox.Show("Trig EXE - 1");
+
+            bool UseGoals = false;
+            if(UseGoalsCheck.Checked == true)
+            {
+                UseGoals = true;
+            }
+
+            //This launches a WinForm that will prompt the user for coverage requirment values. This isn't a custom WinForm like the others, it's a normal one made using Visual Studio
+            //It works beacuse it is actually multi-threaded. The SRSGUICaller method is called, and that method then starts an awaitable Task,
+            //which is a way of having Windows figure out the multithreading for you. This Task, running on a separate thread, then starts another WinForm.
+            //While that is running, the GUI here simply sits in a while loop, until the user closes it.
+            if (DoseStatisticsBox.Checked == true)
+            {
+                //MessageBox.Show("Dosestat true");
+                DoseStat = true;
+
+                if (ptype == "SRS/SBRT")
+                {
+                    await GUICalls.SRSGUICaller(SRScoverageRequirements);
+                    //MessageBox.Show("SRS Coverage Requirements: " + SRScoverageRequirements[0] + "    " + SRScoverageRequirements[1]);
+                }
+                else if (ptype == "Conventional")
+                {
+                    await GUICalls.ConvGUICaller(ConvCoverageRequirements);
+                    //MessageBox.Show("Conv. Coverage Requirements: " + ConvCoverageRequirements[0] + "    " + ConvCoverageRequirements[1]);
+                }
+                else if (ptype == "Both")
+                {
+                    DoseStat = false;
+                    MessageBox.Show("The Dose Objective Script is not capable of generating dose coverage statistics for plansums made up of Conventional and SRS/SBRT plans.\nPlease evaluate the plans individually.");
+                }
+            }
+
+            //these are used for control flow, depending on whether the program is evaluating a plan or plansum
             bool LOCKSUM = false;
             bool LOCKPLAN = false;
 
@@ -337,11 +431,11 @@ namespace DoseObjectiveCheck
 
                 if (LOCKSUM == false)   // plansum
                 {
-                   //  MessageBox.Show("Trig EXE - 7");
-
+                   //MessageBox.Show("Trig EXE - 7");
                     //EXECUTE PLANSUM DOSE OBJECTIVE ANALYSIS
 
-                    string[] Si = new string[50];
+                    //Si is an array used to store potentially multiple treatment sites for plansums
+                    string[] Si = new string[60];
 
                     // this is here to make sure the list of selected treatment sites exists, because if the user selects a plansum after running a plan without clicking on the treatment site again, this can cause a problem
                     if( TSA == null)
@@ -360,6 +454,7 @@ namespace DoseObjectiveCheck
                         GG.MoveNext();
                     }
 
+                    //This is a safety thing to make sure there is a structure set. Otherwise, it'll throw an error later on.
                     try
                     {
                         string strctid = Plansum.StructureSet.Id;
@@ -372,12 +467,17 @@ namespace DoseObjectiveCheck
 
                     OuputBox.AppendText(Environment.NewLine);
                     OuputBox.AppendText("Plansum Analysis Initiated, please be patient");
-                    output = Script.PlansumAnalysis(laterality, Si, ptype, patient, course, Plansum.StructureSet, Plansum, dt, dd, OuputBox, gyntype, pBar);
+
+                    //Calls plansum dose objective analysis, returns a list of ROI objects. Unlike the list initially made by LISTMAKER, this will have the actual doses from the DVH
+                    //estimation algorithim, and pass/fail status
+                    output = DoseObjectiveAnalysis.PlansumAnalysis(laterality, Si, ptype, patient, course, Plansum.StructureSet, Plansum, dt, dd, OuputBox, gyntype, pBar, UseGoals);
                   //  MessageBox.Show("Trig EXE - 8");
+
+                    //This is some code to alert the user right away if there is an objective that isn't passing
                     bool T = false;
-                    foreach (ROI.ROI aroi in output)
+                    foreach (DoseObjective DO in output)
                     {
-                        if (aroi.status == "REVIEW")
+                        if (DO.status == "REVIEW")
                         {
                             T = true;
                         }
@@ -390,13 +490,14 @@ namespace DoseObjectiveCheck
 
                     OuputBox.AppendText(Environment.NewLine);
                     OuputBox.AppendText("PDF Generation Initiated");
-                    PdfReport.PDFGenerator.Program.PlansumMain(patient, course, Si, Plansum, image3D, Plansum.StructureSet, user, output, dt, dd);
+                    //Calls the PDF Generation
+                    PDFPreparation.PlansumMain(patient, course, Si, ptype, Plansum, image3D, Plansum.StructureSet, user, DoseStat, SRScoverageRequirements, ConvCoverageRequirements, output, dt, dd);
                 }
             }
 
             if (LOCKPLAN == false)  // plans
             {
-               
+                //This is a safety thing to make sure there is a structure set. Otherwise, it'll throw an error later on.
                 try
                 {
                     string strctid = Plan.StructureSet.Id;
@@ -409,13 +510,17 @@ namespace DoseObjectiveCheck
 
                 OuputBox.AppendText(Environment.NewLine);
                 OuputBox.AppendText("Plan Analysis Initiated, please be patient");
-                output = Script.PlanAnalysis(laterality, TS, ptype, user, patient, course, Plan.StructureSet, Plan, OuputBox, gyntype);
-              //  MessageBox.Show("Trig EXE - 9");
-                bool T = false;
 
-                foreach (ROI.ROI aroi in output)
+                //Calls plan dose objective analysis, returns a list of ROI objects. Unlike the list initially made by LISTMAKER, this will have the actual doses from the DVH
+                //estimation algorithim, and pass/fail status
+                output = DoseObjectiveAnalysis.PlanAnalysis(laterality, TS, ptype, user, patient, course, Plan.StructureSet, Plan, OuputBox, gyntype, UseGoals);
+                //  MessageBox.Show("Trig EXE - 9");
+
+                //This is some code to alert the user right away if there is an objective that isn't passing
+                bool T = false;
+                foreach (DoseObjective DO in output)
                 {
-                    if (aroi.status == "REVIEW")
+                    if (DO.status == "REVIEW")
                     {
                         T = true;
                     }
@@ -427,298 +532,18 @@ namespace DoseObjectiveCheck
                 }
 
                 OuputBox.AppendText(Environment.NewLine);
+                //Calls the PDF Generation
                 OuputBox.AppendText("PDF Generation Initiated");
-                PdfReport.PDFGenerator.Program.PlanMain(patient, course, TS, Plan, image3D, Plan.StructureSet, user, output);
-
-
-                // 512 by 512 is the pixel dimensions of the CT scan
-                //86th plane should be the middle of a 175 plane, 0.2 slice thickness CT scan. if the scan is set up so that the middle is at iso, this will work
-
-                //try
-                //{
-
-                //    //var dimage = new Dicom.Imaging.DicomImage(@"\\wvvrnimbp01ss\va_data$\filedata\Patients\_59438\DICOM\Image\PE.1.2.840.113619.2.131.481048305.1568124641.768257.dcm_ID2200594");
-                //    //dimage.RenderImage().As<Bitmap>().Save(@"C:\Users\ztm00\Desktop\Reports\fodicomtest.bmp");
-                //    //PicBox.Image = dimage.RenderImage().As<Bitmap>();
-                //    //PicBox.Visible = true;
-
-                //    //VMS.TPS.Common.Model.API.Image image = Plan.StructureSet.Image;
-
-                //    //VVector[] dirVecs = new VVector[]
-                //    //{
-                //    //    Plan.StructureSet.Image.XDirection,
-                //    //    Plan.StructureSet.Image.YDirection,
-                //    //    Plan.StructureSet.Image.ZDirection
-                //    //};
-
-                //    //double[] steps = new double[]
-                //    //{
-                //    //    Plan.StructureSet.Image.XRes,
-                //    //    Plan.StructureSet.Image.YRes,
-                //    //    Plan.StructureSet.Image.ZRes
-                //    //};
-
-                //    //VVector PlanIso = Plan.Beams.First().IsocenterPosition;
-
-                //    //List<ImageProfile> imagerows = new List<ImageProfile>();
-
-
-                //    VVector ISOCENTER = Plan.Beams.First().IsocenterPosition;
-                //    MessageBox.Show("ISOCENTER (in DICOM): (" + ISOCENTER.x + ", " + ISOCENTER.y + ", " + ISOCENTER.z + ")");
-
-                //    //MessageBox.Show("Series image size: " + Plan.Series.Images.Count());
-
-                //    //var beamlist = Plan.Beams.ToList();
-                //    // var APMv= beamlist.Single(b => b.Id.Equals("AP Mv"));
-                //    var CTimage = Plan.StructureSet.Image;
-
-                //    VVector ImageOrigin = CTimage.Origin;   // upper left hand voxel of first image plane
-                //    VVector ImageOriginUser = Plan.StructureSet.Image.DicomToUser(ImageOrigin, Plan);
-                //    MessageBox.Show("CT image origin (in DICOM): (" + ImageOrigin.x + ", " + ImageOrigin.y + ", " + ImageOrigin.z + ")");
-                //    MessageBox.Show("CT image origin (in USER): (" + ImageOriginUser.x + ", " + ImageOriginUser.y + ", " + ImageOriginUser.z + ")");
-
-
-                //    int Isoplane = Math.Abs(Convert.ToInt32(Math.Round(((ISOCENTER.z - ImageOrigin.z) / 3.0), 0, MidpointRounding.AwayFromZero)));
-                //    MessageBox.Show("Isoplane number: " + Isoplane);
-
-                //    int xsize = CTimage.XSize;
-                //    int ysize = CTimage.YSize;
-
-                //    // MessageBox.Show("X voxel size: " + xsize);
-                //    // MessageBox.Show("Y voxel size: " + ysize);
-
-                //    int LEVEL = CTimage.Level;
-                //    int WINDOW = CTimage.Window;
-
-
-                //    //   MessageBox.Show("Level: " + LEVEL);
-                //    //   MessageBox.Show("Window: " + WINDOW);
-
-                //    // Level is the voxel intensity that is in the middle of the selected window of intensity values
-                //    // Window is the absolute length of the window
-                //    // so, if a CT scan image is windowed form -60 HU to 60 HU, then the Level is 0 and the window is 120.
-                //    //THE WINDOW LEVEL LITERALLY DEFINES THE GRAYSCALE RANGE. ANYTHING BELOW THE SELCTED RANGE IS JUST BLACK, ANYTHING ABOVE IS WHITE. ONLY PIXEL VALUES WITHIN THE RANGE ARE DISPLAYED IN GRAYSCALE 
-
-                //    int VOXEL_LOWER_BOUND = LEVEL - (WINDOW / 2);
-                //    int VOXEL_UPPER_BOUND = LEVEL + (WINDOW / 2);
-                //    //  MessageBox.Show("VOXEL upper bound: " + VOXEL_UPPER_BOUND);
-                //    //  MessageBox.Show("VOXEL Lower bound: " + VOXEL_LOWER_BOUND);
-
-                //    double colorconversion = Convert.ToDouble(WINDOW) / 254.0;
-                //    //  MessageBox.Show("colorconversion: " + colorconversion);
-                //    double convtemp = 0.0;
-                //    int iconvtemp = 0;
-
-                //    int[,] pixels = new int[xsize, ysize];
-                //    // long[,] lpixels = new long[xsize, ysize];
-                //   // byte[] realpixels = new byte[xsize * ysize * sizeof(int)];
-
-                //    // Plan.Beams.First().ReferenceImage.GetVoxels(0, pixels);
-                //    CTimage.GetVoxels(Isoplane, pixels);  //86 plane should be Iso
-
-                //    Bitmap imag = new Bitmap(xsize, ysize, PixelFormat.Format32bppArgb);
-                //    imag.SetResolution(26, 26);
-
-                //    //ColorPalette pal = imag.Palette;
-                //    //Color[] colors = pal.Entries;
-
-                //    //for (int i = 0; i < 256; i++)
-                //    //{
-                //    //    Color c = new Color();
-                //    //    c = Color.FromArgb(i, i, i);
-                //    //    colors[i] = c;
-                //    //}
-
-                //    //imag.Palette = pal;
-
-                //        for (int x = 0; x < imag.Width; x++)
-                //        {
-                //            for (int y = 0; y < imag.Height; y++)
-                //            {
-                //                if (pixels[x, y] < VOXEL_LOWER_BOUND)
-                //                {
-                //                    imag.SetPixel(x, y, Color.FromArgb(0,0,0));
-                //                }
-                //                else if (pixels[x, y] > VOXEL_UPPER_BOUND)
-                //                {
-                //                    imag.SetPixel(x, y, Color.FromArgb(255, 255, 255));
-                //                }
-                //                else if (pixels[x, y] >= VOXEL_LOWER_BOUND & pixels[x, y] <= VOXEL_UPPER_BOUND)
-                //                {
-                //                    // MessageBox.Show("in range pixel: " + pixels[x, y]);
-                //                    convtemp = (pixels[x, y] - VOXEL_LOWER_BOUND) / colorconversion;
-                //                    // MessageBox.Show("convtemp: " + convtemp);
-                //                    iconvtemp = Convert.ToInt32(convtemp);
-
-                //                    imag.SetPixel(x, y, Color.FromArgb(iconvtemp, iconvtemp, iconvtemp));
-                //                }
-                //            }
-                //        }
-                    
-                //    //Buffer.BlockCopy(pixels, 0, realpixels, 0, realpixels.Length);
-                //    //BitmapData bmpdata = imag.LockBits(new Rectangle(0, 0, imag.Width, imag.Height), ImageLockMode.ReadWrite, imag.PixelFormat);
-                //    //Marshal.Copy(realpixels, 0, bmpdata.Scan0, pixels.Length);
-
-                //    //imag.UnlockBits(bmpdata);
-
-                //    imag.Save(@"C:\Users\ztm00\Desktop\Reports\CTimage", ImageFormat.MemoryBmp);
-
-                //    //now dose info
-                //    //xsize = Plan.Dose.XSize;
-                //    //ysize = Plan.Dose.YSize;
-
-                //    //MessageBox.Show("Dose X size: " + xsize + " Dose Y size: " + ysize);
-
-                //    //int[,] dpixels = new int[xsize, ysize];
-
-                //    //Plan.Dose.GetVoxels(86, dpixels);
-
-
-                //    //for (int x = 0; x < imag.Width; x++)
-                //    //{
-                //    //    for (int y = 0; y < imag.Height; y++)
-                //    //    {
-                //    //        DoseValue dv = Plan.Dose.VoxelToDoseValue(dpixels[x, y]);
-
-                //    //        MessageBox.Show("Dose value unit: " + dv.Unit.ToString());
-
-                //    //        break;
-                //    //        //imag.SetPixel(x, y, );
-
-                //    //    }
-                //    //    break;
-                //    //}
-                //    double tempval = 0.0;
-                //    double[,] dpixelsxraster = new double[Plan.Dose.XSize, Plan.Dose.YSize];
-                //    double[,] dpixelsyraster = new double[Plan.Dose.XSize, Plan.Dose.YSize];
-                //    double[] yprof = new double[Plan.Dose.YSize];  //Y direction dose profile
-                //    double[] xprof = new double[Plan.Dose.XSize];  //X direction dose profile
-
-                //    MessageBox.Show("Dose matrix Y Res (mm): " + Plan.Dose.YRes);   // resolution is in mm!
-                //    MessageBox.Show("Dose matrix Y size (voxels): " + Plan.Dose.YSize);
-
-                //    double DoseMatrixYlength = Plan.Dose.YRes * Plan.Dose.YSize;
-                //    double DoseMatrixXlength = Plan.Dose.XRes * Plan.Dose.XSize;
-                //    string doseunit = "unit";
-
-                //    VVector DoseMatrixOrigin = Plan.Dose.Origin;  // Upper left hand corner of the first dose plane, in DICOM coordinates. assuming first dose plan is same as first image plane.
-                //    VVector DoseMatrixOriginUser = Plan.StructureSet.Image.DicomToUser(DoseMatrixOrigin, Plan);
-                //    MessageBox.Show("Dose Matrix Origin (in DICOM): (" + DoseMatrixOrigin.x + ", " + DoseMatrixOrigin.y + ", " + DoseMatrixOrigin.z + ")");
-                //    MessageBox.Show("Dose MAtrix Origin (in USER): (" + DoseMatrixOriginUser.x + ", " + DoseMatrixOriginUser.y + ", " + DoseMatrixOriginUser.z + ")");
-
-
-                //    //DOUBLE RASTER
-                //    for (int xi = 0; xi < Plan.Dose.XSize; xi++) // iterates dose profiles in the x-direction
-                //    {
-                //        VVector Start = new VVector(DoseMatrixOrigin.x + (xi * Plan.Dose.XRes) + (Plan.Dose.XRes / 2) , DoseMatrixOrigin.y, ISOCENTER.z);
-                //        VVector Stop = new VVector(DoseMatrixOrigin.x + (xi * Plan.Dose.XRes) + (Plan.Dose.XRes / 2), DoseMatrixOrigin.y + DoseMatrixYlength, ISOCENTER.z);
-
-                //        var v = Plan.Dose.GetDoseProfile(Start, Stop, yprof);
-                //        doseunit = v.Unit.ToString();
-
-                //       // MessageBox.Show("ydprof length: " + ydprof.Length);
- 
-                //        for (int yi = 0; yi < Plan.Dose.YSize; yi++)
-                //        {
-                //            tempval = yprof[yi];
-                //            dpixelsxraster[xi, yi] = tempval;
-                //        }
-                //    }
-
-                //    // MessageBox.Show("Dose profile unit: " + doseunit);
-                //    for (int yi = 0; yi < Plan.Dose.YSize; yi++) // iterates dose profiles in the y-direction
-                //    {
-                //        VVector Start = new VVector(DoseMatrixOrigin.x, DoseMatrixOrigin.y + (yi * Plan.Dose.YRes) + (Plan.Dose.YRes / 2 ), ISOCENTER.z);
-                //        VVector Stop = new VVector(DoseMatrixOrigin.x + DoseMatrixXlength, DoseMatrixOrigin.y + (yi * Plan.Dose.YRes) + (Plan.Dose.YRes / 2),  ISOCENTER.z);
-
-                //        var v = Plan.Dose.GetDoseProfile(Start, Stop, xprof);
-                //        doseunit = v.Unit.ToString();
-
-                //       //  MessageBox.Show("ydprof length: " + yprof.Length);
-
-                //        for (int xi = 0; xi < Plan.Dose.XSize; xi++)
-                //        {
-                //            tempval = xprof[xi];
-                //            dpixelsyraster[xi, yi] = tempval;
-                //        }
-                //    }
-
-                //    using (StreamWriter file = new StreamWriter(@"C:\Users\ztm00\Desktop\Reports\doseinfo.txt"))
-                //    {
-                //        foreach(double db in dpixelsxraster)
-                //        {
-                //            file.WriteLine(db);
-                //        }
-                //    }
-
-                //    // need to figure out how to map the dose to the image using Iso
-
-                //    Bitmap dimag = new Bitmap(Plan.Dose.XSize, Plan.Dose.YSize, PixelFormat.Format32bppArgb);
-                //    dimag.SetResolution(25, 25);
-
-                //    for (int x = 0; x < dimag.Width; x++)
-                //    {
-                //        for (int y = 0; y < dimag.Height; y++)
-                //        {
-                //            if((dpixelsxraster[x, y] > 29.5 & dpixelsxraster[x, y] < 30.5) | (dpixelsyraster[x, y] > 29.5 & dpixelsyraster[x, y] < 30.5))
-                //            {
-                //                dimag.SetPixel(x, y, Color.FromArgb(120, Color.Brown));
-                //            }
-                //            else if((dpixelsxraster[x, y] > 49.5 & dpixelsxraster[x, y] < 50.5) | (dpixelsyraster[x, y] > 49.5 & dpixelsyraster[x, y] < 50.5))
-                //            {
-                //                dimag.SetPixel(x, y, Color.FromArgb(120, Color.Pink));
-                //            }
-                //            else if ((dpixelsxraster[x, y] > 79.5 & dpixelsxraster[x, y] < 80.5) | (dpixelsyraster[x, y] > 79.5 & dpixelsyraster[x, y] < 80.5))
-                //            {
-                //                dimag.SetPixel(x, y, Color.FromArgb(120, Color.DarkBlue));
-                //            }
-                //            else if ((dpixelsxraster[x, y] > 89.5 & dpixelsxraster[x, y] < 90.5) | (dpixelsyraster[x, y] > 89.5 & dpixelsyraster[x, y] < 90.5))
-                //            {
-                //                dimag.SetPixel(x, y, Color.FromArgb(120, Color.Green));
-                //            }
-                //            else if ((dpixelsxraster[x, y] > 94.5 & dpixelsxraster[x, y] < 95.5) | (dpixelsyraster[x, y] > 94.5 & dpixelsyraster[x, y] < 95.5))
-                //            {
-                //                dimag.SetPixel(x, y, Color.FromArgb(120, Color.Blue));
-                //            }
-                //            else if ((dpixelsxraster[x, y] > 97.5 & dpixelsxraster[x, y] < 98.5) | (dpixelsyraster[x, y] > 97.5 & dpixelsyraster[x, y] < 98.5))
-                //            {
-                //                dimag.SetPixel(x, y, Color.FromArgb(120, Color.Orange));
-                //            }
-                //            else if ((dpixelsxraster[x, y] > 99.5 & dpixelsxraster[x, y] < 100.5) | (dpixelsyraster[x, y] > 99.5 & dpixelsyraster[x, y] < 100.5))
-                //            {
-                //                dimag.SetPixel(x, y, Color.FromArgb(120, Color.Yellow));
-                //            }
-                //            else if ((dpixelsxraster[x, y] > 104.5 & dpixelsxraster[x, y] < 105.5) | (dpixelsyraster[x, y] > 104.5 & dpixelsyraster[x, y] < 105.5))
-                //            {
-                //                dimag.SetPixel(x, y, Color.FromArgb(120, Color.Cyan));
-                //            }
-                //            else if ((dpixelsxraster[x, y] > 109.5 & dpixelsxraster[x, y] < 110.5) | (dpixelsyraster[x, y] > 109.5 & dpixelsyraster[x, y] < 110.5))
-                //            {
-                //                dimag.SetPixel(x, y, Color.FromArgb(120, Color.Magenta));
-                //            }
-                //            else 
-                //            {
-                //                dimag.SetPixel(x, y, Color.FromArgb(0, 255, 255, 255));
-                //            }
-                //        }
-                //    }
-
-                //    dimag.Save(@"C:\Users\ztm00\Desktop\Reports\Doseimage", ImageFormat.MemoryBmp);
-
-
-                //    PicBox.Image = imag;
-                //    PicBox.Visible = true;
-                //    MessageBox.Show("DONE");
-                //}
-                //catch(Exception e)
-                //{
-                //    MessageBox.Show(e.ToString());
-                //}
-
+                PDFPreparation.PlanMain(patient, course, TS, ptype, Plan, image3D, Plan.StructureSet, user, DoseStat, SRScoverageRequirements, ConvCoverageRequirements, output);
 
             }
         }
 
+        //This method fires when the user selects a plan. A string representing the plan is assigned to a global variable called pl.
+        //If the selected plan is a plansum, it will call a method containing a custom Windows Form which will prompt the user
+        //to select how they want the program to handle the total dose of the plansum. The dt variable is then carried throughout
+        //the rest of the program as a way of knowing which situation was selected. It also states the selection mode of the treatment
+        //site listbox, since if it is a plansum the user can choose more than one treatment site.
         void PlanList_SelectedIndexChanged(object sender, EventArgs e)
         {
             pl = Plan_List.SelectedItem.ToString();
@@ -728,7 +553,6 @@ namespace DoseObjectiveCheck
             foreach (string str in sumnames)
             {
                 c++;
-
                 if (pl == str)
                 {
                     LOCK = true;
@@ -737,19 +561,19 @@ namespace DoseObjectiveCheck
 
                     sid = PlansumTotalDoseDialog();
 
-                    if (sid == "Sum of the Rx doses of the constituent plans (Normal Plansum)")
+                    if (sid == "Normal Plansum")
                     {
                         // add Rx doses of the two plans in the plansum
                         dt = 1;
                     }
-                    else if (sid == "The Rx dose of the plans (assuming they have the same Rx, \"fake plansum\")")
+                    else if (sid == "\"fake plansum\" - Both plans have the same Rx dose and you want to evaluate using that dose, NOT the sum.")
                     {
                         //use the Rx dose of one of the plans
                         dt = 2;
                     }
-                    else if (sid == "Enter your own dose (Use this if you want to use the Rx dose of one of the constituent plans, but they are not the same. You will have to enter the dose in.")
+                    else if (sid == "For other situations, enter your own dose to use in evaluation. You'll be prompted.")
                     {
-                        //Enter your own dose
+                        //Enter your own dose. There is an additional custom Form, called below where the user enters the dose they want to use
                         dt = 3;
                         dd = Convert.ToDouble(Dialog());
                     }
@@ -788,10 +612,17 @@ namespace DoseObjectiveCheck
             laterality = latobj.ToString();
         }
 
+        //This fires when a treatment site is selected. There are two logic branches because of the case of multiple treatment sites
+        //selected for a plansum, but they do the same thing. If the treatment site is Gynecological, a custom WinForm is called that
+        //asks the user if it is a Dose painted plan or a sequential boosts. This is necessary becuase there is no way for Eclipse to know about this.
+        //This information is needed for calculating the dose limits of three special dynamic limits in Gynecological plans, but the limits
+        //depend on the planning technique, dose painted vs. sequential.
+        //The other thing is laterality for breast plans. This is actually a listbox on the GUI which is kept hidden until triggered below.
+        //This information is used to decide which breast structure (right or left) is ipsilateral or contralateral for the given plan,
+        //since their are different dose objectives for ipsilateral and contralateral breast.
 
         void TSiteList_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             // MessageBox.Show("OrganList fire");
             if (TSiteList.SelectionMode == SelectionMode.One)
             {
@@ -802,12 +633,12 @@ namespace DoseObjectiveCheck
                 OuputBox.AppendText(Environment.NewLine);
                 OuputBox.AppendText("Treatment Site Selected: " + TS);
 
-                if (TS == "Gynecological")
+                if (TS == "Pelvis - GYN")
                 {
                     gyntype = GynecologicalEdits();
                 }
 
-                if (TS == "Breast 23+fx" || TS == "Breast Hypofx")
+                if (TS == "Breast 23+fx" || TS == "Breast Hypofx" || TS == "Breast + regional_LN 23 + fx" || TS == "Breast+regional_LN Hypofx")
                 {
                     lateralitybox.Visible = true;
                     MessageBox.Show("Please select the laterality of the breast plan (above the execute button). ");
@@ -825,12 +656,12 @@ namespace DoseObjectiveCheck
                 {
                     ject = ject + obj.ToString();
 
-                    if (obj.ToString() == "Gynecological")
+                    if (obj.ToString() == "Pelvis - GYN")
                     {
                         gyntype = GynecologicalEdits();
                     }
 
-                    if (obj.ToString() == "Breast 23+fx" || obj.ToString() == "Breast Hypofx")
+                    if (obj.ToString() == "Breast 23+fx" || obj.ToString() == "Breast Hypofx" || obj.ToString() == "Breast+regional_LN 23+fx" || obj.ToString() == "Breast+regional_LN Hypofx")
                     {
                         lateralitybox.Visible = true;
                         MessageBox.Show("Please select the laterality of the breast plan (above the execute button). ");
@@ -868,6 +699,7 @@ namespace DoseObjectiveCheck
             return gynDialog.ShowDialog() == DialogResult.OK ? (string)gopt.SelectedItem : "";
         }
 
+        //This fires when the plan type is selected, SRS or Conventional
         void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             // MessageBox.Show("checkedlistboxfire");
@@ -879,75 +711,27 @@ namespace DoseObjectiveCheck
             {
                 //conventional
                 ptype = "Conventional";
-                TSiteList.DataSource = Script.MakelistConv();               
+                TSiteList.DataSource = TreatSite.MakelistConv();               
             }
             else if (listBox1.SelectedItem.ToString() == "SRS/SBRT")
             {
                 //SRS
                 ptype = "SRS/SBRT";
-                TSiteList.DataSource = Script.MakelistSRS();               
+                TSiteList.DataSource = TreatSite.MakelistSRS(); 
             }
             else if (listBox1.SelectedItem.ToString() == "Both (Plansums Only)")
             {
                 //Both
                 ptype = "Both";
-                TSiteList.DataSource = Script.MakelistBoth();               
+                TSiteList.DataSource = TreatSite.MakelistBoth();               
             }
 
             OuputBox.AppendText(Environment.NewLine);
             OuputBox.AppendText("Treatment Type Selected: " + ptype);
 
             TSiteList.SelectionMode = sel;   // after the datasource is set, the selection mode is set back to what was when the plan is selected.
-                                                // this is an issue because we choose the selection mode when the plan is selected, before the list has even been made
+                                             // this is an issue because we choose the selection mode when the plan is selected, before the list has even been made
         }
-
-        /*
-        void checkedListBox1_ItemCheck(object sender, EventArgs e)
-        {
-            if (checkedListBox1.GetItemChecked(0))
-            {
-                //Conventional
-                ptype = "Conventional";
-                TSiteList.DataSource = Script.MakelistConv();               
-            }
-            else if (checkedListBox1.GetItemChecked(1))
-            {
-                //SRS
-                ptype = "SRS/SBRT";
-                TSiteList.DataSource = Script.MakelistSRS();              
-            }
-            else if (checkedListBox1.GetItemChecked(2))
-            {
-                //Both
-                ptype = "Both";
-                TSiteList.DataSource = Script.MakelistBoth();               
-            }
-            OuputBox.Text = "Plan Type Selected";
-        }
-        */
-
-
-        /*
-        void checkedListBox2_ItemCheck(object sender, EventArgs e)
-        {
-            if (listBox2.GetItemChecked(0))
-            {
-                // add Rx doses of the two plans in the plansum
-                dt = 1;
-            }
-            else if (listBox2.GetItemChecked(1))
-            {
-                //use the Rx dose of one of the plans
-                dt = 2;
-            }
-            else if (listBox2.GetItemChecked(2))
-            {
-                //Enter your own dose
-                dt = 3;
-                dd = Convert.ToDouble(Dialog());
-            }
-        }
-        */
 
         private void button1_Click(object sender, EventArgs args)
         {
@@ -955,7 +739,7 @@ namespace DoseObjectiveCheck
             //  MessageBox.Show("Trig 12 - First Click");
         }
 
-        void buttonNext_Click(object sender, EventArgs e, Patient patient, Course course, VMS.TPS.Common.Model.API.Image image3D, User user, IEnumerable<PlanSum> Plansums, IEnumerable<PlanSetup> Plans)
+        void buttonNext_Click(object sender, EventArgs e, VMS.TPS.Common.Model.API.Patient patient, Course course, VMS.TPS.Common.Model.API.Image image3D, User user, IEnumerable<PlanSum> Plansums, IEnumerable<PlanSetup> Plans)
         {
             // MessageBox.Show("Trig MORTY");
             EXECUTE(laterality, TS, TSA, patient, course, image3D, user, Plansums, Plans);
@@ -965,20 +749,20 @@ namespace DoseObjectiveCheck
         {
             Form Dialog = new Form()
             {
-                Width = 1250,
-                Height = 450,
+                Width = 960,
+                Height = 290,
                 FormBorderStyle = FormBorderStyle.FixedDialog,
                 Text = "Plansum Dose",
                 StartPosition = FormStartPosition.CenterScreen,
                 Font = new System.Drawing.Font("Goudy Old Style", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)))
             };
-            Label txtlab = new Label() { Left = 10, Top = 15, Width = 320, Height = 140, Text = "How do you want the Total Dose of this Plansum to be calculated?" };
-            Button confirm = new Button() { Text = "Ok", Left = 120, Width = 75, Top = 320, DialogResult = DialogResult.OK };
-            ListBox opt = new ListBox() { Left = 30, Top = 90, Width = 1200};
+            Label txtlab = new Label() { Left = 10, Top = 15, Width = 650, Height = 140, Text = "How do you want the Total Dose of this Plansum to be calculated?" };
+            Button confirm = new Button() { Text = "Ok", Left = 120, Width = 75, Top = 210, DialogResult = DialogResult.OK };
+            ListBox opt = new ListBox() { Left = 30, Top = 90, Width = 900};
             opt.Items.AddRange(new object[] {
-                     "Sum of the Rx doses of the constituent plans (Normal Plansum)",
-                     "The Rx dose of the plans (assuming they have the same Rx, \"fake plansum\")",
-                     "Enter your own dose (Use this if you want to use the Rx dose of one of the constituent plans, but they are not the same.You will have to enter the dose in."});
+                     "Normal Plansum",
+                     "\"fake plansum\" - Both plans have the same Rx dose and you want to evaluate using that dose, NOT the sum.",
+                     "For other situations, enter your own dose to use in evaluation. You'll be prompted."});
             confirm.Click += (sender, e) => { Dialog.Close(); };
             Dialog.Controls.Add(opt);
             Dialog.Controls.Add(confirm);
@@ -987,64 +771,52 @@ namespace DoseObjectiveCheck
 
             return Dialog.ShowDialog() == DialogResult.OK ? (string)opt.SelectedItem : "";
         }
-
-        public static string PlansumTotalDoseChoice4Dialog(List<string> sumnames)
-        {
-            Form Dialog = new Form()
-            {
-                Width = 600,
-                Height = 600,
-                FormBorderStyle = FormBorderStyle.FixedDialog,
-                Text = "Plansum Dose",
-                StartPosition = FormStartPosition.CenterScreen,
-                Font = new System.Drawing.Font("Goudy Old Style", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)))
-            };
-            Label txtlab = new Label() { Left = 10, Top = 15, Width = 320, Height = 140, Text = "Please choose which plan you want to use the Rx dose of to evaluate the dose objectives" };
-            Button confirm = new Button() { Text = "Ok", Left = 120, Width = 100, Top = 500, DialogResult = DialogResult.OK };
-            ListBox opt = new ListBox() { Left = 30, Top = 90, Width = 450 };
-            opt.Items.AddRange(new object[] {
-                        sumnames[0]
-
-
-
-                                            });
-            confirm.Click += (sender, e) => { Dialog.Close(); };
-            Dialog.Controls.Add(opt);
-            Dialog.Controls.Add(confirm);
-            Dialog.Controls.Add(txtlab);
-            Dialog.AcceptButton = confirm;
-
-            return Dialog.ShowDialog() == DialogResult.OK ? (string)opt.SelectedItem : "";
-        }
-
-
-
-
-
 
         public static string Dialog()
         {
+            //MessageBox.Show("Start plansum custom dialog");
             Form Dialog = new Form()
             {
                 Width = 350,
-                Height = 170,
+                Height = 225,
                 FormBorderStyle = FormBorderStyle.FixedDialog,
                 Text = "Custom Plansum Dose",
                 StartPosition = FormStartPosition.CenterScreen,
                 Font = new System.Drawing.Font("Goudy Old Style", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)))
             };
             Label txtlab = new Label() { Left = 10, Top = 15, Width = 320, Height = 140, Text = "Please enter the dose (in cGy) that you would like to use as the total dose of the PlanSum." };
-            TextBox txtb = new TextBox() { Left = 20, Top = 80, Width = 200 };
-            Button confirm = new Button() { Text = "Ok", Left = 120, Width = 100, Top = 110, DialogResult = DialogResult.OK };
+            TextBox txtb = new TextBox() { Left = 20, Top = 90, Width = 200 };
+            Button confirm = new Button() { Text = "Ok", Left = 120, Width = 100, Top = 120, DialogResult = DialogResult.OK };
             confirm.Click += (sender, e) => { Dialog.Close(); };
             Dialog.Controls.Add(txtb);
             Dialog.Controls.Add(confirm);
             Dialog.Controls.Add(txtlab);
             Dialog.AcceptButton = confirm;
 
+            //MessageBox.Show("Before return plansum custom dialog");
             return Dialog.ShowDialog() == DialogResult.OK ? txtb.Text : "";
         }
 
+    } // end of class GUI
+
+
+
+    public class GUICalls
+    {
+        public static async Task SRSGUICaller(string[] SRSCoverageRequirements)
+        {
+            await Task.Run(() => System.Windows.Forms.Application.Run(new SRSstatsGUI(SRSCoverageRequirements)));
+            return;
+        }
+
+        public static async Task ConvGUICaller(string[] ConvCoverageRequirements)
+        {
+            await Task.Run(() => System.Windows.Forms.Application.Run(new ConvStatsGUI(ConvCoverageRequirements)));
+            return;
+        }
     }
-}
+
+
+
+} // end namespace
 

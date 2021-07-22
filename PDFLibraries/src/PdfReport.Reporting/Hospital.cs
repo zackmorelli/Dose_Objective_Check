@@ -13,7 +13,5 @@ namespace PdfReport.Reporting
 
         public string Address { get; set; }
 
-
-
     }
 }

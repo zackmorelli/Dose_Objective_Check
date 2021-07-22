@@ -8,9 +8,10 @@
     <OutputType>Library</OutputType>
     <RootNamespace>PdfReport.PDFGenerator</RootNamespace>
     <AssemblyName>PdfReport.PDFGenerator</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ESAPI 13.7|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -25,7 +26,7 @@
     <ESAPIpathTypes>C:\prog\ESAPI\ESAPI V13.7 DLLs\VMS.TPS.Common.Model.Types.dll</ESAPIpathTypes>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -51,13 +52,49 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PdfReport.PDFGenerator.cs" />
+    <Compile Include="ConventionalDoseCoverageTargetSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConventionalDoseCoverageTargetSelector.Designer.cs">
+      <DependentUpon>ConventionalDoseCoverageTargetSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DosePaintedPrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DosePaintedPrompt.Designer.cs">
+      <DependentUpon>DosePaintedPrompt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DosePaintedTargetSpecifier.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DosePaintedTargetSpecifier.Designer.cs">
+      <DependentUpon>DosePaintedTargetSpecifier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PlansumSequentialPrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlansumSequentialPrompt.Designer.cs">
+      <DependentUpon>PlansumSequentialPrompt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimplePlanNotifier.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SimplePlanNotifier.Designer.cs">
+      <DependentUpon>SimplePlanNotifier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SRSDoseCoverageTargetSelectorGUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SRSDoseCoverageTargetSelectorGUI.Designer.cs">
+      <DependentUpon>SRSDoseCoverageTargetSelectorGUI.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PdfReport.Reporting, Version=2.1.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>src\PdfReport.Reporting\bin\Debug\PdfReport.Reporting.dll</HintPath>
+      <HintPath>src\PdfReport.Reporting\bin\Release\PdfReport.Reporting.dll</HintPath>
     </Reference>
     <Reference Include="PdfReport.Reporting.MigraDoc, Version=2.1.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
@@ -67,19 +104,42 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="ROI, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ROI\bin\Debug\ROI.dll</HintPath>
+      <HintPath>..\ROI\bin\Release\ROI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="VMS.TPS.Common.Model.API, Version=1.0.300.11, Culture=neutral, PublicKeyToken=305b81e210ec4b89, processorArchitecture=AMD64">
+    <Reference Include="System.Xml" />
+    <Reference Include="VMS.TPS.Common.Model.API, Version=1.0.7.0, Culture=neutral, PublicKeyToken=305b81e210ec4b89, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ESAPI\ESAPI V15.6 DLLs\VMS.TPS.Common.Model.API.dll</HintPath>
+      <HintPath>..\..\ESAPI\ESAPI V16 DLLs\VMS.TPS.Common.Model.API.dll</HintPath>
     </Reference>
-    <Reference Include="VMS.TPS.Common.Model.Types, Version=1.0.300.11, Culture=neutral, PublicKeyToken=305b81e210ec4b89, processorArchitecture=AMD64">
+    <Reference Include="VMS.TPS.Common.Model.Types, Version=1.0.7.0, Culture=neutral, PublicKeyToken=305b81e210ec4b89, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ESAPI\ESAPI V15.6 DLLs\VMS.TPS.Common.Model.Types.dll</HintPath>
+      <HintPath>..\..\ESAPI\ESAPI V16 DLLs\VMS.TPS.Common.Model.Types.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ConventionalDoseCoverageTargetSelector.resx">
+      <DependentUpon>ConventionalDoseCoverageTargetSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DosePaintedPrompt.resx">
+      <DependentUpon>DosePaintedPrompt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DosePaintedTargetSpecifier.resx">
+      <DependentUpon>DosePaintedTargetSpecifier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlansumSequentialPrompt.resx">
+      <DependentUpon>PlansumSequentialPrompt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SimplePlanNotifier.resx">
+      <DependentUpon>SimplePlanNotifier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SRSDoseCoverageTargetSelectorGUI.resx">
+      <DependentUpon>SRSDoseCoverageTargetSelectorGUI.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

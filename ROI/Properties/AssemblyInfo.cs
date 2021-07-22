@@ -7,10 +7,10 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("ROI")]
 [assembly: AssemblyDescription("This is an internal class of the Dose Objective Check program. Written by Zackary T Morelli")]
-[assembly: AssemblyConfiguration("RELEASE 2.1 - 11/19/2019")]
+[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Radiation Oncology Department, Lahey Hospital and Medical Center, Burlington MA")]
 [assembly: AssemblyProduct("DoseObjectiveCheck")]
-[assembly: AssemblyCopyright("Copyright © 2019 Radiation Oncology Department, Lahey Hospital and Medical Center")]
+[assembly: AssemblyCopyright("Copyright © 2021 Radiation Oncology Department, Lahey Hospital and Medical Center")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -14,7 +14,6 @@ namespace PdfReport.Reporting
 
         public Nullable<DateTime> CreationDateTime { get; set; }
 
- 
         public DateTime LastModifiedDateTime { get; set; }
 
         public string LastModifiedUser { get; set; }

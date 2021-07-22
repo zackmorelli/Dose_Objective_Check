@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -8,9 +7,9 @@
     <ProjectGuid>{3E2ABC71-EAF2-4291-A57D-A99515AD5632}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Auto_Report_Script</RootNamespace>
-    <AssemblyName>DoseObjectiveCheck.esapi</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>DoseObjectiveCheck</RootNamespace>
+    <AssemblyName>DoseObjectiveCheck_16.1.esapi</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -32,12 +31,13 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>preview</LangVersion>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ESAPI 15.6|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -52,36 +52,26 @@
     <ESAPIpathTypes>C:\prog\ESAPI\ESAPI V15.6 DLLs\VMS.TPS.Common.Model.Types.dll</ESAPIpathTypes>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ContourChecks, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>AutoChecks\bin\Debug\ContourChecks.dll</HintPath>
-    </Reference>
-    <Reference Include="Dicom.Core, Version=4.0.4.0, Culture=neutral, PublicKeyToken=3a13f649e28eb09a, processorArchitecture=MSIL">
-      <HintPath>packages\fo-dicom.Desktop.4.0.5\lib\net45\Dicom.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="geometry3Sharp, Version=1.0.324.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\geometry3Sharp.1.0.324\lib\net45\geometry3Sharp.dll</HintPath>
     </Reference>
-    <Reference Include="PdfReport.PDFGenerator">
-      <HintPath>PDFLibraries\bin\ESAPI 15.6\PdfReport.PDFGenerator.dll</HintPath>
+    <Reference Include="MigraDoc.DocumentObjectModel, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>packages\PDFsharp-MigraDoc.1.50.5147\lib\net20\MigraDoc.DocumentObjectModel.dll</HintPath>
     </Reference>
-    <Reference Include="PdfReport.Reporting">
-      <HintPath>PDFLibraries\src\PdfReport.Reporting\bin\Debug\PdfReport.Reporting.dll</HintPath>
+    <Reference Include="MigraDoc.Rendering, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>packages\PDFsharp-MigraDoc.1.50.5147\lib\net20\MigraDoc.Rendering.dll</HintPath>
     </Reference>
-    <Reference Include="PdfReport.Reporting.MigraDoc">
-      <HintPath>PDFLibraries\src\PdfReport.Reporting.MigraDoc\bin\Debug\PdfReport.Reporting.MigraDoc.dll</HintPath>
+    <Reference Include="MigraDoc.RtfRendering, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>packages\PDFsharp-MigraDoc.1.50.5147\lib\net20\MigraDoc.RtfRendering.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>packages\PDFsharp-MigraDoc.1.50.5147\lib\net20\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>packages\PDFsharp-MigraDoc.1.50.5147\lib\net20\PdfSharp.Charting.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="ROI">
-      <HintPath>ROI\bin\ESAPI 15.6\ROI.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -100,16 +90,83 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="VMS.TPS.Common.Model.API">
-      <HintPath>..\ESAPI\ESAPI V15.6 DLLs\VMS.TPS.Common.Model.API.dll</HintPath>
+    <Reference Include="VMS.TPS.Common.Model.API, Version=1.0.7.0, Culture=neutral, PublicKeyToken=305b81e210ec4b89, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ESAPI\ESAPI V16 DLLs\VMS.TPS.Common.Model.API.dll</HintPath>
     </Reference>
-    <Reference Include="VMS.TPS.Common.Model.Types">
-      <HintPath>..\ESAPI\ESAPI V15.6 DLLs\VMS.TPS.Common.Model.Types.dll</HintPath>
+    <Reference Include="VMS.TPS.Common.Model.Types, Version=1.0.7.0, Culture=neutral, PublicKeyToken=305b81e210ec4b89, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ESAPI\ESAPI V16 DLLs\VMS.TPS.Common.Model.Types.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DoseObjectiveCheck.cs" />
+    <Compile Include="ConvStatsGUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConvStatsGUI.Designer.cs">
+      <DependentUpon>ConvStatsGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DoseObjective.cs" />
+    <Compile Include="PDF\ConventionalCoverageStats.cs" />
+    <Compile Include="PDF\PDFGenerator Internal\ConvStats.cs" />
+    <Compile Include="PDF\PDFGenerator Internal\CustomStyles.cs" />
+    <Compile Include="PDF\PDFGenerator Internal\DoseObjectiveList.cs" />
+    <Compile Include="PDF\PDFGenerator Internal\FirstPageStuff.cs" />
+    <Compile Include="PDF\PDFGenerator Internal\HeaderAndFooter.cs" />
+    <Compile Include="PDF\PDFGenerator Internal\old.cs" />
+    <Compile Include="PDF\PDFGenerator Internal\Size.cs" />
+    <Compile Include="PDF\PDFGenerator Internal\SRSstats.cs" />
+    <Compile Include="PDF\PDFGenerator Internal\VolDoseObjectiveList.cs" />
+    <Compile Include="PDF\PDFGenerator.cs" />
+    <Compile Include="PDF\PDFGUI\ConventionalDoseCoverageTargetSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PDF\PDFGUI\ConventionalDoseCoverageTargetSelector.Designer.cs">
+      <DependentUpon>ConventionalDoseCoverageTargetSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PDF\ReportData\Doctor.cs" />
+    <Compile Include="PDF\PDFGUI\DosePaintedPrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PDF\PDFGUI\DosePaintedPrompt.Designer.cs">
+      <DependentUpon>DosePaintedPrompt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PDF\PDFGUI\DosePaintedTargetSpecifier.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PDF\PDFGUI\DosePaintedTargetSpecifier.Designer.cs">
+      <DependentUpon>DosePaintedTargetSpecifier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PDF\ReportData\Hospital.cs" />
+    <Compile Include="PDF\ReportData\Image.cs" />
+    <Compile Include="PDF\ReportData\IReport.cs" />
+    <Compile Include="PDF\ReportData\Patient.cs" />
+    <Compile Include="PDF\PDFPreparation.cs" />
+    <Compile Include="PDF\ReportData\Plan.cs" />
+    <Compile Include="PDF\ReportData\Plansum.cs" />
+    <Compile Include="PDF\PDFGUI\PlansumSequentialPrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PDF\PDFGUI\PlansumSequentialPrompt.Designer.cs">
+      <DependentUpon>PlansumSequentialPrompt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PDF\ReportData\ReportData.cs" />
+    <Compile Include="PDF\PDFGUI\SimplePlanNotifier.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PDF\PDFGUI\SimplePlanNotifier.Designer.cs">
+      <DependentUpon>SimplePlanNotifier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PDF\SRScoveragestats.cs" />
+    <Compile Include="PDF\PDFGUI\SRSDoseCoverageTargetSelectorGUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PDF\PDFGUI\SRSDoseCoverageTargetSelectorGUI.Designer.cs">
+      <DependentUpon>SRSDoseCoverageTargetSelectorGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PDF\SRSTargetOverlapCheck.cs" />
+    <Compile Include="ScriptExecute.cs" />
     <Compile Include="GUI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,38 +180,54 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SRSstatsGUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SRSstatsGUI.Designer.cs">
+      <DependentUpon>SRSstatsGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DoseObjectiveAnalysis.cs" />
+    <Compile Include="TreatSite.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ConvStatsGUI.resx">
+      <DependentUpon>ConvStatsGUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI.resx">
       <DependentUpon>GUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PDF\PDFGUI\ConventionalDoseCoverageTargetSelector.resx">
+      <DependentUpon>ConventionalDoseCoverageTargetSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PDF\PDFGUI\DosePaintedPrompt.resx">
+      <DependentUpon>DosePaintedPrompt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PDF\PDFGUI\DosePaintedTargetSpecifier.resx">
+      <DependentUpon>DosePaintedTargetSpecifier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PDF\PDFGUI\PlansumSequentialPrompt.resx">
+      <DependentUpon>PlansumSequentialPrompt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PDF\PDFGUI\SimplePlanNotifier.resx">
+      <DependentUpon>SimplePlanNotifier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PDF\PDFGUI\SRSDoseCoverageTargetSelectorGUI.resx">
+      <DependentUpon>SRSDoseCoverageTargetSelectorGUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SRSstatsGUI.resx">
+      <DependentUpon>SRSstatsGUI.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ExternalBeamPlanCheck\ARIA_QUERY\ARIA_QUERY.csproj">
-      <Project>{645143e1-941b-4bdf-8c2a-17ed2815d9fc}</Project>
-      <Name>ARIA_QUERY</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
-    <Error Condition="!Exists('packages\fo-dicom.Desktop.4.0.5\build\net45\fo-dicom.Desktop.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fo-dicom.Desktop.4.0.5\build\net45\fo-dicom.Desktop.targets'))" />
-  </Target>
-  <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
-  <Import Project="packages\fo-dicom.Desktop.4.0.5\build\net45\fo-dicom.Desktop.targets" Condition="Exists('packages\fo-dicom.Desktop.4.0.5\build\net45\fo-dicom.Desktop.targets')" />
 </Project>
