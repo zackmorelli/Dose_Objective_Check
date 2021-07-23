@@ -74,10 +74,10 @@ namespace DoseObjectiveCheck
             // string path = @"\\wvvrnimbp01ss\va_data$\filedata\ProgramData\Vision\PublishedScripts\ConventionalROIList.txt";   // V13.7 Lahey
             // string path =  @"\\wvariafssp01\VA_DATA$\ProgramData\Vision\PatientSpecificDoseObjectiveLists"; V16.1 Lahey
 
-            if (File.Exists(@"\\wvariafssp01ss\VA_DATA$\ProgramData\Vision\PatientSpecificDoseObjectiveLists\" + PMRN + ".txt"))
+            if (File.Exists(@"\\shceclipseimg\VA_DATA$\ProgramData\Vision\PatientSpecificObjectiveLists\" + PMRN + ".txt"))
             {
-                 string path = @"\\wvariafssp01ss\VA_DATA$\ProgramData\Vision\PatientSpecificDoseObjectiveLists\" + PMRN + ".txt";   // Lahey
-                // string path = @"\\shceclipseimg\VA_DATA$\ProgramData\Vision\PatientSpecificObjectiveLists\" + PMRN + ".txt";    // Winchester
+                 //string path = @"\\wvariafssp01ss\VA_DATA$\ProgramData\Vision\PatientSpecificDoseObjectiveLists\" + PMRN + ".txt";   // Lahey
+                 string path = @"\\shceclipseimg\VA_DATA$\ProgramData\Vision\PatientSpecificObjectiveLists\" + PMRN + ".txt";    // Winchester
 
                 StreamReader ss = File.OpenText(path);
                 line = ss.ReadLine();
@@ -272,9 +272,9 @@ namespace DoseObjectiveCheck
 
             if (Ttype == "Conventional" | Ttype == "Both")
             {
-                // string path = @"\\shceclipseimg\VA_DATA$\ProgramData\Vision\PublishedScripts\ConventionalROIList.txt";    // Winchester
+                 string path = @"\\shceclipseimg\VA_DATA$\ProgramData\Vision\PublishedScripts\ConventionalROIList.txt";    // Winchester
                 // string path = @"\\wvvrnimbp01ss\va_data$\filedata\ProgramData\Vision\PublishedScripts\ConventionalROIList.txt";   // V13.7 Lahey
-                 string path = @"\\wvariafssp01ss\VA_DATA$\ProgramData\Vision\PublishedScripts\ConventionalROIList.txt";    // V16.1 Lahey
+                // string path = @"\\wvariafssp01ss\VA_DATA$\ProgramData\Vision\PublishedScripts\ConventionalROIList.txt";    // V16.1 Lahey
                 // Console.WriteLine("TriggerConv1");
 
                 if (File.Exists(path))
@@ -355,9 +355,9 @@ namespace DoseObjectiveCheck
             }
             else if (Ttype == "SRS/SBRT" | Ttype == "Both")
             {
-                // string path = @"\\shceclipseimg\VA_DATA$\ProgramData\Vision\PublishedScripts\SRSROIList.txt";   //Winchester
+                 string path = @"\\shceclipseimg\VA_DATA$\ProgramData\Vision\PublishedScripts\SRSROIList.txt";   //Winchester
                 // string path = @"\\wvvrnimbp01ss\va_data$\filedata\ProgramData\Vision\PublishedScripts\SRSROIList.txt";     // V13.7 Lahey
-                string path = @"\\wvariafssp01ss\VA_DATA$\ProgramData\Vision\PublishedScripts\SRSROIList.txt";    // V16.1 Lahey
+                 // string path = @"\\wvariafssp01ss\VA_DATA$\ProgramData\Vision\PublishedScripts\SRSROIList.txt";    // V16.1 Lahey
 
                 if (File.Exists(path))
                 {

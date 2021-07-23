@@ -1,5 +1,7 @@
 ﻿using MigraDoc.DocumentObjectModel;
 using MigraDoc.Rendering;
+using System;
+using System.Windows.Forms;
 
 
 
@@ -41,7 +43,16 @@ namespace DoseObjectiveCheck
             var pdfRenderer = new PdfDocumentRenderer();
             pdfRenderer.Document = report;
             pdfRenderer.RenderDocument();
-            pdfRenderer.PdfDocument.Save(path);
+
+            try
+            {
+                pdfRenderer.PdfDocument.Save(path);
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show("Something has gone wrong while attempting to save the PDF. Most likely there is a special character in the Plan, Course or Patient ID that the program is using to construct the file name that is not allowed by the Windows file system. Please remove these characters and try rerunning the script.");
+            }
+
           //  MessageBox.Show("Trigger exportpdf");
         }
 

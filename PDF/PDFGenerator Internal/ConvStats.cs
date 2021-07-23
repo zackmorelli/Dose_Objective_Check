@@ -118,17 +118,36 @@ namespace DoseObjectiveCheck
                 List<TargetStructure> doselevelthree = data.conventionalstats.TargetStructures.Where(t => t.DosePaintedTargetNumber == 3).ToList();
                 List<TargetStructure> doselevelfour = data.conventionalstats.TargetStructures.Where(t => t.DosePaintedTargetNumber == 4).ToList();
 
-                if(doselevelone.Count > 0)
+
+                //foreach (TargetStructure st in doselevelone)
+                //{
+                //    MessageBox.Show("Dose level one targets: " + st.StructureNAME);
+                //}
+
+                //foreach (TargetStructure st in doseleveltwo)
+                //{
+                //    MessageBox.Show("Dose level two targets: " + st.StructureNAME);
+                //}
+
+
+                //foreach (TargetStructure st in doselevelthree)
+                //{
+                //    MessageBox.Show("Dose level three targets: " + st.StructureNAME);
+                //}
+
+
+                if (doselevelone.Count > 0)
                 {
                     //so at least one structure in the first dose level
                     //need to find out if its a nice PTV/CTV pair or something else
                     //MessageBox.Show("doselevelcount: " + doselevelone.Count + "  " + doselevelone[0].StructureNAME + "  " + doselevelone[1].StructureNAME);
-                    if(doselevelone.Count < 4 && doselevelone.All(s => s.StructureNAME.Contains("PTV") || s.StructureNAME.Contains("CTV") || s.StructureNAME.Contains("GTV"))) 
+                    if(doselevelone.All(s => s.StructureNAME.Contains("PTV") || s.StructureNAME.Contains("CTV") || s.StructureNAME.Contains("GTV"))) 
                     {
                         //Nice PTV/CTV pair, so call the simple doselist table
-                        TargetStructure PTV = data.conventionalstats.TargetStructures.Where(s => s.StructureNAME.Contains("PTV")).First();
-                        List<TargetStructure> CTVlist = data.conventionalstats.TargetStructures.Where(s => s.StructureNAME.Contains("CTV")).ToList();
-                        List<TargetStructure> GTVlist = data.conventionalstats.TargetStructures.Where(s => s.StructureNAME.Contains("GTV")).ToList();
+                        //MessageBox.Show("Dose Level one PTV/CTV pair");
+                        TargetStructure PTV = doselevelone.Where(s => s.StructureNAME.Contains("PTV")).First();
+                        List<TargetStructure> CTVlist = doselevelone.Where(s => s.StructureNAME.Contains("CTV")).ToList();
+                        List<TargetStructure> GTVlist = doselevelone.Where(s => s.StructureNAME.Contains("GTV")).ToList();
 
                         if (CTVlist.Count > 0 && GTVlist.Count > 0)
                         {
@@ -152,9 +171,17 @@ namespace DoseObjectiveCheck
                             AddTableTitle(section, title);
                             AddDoseListTableSimplewithGTV(section, data, PTV, GTV);
                         }
+                        else
+                        {
+                            //just a PTV
+                            title = "Dose Level One - " + doselevelone.First().Dose + " cGy   Target: " + PTV.StructureNAME;
+                            AddTableTitle(section, title);
+                            AddDoseListTableSimplePTVonly(section, data, PTV);
+                        }
                     }
                     else
                     {
+                        //MessageBox.Show("Dose Level one per target");
                         int dosepaintedcount = 0;
                         foreach (TargetStructure ts in doselevelone)
                         {
@@ -168,13 +195,13 @@ namespace DoseObjectiveCheck
                 
                 if(doseleveltwo.Count > 0)
                 {
-                    if (doseleveltwo.Count < 4 && doseleveltwo.All(s => s.StructureNAME.Contains("PTV") || s.StructureNAME.Contains("CTV") || s.StructureNAME.Contains("GTV")))
+                    if (doseleveltwo.All(s => s.StructureNAME.Contains("PTV") || s.StructureNAME.Contains("CTV") || s.StructureNAME.Contains("GTV")))
                     {
                         //Nice PTV/CTV pair, so call the simple doselist table
-
-                        TargetStructure PTV = data.conventionalstats.TargetStructures.Where(s => s.StructureNAME.Contains("PTV")).First();
-                        List<TargetStructure> CTVlist = data.conventionalstats.TargetStructures.Where(s => s.StructureNAME.Contains("CTV")).ToList();
-                        List<TargetStructure> GTVlist = data.conventionalstats.TargetStructures.Where(s => s.StructureNAME.Contains("GTV")).ToList();
+                        //MessageBox.Show("Dose Level two PTV/CTV pair");
+                        TargetStructure PTV = doseleveltwo.Where(s => s.StructureNAME.Contains("PTV")).First();
+                        List<TargetStructure> CTVlist = doseleveltwo.Where(s => s.StructureNAME.Contains("CTV")).ToList();
+                        List<TargetStructure> GTVlist = doseleveltwo.Where(s => s.StructureNAME.Contains("GTV")).ToList();
 
                         if (CTVlist.Count > 0 && GTVlist.Count > 0)
                         {
@@ -198,9 +225,17 @@ namespace DoseObjectiveCheck
                             AddTableTitle(section, title);
                             AddDoseListTableSimplewithGTV(section, data, PTV, GTV);
                         }
+                        else
+                        {
+                            //just a PTV
+                            title = "Dose Level Two - " + doseleveltwo.First().Dose + " cGy   Target: " + PTV.StructureNAME;
+                            AddTableTitle(section, title);
+                            AddDoseListTableSimplePTVonly(section, data, PTV);
+                        }
                     }
                     else
                     {
+                        //MessageBox.Show("Dose Level two per target");
                         int dosepaintedcount = 0;
                         foreach (TargetStructure ts in doseleveltwo)
                         {
@@ -214,12 +249,12 @@ namespace DoseObjectiveCheck
 
                 if (doselevelthree.Count > 0)
                 {
-                    if (doselevelthree.Count < 4 && doselevelthree.All(s => s.StructureNAME.Contains("PTV") || s.StructureNAME.Contains("CTV") || s.StructureNAME.Contains("GTV")))
+                    if (doselevelthree.All(s => s.StructureNAME.Contains("PTV") || s.StructureNAME.Contains("CTV") || s.StructureNAME.Contains("GTV")))
                     {
                         //Nice PTV/CTV pair, so call the simple doselist table
-                        TargetStructure PTV = data.conventionalstats.TargetStructures.Where(s => s.StructureNAME.Contains("PTV")).First();
-                        List<TargetStructure> CTVlist = data.conventionalstats.TargetStructures.Where(s => s.StructureNAME.Contains("CTV")).ToList();
-                        List<TargetStructure> GTVlist = data.conventionalstats.TargetStructures.Where(s => s.StructureNAME.Contains("GTV")).ToList();
+                        TargetStructure PTV = doselevelthree.Where(s => s.StructureNAME.Contains("PTV")).First();
+                        List<TargetStructure> CTVlist = doselevelthree.Where(s => s.StructureNAME.Contains("CTV")).ToList();
+                        List<TargetStructure> GTVlist = doselevelthree.Where(s => s.StructureNAME.Contains("GTV")).ToList();
 
                         if (CTVlist.Count > 0 && GTVlist.Count > 0)
                         {
@@ -243,6 +278,13 @@ namespace DoseObjectiveCheck
                             AddTableTitle(section, title);
                             AddDoseListTableSimplewithGTV(section, data, PTV, GTV);
                         }
+                        else
+                        {
+                            //just a PTV
+                            title = "Dose Level Three - " + doselevelthree.First().Dose + " cGy   Target: " + PTV.StructureNAME;
+                            AddTableTitle(section, title);
+                            AddDoseListTableSimplePTVonly(section, data, PTV);
+                        }
                     }
                     else
                     {
@@ -259,13 +301,12 @@ namespace DoseObjectiveCheck
 
                 if (doselevelfour.Count > 0)
                 {
-                    if (doselevelfour.Count < 4 && doselevelfour.All(s => s.StructureNAME.Contains("PTV") || s.StructureNAME.Contains("CTV") || s.StructureNAME.Contains("GTV")))
+                    if (doselevelfour.All(s => s.StructureNAME.Contains("PTV") || s.StructureNAME.Contains("CTV") || s.StructureNAME.Contains("GTV")))
                     {
                         //Nice PTV/CTV pair, so call the simple doselist table
-
-                        TargetStructure PTV = data.conventionalstats.TargetStructures.Where(s => s.StructureNAME.Contains("PTV")).First();
-                        List<TargetStructure> CTVlist = data.conventionalstats.TargetStructures.Where(s => s.StructureNAME.Contains("CTV")).ToList();
-                        List<TargetStructure> GTVlist = data.conventionalstats.TargetStructures.Where(s => s.StructureNAME.Contains("GTV")).ToList();
+                        TargetStructure PTV = doselevelfour.Where(s => s.StructureNAME.Contains("PTV")).First();
+                        List<TargetStructure> CTVlist = doselevelfour.Where(s => s.StructureNAME.Contains("CTV")).ToList();
+                        List<TargetStructure> GTVlist = doselevelfour.Where(s => s.StructureNAME.Contains("GTV")).ToList();
 
                         if (CTVlist.Count > 0 && GTVlist.Count > 0)
                         {
@@ -288,6 +329,13 @@ namespace DoseObjectiveCheck
                             title = "Dose Level Four - " + doselevelfour.First().Dose + " cGy   Target: " + PTV.StructureNAME + " and " + GTV.StructureNAME;
                             AddTableTitle(section, title);
                             AddDoseListTableSimplewithGTV(section, data, PTV, GTV);
+                        }
+                        else
+                        {
+                            //just a PTV
+                            title = "Dose Level Four - " + doselevelfour.First().Dose + " cGy   Target: " + PTV.StructureNAME;
+                            AddTableTitle(section, title);
+                            AddDoseListTableSimplePTVonly(section, data, PTV);
                         }
                     }
                     else
@@ -330,6 +378,17 @@ namespace DoseObjectiveCheck
             FormatTable(table);
             AddColumnsAndHeaders(table);
             AddRows(table, data, count);
+            AddLastRowBorder(table);
+            // AlternateRowShading(table);
+        }
+
+        private void AddDoseListTableSimplePTVonly(Section section, ReportData data, TargetStructure PTV)
+        {
+            var table = section.AddTable();
+
+            FormatTable(table);
+            AddColumnsAndHeaders(table);
+            AddRowsSimplePTVonly(table, data, PTV);
             AddLastRowBorder(table);
             // AlternateRowShading(table);
         }
@@ -383,6 +442,88 @@ namespace DoseObjectiveCheck
             table.AddColumn(width * 0.5);
             table.AddColumn(width * 0.5);
         }
+
+        private static void AddRowsSimplePTVonly(Table table, ReportData data, TargetStructure PTV)
+        {
+            string roundedPTVXXRX = null;
+
+            var row0 = table.AddRow();
+            row0.VerticalAlignment = VerticalAlignment.Center;
+            row0.Cells[0].AddParagraph("Dose (cGy)");
+            row0.Cells[1].AddParagraph(Convert.ToString(PTV.Dose));
+
+            var row1 = table.AddRow();
+            row1.VerticalAlignment = VerticalAlignment.Center;
+            row1.Cells[0].AddParagraph("Target Volume (cc)");
+            string roundedptvvol = Convert.ToString(Math.Round(PTV.vol, 2, MidpointRounding.AwayFromZero));
+            row1.Cells[1].AddParagraph(roundedptvvol);
+
+            //Second row. Global Max Point Dose FOR THE PLAN OF THIS TARGET.
+            double globalmaxpercentofRX = (PTV.GlobalMaxPointDose / PTV.Dose) * 100.0;
+            var row2 = table.AddRow();
+            row2.VerticalAlignment = VerticalAlignment.Center;
+            row2.Cells[0].AddParagraph("Global Max Point Dose");
+            row2.Cells[1].AddParagraph(Math.Round(PTV.GlobalMaxPointDose, 2, MidpointRounding.AwayFromZero) + " cGy.\nThis is " + Math.Round(globalmaxpercentofRX, 2, MidpointRounding.AwayFromZero) + "% of the dose for this target.");
+
+            // third row
+            var row3 = table.AddRow();
+            row3.VerticalAlignment = VerticalAlignment.Center;
+            row3.Cells[0].AddParagraph("PTV V" + data.conventionalstats.PTV1RXcoverage + "% RX\nShould be greater than or equal to " + data.conventionalstats.PTV1Volcoverage + "%");
+            roundedPTVXXRX = Convert.ToString(Math.Round(PTV.PTVXXRX1, 2, MidpointRounding.AwayFromZero));
+            row3.Cells[1].AddParagraph(roundedPTVXXRX);
+            //MessageBox.Show("rounedePTVXXRX1: " + roundedPTVXXRX);
+            if (Convert.ToDouble(roundedPTVXXRX) >= data.conventionalstats.PTV1Volcoverage)
+            {
+                row3.Cells[1].Shading.Color = Color.FromRgb(0, 255, 0);
+            }
+            else
+            {
+                row3.Cells[1].Shading.Color = Color.FromRgb(255, 0, 0);
+            }
+
+            // fourth row
+            var row4 = table.AddRow();
+            row4.VerticalAlignment = VerticalAlignment.Center;
+            row4.Cells[0].AddParagraph("PTV V" + data.conventionalstats.PTV2RXcoverage + "% RX\nShould be greater than or equal to " + data.conventionalstats.PTV2Volcoverage + "%");
+            roundedPTVXXRX = Convert.ToString(Math.Round(PTV.PTVXXRX2, 2, MidpointRounding.AwayFromZero));
+            row4.Cells[1].AddParagraph(roundedPTVXXRX);
+
+            if (Convert.ToDouble(roundedPTVXXRX) >= data.conventionalstats.PTV2Volcoverage)
+            {
+                row4.Cells[1].Shading.Color = Color.FromRgb(0, 255, 0);
+            }
+            else
+            {
+                row4.Cells[1].Shading.Color = Color.FromRgb(255, 0, 0);
+            }
+
+            // fifth row
+            var row5 = table.AddRow();
+            row5.VerticalAlignment = VerticalAlignment.Center;
+            row5.Cells[0].AddParagraph("PTV V" + data.conventionalstats.PTV3RXcoverage + "% RX\nShould be less than or equal to " + data.conventionalstats.PTV3Volcoverage + "%");
+            roundedPTVXXRX = Convert.ToString(Math.Round(PTV.PTVXXRX3, 2, MidpointRounding.AwayFromZero));
+            row5.Cells[1].AddParagraph(roundedPTVXXRX);
+
+            if (Convert.ToDouble(roundedPTVXXRX) <= data.conventionalstats.PTV3Volcoverage)
+            {
+                row5.Cells[1].Shading.Color = Color.FromRgb(0, 255, 0);
+            }
+            else
+            {
+                row5.Cells[1].Shading.Color = Color.FromRgb(255, 0, 0);
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
 
         private static void AddRowsSimplewithCTV(Table table, ReportData data, TargetStructure PTV, TargetStructure CTV)
         {

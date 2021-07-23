@@ -28,70 +28,60 @@ namespace DoseObjectiveCheck
 
         void DoneClick(object sender, EventArgs e)
         {
-            if(structlist1.SelectedItems.Count > 1)
-            {
-                object naval = null;
-                foreach(object obj in structlist1.SelectedItems)
-                {
-                    //deselect the NA value if the user actually selects something
-                    if(obj.ToString().Equals("NA"))
-                    {
-                        naval = obj;
-                        //MessageBox.Show("NA skip trigger");
-                        continue;
-                    }
-                    ConventionalCoverageStats.TargetStructures.Add(new TargetStructure { StructureNAME = obj.ToString(), DosePaintedTargetNumber = 1, Dose = Convert.ToDouble(Dbox1.Text) });
-                }
-                structlist1.SelectedItems.Remove(naval);
-            }
 
-            if (structlist2.SelectedItems.Count > 1)
+            object naval = null;
+            foreach (object obj in structlist1.SelectedItems)
             {
-                object naval = null;
-                foreach (object obj in structlist2.SelectedItems)
+                //deselect the NA value if the user actually selects something
+                if (obj.ToString().Equals("NA"))
                 {
-                    //deselect the NA value if the user actually selects something
-                    if (obj.ToString().Equals("NA"))
-                    {
-                        naval = obj;
-                        continue;
-                    }
-                    ConventionalCoverageStats.TargetStructures.Add(new TargetStructure { StructureNAME = obj.ToString(), DosePaintedTargetNumber = 2, Dose = Convert.ToDouble(Dbox2.Text) });
+                    naval = obj;
+                    //MessageBox.Show("NA skip trigger");
+                    continue;
                 }
-                structlist2.SelectedItems.Remove(naval);
+                ConventionalCoverageStats.TargetStructures.Add(new TargetStructure { StructureNAME = obj.ToString(), DosePaintedTargetNumber = 1, Dose = Convert.ToDouble(Dbox1.Text) });
             }
+            structlist1.SelectedItems.Remove(naval);
 
-            if (structlist3.SelectedItems.Count > 1)
-            {
-                object naval = null;
-                foreach (object obj in structlist1.SelectedItems)
-                {
-                    //deselect the NA value if the user actually selects something
-                    if (obj.ToString().Equals("NA"))
-                    {
-                        naval = obj;
-                        continue;
-                    }
-                    ConventionalCoverageStats.TargetStructures.Add(new TargetStructure { StructureNAME = obj.ToString(), DosePaintedTargetNumber = 3, Dose = Convert.ToDouble(Dbox3.Text) });
-                }
-                structlist3.SelectedItems.Remove(naval);
-            }
 
-            if (structlist4.SelectedItems.Count > 1)
+            foreach (object obj in structlist2.SelectedItems)
             {
-                object naval = null;
-                foreach (object obj in structlist4.SelectedItems)
+                //deselect the NA value if the user actually selects something
+                if (obj.ToString().Equals("NA"))
                 {
-                    //deselect the NA value if the user actually selects something
-                    if (obj.ToString().Equals("NA"))
-                    {
-                        naval = obj;
-                        continue;
-                    }
-                    ConventionalCoverageStats.TargetStructures.Add(new TargetStructure { StructureNAME = obj.ToString(), DosePaintedTargetNumber = 4, Dose = Convert.ToDouble(Dbox4.Text) });
+                    naval = obj;
+                    continue;
                 }
-                structlist4.SelectedItems.Remove(naval);
+                ConventionalCoverageStats.TargetStructures.Add(new TargetStructure { StructureNAME = obj.ToString(), DosePaintedTargetNumber = 2, Dose = Convert.ToDouble(Dbox2.Text) });
             }
+            structlist2.SelectedItems.Remove(naval);
+
+
+            foreach (object obj in structlist3.SelectedItems)
+            {
+                //deselect the NA value if the user actually selects something
+                if (obj.ToString().Equals("NA"))
+                {
+                    naval = obj;
+                    continue;
+                }
+                ConventionalCoverageStats.TargetStructures.Add(new TargetStructure { StructureNAME = obj.ToString(), DosePaintedTargetNumber = 3, Dose = Convert.ToDouble(Dbox3.Text) });
+            }
+            structlist3.SelectedItems.Remove(naval);
+
+
+            foreach (object obj in structlist4.SelectedItems)
+            {
+                //deselect the NA value if the user actually selects something
+                if (obj.ToString().Equals("NA"))
+                {
+                    naval = obj;
+                    continue;
+                }
+                ConventionalCoverageStats.TargetStructures.Add(new TargetStructure { StructureNAME = obj.ToString(), DosePaintedTargetNumber = 4, Dose = Convert.ToDouble(Dbox4.Text) });
+            }
+            structlist4.SelectedItems.Remove(naval);
+
 
 
 

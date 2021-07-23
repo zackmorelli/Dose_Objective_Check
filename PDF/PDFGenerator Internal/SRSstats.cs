@@ -33,7 +33,7 @@ namespace DoseObjectiveCheck
                 }
                 else if(targetstat.DistanceWarning == true)
                 {
-                    AddTableTitle(section, (targetstat.TargetNAME + " Warning: This target is close to other targets, so the dosimetry is approximate."));
+                    AddTableTitle(section, (targetstat.TargetNAME + " Warning: This target is close to other targets, so conformity and dose fall-off values are approximate"));
                 }
                 
                 AddDoseListTable(section, data, count);

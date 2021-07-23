@@ -78,7 +78,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(12, 233);
+            this.label2.Location = new System.Drawing.Point(3, 285);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(92, 20);
             this.label2.TabIndex = 2;
@@ -88,7 +88,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(12, 341);
+            this.label3.Location = new System.Drawing.Point(3, 444);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(92, 20);
             this.label3.TabIndex = 3;
@@ -98,7 +98,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(12, 444);
+            this.label4.Location = new System.Drawing.Point(3, 594);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(92, 20);
             this.label4.TabIndex = 4;
@@ -108,7 +108,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(12, 546);
+            this.label5.Location = new System.Drawing.Point(3, 724);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(92, 20);
             this.label5.TabIndex = 5;
@@ -122,7 +122,7 @@
             this.t1list.ItemHeight = 20;
             this.t1list.Location = new System.Drawing.Point(101, 124);
             this.t1list.Name = "t1list";
-            this.t1list.Size = new System.Drawing.Size(184, 84);
+            this.t1list.Size = new System.Drawing.Size(184, 144);
             this.t1list.TabIndex = 6;
             // 
             // t2list
@@ -131,9 +131,9 @@
             this.t2list.FormattingEnabled = true;
             this.t2list.HorizontalScrollbar = true;
             this.t2list.ItemHeight = 20;
-            this.t2list.Location = new System.Drawing.Point(101, 227);
+            this.t2list.Location = new System.Drawing.Point(101, 285);
             this.t2list.Name = "t2list";
-            this.t2list.Size = new System.Drawing.Size(184, 84);
+            this.t2list.Size = new System.Drawing.Size(184, 144);
             this.t2list.TabIndex = 7;
             // 
             // t3list
@@ -142,9 +142,9 @@
             this.t3list.FormattingEnabled = true;
             this.t3list.HorizontalScrollbar = true;
             this.t3list.ItemHeight = 20;
-            this.t3list.Location = new System.Drawing.Point(101, 335);
+            this.t3list.Location = new System.Drawing.Point(101, 442);
             this.t3list.Name = "t3list";
-            this.t3list.Size = new System.Drawing.Size(184, 84);
+            this.t3list.Size = new System.Drawing.Size(184, 144);
             this.t3list.TabIndex = 8;
             // 
             // t4list
@@ -153,9 +153,9 @@
             this.t4list.FormattingEnabled = true;
             this.t4list.HorizontalScrollbar = true;
             this.t4list.ItemHeight = 20;
-            this.t4list.Location = new System.Drawing.Point(101, 444);
+            this.t4list.Location = new System.Drawing.Point(101, 594);
             this.t4list.Name = "t4list";
-            this.t4list.Size = new System.Drawing.Size(184, 84);
+            this.t4list.Size = new System.Drawing.Size(184, 124);
             this.t4list.TabIndex = 9;
             // 
             // t5list
@@ -164,9 +164,9 @@
             this.t5list.FormattingEnabled = true;
             this.t5list.HorizontalScrollbar = true;
             this.t5list.ItemHeight = 20;
-            this.t5list.Location = new System.Drawing.Point(101, 544);
+            this.t5list.Location = new System.Drawing.Point(101, 724);
             this.t5list.Name = "t5list";
-            this.t5list.Size = new System.Drawing.Size(184, 84);
+            this.t5list.Size = new System.Drawing.Size(184, 124);
             this.t5list.TabIndex = 10;
             // 
             // Okay_But
@@ -273,7 +273,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(514, 640);
+            this.ClientSize = new System.Drawing.Size(514, 858);
             this.Controls.Add(this.DBox5);
             this.Controls.Add(this.DBox4);
             this.Controls.Add(this.DBox3);

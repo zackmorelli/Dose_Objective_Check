@@ -55,10 +55,11 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(42, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(905, 20);
+            this.label1.Size = new System.Drawing.Size(867, 40);
             this.label1.TabIndex = 0;
-            this.label1.Text = "For each dose level that applies to your plan, select the targets you want evalua" +
-    "ted at that dose and enter the dose of that level.";
+            this.label1.Text = "For each dose level that applies to your plan, select the targets (multiple items" +
+    " can be selected in the dropdowns) you want\r\nevaluated at that dose and enter th" +
+    "e dose of that level.";
             // 
             // labellevel1
             // 
@@ -90,12 +91,14 @@
             // 
             // structlist1
             // 
+            this.structlist1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.structlist1.FormattingEnabled = true;
             this.structlist1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.structlist1.ItemHeight = 18;
             this.structlist1.Location = new System.Drawing.Point(16, 136);
             this.structlist1.Name = "structlist1";
             this.structlist1.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.structlist1.Size = new System.Drawing.Size(191, 186);
+            this.structlist1.Size = new System.Drawing.Size(191, 436);
             this.structlist1.TabIndex = 4;
             // 
             // label3
@@ -184,35 +187,41 @@
             // 
             // structlist2
             // 
+            this.structlist2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.structlist2.FormattingEnabled = true;
+            this.structlist2.ItemHeight = 18;
             this.structlist2.Location = new System.Drawing.Point(268, 136);
             this.structlist2.Name = "structlist2";
             this.structlist2.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.structlist2.Size = new System.Drawing.Size(191, 186);
+            this.structlist2.Size = new System.Drawing.Size(191, 436);
             this.structlist2.TabIndex = 14;
             // 
             // structlist3
             // 
+            this.structlist3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.structlist3.FormattingEnabled = true;
+            this.structlist3.ItemHeight = 18;
             this.structlist3.Location = new System.Drawing.Point(517, 136);
             this.structlist3.Name = "structlist3";
             this.structlist3.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.structlist3.Size = new System.Drawing.Size(191, 186);
+            this.structlist3.Size = new System.Drawing.Size(191, 436);
             this.structlist3.TabIndex = 15;
             // 
             // structlist4
             // 
+            this.structlist4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.structlist4.FormattingEnabled = true;
-            this.structlist4.Location = new System.Drawing.Point(776, 136);
+            this.structlist4.ItemHeight = 18;
+            this.structlist4.Location = new System.Drawing.Point(760, 136);
             this.structlist4.Name = "structlist4";
             this.structlist4.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.structlist4.Size = new System.Drawing.Size(191, 186);
+            this.structlist4.Size = new System.Drawing.Size(191, 436);
             this.structlist4.TabIndex = 16;
             // 
             // button
             // 
             this.button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button.Location = new System.Drawing.Point(711, 46);
+            this.button.Location = new System.Drawing.Point(711, 52);
             this.button.Name = "button";
             this.button.Size = new System.Drawing.Size(80, 37);
             this.button.TabIndex = 17;
@@ -224,7 +233,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(978, 329);
+            this.ClientSize = new System.Drawing.Size(978, 580);
             this.Controls.Add(this.button);
             this.Controls.Add(this.structlist4);
             this.Controls.Add(this.structlist3);

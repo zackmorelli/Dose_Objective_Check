@@ -13,20 +13,35 @@ using VMS.TPS.Common.Model.Types;
 
 /*
     Dose Objective Check - PDF Preparation
-    Copyright (c) 2021 Radiation Oncology Department, Lahey Hospital and Medical Center
-    Written by: Zackary T Morelli
-
-    This program is expressely written as a plug-in script for use with Varian's Eclipse Treatment Planning System, and requires Varian's API files to run properly.
-    This program also requires .NET Framework 4.6.1 to run properly.
-
-    This is the source code for a .NET Framework assembly file, however this functions as an executable file in Eclipse.
-    In addition to Varian's APIs and .NET Framework, this program uses the following commonly available libraries:
-    MigraDoc
-    PdfSharp
 
     Description:
     This is an internal helper class that is involved in creating the PDF report made by the Dose Objective Check Program. 
-    This code was originally developed by Carlos J Anderson and was obtained from him via his website. It was significatly modified for use with the Dose Objective Check program.
+    A lot of the logic in here is for dealing with the target coverage.
+
+    This program is expressely written as a plug-in script for use with Varian's Eclipse Treatment Planning System, and requires Varian's API files to run properly.
+    This program runs on .NET Framework 4.6.1. It also uses MigraDoc and PDFSharp for the PDF generation, commonly available libraries which can be found on NuGet
+
+    Copyright (C) 2021 Zackary Thomas Ricci Morelli
+    
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+    I can be contacted at: zackmorelli@gmail.com
+
+
+    Release 3.2 - 6/8/2021
+
+
 
 */
 
@@ -75,19 +90,6 @@ namespace DoseObjectiveCheck
                     }
 
                     SRScoveragestats srscoveragestats = await DoseCoverageUtilities.SRSDoseCoverageSelectorGUICALLER(SRSTargetlist, targetdoses, targetids, plandose);
-
-
-                    //need to deal with SIMT plans where targets are close together. Alert user.
-                    //foreach(SRSTargetstats st in srscoveragestats.Targets)
-                    //{
-                    //    VMS.TPS.Common.Model.API.Structure structm = plan.StructureSet.Structures.Where(s => s.Id.Equals(st.TargetNAME)).First();
-
-                    //    structm.
-
-
-
-                    //}
-
                     srscoveragestats.CoverageReqRX = Convert.ToDouble(SRScoverageRequirements[0]);
                     srscoveragestats.CoverageReqVol = Convert.ToDouble(SRScoverageRequirements[1]);
                     srsstats = srscoveragestats;
@@ -117,17 +119,12 @@ namespace DoseObjectiveCheck
                     }
 
                     bool sequentialstatus = false;
-                    //if (plan.Id.Contains("PlanSum") || plan.Id.Contains("Plan Sum") || plan.Id.Contains("plan sum") || plan.Id.Contains("plansum"))
-                    //{
-                    //    sequentialstatus = await DoseCoverageUtilities.sequentialpromptGUICALLER();
-                    //}
                     conventionalCoverageStats.Sequential = false;   //always false for plans
 
                     List<VMS.TPS.Common.Model.API.Structure> ptvlist = plan.StructureSet.Structures.Where(s => s.Id.StartsWith("_PTV")).ToList();
                     List<VMS.TPS.Common.Model.API.Structure> ctvlist = plan.StructureSet.Structures.Where(s => s.Id.StartsWith("_CTV")).ToList();
                     List<VMS.TPS.Common.Model.API.Structure> gtvlist = plan.StructureSet.Structures.Where(s => s.Id.StartsWith("_GTV")).ToList();
                    
-
                     if(ptvlist.Count == 1 && ctvlist.Count < 2 && gtvlist.Count < 2)
                     {
                         //seems like a "normal" conventional plan with one PTV and one CTV or GTV.
@@ -261,8 +258,8 @@ namespace DoseObjectiveCheck
             var reportData = CreateReportDataPlan(patient, course, TS, ptype, plan, image3D, structureSet, user, DoseStats, srsstats, conventionalCoverageStats, SRScoverageRequirements, ConvCoverageRequirements, output);
             //  MessageBox.Show("Trigger main middle plan");
 
-            var path = @"\\ntfs16\TherapyPhysics\LCN Scans\Script_Reports\Dose_Objective_Reports\Dose_Objective_Report_" + patient.Id + "_" + course.Id + "_" + plan.Id + ".pdf";  // Lahey
-            //var path = @"\\shccorp\commononcology\PHYSICS\New File Structure PHYSICS\Script Reports\Dose Objective Reports\Dose_Objective_Report_" + patient.Id + "_" + course.Id + "_" + plan.Id + ".pdf"; // Winchester
+            //var path = @"\\ntfs16\TherapyPhysics\LCN Scans\Script_Reports\Dose_Objective_Reports\Dose_Objective_Report_" + patient.Id + "_" + course.Id + "_" + plan.Id + ".pdf";  // Lahey
+            var path = @"\\shccorp\commononcology\PHYSICS\New File Structure PHYSICS\Script Reports\Dose Objective Reports\Dose_Objective_Report_" + patient.Id + "_" + course.Id + "_" + plan.Id + ".pdf"; // Winchester
 
             // MessageBox.Show(path);
             reportService.Export(path, reportData);
@@ -541,8 +538,8 @@ namespace DoseObjectiveCheck
 
             var reportData = CreateReportDataPlansum(patient, course, Si, ptype, plansum, image3D, structureSet, user, DoseStats, srsstats, conventionalCoverageStats, SRScoverageRequirements, ConvCoverageRequirements, output, dt, dd);
             // MessageBox.Show("Trigger main middle");
-            var path = @"\\ntfs16\TherapyPhysics\LCN Scans\Script_Reports\Dose_Objective_Reports\Dose_Objective_Report_" + patient.Id + "_" + course.Id + "_" + plansum.Id + ".pdf";   // Lahey
-           // var path = @"\\shccorp\commononcology\PHYSICS\New File Structure PHYSICS\Script Reports\Dose Objective Reports\Dose_Objective_Report_" + patient.Id + "_" + course.Id + "_" + plansum.Id + ".pdf"; // Winchester
+            //var path = @"\\ntfs16\TherapyPhysics\LCN Scans\Script_Reports\Dose_Objective_Reports\Dose_Objective_Report_" + patient.Id + "_" + course.Id + "_" + plansum.Id + ".pdf";   // Lahey
+            var path = @"\\shccorp\commononcology\PHYSICS\New File Structure PHYSICS\Script Reports\Dose Objective Reports\Dose_Objective_Report_" + patient.Id + "_" + course.Id + "_" + plansum.Id + ".pdf"; // Winchester
 
             // MessageBox.Show(path);
             reportService.Export(path, reportData);
@@ -730,7 +727,9 @@ namespace DoseObjectiveCheck
                                     target.PTVXXRX2 = plan.GetVolumeAtDose(str, td, VolumePresentation.Relative);
                                     //System.Windows.Forms.MessageBox.Show("RX2: " + target.PTVXXRX2);
 
+                                    //System.Windows.Forms.MessageBox.Show("RX3 tempdose struct: " + target.StructureNAME);
                                     tempdose = target.Dose * (conventionalCoverageStats.PTV3RXcoverage / 100.0);
+                                    //System.Windows.Forms.MessageBox.Show("RX3 tempdose: " + tempdose);
                                     td = new DoseValue(tempdose, DoseValue.DoseUnit.cGy);
                                     target.PTVXXRX3 = plan.GetVolumeAtDose(str, td, VolumePresentation.Relative);
                                     //System.Windows.Forms.MessageBox.Show("RX3: " + target.PTVXXRX3);

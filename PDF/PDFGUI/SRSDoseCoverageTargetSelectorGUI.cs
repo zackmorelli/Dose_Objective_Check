@@ -143,6 +143,5 @@ namespace DoseObjectiveCheck
             this.Close();
         }
 
-
     }
 }

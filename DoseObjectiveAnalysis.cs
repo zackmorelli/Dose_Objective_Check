@@ -59,145 +59,145 @@ namespace DoseObjectiveCheck
 
             ROIE = LISTMAKER.Listmaker(Ttype, Tsite, Si, laterality, patient.Id);          // separate class with LISTMAKER function which generates a list of Dose Objectives for the given treatment type and site
 
-
             // If the User wants the program to evaluate dose objectives they have made using the clinical goals feature in Eclipse, the code below handles that
             // It simply adds their clincial goals to the standard list. If they want to change a dose objective that is already on the list, they can use the PCTPN Document workflow
             // basically it takes in the string representing the clinical goal and breaks it apart to assign the neccessary info to the appropriate parts of the Dose Objective class
-            if (UseGoals == true)
-            {
-                //actually take the clinical goals and add them to the dose objective list
-                foreach (ClinicalGoal CG in Plan.GetClinicalGoals())
-                {
-                    string limit = null;
-                    string limunit = null;
-                    string strict = null;
-                    string limitval = null;
+            
+            //if (UseGoals == true)
+            //{
+            //    //actually take the clinical goals and add them to the dose objective list
+            //    foreach (ClinicalGoal CG in Plan.GetClinicalGoals())
+            //    {
+            //        string limit = null;
+            //        string limunit = null;
+            //        string strict = null;
+            //        string limitval = null;
 
-                    if (CG.ObjectiveAsString.StartsWith("Conformity Index") || CG.ObjectiveAsString.StartsWith("Gradient Measure") || CG.ObjectiveAsString.StartsWith("GM") || CG.ObjectiveAsString.StartsWith("CI"))
-                    {
-                        continue;
-                    }
+            //        if (CG.ObjectiveAsString.StartsWith("Conformity Index") || CG.ObjectiveAsString.StartsWith("Gradient Measure") || CG.ObjectiveAsString.StartsWith("GM") || CG.ObjectiveAsString.StartsWith("CI"))
+            //        {
+            //            continue;
+            //        }
 
-                    try
-                    {
-                        if (CG.ObjectiveAsString.StartsWith("Dmax"))
-                        {
-                            limit = "Max Pt Dose [voxel]";
+            //        try
+            //        {
+            //            if (CG.ObjectiveAsString.StartsWith("Dmax"))
+            //            {
+            //                limit = "Max Pt Dose [voxel]";
 
-                            string[] wrdbrk = new string[4];
-                            wrdbrk = CG.ObjectiveAsString.Split(' ');
-                            limunit = wrdbrk[3];
-                            limitval = wrdbrk[2];
-                            strict = wrdbrk[1];
-                        }
+            //                string[] wrdbrk = new string[4];
+            //                wrdbrk = CG.ObjectiveAsString.Split(' ');
+            //                limunit = wrdbrk[3];
+            //                limitval = wrdbrk[2];
+            //                strict = wrdbrk[1];
+            //            }
 
-                        if (CG.ObjectiveAsString.StartsWith("Maximum Dose"))
-                        {
-                            limit = "Max Pt Dose [voxel]";
+            //            if (CG.ObjectiveAsString.StartsWith("Maximum Dose"))
+            //            {
+            //                limit = "Max Pt Dose [voxel]";
 
-                            string[] wrdbrk = new string[4];
-                            wrdbrk = CG.ObjectiveAsString.Split(' ');
-                            limunit = wrdbrk[3];
-                            limitval = wrdbrk[2];
-                            strict = wrdbrk[1];
-                        }
+            //                string[] wrdbrk = new string[4];
+            //                wrdbrk = CG.ObjectiveAsString.Split(' ');
+            //                limunit = wrdbrk[3];
+            //                limitval = wrdbrk[2];
+            //                strict = wrdbrk[1];
+            //            }
 
-                        if (CG.ObjectiveAsString.StartsWith("Mean Dose"))
-                        {
-                            limit = "Mean Dose";
+            //            if (CG.ObjectiveAsString.StartsWith("Mean Dose"))
+            //            {
+            //                limit = "Mean Dose";
 
-                            string[] wrdbrk = new string[4];
-                            wrdbrk = CG.ObjectiveAsString.Split(' ');
-                            limunit = wrdbrk[3];
-                            limitval = wrdbrk[2];
-                            strict = wrdbrk[1];
-                        }
+            //                string[] wrdbrk = new string[4];
+            //                wrdbrk = CG.ObjectiveAsString.Split(' ');
+            //                limunit = wrdbrk[3];
+            //                limitval = wrdbrk[2];
+            //                strict = wrdbrk[1];
+            //            }
 
-                        if (CG.ObjectiveAsString.StartsWith("Dmean"))
-                        {
-                            limit = "Mean Dose";
+            //            if (CG.ObjectiveAsString.StartsWith("Dmean"))
+            //            {
+            //                limit = "Mean Dose";
 
-                            string[] wrdbrk = new string[4];
-                            wrdbrk = CG.ObjectiveAsString.Split(' ');
-                            limunit = wrdbrk[3];
-                            limitval = wrdbrk[2];
-                            strict = wrdbrk[1];
-                        }
+            //                string[] wrdbrk = new string[4];
+            //                wrdbrk = CG.ObjectiveAsString.Split(' ');
+            //                limunit = wrdbrk[3];
+            //                limitval = wrdbrk[2];
+            //                strict = wrdbrk[1];
+            //            }
 
-                        if (CG.ObjectiveAsString.StartsWith("V"))
-                        {
-                            string[] wrdbrk = new string[6];
+            //            if (CG.ObjectiveAsString.StartsWith("V"))
+            //            {
+            //                string[] wrdbrk = new string[6];
 
-                            wrdbrk = CG.ObjectiveAsString.Split(' ');
+            //                wrdbrk = CG.ObjectiveAsString.Split(' ');
 
-                            if (wrdbrk[2] == "%")
-                            {
-                                limit = wrdbrk[0] + wrdbrk[1] + wrdbrk[2];
-                            }
-                            else
-                            {
-                                // the clinical goals force the use of cGy, so we need to convert to Gy so this is compatible with the rest of the program
-                                string gyconv = Convert.ToString((Convert.ToDouble(wrdbrk[1]) / 100.0));
+            //                if (wrdbrk[2] == "%")
+            //                {
+            //                    limit = wrdbrk[0] + wrdbrk[1] + wrdbrk[2];
+            //                }
+            //                else
+            //                {
+            //                    // the clinical goals force the use of cGy, so we need to convert to Gy so this is compatible with the rest of the program
+            //                    string gyconv = Convert.ToString((Convert.ToDouble(wrdbrk[1]) / 100.0));
 
-                                limit = wrdbrk[0] + gyconv;
-                            }
+            //                    limit = wrdbrk[0] + gyconv;
+            //                }
 
-                            limunit = wrdbrk[5];
-                            limitval = wrdbrk[4];
-                            strict = wrdbrk[3];
-                        }
+            //                limunit = wrdbrk[5];
+            //                limitval = wrdbrk[4];
+            //                strict = wrdbrk[3];
+            //            }
 
-                        if (CG.ObjectiveAsString.StartsWith("D "))
-                        {
-                            string[] wrdbrk = new string[6];
+            //            if (CG.ObjectiveAsString.StartsWith("D "))
+            //            {
+            //                string[] wrdbrk = new string[6];
 
-                            wrdbrk = CG.ObjectiveAsString.Split(' ');
+            //                wrdbrk = CG.ObjectiveAsString.Split(' ');
 
-                            if (wrdbrk[2].StartsWith("cm"))
-                            {
-                                wrdbrk[2] = "cc";
-                            }
+            //                if (wrdbrk[2].StartsWith("cm"))
+            //                {
+            //                    wrdbrk[2] = "cc";
+            //                }
 
-                            limit = wrdbrk[0] + wrdbrk[1] + wrdbrk[2];
+            //                limit = wrdbrk[0] + wrdbrk[1] + wrdbrk[2];
 
-                            limunit = wrdbrk[5];
-                            limitval = wrdbrk[4];
-                            strict = wrdbrk[3];
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        MessageBox.Show("Clincal goals conversion error.\n\n" + e.ToString() + "\n" + e.StackTrace);
-                    }
+            //                limunit = wrdbrk[5];
+            //                limitval = wrdbrk[4];
+            //                strict = wrdbrk[3];
+            //            }
+            //        }
+            //        catch (Exception e)
+            //        {
+            //            MessageBox.Show("Clincal goals conversion error.\n\n" + e.ToString() + "\n" + e.StackTrace);
+            //        }
 
 
-                    if (strict == "\u2265")
-                    {
-                        strict = ">=";
-                    }
-                    else if (strict == "\u2264")
-                    {
-                        strict = "<=";
-                    }
+            //        if (strict == "\u2265")
+            //        {
+            //            strict = ">=";
+            //        }
+            //        else if (strict == "\u2264")
+            //        {
+            //            strict = "<=";
+            //        }
 
-                    string CGname = CG.StructureId + "_" + limit + " " + strict + " " + limitval + limunit;
+            //        string CGname = CG.StructureId + "_" + limit + " " + strict + " " + limitval + limunit;
 
-                    //MessageBox.Show("Name: " + CGname);
-                    //MessageBox.Show("Struct Id: " + CG.StructureId);
-                    //MessageBox.Show("limit: " + limit);
-                    //MessageBox.Show("strict: " + strict);
-                    //MessageBox.Show("limitval: " + limitval);
-                    //MessageBox.Show("limitunit: " + limunit);
+            //        //MessageBox.Show("Name: " + CGname);
+            //        //MessageBox.Show("Struct Id: " + CG.StructureId);
+            //        //MessageBox.Show("limit: " + limit);
+            //        //MessageBox.Show("strict: " + strict);
+            //        //MessageBox.Show("limitval: " + limitval);
+            //        //MessageBox.Show("limitunit: " + limunit);
 
-                    string[] treatsiteclinical = new string[1];
-                    treatsiteclinical[0] = "Clinical Goal";
+            //        string[] treatsiteclinical = new string[1];
+            //        treatsiteclinical[0] = "Clinical Goal";
 
-                    ROIE.Add(new DoseObjective { DoseObjectiveName = CGname, Rstruct = CG.StructureId, DoseObjectiveID = 5000, limit = limit, limval = limitval, strict = strict, limunit = limunit, status = null, goal = "NA", treatsite = treatsiteclinical, applystatus = true });
-                }
+            //        ROIE.Add(new DoseObjective { DoseObjectiveName = CGname, Rstruct = CG.StructureId, DoseObjectiveID = 5000, limit = limit, limval = limitval, strict = strict, limunit = limunit, status = null, goal = "NA", treatsite = treatsiteclinical, applystatus = true });
+            //    }
 
-                //ROIL.Add(new ROI.ROI { DoseObjectiveName = tname, Rstruct = tstruct, ROIId = tid, limit = tlimit, limval = tlimval, strict = tstrict, limunit = tlimunit, status = tstatus, goal = tgoal, treatsite = ttreatsite, applystatus = true });
-            }
-
+            //    //ROIL.Add(new ROI.ROI { DoseObjectiveName = tname, Rstruct = tstruct, ROIId = tid, limit = tlimit, limval = tlimval, strict = tstrict, limunit = tlimunit, status = tstatus, goal = tgoal, treatsite = ttreatsite, applystatus = true });
+            //}
+            
             double pdose = Plan.TotalDose.Dose;       // prescribed dose of the Plan
 
             int county = 0;
@@ -1296,131 +1296,133 @@ namespace DoseObjectiveCheck
             // If the User wants the program to evaluate dose objectives they have made using the clinical goals feature in Eclipse, the code below handles that
             // It simply adds their clincial goals to the standard list. If they want to change a dose objective that is already on the list, they can use the PCTPN Document workflow
             // basically it takes in the string representing the clinical goal and breaks it apart to assign the neccessary info to the appropriate parts of the Dose Objective class
-            if (UseGoals == true)
-            {
-                //take the clinical goals and add them to the dose objective list
-                foreach (ClinicalGoal CG in Plansum.GetClinicalGoals())
-                {
-                    string limit = null;
-                    string limunit = null;
-                    string strict = null;
-                    string limitval = null;
+            
+            //if (UseGoals == true)
+            //{
+            //    //take the clinical goals and add them to the dose objective list
+            //    foreach (ClinicalGoal CG in Plansum.GetClinicalGoals())
+            //    {
+            //        string limit = null;
+            //        string limunit = null;
+            //        string strict = null;
+            //        string limitval = null;
 
-                    if (CG.ObjectiveAsString.StartsWith("Conformity Index") || CG.ObjectiveAsString.StartsWith("Gradient Measure") || CG.ObjectiveAsString.StartsWith("GM") || CG.ObjectiveAsString.StartsWith("CI"))
-                    {
-                        continue;
-                    }
+            //        if (CG.ObjectiveAsString.StartsWith("Conformity Index") || CG.ObjectiveAsString.StartsWith("Gradient Measure") || CG.ObjectiveAsString.StartsWith("GM") || CG.ObjectiveAsString.StartsWith("CI"))
+            //        {
+            //            continue;
+            //        }
 
-                    try
-                    {
-                        if (CG.ObjectiveAsString.StartsWith("Dmax"))
-                        {
-                            limit = "Max Pt Dose [voxel]";
+            //        try
+            //        {
+            //            if (CG.ObjectiveAsString.StartsWith("Dmax"))
+            //            {
+            //                limit = "Max Pt Dose [voxel]";
 
-                            string[] wrdbrk = new string[4];
-                            wrdbrk = CG.ObjectiveAsString.Split(' ');
-                            limunit = wrdbrk[3];
-                            limitval = wrdbrk[2];
-                            strict = wrdbrk[1];
-                        }
+            //                string[] wrdbrk = new string[4];
+            //                wrdbrk = CG.ObjectiveAsString.Split(' ');
+            //                limunit = wrdbrk[3];
+            //                limitval = wrdbrk[2];
+            //                strict = wrdbrk[1];
+            //            }
 
-                        if (CG.ObjectiveAsString.StartsWith("Maximum Dose"))
-                        {
-                            limit = "Max Pt Dose [voxel]";
+            //            if (CG.ObjectiveAsString.StartsWith("Maximum Dose"))
+            //            {
+            //                limit = "Max Pt Dose [voxel]";
 
-                            string[] wrdbrk = new string[4];
-                            wrdbrk = CG.ObjectiveAsString.Split(' ');
-                            limunit = wrdbrk[3];
-                            limitval = wrdbrk[2];
-                            strict = wrdbrk[1];
-                        }
+            //                string[] wrdbrk = new string[4];
+            //                wrdbrk = CG.ObjectiveAsString.Split(' ');
+            //                limunit = wrdbrk[3];
+            //                limitval = wrdbrk[2];
+            //                strict = wrdbrk[1];
+            //            }
 
-                        if (CG.ObjectiveAsString.StartsWith("Mean Dose"))
-                        {
-                            limit = "Mean Dose";
+            //            if (CG.ObjectiveAsString.StartsWith("Mean Dose"))
+            //            {
+            //                limit = "Mean Dose";
 
-                            string[] wrdbrk = new string[4];
-                            wrdbrk = CG.ObjectiveAsString.Split(' ');
-                            limunit = wrdbrk[3];
-                            limitval = wrdbrk[2];
-                            strict = wrdbrk[1];
-                        }
+            //                string[] wrdbrk = new string[4];
+            //                wrdbrk = CG.ObjectiveAsString.Split(' ');
+            //                limunit = wrdbrk[3];
+            //                limitval = wrdbrk[2];
+            //                strict = wrdbrk[1];
+            //            }
 
-                        if (CG.ObjectiveAsString.StartsWith("Dmean"))
-                        {
-                            limit = "Mean Dose";
+            //            if (CG.ObjectiveAsString.StartsWith("Dmean"))
+            //            {
+            //                limit = "Mean Dose";
 
-                            string[] wrdbrk = new string[4];
-                            wrdbrk = CG.ObjectiveAsString.Split(' ');
-                            limunit = wrdbrk[3];
-                            limitval = wrdbrk[2];
-                            strict = wrdbrk[1];
-                        }
+            //                string[] wrdbrk = new string[4];
+            //                wrdbrk = CG.ObjectiveAsString.Split(' ');
+            //                limunit = wrdbrk[3];
+            //                limitval = wrdbrk[2];
+            //                strict = wrdbrk[1];
+            //            }
 
-                        if (CG.ObjectiveAsString.StartsWith("V"))
-                        {
-                            string[] wrdbrk = new string[6];
+            //            if (CG.ObjectiveAsString.StartsWith("V"))
+            //            {
+            //                string[] wrdbrk = new string[6];
 
-                            wrdbrk = CG.ObjectiveAsString.Split(' ');
+            //                wrdbrk = CG.ObjectiveAsString.Split(' ');
 
-                            if (wrdbrk[2] == "%")
-                            {
-                                limit = wrdbrk[0] + wrdbrk[1] + wrdbrk[2];
-                            }
-                            else
-                            {
-                                limit = wrdbrk[0] + wrdbrk[1];
-                            }
+            //                if (wrdbrk[2] == "%")
+            //                {
+            //                    limit = wrdbrk[0] + wrdbrk[1] + wrdbrk[2];
+            //                }
+            //                else
+            //                {
+            //                    limit = wrdbrk[0] + wrdbrk[1];
+            //                }
 
-                            limunit = wrdbrk[5];
-                            limitval = wrdbrk[4];
-                            strict = wrdbrk[3];
-                        }
+            //                limunit = wrdbrk[5];
+            //                limitval = wrdbrk[4];
+            //                strict = wrdbrk[3];
+            //            }
 
-                        if (CG.ObjectiveAsString.StartsWith("D "))
-                        {
-                            string[] wrdbrk = new string[6];
+            //            if (CG.ObjectiveAsString.StartsWith("D "))
+            //            {
+            //                string[] wrdbrk = new string[6];
 
-                            wrdbrk = CG.ObjectiveAsString.Split(' ');
+            //                wrdbrk = CG.ObjectiveAsString.Split(' ');
 
-                            limit = wrdbrk[0] + wrdbrk[1] + wrdbrk[2];
+            //                limit = wrdbrk[0] + wrdbrk[1] + wrdbrk[2];
 
-                            limunit = wrdbrk[5];
-                            limitval = wrdbrk[4];
-                            strict = wrdbrk[3];
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        MessageBox.Show("Clincal goals conversion error.\n\n" + e.ToString() + "\n" + e.StackTrace);
-                    }
+            //                limunit = wrdbrk[5];
+            //                limitval = wrdbrk[4];
+            //                strict = wrdbrk[3];
+            //            }
+            //        }
+            //        catch (Exception e)
+            //        {
+            //            MessageBox.Show("Clincal goals conversion error.\n\n" + e.ToString() + "\n" + e.StackTrace);
+            //        }
 
 
-                    if (strict == "\u2265")
-                    {
-                        strict = ">=";
-                    }
-                    else if (strict == "\u2264")
-                    {
-                        strict = "<=";
-                    }
+            //        if (strict == "\u2265")
+            //        {
+            //            strict = ">=";
+            //        }
+            //        else if (strict == "\u2264")
+            //        {
+            //            strict = "<=";
+            //        }
 
-                    string CGname = CG.StructureId + "_" + limit + " " + strict + " " + limitval + limunit;
+            //        string CGname = CG.StructureId + "_" + limit + " " + strict + " " + limitval + limunit;
 
-                    //MessageBox.Show("Name: " + CGname);
-                    //MessageBox.Show("Struct Id: " + CG.StructureId);
-                    //MessageBox.Show("limit: " + limit);
-                    //MessageBox.Show("strict: " + strict);
-                    //MessageBox.Show("limitval: " + limitval);
-                    //MessageBox.Show("limitunit: " + limunit);
+            //        //MessageBox.Show("Name: " + CGname);
+            //        //MessageBox.Show("Struct Id: " + CG.StructureId);
+            //        //MessageBox.Show("limit: " + limit);
+            //        //MessageBox.Show("strict: " + strict);
+            //        //MessageBox.Show("limitval: " + limitval);
+            //        //MessageBox.Show("limitunit: " + limunit);
 
-                    string[] treatsiteclinical = new string[1];
-                    treatsiteclinical[0] = "Clinical Goal";
+            //        string[] treatsiteclinical = new string[1];
+            //        treatsiteclinical[0] = "Clinical Goal";
 
-                    ROIE.Add(new DoseObjective { DoseObjectiveName = CGname, Rstruct = CG.StructureId, DoseObjectiveID = 5000, limit = limit, limval = limitval, strict = strict, limunit = limunit, status = null, goal = "NA", treatsite = treatsiteclinical, applystatus = true });
-                }
-                //ROIL.Add(new DoseObjective { DoseObjectiveName = tname, Rstruct = tstruct, ROIId = tid, limit = tlimit, limval = tlimval, strict = tstrict, limunit = tlimunit, status = tstatus, goal = tgoal, treatsite = ttreatsite, applystatus = true });
-            }
+            //        ROIE.Add(new DoseObjective { DoseObjectiveName = CGname, Rstruct = CG.StructureId, DoseObjectiveID = 5000, limit = limit, limval = limitval, strict = strict, limunit = limunit, status = null, goal = "NA", treatsite = treatsiteclinical, applystatus = true });
+            //    }
+            //    //ROIL.Add(new DoseObjective { DoseObjectiveName = tname, Rstruct = tstruct, ROIId = tid, limit = tlimit, limval = tlimval, strict = tstrict, limunit = tlimunit, status = tstatus, goal = tgoal, treatsite = ttreatsite, applystatus = true });
+            //}
+            
 
             //this gets the progress bar going on the GUI
             pBar.Style = ProgressBarStyle.Continuous;
